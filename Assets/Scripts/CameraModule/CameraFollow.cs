@@ -1,6 +1,5 @@
 ﻿using Cinemachine;
 using Plugins.MonoCache;
-using Services.Inputs;
 using UnityEngine;
 
 namespace CameraModule
@@ -15,15 +14,9 @@ namespace CameraModule
         private readonly bool _cursorLocked = true;
 
         private bool _zoom;
-    
-        public void Construct(IInputService input, Transform cameraRootHero)
-        {
-            _cameraFollow.Follow = cameraRootHero;
-            _zoomFollow.Follow = cameraRootHero;
-            
-            _zoomFollow.gameObject.SetActive(false);
+
+        private void Start() => 
             SetCursorState(_cursorLocked);
-        }
 
         public Camera GetCameraMain() =>
             _camera;

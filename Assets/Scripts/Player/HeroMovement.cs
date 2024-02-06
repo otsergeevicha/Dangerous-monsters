@@ -23,6 +23,7 @@ namespace Player
 
         private void Start()
         {
+            //весь старт временный
             _input = new InputService();
             _input.OnControls();
         }
