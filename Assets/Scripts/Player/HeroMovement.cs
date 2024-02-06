@@ -1,5 +1,4 @@
 ﻿using System;
-using CameraModule;
 using Inputs;
 using Plugins.MonoCache;
 using Services.Inputs;
@@ -12,34 +11,21 @@ namespace Player
     [RequireComponent(typeof(Animator))]
     public class HeroMovement : MonoCache
     {
-        [SerializeField] private CharacterController _controller;
         [SerializeField] private Animator _animator;
-        
-        private Hero _hero;
-        
+        [SerializeField] private CharacterController _controller;
         private IInputService _input;
-        private float _rotationVelocity;
-        private Transform _cameraFollow;
 
-        private void Start()
-        {
-            //весь старт временный
-            _input = new InputService();
-            _input.OnControls();
-        }
-
-        public void Construct(IInputService input, CameraFollow cameraFollow, Animator animator, Hero hero)
+        public void Construct(IInputService input)
         {
             _input = input;
-            _hero = hero;
-            _cameraFollow = cameraFollow.transform;
-            _animator = animator;
-            
             _input.OnControls();
         }
 
-        private void OnValidate() => 
+        private void OnValidate()
+        {
             _controller = Get<CharacterController>();
+            _animator = Get<Animator>();
+        }
 
         protected override void UpdateCached() => 
             BaseLogic();

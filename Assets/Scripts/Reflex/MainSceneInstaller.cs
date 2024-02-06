@@ -1,4 +1,6 @@
-﻿using Plugins.MonoCache;
+﻿using CameraModule;
+using Player;
+using Plugins.MonoCache;
 using Reflex.Core;
 using Services.Factory;
 using Services.Inputs;
@@ -14,6 +16,12 @@ namespace Reflex
         {
             IInputService input = container.Single<IInputService>();
             IGameFactory gameFactory = container.Single<IGameFactory>();
+
+            CameraFollow cameraFollow = gameFactory.CreateCamera();
+            Hero hero = gameFactory.CreateHero();
+
+            hero.Construct(input);
+            cameraFollow.Construct(hero.GetCameraRoot());
         }
     }
 }
