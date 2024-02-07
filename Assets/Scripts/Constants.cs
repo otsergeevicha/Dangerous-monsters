@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public static class Constants
+﻿public static class Constants
 {
     //saveLoad
     public const string Progress = "Progress";
@@ -8,14 +6,8 @@ public static class Constants
     //paths
     public const string HeroPath = "Player/Hero";
     public const string CameraPath = "Camera/MainCamera";
-    
-    //hero
-    public const int HeroSpeed = 3;
-    
-    //hero animator
-    public static readonly int HeroIdleHash = Animator.StringToHash("Idle");
-    public static readonly int HeroRunHash = Animator.StringToHash("Run");
-    public static readonly int HeroRunGunHash = Animator.StringToHash("RunGun");
+    public const string AmmoBoxPath = "Ammo/AmmoBox";
+    public const string PoolPath = "Pools/Pool";
 
     //check device
     public const string KeyboardMouse = "KeyboardMouse";

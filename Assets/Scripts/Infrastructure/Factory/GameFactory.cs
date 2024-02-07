@@ -1,5 +1,6 @@
 ﻿using CameraModule;
 using Player;
+using Reflex;
 using Services.Assets;
 using Services.Factory;
 
@@ -19,5 +20,13 @@ namespace Infrastructure.Factory
         public CameraFollow CreateCamera() =>
             _assetsProvider.InstantiateEntity(Constants.CameraPath)
                 .GetComponent<CameraFollow>();
+
+        public AmmoBox CreateAmmoBox() =>
+            _assetsProvider.InstantiateEntity(Constants.AmmoBoxPath)
+                .GetComponent<AmmoBox>();
+        
+        public Pool CreatePool() =>
+            _assetsProvider.InstantiateEntity(Constants.PoolPath)
+                .GetComponent<Pool>();
     }
 }

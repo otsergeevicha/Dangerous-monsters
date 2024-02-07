@@ -1,5 +1,4 @@
 ﻿using System;
-using Inputs;
 using Plugins.MonoCache;
 using Services.Inputs;
 using UnityEngine;
@@ -13,10 +12,17 @@ namespace Player
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterController _controller;
+        
         private IInputService _input;
+        private int _heroSpeed;
+        private int _idleHash;
+        private int _runHash;
 
-        public void Construct(IInputService input)
+        public void Construct(IInputService input, int heroSpeed, int idleHash, int runHash)
         {
+            _runHash = runHash;
+            _idleHash = idleHash;
+            _heroSpeed = heroSpeed;
             _input = input;
             _input.OnControls();
         }
@@ -39,7 +45,7 @@ namespace Player
 
             if (_input.MoveAxis.sqrMagnitude > Single.Epsilon)
             {
-                _animator.SetBool(Constants.HeroRunHash, true);
+                _animator.SetBool(_runHash, true);
 
                 movementDirection = new Vector3(_input.MoveAxis.x,Single.Epsilon, _input.MoveAxis.y);
                 
@@ -48,13 +54,13 @@ namespace Player
             }
             else
             {
-                _animator.SetBool(Constants.HeroRunHash, false);
-                _animator.SetBool(Constants.HeroIdleHash, true);
+                _animator.SetBool(_runHash, false);
+                _animator.SetBool(_idleHash, true);
             }
             
             movementDirection += Physics.gravity;
 
-            _controller.Move(movementDirection * (Constants.HeroSpeed * Time.deltaTime));
+            _controller.Move(movementDirection * (_heroSpeed * Time.deltaTime));
         }
     }
 }

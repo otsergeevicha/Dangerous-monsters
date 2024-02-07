@@ -1,5 +1,6 @@
 ﻿using CameraModule;
 using Player;
+using Reflex;
 
 namespace Services.Factory
 {
@@ -7,5 +8,7 @@ namespace Services.Factory
     {
         Hero CreateHero();
         CameraFollow CreateCamera();
+        AmmoBox CreateAmmoBox();
+        Pool CreatePool();
     }
 }

@@ -9,8 +9,6 @@ namespace CameraModule
         [SerializeField] private CinemachineVirtualCamera _cameraFollow;
         [SerializeField] private CinemachineVirtualCamera _zoomFollow;
 
-        [SerializeField] private Camera _camera;
-
         private readonly bool _cursorLocked = true;
         private bool _zoom;
 
@@ -24,9 +22,6 @@ namespace CameraModule
             
             SetCursorState(_cursorLocked);
         }
-
-        public Camera GetCameraMain() =>
-            _camera;
 
         private void SetCursorState(bool newState) =>
             Cursor.lockState = newState
