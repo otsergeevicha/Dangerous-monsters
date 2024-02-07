@@ -948,6 +948,7 @@ MonoBehaviour:
   _heroMovement: {fileID: 7594981008869280587}
   _rootCamera: {fileID: 7912492608279083692}
   _ammoBasket: {fileID: 6954304465744374234}
+  _heroTriggers: {fileID: 0}
 --- !u!114 &7594981008869280587
 MonoBehaviour:
   m_ObjectHideFlags: 0

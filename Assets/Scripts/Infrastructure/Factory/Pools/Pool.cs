@@ -1,9 +1,8 @@
-﻿using Player;
-using Plugins.MonoCache;
+﻿using Plugins.MonoCache;
 using Services.Factory;
 using SO;
 
-namespace Reflex
+namespace Infrastructure.Factory.Pools
 {
     public class Pool : MonoCache
     {

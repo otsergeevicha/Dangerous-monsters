@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Ammo;
 using Services.Factory;
 using UnityEngine;
 
-namespace Player
+namespace Infrastructure.Factory.Pools
 {
     public class PoolAmmoBox
     {

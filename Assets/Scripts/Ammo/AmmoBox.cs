@@ -1,7 +1,7 @@
 ﻿using Plugins.MonoCache;
 using UnityEngine;
 
-namespace Player
+namespace Ammo
 {
     public class AmmoBox : MonoCache
     {
