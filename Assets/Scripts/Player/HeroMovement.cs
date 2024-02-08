@@ -13,6 +13,9 @@ namespace Player
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterController _controller;
         
+        private readonly float _rotationSpeed = 5;
+        private readonly float _maxMagnitudeDelta = 0.0f;
+        
         private IInputService _input;
         private int _heroSpeed;
         private int _idleHash;
@@ -47,20 +50,30 @@ namespace Player
             {
                 _animator.SetBool(_runHash, true);
 
-                movementDirection = new Vector3(_input.MoveAxis.x,Single.Epsilon, _input.MoveAxis.y);
-                
-                if (movementDirection != Vector3.zero) 
-                    transform.forward = movementDirection.normalized;
+                movementDirection = new Vector3(_input.MoveAxis.x, Single.Epsilon, _input.MoveAxis.y);
+
+                if (movementDirection != Vector3.zero)
+                {
+                    Vector3 targetDirection = movementDirection.normalized;
+                    Rotate(targetDirection);
+                }
             }
             else
             {
                 _animator.SetBool(_runHash, false);
                 _animator.SetBool(_idleHash, true);
             }
-            
+
             movementDirection += Physics.gravity;
 
             _controller.Move(movementDirection * (_heroSpeed * Time.deltaTime));
+        }
+
+        private void Rotate(Vector3 targetDirection)
+        {
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, _rotationSpeed * Time.deltaTime,
+                _maxMagnitudeDelta);
+            transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
 }

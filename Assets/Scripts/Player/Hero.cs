@@ -19,7 +19,7 @@ namespace Player
         public void Construct(IInputService input, HeroData heroData, PoolAmmoBox pool)
         {
             _heroMovement.Construct(input, heroData.HeroSpeed, heroData.HeroIdleHash, heroData.HeroRunHash);
-            _ammoBasket.Construct(pool);
+            _ammoBasket.Construct(pool, heroData.SizeBasket);
         }
 
         protected override void OnEnabled()
@@ -35,7 +35,7 @@ namespace Player
         {
             _heroTriggers.StorageEntered -= OnStorageEntered;
             _heroTriggers.StorageExited -= OnStorageExited;
-            
+
             _heroTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
             _heroTriggers.CartridgeGunExited -= OnCartridgeGunExited;
         }
@@ -46,25 +46,23 @@ namespace Player
             _heroTriggers = Get<HeroTriggers>();
         }
 
-        private void OnStorageEntered()
-        {
-            Debug.Log("вошли в магазин");
-        }
+        private void OnStorageEntered() =>
+            _ammoBasket.Replenishment().Forget();
 
-        private void OnStorageExited()
-        {
-            Debug.Log("вышли из магазина");
-        }
+        private void OnStorageExited() =>
+            _ammoBasket.StopReplenishment();
 
         private void OnCartridgeGunEntered(CartridgeGun cartridgeGun)
         {
-            Debug.Log("вошли в cartridgeGun");
+            if (_ammoBasket.IsEmpty)
+                return;
+
+            cartridgeGun.SetPresenceCourier(false);
+            cartridgeGun.ApplyBox(_ammoBasket);
         }
 
-        private void OnCartridgeGunExited(CartridgeGun cartridgeGun)
-        {
-            Debug.Log("вышли из cartridgeGun");
-        }
+        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) => 
+            cartridgeGun.SetPresenceCourier(true);
 
         public Transform GetCameraRoot() =>
             _rootCamera.transform;

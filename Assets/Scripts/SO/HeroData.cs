@@ -7,7 +7,10 @@ namespace SO
     {
         [Range(3,6)]
         public int HeroSpeed = 3;
-    
+
+        [Range(5, 15)] 
+        public int SizeBasket = 5;
+        
         [HideInInspector] public int HeroIdleHash = Animator.StringToHash("Idle");
         [HideInInspector] public int HeroRunHash = Animator.StringToHash("Run");
         [HideInInspector] public int HeroRunGunHash = Animator.StringToHash("RunGun");

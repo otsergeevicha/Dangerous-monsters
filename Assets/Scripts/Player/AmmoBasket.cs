@@ -1,16 +1,66 @@
-﻿using Infrastructure.Factory.Pools;
+﻿using Cysharp.Threading.Tasks;
+using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
 
 namespace Player
 {
     public class AmmoBasket : MonoCache
     {
-        public PoolAmmoBox Pool { get; private set; }
+        private const int MillisecondsDelay = 500;
+        
+        private bool _isReplenishment;
+        
+        private int _maxSizeBasket;
+        private int _currentCount = 0;
+        private PoolAmmoBox Pool { get; set; }
+        
+        public bool IsEmpty => 
+            _currentCount == 0;
 
-        public void Construct(PoolAmmoBox pool)
+        public int CountBoxes =>
+            _currentCount;
+
+        public void Construct(PoolAmmoBox pool, int sizeBasket)
         {
+            _maxSizeBasket = sizeBasket;
+
             pool.FirstPointPosition(transform);
             Pool = pool;
+        }
+
+        public void StopReplenishment() => 
+            _isReplenishment = false;
+
+        public void SpendBox()
+        {
+            Pool.SpendBox();
+            _currentCount--;
+
+            if (_currentCount < 0) 
+                _currentCount = 0;
+        }
+
+        private bool CheckFull() => 
+            _currentCount == _maxSizeBasket;
+
+        public async UniTaskVoid Replenishment()
+        {
+            _isReplenishment = true;
+
+            while (_isReplenishment)
+            {
+                if (CheckFull())
+                {
+                    _isReplenishment = false;
+                }
+                else
+                {
+                    Pool.AcceptBox();
+                    _currentCount++;
+                }
+
+                await UniTask.Delay(MillisecondsDelay);
+            }
         }
     }
 }

@@ -8,7 +8,9 @@ namespace Infrastructure.Factory.Pools
     {
         public PoolAmmoBox PoolAmmoBox { get; private set; }
         
-        public void Construct(IGameFactory factory, PoolData poolData) => 
+        public void Construct(IGameFactory factory, PoolData poolData)
+        {
             PoolAmmoBox = new PoolAmmoBox(factory, poolData.SizeAmmoBox);
+        }
     }
 }
