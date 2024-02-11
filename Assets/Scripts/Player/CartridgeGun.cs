@@ -25,17 +25,6 @@ namespace Player
             if (_cartridgeBoxes.Length == 0)
                 return;
 
-            int freeSpaceCounter = 0;
-
-            for (int i = 0; i < _cartridgeBoxes.Length; i++)
-            {
-                if (_cartridgeBoxes[i].isActiveAndEnabled == false)
-                    freeSpaceCounter++;
-            }
-
-            if (freeSpaceCounter == 0)
-                return;
-
             Replenishment(ammoBasket).Forget();
         }
 
@@ -49,16 +38,16 @@ namespace Player
                 if (_isCourierExited)
                     return;
 
+                if (ammoBasket.IsEmpty)
+                    return;
+
                 if (_cartridgeBoxes[i].isActiveAndEnabled == false)
                 {
-                    if (ammoBasket.IsEmpty)
-                        return;
-
                     _cartridgeBoxes[i].OnActive();
                     ammoBasket.SpendBox();
+                    
+                    await UniTask.Delay(MillisecondsDelay);
                 }
-
-                await UniTask.Delay(MillisecondsDelay);
             }
         }
     }
