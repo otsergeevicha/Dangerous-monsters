@@ -17,15 +17,15 @@ namespace Player
         private readonly float _maxMagnitudeDelta = 0.0f;
         
         private IInputService _input;
-        private int _heroSpeed;
+        private int _speed;
         private int _idleHash;
         private int _runHash;
 
-        public void Construct(IInputService input, int heroSpeed, int idleHash, int runHash)
+        public void Construct(IInputService input, int speed, int idleHash, int runHash)
         {
             _runHash = runHash;
             _idleHash = idleHash;
-            _heroSpeed = heroSpeed;
+            _speed = speed;
             _input = input;
             _input.OnControls();
         }
@@ -66,7 +66,7 @@ namespace Player
 
             movementDirection += Physics.gravity;
 
-            _controller.Move(movementDirection * (_heroSpeed * Time.deltaTime));
+            _controller.Move(movementDirection * (_speed * Time.deltaTime));
         }
 
         private void Rotate(Vector3 targetDirection)

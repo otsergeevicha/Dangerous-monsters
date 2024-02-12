@@ -6,7 +6,7 @@ namespace SO
     public class HeroData : ScriptableObject
     {
         [Range(3,6)]
-        public int HeroSpeed = 3;
+        public int Speed = 3;
 
         [Range(5, 15)] 
         public int SizeBasket = 5;

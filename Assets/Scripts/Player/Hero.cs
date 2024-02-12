@@ -3,6 +3,7 @@ using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
 using Services.Inputs;
 using SO;
+using Turret;
 using UnityEngine;
 
 namespace Player
@@ -18,7 +19,7 @@ namespace Player
 
         public void Construct(IInputService input, HeroData heroData, PoolAmmoBox pool)
         {
-            _heroMovement.Construct(input, heroData.HeroSpeed, heroData.HeroIdleHash, heroData.HeroRunHash);
+            _heroMovement.Construct(input, heroData.Speed, heroData.HeroIdleHash, heroData.HeroRunHash);
             _ammoBasket.Construct(pool, heroData.SizeBasket);
         }
 

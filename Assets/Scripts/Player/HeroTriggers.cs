@@ -1,5 +1,7 @@
 ﻿using System;
+using ContactPlatforms;
 using Plugins.MonoCache;
+using Turret;
 using UnityEngine;
 
 namespace Player
@@ -14,7 +16,7 @@ namespace Player
         
         private void OnTriggerEnter(Collider collision)
         {
-            if (collision.gameObject.TryGetComponent(out StorageAmmoBox _)) 
+            if (collision.gameObject.TryGetComponent(out StorageAmmoPlate _)) 
                 StorageEntered?.Invoke();
             
             if (collision.TryGetComponent(out CartridgeGun cartridge)) 
@@ -23,7 +25,7 @@ namespace Player
         
         private void OnTriggerExit(Collider collision)
         {
-            if (collision.TryGetComponent(out StorageAmmoBox _)) 
+            if (collision.TryGetComponent(out StorageAmmoPlate _)) 
                 StorageExited?.Invoke();
             
             if (collision.TryGetComponent(out CartridgeGun cartridge)) 
