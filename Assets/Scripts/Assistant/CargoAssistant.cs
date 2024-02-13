@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ContactPlatforms;
 using Plugins.MonoCache;
 using SO;
@@ -9,71 +10,42 @@ using UnityEngine.AI;
 
 namespace Assistant
 {
-    enum TypeAssistant
-    {
-        MoneyAssistant,
-        CargoAssistant
-    }
-
     [RequireComponent(typeof(AssistantStateMachine))]
-    [RequireComponent(typeof(SearchTargetState))]
-    public class Assistant : MonoCache
+    public class CargoAssistant : MonoCache
     {
-        [Range(0, 1)] public int AssistantId;
-
-        private AssistantStateMachine _stateMachine;
-        private SearchTargetState _searchTargetState;
-        
-        private List<Vector3> _currentTargetPoints = new();
-        private Vector3 _returnPoint = Vector3.zero;
+        private CartridgeGun[] _cartridgeGuns;
+        private IdleState _idleState;
         
         public AssistantData AssistantData { get; private set; }
 
-        public void Construct(AssistantData assistantData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate,
-            PoolFreeMoney poolFreeMoney, TriggerReturnMoney triggerReturnMoney)
+        public void Construct(AssistantData assistantData, CartridgeGun[] cartridgeGuns,
+            StorageAmmoPlate storageAmmoPlate)
         {
             AssistantData = assistantData;
-            
-            if (AssistantId == (int)TypeAssistant.CargoAssistant)
-            {
-                if (cartridgeGuns.Length != 0)
-                {
-                    for (int i = 0; i < cartridgeGuns.Length; i++)
-                    {
-                        if (cartridgeGuns[i].isActiveAndEnabled)
-                            _currentTargetPoints.Add(cartridgeGuns[i].transform.position);
-                    }
+            _cartridgeGuns = cartridgeGuns;
 
-                    _searchTargetState.InjectDirections(_currentTargetPoints, _returnPoint);
-                    _stateMachine.EnterBehavior<SearchTargetState>();
-                }
-                else
-                {
-                    Debug.Log("Массив платформ для патрон пуст");
-                }
-            }
-
-            if (AssistantId == (int)TypeAssistant.MoneyAssistant)
-            {
-                //мысль такая если забуду, так как FSM GENERAL на два типа помощника, то входные точки должны быть две,
-                //это лист точек патрулирования и возвратная точка
-                //монеты в пули должны инвокаться, и список векторов должен дополняться
-                //когда монета подобрана, вектор из листа удаляется
-                
-                Debug.Log("Здесь еще нет логики");
-            }
+            foreach (CartridgeGun cartridgeGun in _cartridgeGuns)
+                cartridgeGun.Activated += UpdateListPoints;
         }
 
-        private void OnValidate()
+        protected override void OnDisabled()
         {
-            _searchTargetState = Get<SearchTargetState>();
-            _stateMachine = Get<AssistantStateMachine>();
+            foreach (CartridgeGun cartridgeGun in _cartridgeGuns)
+                cartridgeGun.Activated -= UpdateListPoints;
         }
+
+        private void OnValidate() => 
+            _idleState = Get<IdleState>();
+
+        public void UpdateListPoints() => 
+            _idleState.SetActualPoint(_cartridgeGuns.Where(gun => 
+                gun.isActiveAndEnabled).ToList());
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(IdleState))]
+    [RequireComponent(typeof(CargoAssistant))]
     public class AssistantStateMachine : MonoCache
     {
         [HideInInspector] [SerializeField] private Animator _animator;
@@ -83,11 +55,11 @@ namespace Assistant
 
         private Dictionary<Type, ISwitcherState> _allBehaviors;
         private ISwitcherState _currentBehavior;
-        private AssistantData _assistant;
+        private CargoAssistant _cargoAssistant;
 
         private void OnValidate()
         {
-            _assistant = Get<AssistantData>();
+            _cargoAssistant = Get<CargoAssistant>();
             
             _animator = Get<Animator>();
             _navMeshAgent = Get<NavMeshAgent>();
@@ -104,7 +76,7 @@ namespace Assistant
 
             foreach (var behavior in _allBehaviors)
             {
-                behavior.Value.Init(this, _animator, _navMeshAgent, _assistant);
+                behavior.Value.Init(this, _animator, _navMeshAgent, _cargoAssistant.AssistantData);
                 behavior.Value.ExitBehavior();
             }
 
@@ -125,15 +97,6 @@ namespace Assistant
 
     public class IdleState : State
     {
-        public override void OnActive() => 
-            AnimatorCached.SetBool(AssistantData.AssistantIdleHash, true);
-
-        public override void InActive() => 
-            AnimatorCached.SetBool(AssistantData.AssistantIdleHash, false);
-    }
-
-    public class SearchTargetState : State
-    {
         public override void OnActive()
         {
         }
@@ -142,7 +105,7 @@ namespace Assistant
         {
         }
 
-        public void InjectDirections(List<Vector3> currentTargetPoints, Vector3 returnPoint)
+        public void SetActualPoint(List<CartridgeGun> toList)
         {
             throw new NotImplementedException();
         }
@@ -183,13 +146,5 @@ namespace Assistant
 
         public void Init(AssistantStateMachine stateMachine, Animator animator, NavMeshAgent navMeshAgent,
             AssistantData assistantData);
-    }
-    
-    public class TriggerReturnMoney : MonoCache
-    {
-    }
-
-    public class PoolFreeMoney
-    {
     }
 }

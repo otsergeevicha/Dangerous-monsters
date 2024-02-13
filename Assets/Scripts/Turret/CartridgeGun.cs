@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Player;
 using Plugins.MonoCache;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Turret
         private const int MillisecondsDelay = 500;
         private bool _isCourierExited;
 
+        public event Action Activated;
+
         private void Start()
         {
             if (_cartridgeBoxes.Length != 0)
@@ -20,6 +23,9 @@ namespace Turret
                     _cartridgeBoxes[i].InActive();
             }
         }
+
+        public void OnActive() => 
+            Activated?.Invoke();
 
         public void ApplyBox(AmmoBasket ammoBasket)
         {

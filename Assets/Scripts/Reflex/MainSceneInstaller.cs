@@ -13,6 +13,7 @@ namespace Reflex
     public class MainSceneInstaller : MonoCache, IInstaller
     {
         [SerializeField] private HeroData _heroData;
+        [SerializeField] private AssistantData _assistantData;
         [SerializeField] private PoolData _poolData;
         
         public void InstallBindings(ContainerBuilder descriptor) => 
