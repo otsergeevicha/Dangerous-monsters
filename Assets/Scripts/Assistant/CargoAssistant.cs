@@ -48,6 +48,7 @@ namespace Assistant
     [RequireComponent(typeof(CargoAssistant))]
     public class AssistantStateMachine : MonoCache
     {
+        [HideInInspector] [SerializeField] private CargoAssistant _cargoAssistant;
         [HideInInspector] [SerializeField] private Animator _animator;
         [HideInInspector] [SerializeField] private NavMeshAgent _navMeshAgent;
 
@@ -55,7 +56,6 @@ namespace Assistant
 
         private Dictionary<Type, ISwitcherState> _allBehaviors;
         private ISwitcherState _currentBehavior;
-        private CargoAssistant _cargoAssistant;
 
         private void OnValidate()
         {
@@ -97,18 +97,34 @@ namespace Assistant
 
     public class IdleState : State
     {
+        private List<CartridgeGun> _actualCartridgeGuns;
+
         public override void OnActive()
         {
+            if (_actualCartridgeGuns != null)
+            {
+                foreach (CartridgeGun cartridgeGun in _actualCartridgeGuns)
+                {
+                   // cartridgeGun.RequiredUpload += NextState;
+                }
+            }
+            else
+            {
+                Debug.Log("Список актуальных точек пушек отсутствует");
+            }
         }
 
         public override void InActive()
         {
         }
 
-        public void SetActualPoint(List<CartridgeGun> toList)
+        public void NextState()
         {
-            throw new NotImplementedException();
+            
         }
+
+        public void SetActualPoint(List<CartridgeGun> actualCartridgeGuns) => 
+            _actualCartridgeGuns = actualCartridgeGuns;
     }
 
     public abstract class State : MonoCache, ISwitcherState
