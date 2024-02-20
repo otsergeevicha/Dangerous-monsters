@@ -11,8 +11,8 @@ namespace SO
         [Range(5, 15)] 
         public int SizeBasket = 5;
         
-        [HideInInspector] public int HeroIdleHash = Animator.StringToHash("Idle");
-        [HideInInspector] public int HeroRunHash = Animator.StringToHash("Run");
-        [HideInInspector] public int HeroRunGunHash = Animator.StringToHash("RunGun");
+        [HideInInspector] public int IdleHash = Animator.StringToHash("Idle");
+        [HideInInspector] public int RunHash = Animator.StringToHash("Run");
+        [HideInInspector] public int RunGunHash = Animator.StringToHash("RunGun");
     }
 }

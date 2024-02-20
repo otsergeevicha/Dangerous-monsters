@@ -9,42 +9,42 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(HeroMovement))]
-    [RequireComponent(typeof(HeroTriggers))]
+    [RequireComponent(typeof(AmmoTriggers))]
     public class Hero : MonoCache
     {
         [SerializeField] private HeroMovement _heroMovement;
         [SerializeField] private RootCamera _rootCamera;
         [SerializeField] private AmmoBasket _ammoBasket;
-        [SerializeField] private HeroTriggers _heroTriggers;
+        [SerializeField] private AmmoTriggers _ammoTriggers;
 
         public void Construct(IInputService input, HeroData heroData, PoolAmmoBox pool)
         {
-            _heroMovement.Construct(input, heroData.Speed, heroData.HeroIdleHash, heroData.HeroRunHash);
+            _heroMovement.Construct(input, heroData.Speed, heroData.IdleHash, heroData.RunHash);
             _ammoBasket.Construct(pool, heroData.SizeBasket);
         }
 
         protected override void OnEnabled()
         {
-            _heroTriggers.StorageEntered += OnStorageEntered;
-            _heroTriggers.StorageExited += OnStorageExited;
+            _ammoTriggers.StorageEntered += OnStorageEntered;
+            _ammoTriggers.StorageExited += OnStorageExited;
 
-            _heroTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
-            _heroTriggers.CartridgeGunExited += OnCartridgeGunExited;
+            _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
         }
 
         protected override void OnDisabled()
         {
-            _heroTriggers.StorageEntered -= OnStorageEntered;
-            _heroTriggers.StorageExited -= OnStorageExited;
+            _ammoTriggers.StorageEntered -= OnStorageEntered;
+            _ammoTriggers.StorageExited -= OnStorageExited;
 
-            _heroTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
-            _heroTriggers.CartridgeGunExited -= OnCartridgeGunExited;
+            _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
         }
 
         private void OnValidate()
         {
             _heroMovement = Get<HeroMovement>();
-            _heroTriggers = Get<HeroTriggers>();
+            _ammoTriggers = Get<AmmoTriggers>();
         }
 
         private void OnStorageEntered() =>

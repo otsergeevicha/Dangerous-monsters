@@ -1,166 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using ContactPlatforms;
+using Infrastructure.Factory.Pools;
+using Player;
 using Plugins.MonoCache;
 using SO;
 using Turret;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Assistant
 {
+    [RequireComponent(typeof(AmmoTriggers))]
+    [RequireComponent(typeof(BasketAssistant))]
     [RequireComponent(typeof(AssistantStateMachine))]
+    [RequireComponent(typeof(IdleState))]
     public class CargoAssistant : MonoCache
     {
+        [SerializeField] private BasketAssistant _basket;
+
         private CartridgeGun[] _cartridgeGuns;
         private IdleState _idleState;
-        
+        private AmmoTriggers _ammoTriggers;
+        private StorageAmmoPlate _storageAmmoPlate;
+
         public AssistantData AssistantData { get; private set; }
 
         public void Construct(AssistantData assistantData, CartridgeGun[] cartridgeGuns,
-            StorageAmmoPlate storageAmmoPlate)
+            StorageAmmoPlate storageAmmoPlate, PoolAmmoBoxAssistant pool)
         {
+            _storageAmmoPlate = storageAmmoPlate;
+            _basket.Construct(pool, assistantData.SizeBasket);
+
             AssistantData = assistantData;
             _cartridgeGuns = cartridgeGuns;
+
+            
+            _idleState.Inject(_storageAmmoPlate.transform.position, _basket);
 
             foreach (CartridgeGun cartridgeGun in _cartridgeGuns)
                 cartridgeGun.Activated += UpdateListPoints;
         }
 
+        protected override void OnEnabled()
+        {
+            _ammoTriggers.StorageEntered += OnStorageEntered;
+            _ammoTriggers.StorageExited += OnStorageExited;
+
+            _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
+        }
+
         protected override void OnDisabled()
         {
+            _ammoTriggers.StorageEntered -= OnStorageEntered;
+            _ammoTriggers.StorageExited -= OnStorageExited;
+
+            _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
+
             foreach (CartridgeGun cartridgeGun in _cartridgeGuns)
                 cartridgeGun.Activated -= UpdateListPoints;
         }
 
-        private void OnValidate() => 
-            _idleState = Get<IdleState>();
-
-        public void UpdateListPoints() => 
-            _idleState.SetActualPoint(_cartridgeGuns.Where(gun => 
-                gun.isActiveAndEnabled).ToList());
-    }
-
-    [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(IdleState))]
-    [RequireComponent(typeof(CargoAssistant))]
-    public class AssistantStateMachine : MonoCache
-    {
-        [HideInInspector] [SerializeField] private CargoAssistant _cargoAssistant;
-        [HideInInspector] [SerializeField] private Animator _animator;
-        [HideInInspector] [SerializeField] private NavMeshAgent _navMeshAgent;
-
-        [HideInInspector] [SerializeField] private IdleState _idleState;
-
-        private Dictionary<Type, ISwitcherState> _allBehaviors;
-        private ISwitcherState _currentBehavior;
-
         private void OnValidate()
         {
-            _cargoAssistant = Get<CargoAssistant>();
-            
-            _animator = Get<Animator>();
-            _navMeshAgent = Get<NavMeshAgent>();
-
             _idleState = Get<IdleState>();
+            _ammoTriggers = Get<AmmoTriggers>();
         }
 
-        private void Start()
+
+        private void OnStorageEntered() =>
+            _basket.Replenishment().Forget();
+
+        private void OnStorageExited() =>
+            _basket.StopReplenishment();
+
+        private void OnCartridgeGunEntered(CartridgeGun cartridgeGun)
         {
-            _allBehaviors = new Dictionary<Type, ISwitcherState>
-            {
-                [typeof(IdleState)] = _idleState
-            };
+            if (_basket.IsEmpty)
+                return;
 
-            foreach (var behavior in _allBehaviors)
-            {
-                behavior.Value.Init(this, _animator, _navMeshAgent, _cargoAssistant.AssistantData);
-                behavior.Value.ExitBehavior();
-            }
-
-            _currentBehavior = _allBehaviors[typeof(IdleState)];
-            EnterBehavior<IdleState>();
+            cartridgeGun.SetPresenceCourier(false);
+            cartridgeGun.ApplyBox(_basket);
         }
 
-        public void EnterBehavior<TState>() where TState : ISwitcherState
+        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
+            cartridgeGun.SetPresenceCourier(true);
+
+        public void UpdateListPoints()
         {
-            var behavior = _allBehaviors[typeof(TState)];
-            _currentBehavior.InActive();
-            _currentBehavior.ExitBehavior();
-            behavior.EnterBehavior();
-            behavior.OnActive();
-            _currentBehavior = behavior;
+            _idleState.SetActualPoint(_cartridgeGuns.Where(gun =>
+                gun.isActiveAndEnabled).ToList());
         }
-    }
-
-    public class IdleState : State
-    {
-        private List<CartridgeGun> _actualCartridgeGuns;
-
-        public override void OnActive()
-        {
-            if (_actualCartridgeGuns != null)
-            {
-                foreach (CartridgeGun cartridgeGun in _actualCartridgeGuns)
-                {
-                   // cartridgeGun.RequiredUpload += NextState;
-                }
-            }
-            else
-            {
-                Debug.Log("Список актуальных точек пушек отсутствует");
-            }
-        }
-
-        public override void InActive()
-        {
-        }
-
-        public void NextState()
-        {
-            
-        }
-
-        public void SetActualPoint(List<CartridgeGun> actualCartridgeGuns) => 
-            _actualCartridgeGuns = actualCartridgeGuns;
-    }
-
-    public abstract class State : MonoCache, ISwitcherState
-    {
-        protected AssistantStateMachine StateMachine;
-        protected Animator AnimatorCached;
-        protected NavMeshAgent Agent;
-        protected AssistantData AssistantData;
-
-        public abstract void OnActive();
-        public abstract void InActive();
-
-        public void EnterBehavior() =>
-            enabled = true;
-
-        public void ExitBehavior() =>
-            enabled = false;
-
-        public void Init(AssistantStateMachine stateMachine, Animator animator, NavMeshAgent navMeshAgent,
-            AssistantData assistantData)
-        {
-            AssistantData = assistantData;
-            Agent = navMeshAgent;
-            AnimatorCached = animator;
-            StateMachine = stateMachine;
-        }
-    }
-
-    public interface ISwitcherState
-    {
-        public void EnterBehavior();
-        public void ExitBehavior();
-        public abstract void OnActive();
-        public abstract void InActive();
-
-        public void Init(AssistantStateMachine stateMachine, Animator animator, NavMeshAgent navMeshAgent,
-            AssistantData assistantData);
     }
 }

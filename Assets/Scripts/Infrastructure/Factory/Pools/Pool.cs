@@ -7,10 +7,12 @@ namespace Infrastructure.Factory.Pools
     public class Pool : MonoCache
     {
         public PoolAmmoBox PoolAmmoBox { get; private set; }
+        public PoolAmmoBoxAssistant PoolAmmoBoxAssistant { get; private set; }
         
         public void Construct(IGameFactory factory, PoolData poolData)
         {
             PoolAmmoBox = new PoolAmmoBox(factory, poolData.SizeAmmoBox);
+            PoolAmmoBoxAssistant = new PoolAmmoBoxAssistant(factory, poolData.SizeBasketAssistant);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Assistant;
 using Cysharp.Threading.Tasks;
 using Player;
 using Plugins.MonoCache;
@@ -14,6 +15,8 @@ namespace Turret
         private bool _isCourierExited;
 
         public event Action Activated;
+        public event Action<Vector3> DownloadRequired;
+        public event Action<Vector3> Fulled;
 
         private void Start()
         {
@@ -27,18 +30,46 @@ namespace Turret
         public void OnActive() => 
             Activated?.Invoke();
 
+        public void SetPresenceCourier(bool status) =>
+            _isCourierExited = status;
+
         public void ApplyBox(AmmoBasket ammoBasket)
         {
             if (_cartridgeBoxes.Length == 0)
                 return;
 
-            Replenishment(ammoBasket).Forget();
+            ReplenishmentHero(ammoBasket).Forget();
+        }
+        
+        public void ApplyBox(BasketAssistant basket)
+        {
+            if (_cartridgeBoxes.Length == 0)
+                return;
+
+            ReplenishmentAssistant(basket).Forget();
+        }
+        
+        private async UniTaskVoid ReplenishmentAssistant(BasketAssistant basket)
+        {
+            for (int i = 0; i < _cartridgeBoxes.Length; i++)
+            {
+                if (_isCourierExited)
+                    return;
+
+                if (basket.IsEmpty)
+                    return;
+
+                if (_cartridgeBoxes[i].isActiveAndEnabled == false)
+                {
+                    _cartridgeBoxes[i].OnActive();
+                    basket.SpendBox();
+                    
+                    await UniTask.Delay(MillisecondsDelay);
+                }
+            }
         }
 
-        public void SetPresenceCourier(bool status) =>
-            _isCourierExited = status;
-
-        private async UniTaskVoid Replenishment(AmmoBasket ammoBasket)
+        private async UniTaskVoid ReplenishmentHero(AmmoBasket ammoBasket)
         {
             for (int i = 0; i < _cartridgeBoxes.Length; i++)
             {

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class HeroTriggers : MonoCache
+    public class AmmoTriggers : MonoCache
     {
         public Action StorageEntered;
         public Action StorageExited;
