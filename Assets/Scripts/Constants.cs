@@ -5,6 +5,7 @@
 
     //paths
     public const string HeroPath = "Player/Hero";
+    public const string CargoAssistantPath = "Assistants/CargoAssistant";
     public const string CameraPath = "Camera/MainCamera";
     public const string AmmoBoxPath = "Ammo/AmmoBox";
     public const string PoolPath = "Pools/Pool";

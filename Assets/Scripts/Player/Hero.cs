@@ -1,3 +1,4 @@
+using Ammo;
 using CameraModule;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
@@ -14,13 +15,13 @@ namespace Player
     {
         [SerializeField] private HeroMovement _heroMovement;
         [SerializeField] private RootCamera _rootCamera;
-        [SerializeField] private AmmoBasket _ammoBasket;
+        [SerializeField] private BasketPlayer _basketPlayer;
         [SerializeField] private AmmoTriggers _ammoTriggers;
 
         public void Construct(IInputService input, HeroData heroData, PoolAmmoBox pool)
         {
             _heroMovement.Construct(input, heroData.Speed, heroData.IdleHash, heroData.RunHash);
-            _ammoBasket.Construct(pool, heroData.SizeBasket);
+            _basketPlayer.Construct(pool, heroData.SizeBasket);
         }
 
         protected override void OnEnabled()
@@ -48,18 +49,18 @@ namespace Player
         }
 
         private void OnStorageEntered() =>
-            _ammoBasket.Replenishment().Forget();
+            _basketPlayer.Replenishment().Forget();
 
         private void OnStorageExited() =>
-            _ammoBasket.StopReplenishment();
+            _basketPlayer.StopReplenishment();
 
         private void OnCartridgeGunEntered(CartridgeGun cartridgeGun)
         {
-            if (_ammoBasket.IsEmpty)
+            if (_basketPlayer.IsEmpty)
                 return;
 
             cartridgeGun.SetPresenceCourier(false);
-            cartridgeGun.ApplyBox(_ammoBasket);
+            cartridgeGun.ApplyBox(_basketPlayer);
         }
 
         private void OnCartridgeGunExited(CartridgeGun cartridgeGun) => 

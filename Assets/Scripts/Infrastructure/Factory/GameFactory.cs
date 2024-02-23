@@ -2,7 +2,6 @@
 using CameraModule;
 using Infrastructure.Factory.Pools;
 using Player;
-using Reflex;
 using Services.Assets;
 using Services.Factory;
 
@@ -30,5 +29,9 @@ namespace Infrastructure.Factory
         public Pool CreatePool() =>
             _assetsProvider.InstantiateEntity(Constants.PoolPath)
                 .GetComponent<Pool>();
+
+        public CargoAssistant CreateCargoAssistant() =>
+            _assetsProvider.InstantiateEntity(Constants.CargoAssistantPath)
+                .GetComponent<CargoAssistant>();
     }
 }

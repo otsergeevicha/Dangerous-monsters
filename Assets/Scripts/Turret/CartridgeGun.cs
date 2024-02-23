@@ -1,5 +1,4 @@
 ﻿using System;
-using Assistant;
 using Cysharp.Threading.Tasks;
 using Player;
 using Plugins.MonoCache;
@@ -33,56 +32,28 @@ namespace Turret
         public void SetPresenceCourier(bool status) =>
             _isCourierExited = status;
 
-        public void ApplyBox(AmmoBasket ammoBasket)
+        public void ApplyBox(BasketPlayer basketPlayer)
         {
             if (_cartridgeBoxes.Length == 0)
                 return;
 
-            ReplenishmentHero(ammoBasket).Forget();
+            ReplenishmentHero(basketPlayer).Forget();
         }
-        
-        public void ApplyBox(BasketAssistant basket)
-        {
-            if (_cartridgeBoxes.Length == 0)
-                return;
 
-            ReplenishmentAssistant(basket).Forget();
-        }
-        
-        private async UniTaskVoid ReplenishmentAssistant(BasketAssistant basket)
+        private async UniTaskVoid ReplenishmentHero(BasketPlayer basketPlayer)
         {
             for (int i = 0; i < _cartridgeBoxes.Length; i++)
             {
                 if (_isCourierExited)
                     return;
 
-                if (basket.IsEmpty)
+                if (basketPlayer.IsEmpty)
                     return;
 
                 if (_cartridgeBoxes[i].isActiveAndEnabled == false)
                 {
                     _cartridgeBoxes[i].OnActive();
-                    basket.SpendBox();
-                    
-                    await UniTask.Delay(MillisecondsDelay);
-                }
-            }
-        }
-
-        private async UniTaskVoid ReplenishmentHero(AmmoBasket ammoBasket)
-        {
-            for (int i = 0; i < _cartridgeBoxes.Length; i++)
-            {
-                if (_isCourierExited)
-                    return;
-
-                if (ammoBasket.IsEmpty)
-                    return;
-
-                if (_cartridgeBoxes[i].isActiveAndEnabled == false)
-                {
-                    _cartridgeBoxes[i].OnActive();
-                    ammoBasket.SpendBox();
+                    basketPlayer.SpendBox();
                     
                     await UniTask.Delay(MillisecondsDelay);
                 }

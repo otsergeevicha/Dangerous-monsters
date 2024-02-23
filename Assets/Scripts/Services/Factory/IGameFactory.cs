@@ -12,5 +12,6 @@ namespace Services.Factory
         CameraFollow CreateCamera();
         AmmoBox CreateAmmoBox();
         Pool CreatePool();
+        CargoAssistant CreateCargoAssistant();
     }
 }

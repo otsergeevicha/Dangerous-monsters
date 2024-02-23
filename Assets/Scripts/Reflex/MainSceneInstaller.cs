@@ -1,4 +1,5 @@
 ﻿using CameraModule;
+using ContactPlatforms;
 using Infrastructure.Factory.Pools;
 using Player;
 using Plugins.MonoCache;
@@ -6,12 +7,16 @@ using Reflex.Core;
 using Services.Factory;
 using Services.Inputs;
 using SO;
+using Turret;
 using UnityEngine;
 
 namespace Reflex
 {
     public class MainSceneInstaller : MonoCache, IInstaller
     {
+        [SerializeField] private CartridgeGun[] _cartridgeGuns;
+        [SerializeField] private StorageAmmoPlate _storageAmmoPlate;
+        
         [SerializeField] private HeroData _heroData;
         [SerializeField] private AssistantData _assistantData;
         [SerializeField] private PoolData _poolData;
@@ -28,7 +33,7 @@ namespace Reflex
             CameraFollow cameraFollow = gameFactory.CreateCamera();
             Hero hero = gameFactory.CreateHero();
 
-            pool.Construct(gameFactory, _poolData);
+            pool.Construct(gameFactory, _poolData, _assistantData, _cartridgeGuns, _storageAmmoPlate);
             hero.Construct(input, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
         }
