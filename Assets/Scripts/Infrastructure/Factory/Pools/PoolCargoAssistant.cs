@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assistant;
 using ContactPlatforms;
 using Services.Factory;
 using SO;

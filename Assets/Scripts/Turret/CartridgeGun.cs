@@ -16,6 +16,7 @@ namespace Turret
         public event Action Activated;
         public event Action<Vector3> DownloadRequired;
         public event Action<Vector3> Fulled;
+        public bool IsRequiredDownload { get; private set; } = false;
 
         private void Start()
         {
