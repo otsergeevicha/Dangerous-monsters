@@ -1,3 +1,4 @@
+using Behavior_Designer.Runtime.Variables;
 using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityBoxCollider2D

@@ -1,10 +1,12 @@
+using System;
+using BehaviorDesigner.Runtime;
 using UnityEngine;
 
-namespace BehaviorDesigner.Runtime
+namespace Behavior_Designer.Runtime.Variables
 {
-    [System.Serializable]
+    [Serializable]
     public class SharedVector2 : SharedVariable<Vector2>
     {
-        public static implicit operator SharedVector2(Vector2 value) { return new SharedVector2 { mValue = value }; }
+        public static implicit operator SharedVector2(Vector2 value) { return new SharedVector2 { Value = value }; }
     }
 }

@@ -108,8 +108,9 @@ GameObject:
   - component: {fileID: 2746555531933666320}
   - component: {fileID: 5073887131534463776}
   - component: {fileID: 7102827232870933810}
-  - component: {fileID: 5156585161812783769}
+  - component: {fileID: 8723078127232943258}
   - component: {fileID: 1665833479837585030}
+  - component: {fileID: 33277363244937501}
   m_Layer: 0
   m_Name: CargoAssistant
   m_TagString: Untagged
@@ -165,12 +166,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1279978368200395827}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -190,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc86512269343ecaed42caafa311bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5156585161812783769
+--- !u!114 &8723078127232943258
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,9 +200,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1279978368200395827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ece18659f6ab47f8bd5f497fffd9966b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4013184289e34a3f911dcbc177a8d750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 2746555531933666320}
 --- !u!114 &1665833479837585030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,24 +232,43 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(172,-37)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-0.9761963,120.857117)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(0.214296341,119.904747)"},"ID":2,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-194.016434,118.9523)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Assistant.SetDirection","NodeData":{"Offset":"(-199.267868,127.179489)","WatchedFields":["Direction"]},"ID":4,"Name":"Set
-        Direction","Instant":true,"SharedVector2Direction":{"Type":"BehaviorDesigner.Runtime.SharedVector2","Name":"_direction","IsShared":true,"Vector2mValue":"(0,0)"},"SharedCargoAssistantSelfCargoAssistant":{"Type":"Assistant.SharedCargoAssistant","Name":"_cargoAssistant","IsShared":true,"CargoAssistantmValue":0}},{"Type":"Assistant.SetMovement","NodeData":{"Offset":"(98.53479,127.179489)"},"ID":5,"Name":"Set
-        Movement","Instant":true,"SharedBotInputSelfBotInput":{"Type":"Assistant.SharedBotInput","Name":"_botInput","IsShared":true,"BotInputmValue":1},"SharedVector2Direction":{"Type":"BehaviorDesigner.Runtime.SharedVector2","Name":"_direction","IsShared":true,"Vector2mValue":"(0,0)"}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(127.5036,132.047577)"},"ID":6,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Idle","NodeData":{"Offset":"(-90.5,122.285614)"},"ID":7,"Name":"Idle","Instant":true},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(85.69043,119.904663)"},"ID":8,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]},"Variables":[null,{"Type":"Assistant.SharedCargoAssistant","Name":"_cargoAssistant","IsShared":true,"CargoAssistantmValue":2},{"Type":"Assistant.SharedBotInput","Name":"_botInput","IsShared":true,"BotInputmValue":3},{"Type":"BehaviorDesigner.Runtime.SharedVector2","Name":"_direction","IsShared":true,"Vector2mValue":"(0,0)"}]}'
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(172,-37)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(1.5,126)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-1.10712051,135.385391)"},"ID":2,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-220.770813,108.205872)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"Assistant.AI.IsBasketUnder","NodeData":{"Offset":"(-70.59419,136.6673)"},"ID":4,"Name":"Is
+        Basket Under","Instant":true},{"Type":"Assistant.AI.MoveStorage","NodeData":{"Offset":"(66.060524,138.485062)"},"ID":5,"Name":"Move
+        Storage","Instant":true}]}]}]},"Variables":[null,null,null,null]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
         startIndex: 
         dataPosition: 
-        unityObjects:
-        - {fileID: 7102827232870933810}
-        - {fileID: 5156585161812783769}
-        - {fileID: 7102827232870933810}
-        - {fileID: 5156585161812783769}
+        unityObjects: []
         byteData: 
         byteDataArray: 
       Version: 1.7.2
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
+--- !u!136 &33277363244937501
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279978368200395827}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.26
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1860818666946461780
 GameObject:
   m_ObjectHideFlags: 0
