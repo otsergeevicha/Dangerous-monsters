@@ -19,6 +19,7 @@ namespace Reflex
         
         [SerializeField] private HeroData _heroData;
         [SerializeField] private AssistantData _assistantData;
+        [SerializeField] private EnemyData _enemyData;
         [SerializeField] private PoolData _poolData;
         
         public void InstallBindings(ContainerBuilder descriptor) => 
@@ -33,7 +34,7 @@ namespace Reflex
             CameraFollow cameraFollow = gameFactory.CreateCamera();
             Hero hero = gameFactory.CreateHero();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _cartridgeGuns, _storageAmmoPlate);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate);
             hero.Construct(input, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
         }

@@ -14,5 +14,6 @@ namespace Services.Factory
         AmmoBox CreateAmmoBox();
         Pool CreatePool();
         CargoAssistant CreateCargoAssistant();
+        Enemy CreateEnemy(string currentPath);
     }
 }

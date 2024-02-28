@@ -34,5 +34,9 @@ namespace Infrastructure.Factory
         public CargoAssistant CreateCargoAssistant() =>
             _assetsProvider.InstantiateEntity(Constants.CargoAssistantPath)
                 .GetComponent<CargoAssistant>();
+
+        public Enemy CreateEnemy(string currentPath) =>
+            _assetsProvider.InstantiateEntity(currentPath)
+                .GetComponent<Enemy>();
     }
 }

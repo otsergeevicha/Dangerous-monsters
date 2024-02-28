@@ -42,7 +42,7 @@ namespace Assistant
 
         private void Start()
         {
-            //все здесь временно для тестов, должно все быть в методе OnActive. Сейчас для тестов в старте
+            print("все здесь временно для тестов, должно все быть в методе OnActive. Сейчас для тестов в старте");
             _ammoTriggers.StorageEntered += OnStorageEntered;
             _ammoTriggers.StorageExited += OnStorageExited;
             
