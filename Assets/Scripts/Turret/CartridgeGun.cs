@@ -1,4 +1,5 @@
 ﻿using System;
+using Assistant;
 using Cysharp.Threading.Tasks;
 using Player;
 using Plugins.MonoCache;
@@ -16,7 +17,7 @@ namespace Turret
         public event Action Activated;
         public event Action<Vector3> DownloadRequired;
         public event Action<Vector3> Fulled;
-        public bool IsRequiredDownload { get; private set; } = false;
+        public bool IsRequiredDownload { get; private set; } = true;
 
         private void Start()
         {
@@ -40,7 +41,35 @@ namespace Turret
 
             ReplenishmentHero(basketPlayer).Forget();
         }
+        
+        public void ApplyBox(BasketCargoAssistant basketCargoAssistant)
+        {
+            if (_cartridgeBoxes.Length == 0)
+                return;
 
+            ReplenishmentHero(basketCargoAssistant).Forget();
+        }
+
+        private async UniTaskVoid ReplenishmentHero(BasketCargoAssistant basketCargoAssistant)
+        {
+            for (int i = 0; i < _cartridgeBoxes.Length; i++)
+            {
+                if (_isCourierExited)
+                    return;
+
+                if (basketCargoAssistant.IsEmpty)
+                    return;
+
+                if (_cartridgeBoxes[i].isActiveAndEnabled == false)
+                {
+                    _cartridgeBoxes[i].OnActive();
+                    basketCargoAssistant.SpendBox();
+                    
+                    await UniTask.Delay(MillisecondsDelay);
+                }
+            }
+        }
+        
         private async UniTaskVoid ReplenishmentHero(BasketPlayer basketPlayer)
         {
             for (int i = 0; i < _cartridgeBoxes.Length; i++)

@@ -18,7 +18,7 @@ namespace Player
         [SerializeField] private BasketPlayer _basketPlayer;
         [SerializeField] private AmmoTriggers _ammoTriggers;
 
-        public void Construct(IInputService input, HeroData heroData, PoolAmmoBox pool)
+        public void Construct(IInputService input, HeroData heroData, PoolAmmoBoxPlayer pool)
         {
             _heroMovement.Construct(input, heroData.Speed, heroData.IdleHash, heroData.RunHash);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
