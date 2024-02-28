@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Ammo;
 using Cysharp.Threading.Tasks;
 using Plugins.MonoCache;
@@ -8,7 +7,7 @@ using UnityEngine;
 
 namespace Assistant
 {
-    public class BasketCargoAssistant : MonoCache
+    public class BasketCargoAssistant : MonoCache, IBasket
     {
         [SerializeField] private CargoAssistant _cargoAssistant;
         [SerializeField] private AmmoBox[] _ammoBoxes;

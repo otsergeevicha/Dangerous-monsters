@@ -1,7 +1,5 @@
 ﻿using System;
-using Assistant;
 using Cysharp.Threading.Tasks;
-using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -34,56 +32,28 @@ namespace Turret
         public void SetPresenceCourier(bool status) =>
             _isCourierExited = status;
 
-        public void ApplyBox(BasketPlayer basketPlayer)
+        public void ApplyBox(IBasket basket)
         {
             if (_cartridgeBoxes.Length == 0)
                 return;
 
-            ReplenishmentHero(basketPlayer).Forget();
-        }
-        
-        public void ApplyBox(BasketCargoAssistant basketCargoAssistant)
-        {
-            if (_cartridgeBoxes.Length == 0)
-                return;
-
-            ReplenishmentHero(basketCargoAssistant).Forget();
+            Replenishment(basket).Forget();
         }
 
-        private async UniTaskVoid ReplenishmentHero(BasketCargoAssistant basketCargoAssistant)
+        private async UniTaskVoid Replenishment(IBasket basket)
         {
             for (int i = 0; i < _cartridgeBoxes.Length; i++)
             {
                 if (_isCourierExited)
                     return;
 
-                if (basketCargoAssistant.IsEmpty)
+                if (basket.IsEmpty)
                     return;
 
                 if (_cartridgeBoxes[i].isActiveAndEnabled == false)
                 {
                     _cartridgeBoxes[i].OnActive();
-                    basketCargoAssistant.SpendBox();
-                    
-                    await UniTask.Delay(MillisecondsDelay);
-                }
-            }
-        }
-        
-        private async UniTaskVoid ReplenishmentHero(BasketPlayer basketPlayer)
-        {
-            for (int i = 0; i < _cartridgeBoxes.Length; i++)
-            {
-                if (_isCourierExited)
-                    return;
-
-                if (basketPlayer.IsEmpty)
-                    return;
-
-                if (_cartridgeBoxes[i].isActiveAndEnabled == false)
-                {
-                    _cartridgeBoxes[i].OnActive();
-                    basketPlayer.SpendBox();
+                    basket.SpendBox();
                     
                     await UniTask.Delay(MillisecondsDelay);
                 }

@@ -1,10 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
+using Turret;
 
 namespace Player
 {
-    public class BasketPlayer : MonoCache
+    public class BasketPlayer : MonoCache, IBasket
     {
         private const int MillisecondsDelay = 500;
         

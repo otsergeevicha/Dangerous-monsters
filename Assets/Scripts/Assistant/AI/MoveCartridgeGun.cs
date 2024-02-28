@@ -1,21 +1,27 @@
 ﻿using System.Linq;
 using Assistant.AI.Parents;
+using BehaviorDesigner.Runtime.Tasks;
 using Turret;
 
 namespace Assistant.AI
 {
     public class MoveCartridgeGun : CargoAssistantAction
     {
+        private CartridgeGun _gun;
+        
         public override void OnStart()
         {
-            CartridgeGun gun = CargoAssistant.CartridgeGuns.FirstOrDefault(cartridge => cartridge.IsRequiredDownload);
+            _gun = CargoAssistant.CartridgeGuns.FirstOrDefault(cartridge => cartridge.IsRequiredDownload);
 
-            if (gun != null)
+            if (_gun != null)
             {
                 CargoAssistant.AnimationOperator.EnableRun();
                 Agent.speed = CargoAssistant.AssistantData.Speed;
-                Agent.SetDestination(gun.transform.position);
+                Agent.SetDestination(_gun.transform.position);
             }
         }
+
+        public override TaskStatus OnUpdate() => 
+            _gun.IsRequiredDownload ? TaskStatus.Success : TaskStatus.Failure;
     }
 }
