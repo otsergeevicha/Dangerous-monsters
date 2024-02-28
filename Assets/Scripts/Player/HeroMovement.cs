@@ -13,8 +13,7 @@ namespace Player
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterController _controller;
         
-        private readonly float _rotationSpeed = 5;
-        private readonly float _maxMagnitudeDelta = 0.0f;
+        private readonly float _rotationSpeed = 5.5f;
         
         private IInputService _input;
         private int _speed;
@@ -71,8 +70,8 @@ namespace Player
 
         private void Rotate(Vector3 targetDirection)
         {
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, _rotationSpeed * Time.deltaTime,
-                _maxMagnitudeDelta);
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, _rotationSpeed * Time.deltaTime, 0.0f);
+            newDirection.y = 0.0f;
             transform.rotation = Quaternion.LookRotation(newDirection);
         }
     }
