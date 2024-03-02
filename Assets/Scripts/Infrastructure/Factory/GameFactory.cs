@@ -1,10 +1,12 @@
 ﻿using Ammo;
 using Assistant;
 using CameraModule;
+using Enemies;
 using Infrastructure.Factory.Pools;
 using Player;
 using Services.Assets;
 using Services.Factory;
+using Spawners;
 
 namespace Infrastructure.Factory
 {
@@ -38,5 +40,9 @@ namespace Infrastructure.Factory
         public Enemy CreateEnemy(string currentPath) =>
             _assetsProvider.InstantiateEntity(currentPath)
                 .GetComponent<Enemy>();
+
+        public EnemySpawner CreateEnemySpawner() =>
+            _assetsProvider.InstantiateEntity(Constants.EnemySpawnerPath)
+                .GetComponent<EnemySpawner>();
     }
 }

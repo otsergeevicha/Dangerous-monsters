@@ -17,6 +17,7 @@ namespace SO
         [Range(1, 10)] 
         public int CurrentLevelGame = 1;
 
+        [Header("Amount enemies")]
         [Range(1, 10)] 
         public int OneLevelCountEnemy = 9;
         [Range(1, 10)] 
