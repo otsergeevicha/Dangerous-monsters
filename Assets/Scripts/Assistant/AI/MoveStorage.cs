@@ -6,7 +6,7 @@ namespace Assistant.AI
     {
         public override void OnStart()
         {
-            CargoAssistant.AnimationOperator.EnableRun();
+            CargoAssistant.AssistantAnimation.EnableRun();
             Agent.speed = CargoAssistant.AssistantData.Speed;
             Agent.SetDestination(CargoAssistant.StorageAmmoPlate.transform.position);
         }

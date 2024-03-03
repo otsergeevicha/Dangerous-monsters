@@ -9,7 +9,7 @@ using UnityEngine.AI;
 namespace Assistant
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(AnimationOperator))]
+    [RequireComponent(typeof(AssistantAnimation))]
     [RequireComponent(typeof(AmmoTriggers))]
     public class CargoAssistant : MonoCache
     {
@@ -17,7 +17,7 @@ namespace Assistant
         
         public BasketCargoAssistant Basket;
         
-        public AnimationOperator AnimationOperator{ get; private set; }
+        public AssistantAnimation AssistantAnimation{ get; private set; }
         public AssistantData AssistantData { get; private set; }
         public StorageAmmoPlate StorageAmmoPlate { get; private set; }
         public CartridgeGun[] CartridgeGuns { get; private set; }
@@ -32,9 +32,8 @@ namespace Assistant
             StorageAmmoPlate = storageAmmoPlate;
             CartridgeGuns = cartridgeGuns;
 
-            AnimationOperator = Get<AnimationOperator>();
-            AnimationOperator.Construct(assistantData);
-
+            AssistantAnimation = Get<AssistantAnimation>();
+            AssistantAnimation.Construct(assistantData);
         }
 
         private void OnValidate() => 

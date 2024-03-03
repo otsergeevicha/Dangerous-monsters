@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assistant
 {
     [RequireComponent(typeof(Animator))]
-    public class AnimationOperator : MonoCache
+    public class AssistantAnimation : MonoCache
     {
         [HideInInspector] [SerializeField] private Animator _animator;
         

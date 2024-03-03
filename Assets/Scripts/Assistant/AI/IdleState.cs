@@ -6,7 +6,7 @@ namespace Assistant.AI
     {
         public override void OnStart()
         {
-            CargoAssistant.AnimationOperator.EnableIdle();
+            CargoAssistant.AssistantAnimation.EnableIdle();
         }
     }
 }

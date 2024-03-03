@@ -21,10 +21,19 @@ namespace Spawners
             _pool = pool;
             _squarePoints = squareEnemySpawner;
 
-            foreach (Enemy enemy in _pool.Enemies)
-            {
+            foreach (Enemy enemy in _pool.Enemies) 
                 enemy.Died += ReuseEnemy;
-            }
+        }
+
+        private void Start()
+        {
+            LaunchSpawn().Forget();
+        }
+
+        protected override void OnDisabled()
+        {
+            foreach (Enemy enemy in _pool.Enemies) 
+                enemy.Died -= ReuseEnemy;
         }
 
         private void ReuseEnemy()
@@ -37,38 +46,20 @@ namespace Spawners
                 currentEnemy.transform.position = GetRandomPoint();
                 currentEnemy.OnActive();
             }
-        }
-        
-        private void Start()
-        {
-            LaunchSpawn().Forget();
+            else
+            {
+                _isWork = false;
+            }
         }
 
         private async UniTaskVoid LaunchSpawn()
         {
             while (_isWork)
             {
-                Enemy currentEnemy = ActivatedUnit();
-
-                if (currentEnemy == null) 
-                    _isWork = false;
-
+                ReuseEnemy();
+                
                 await UniTask.Delay(_enemySpawnerData.MillisecondsIntervalSpawn);
             }
-        }
-
-        private Enemy ActivatedUnit()
-        {
-            Enemy currentEnemy = _pool.Enemies.FirstOrDefault(enemy =>
-                enemy.isActiveAndEnabled == false);
-
-            if (currentEnemy != null)
-            {
-                currentEnemy.transform.position = GetRandomPoint();
-                currentEnemy.OnActive();
-            }
-
-            return currentEnemy;
         }
 
         private Vector3 GetRandomPoint()

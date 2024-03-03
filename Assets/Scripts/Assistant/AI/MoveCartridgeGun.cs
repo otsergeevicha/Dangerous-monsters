@@ -15,7 +15,7 @@ namespace Assistant.AI
 
             if (_gun != null)
             {
-                CargoAssistant.AnimationOperator.EnableRun();
+                CargoAssistant.AssistantAnimation.EnableRun();
                 Agent.speed = CargoAssistant.AssistantData.Speed;
                 Agent.SetDestination(_gun.transform.position);
             }
