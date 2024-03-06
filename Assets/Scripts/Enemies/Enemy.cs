@@ -1,6 +1,4 @@
-﻿using BehaviorDesigner.Runtime.Tasks;
-using Enemies.AI.Parents;
-using Enemies.Animation;
+﻿using Enemies.Animation;
 using Plugins.MonoCache;
 using SO;
 using UnityEngine;
@@ -31,24 +29,8 @@ namespace Enemies
         public abstract void Construct(EnemyData enemyData);
         public abstract void OnActive();
         public abstract void InActive();
+        public abstract Vector3 GetDirection();
+        public abstract bool IsCalm { get; protected set; }
         public abstract event Action Died;
     }
-
-    // public class IsCalmPatrol : EnemyConditional
-    // {
-    //     public override TaskStatus OnUpdate() => 
-    //         Enemy.IsCalm ? TaskStatus.Success : TaskStatus.Failure;
-    // }
-    //
-    // public class EnemyPatrol : EnemyAction
-    // {
-    //     public override void OnStart() => 
-    //         Agent.SetDestination(Enemy.GetDirection());
-    // }
-    //
-    // public class IsReachedTarget : EnemyConditional
-    // {
-    //     public override TaskStatus OnUpdate() =>
-    //         Agent.remainingDistance <= Agent.stoppingDistance ? TaskStatus.Failure : TaskStatus.Success;
-    // }
 }

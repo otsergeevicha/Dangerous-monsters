@@ -58,7 +58,7 @@ namespace Spawners
             {
                 ReuseEnemy();
                 
-                await UniTask.Delay(_enemySpawnerData.MillisecondsIntervalSpawn);
+                await UniTask.Delay(_enemySpawnerData.IntervalSpawn);
             }
         }
 

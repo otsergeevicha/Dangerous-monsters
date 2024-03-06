@@ -1,5 +1,6 @@
 ﻿using System;
 using SO;
+using UnityEngine;
 
 namespace Enemies
 {
@@ -18,6 +19,13 @@ namespace Enemies
 
         public override void InActive() => 
             gameObject.SetActive(false);
+
+        public override Vector3 GetDirection()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsCalm { get; protected set; }
 
         public override event Action Died;
     }
