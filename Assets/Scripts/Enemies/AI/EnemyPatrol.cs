@@ -1,6 +1,6 @@
 ﻿using Enemies.AI.Parents;
 
-namespace Enemies
+namespace Enemies.AI
 {
     public class EnemyPatrol : EnemyAction
     {

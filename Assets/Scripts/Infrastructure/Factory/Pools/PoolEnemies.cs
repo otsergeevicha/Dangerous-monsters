@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Enemies;
+using Enemies.AI;
+using Reflex;
 using Services.Factory;
 using SO;
 
@@ -23,8 +25,12 @@ namespace Infrastructure.Factory.Pools
             { 10, new[] { Constants.SevenPath, Constants.EightPath, Constants.NinePath } }
         };
 
-        public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData)
+        private DirectionOperator _directionOperator;
+
+        public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData,
+            DirectionOperator directionOperator)
         {
+            _directionOperator = directionOperator;
             int[] levelCounts =
             {
                 poolData.OneLevelCountEnemy, poolData.TwoLevelCountEnemy, poolData.ThreeLevelCountEnemy,
@@ -48,7 +54,7 @@ namespace Infrastructure.Factory.Pools
             for (int i = 0; i < requiredCount; i++)
             {
                 Enemy enemy = factory.CreateEnemy(currentPath);
-                enemy.Construct(enemyData);
+                enemy.Construct(enemyData, _directionOperator);
                 enemy.InActive();
                 enemies[i] = enemy;
             }

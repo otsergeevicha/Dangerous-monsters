@@ -1,5 +1,7 @@
-﻿using Enemies.Animation;
+﻿using Enemies.AI;
+using Enemies.Animation;
 using Plugins.MonoCache;
+using Reflex;
 using SO;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,7 +28,7 @@ namespace Enemies
     public abstract class Enemy : MonoCache
     {
         public abstract int GetId();
-        public abstract void Construct(EnemyData enemyData);
+        public abstract void Construct(EnemyData enemyData, DirectionOperator directionOperator);
         public abstract void OnActive();
         public abstract void InActive();
         public abstract Vector3 GetDirection();

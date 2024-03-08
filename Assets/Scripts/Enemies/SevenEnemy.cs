@@ -1,4 +1,6 @@
 ﻿using System;
+using Enemies.AI;
+using Reflex;
 using SO;
 using UnityEngine;
 
@@ -11,7 +13,7 @@ namespace Enemies
         public override int GetId() => 
             (int)EnemyId.SevenLevel;
 
-        public override void Construct(EnemyData enemyData) => 
+        public override void Construct(EnemyData enemyData, DirectionOperator directionOperator) => 
             EnemyData = enemyData;
 
         public override void OnActive() => 

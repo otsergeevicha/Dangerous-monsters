@@ -1,7 +1,7 @@
 ﻿using BehaviorDesigner.Runtime.Tasks;
 using Enemies.AI.Parents;
 
-namespace Enemies
+namespace Enemies.AI
 {
     public class IsCalmPatrol : EnemyConditional
     {
