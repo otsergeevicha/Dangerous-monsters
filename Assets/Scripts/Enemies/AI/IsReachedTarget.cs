@@ -1,11 +1,10 @@
-﻿using BehaviorDesigner.Runtime.Tasks;
-using Enemies.AI.Parents;
+﻿using Enemies.AI.Parents;
 
 namespace Enemies.AI
 {
     public class IsReachedTarget : EnemyConditional
     {
-        public override TaskStatus OnUpdate() =>
-            Agent.remainingDistance >= Agent.stoppingDistance ? TaskStatus.Failure : TaskStatus.Success;
+        public override void OnStart() => 
+            EnemyAI.SetReached(Agent.remainingDistance <= Agent.stoppingDistance);
     }
 }

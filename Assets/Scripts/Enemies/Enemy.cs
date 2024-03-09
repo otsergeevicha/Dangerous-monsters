@@ -1,7 +1,6 @@
 ﻿using Enemies.AI;
 using Enemies.Animation;
 using Plugins.MonoCache;
-using Reflex;
 using SO;
 using UnityEngine;
 using UnityEngine.AI;
@@ -32,7 +31,9 @@ namespace Enemies
         public abstract void OnActive();
         public abstract void InActive();
         public abstract Vector3 GetDirection();
+        public abstract void SetReached(bool flag);
         public abstract bool IsCalm { get; protected set; }
+        public abstract bool IsReached { get; protected set; }
         public abstract event Action Died;
     }
 }

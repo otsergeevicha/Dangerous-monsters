@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1c4863acee47c4a9d302dcb6ec362a, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
+  IdleHash: 2081823275
+  RunHash: 1748754976
+  DeviationAmount: 15
+  WeightTowardsEnd: 2

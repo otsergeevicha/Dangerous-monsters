@@ -1,6 +1,5 @@
 ﻿using System;
 using Enemies.AI;
-using Reflex;
 using SO;
 using UnityEngine;
 
@@ -27,7 +26,11 @@ namespace Enemies
             throw new NotImplementedException();
         }
 
+        public override void SetReached(bool flag) => 
+            IsReached = flag;
+        
         public override bool IsCalm { get; protected set; }
+        public override bool IsReached { get; protected set; }
 
         public override event Action Died;
     }

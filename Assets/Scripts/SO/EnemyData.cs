@@ -10,5 +10,8 @@ namespace SO
         
         [Header("Deviation direction")] [Range(0, 15)]
         public float DeviationAmount = 1f;
+        
+        [Range(1, 2)]
+        public int WeightTowardsEnd = 1;
     }
 }

@@ -8,7 +8,10 @@ namespace Enemies
     public class ZeroEnemy : Enemy
     {
         private DirectionOperator _directionOperator;
+        public override event Action Died;
         public EnemyData EnemyData { get; private set; }
+        public override bool IsCalm { get; protected set; } = true;
+        public override bool IsReached { get; protected set; }
 
         public override int GetId() => 
             (int)EnemyId.ZeroLevel;
@@ -26,10 +29,9 @@ namespace Enemies
             gameObject.SetActive(false);
 
         public override Vector3 GetDirection() => 
-            _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
+            _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount, EnemyData.WeightTowardsEnd);
 
-        public override bool IsCalm { get; protected set; } = true;
-
-        public override event Action Died;
+        public override void SetReached(bool flag) => 
+            IsReached = flag;
     }
 }
