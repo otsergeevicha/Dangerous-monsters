@@ -621,7 +621,6 @@ GameObject:
   - component: {fileID: 1957742871667710073}
   - component: {fileID: 8379150211498445720}
   - component: {fileID: 4471246473628885076}
-  - component: {fileID: 857299951723338052}
   - component: {fileID: 5429026419239569032}
   - component: {fileID: -4159013367620532065}
   m_Layer: 0
@@ -681,27 +680,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!95 &857299951723338052
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5894102315003255032}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5429026419239569032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,7 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 857299951723338052}
+  _animator: {fileID: 0}
 --- !u!114 &-4159013367620532065
 MonoBehaviour:
   m_ObjectHideFlags: 0

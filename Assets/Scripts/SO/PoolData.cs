@@ -38,5 +38,10 @@ namespace SO
         public int NineLevelCountEnemy = 7;
         [Range(1, 10)] 
         public int TenLevelCountEnemy = 9;
+        
+        [Header("Size pool bullets turret")]
+        [Range(15, 30)] 
+        public int MaxCountBullets = 20;
+
     }
 }

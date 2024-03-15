@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Enemies.Animation
 {
-    [RequireComponent(typeof(Animator))]
     public class EnemyAnimation : MonoCache
     {
         [HideInInspector] [SerializeField] private Animator _animator;
@@ -15,8 +14,8 @@ namespace Enemies.Animation
             _enemyData = enemyData;
 
         private void OnValidate() => 
-            _animator = Get<Animator>();
-        
+            _animator = ChildrenGet<Animator>();
+
         public void EnableRun()
         {
             _animator.SetBool(_enemyData.IdleHash, false);

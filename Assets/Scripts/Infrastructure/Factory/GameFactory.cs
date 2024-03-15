@@ -7,6 +7,7 @@ using Player;
 using Services.Assets;
 using Services.Factory;
 using Spawners;
+using Turrets;
 
 namespace Infrastructure.Factory
 {
@@ -44,5 +45,13 @@ namespace Infrastructure.Factory
         public EnemySpawner CreateEnemySpawner() =>
             _assetsProvider.InstantiateEntity(Constants.EnemySpawnerPath)
                 .GetComponent<EnemySpawner>();
+
+        public Turret CreateTurret() =>
+            _assetsProvider.InstantiateEntity(Constants.TurretPath)
+                .GetComponent<Turret>();
+
+        public Missile CreateMissile() =>
+            _assetsProvider.InstantiateEntity(Constants.MissilePath)
+                .GetComponent<Missile>();
     }
 }

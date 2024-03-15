@@ -29,7 +29,7 @@ namespace Enemies
             gameObject.SetActive(false);
 
         public override Vector3 GetDirection() => 
-            _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount, EnemyData.WeightTowardsEnd);
+            _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
 
         public override void SetReached(bool flag) => 
             IsReached = flag;

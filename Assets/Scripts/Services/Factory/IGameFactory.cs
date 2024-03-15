@@ -4,8 +4,8 @@ using CameraModule;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Player;
-using Reflex;
 using Spawners;
+using Turrets;
 
 namespace Services.Factory
 {
@@ -18,5 +18,7 @@ namespace Services.Factory
         CargoAssistant CreateCargoAssistant();
         Enemy CreateEnemy(string currentPath);
         EnemySpawner CreateEnemySpawner();
+        Turret CreateTurret();
+        Missile CreateMissile();
     }
 }

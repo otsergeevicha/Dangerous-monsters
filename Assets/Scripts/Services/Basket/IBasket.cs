@@ -1,4 +1,4 @@
-﻿namespace Turret
+﻿namespace Services.Basket
 {
     public interface IBasket
     {

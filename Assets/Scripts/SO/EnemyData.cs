@@ -8,10 +8,6 @@ namespace SO
         [HideInInspector] public int IdleHash = Animator.StringToHash("Idle");
         [HideInInspector] public int RunHash = Animator.StringToHash("Run");
         
-        [Header("Deviation direction")] [Range(0, 15)]
-        public float DeviationAmount = 1f;
-        
-        [Range(1, 2)]
-        public int WeightTowardsEnd = 1;
+        [HideInInspector] public float DeviationAmount = 15f;
     }
 }

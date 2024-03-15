@@ -1,6 +1,6 @@
 ﻿using Plugins.MonoCache;
 
-namespace Turret
+namespace Turrets.Childrens
 {
     public class CartridgeBox : MonoCache
     {
