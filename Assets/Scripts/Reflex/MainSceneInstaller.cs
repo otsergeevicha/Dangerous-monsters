@@ -9,7 +9,7 @@ using Services.Inputs;
 using SO;
 using Spawners;
 using Turrets;
-using Turrets.Childrens;
+using Turrets.Children;
 using UnityEngine;
 
 namespace Reflex
@@ -26,7 +26,8 @@ namespace Reflex
         [SerializeField] private EnemyData _enemyData;
         [SerializeField] private PoolData _poolData;
         [SerializeField] private EnemySpawnerData _enemySpawnerData;
-        [SerializeField] private AmmoData _ammoData;
+        [SerializeField] private BulletData _bulletData;
+        [SerializeField] private TurretData _turretData;
         
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
@@ -41,7 +42,7 @@ namespace Reflex
             Hero hero = gameFactory.CreateHero();
             EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _ammoData);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData);
             hero.Construct(input, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);

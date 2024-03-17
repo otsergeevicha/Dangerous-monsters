@@ -2,7 +2,7 @@
 using ContactPlatforms;
 using Plugins.MonoCache;
 using SO;
-using Turrets.Childrens;
+using Turrets.Children;
 using UnityEngine;
 using UnityEngine.AI;
 

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Assistant.AI.Parents;
 using BehaviorDesigner.Runtime.Tasks;
-using Turrets.Childrens;
+using Turrets.Children;
 
 namespace Assistant.AI
 {
