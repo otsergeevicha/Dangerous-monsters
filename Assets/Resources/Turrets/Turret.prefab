@@ -336,7 +336,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7617600590778243499}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.46, y: 0.10000038, z: 13.995}
   m_LocalScale: {x: 0.49, y: 0.49, z: 0.49}
   m_ConstrainProportionsScale: 1
@@ -360,3 +360,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trigger: {fileID: 2887826772306690907}
   _spawnPointGrenade: {fileID: 8611251647226349130}
+  _turretBody: {fileID: 0}

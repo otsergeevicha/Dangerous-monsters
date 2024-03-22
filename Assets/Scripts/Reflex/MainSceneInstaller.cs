@@ -1,4 +1,5 @@
 ﻿using CameraModule;
+using Canvases;
 using ContactPlatforms;
 using Infrastructure.Factory.Pools;
 using Player;
@@ -16,11 +17,14 @@ namespace Reflex
 {
     public class MainSceneInstaller : MonoCache, IInstaller
     {
+        [Header("Objects with scene")]
         [SerializeField] private CartridgeGun[] _cartridgeGuns;
         [SerializeField] private StorageAmmoPlate _storageAmmoPlate;
         [SerializeField] private Transform[] _squareEnemySpawner = new Transform[4];
         [SerializeField] private TurretPlate[] _turretPlates;
+        [SerializeField] private StoreAssistantPlate _storeAssistantPlate;
         
+        [Header("Required configurations")]
         [SerializeField] private HeroData _heroData;
         [SerializeField] private AssistantData _assistantData;
         [SerializeField] private EnemyData _enemyData;
@@ -39,6 +43,7 @@ namespace Reflex
 
             Pool pool = gameFactory.CreatePool();
             CameraFollow cameraFollow = gameFactory.CreateCamera();
+            WindowRoot windowRoot = gameFactory.CreateWindowRoot();
             Hero hero = gameFactory.CreateHero();
             EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
 
@@ -46,6 +51,7 @@ namespace Reflex
             hero.Construct(input, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
+            windowRoot.Construct(input, _storeAssistantPlate, _poolData, pool);
         }
     }
 }

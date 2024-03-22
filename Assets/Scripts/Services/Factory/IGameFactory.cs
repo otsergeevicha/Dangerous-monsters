@@ -1,6 +1,7 @@
 ﻿using Ammo;
 using Assistant;
 using CameraModule;
+using Canvases;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Player;
@@ -20,5 +21,6 @@ namespace Services.Factory
         EnemySpawner CreateEnemySpawner();
         Turret CreateTurret();
         Missile CreateMissile();
+        WindowRoot CreateWindowRoot();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Ammo;
 using Assistant;
 using CameraModule;
+using Canvases;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Player;
@@ -53,5 +54,9 @@ namespace Infrastructure.Factory
         public Missile CreateMissile() =>
             _assetsProvider.InstantiateEntity(Constants.MissilePath)
                 .GetComponent<Missile>();
+
+        public WindowRoot CreateWindowRoot() =>
+            _assetsProvider.InstantiateEntity(Constants.WindowRootPath)
+                .GetComponent<WindowRoot>();
     }
 }

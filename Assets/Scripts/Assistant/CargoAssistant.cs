@@ -51,6 +51,8 @@ namespace Assistant
 
         public void OnActive()
         {
+            gameObject.SetActive(true);
+            
             _ammoTriggers.StorageEntered += OnStorageEntered;
             _ammoTriggers.StorageExited += OnStorageExited;
             

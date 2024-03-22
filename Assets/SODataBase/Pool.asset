@@ -12,4 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12183f6e2dfe4d2d9380cd8a82ddcce8, type: 3}
   m_Name: Pool
   m_EditorClassIdentifier: 
-  SizeAmmoBox: 5
+  SizeAmmoBoxPlayer: 5
+  SizeBasketAssistant: 5
+  MaxCountCargoAssistant: 2
+  CurrentLevelGame: 1
+  OneLevelCountEnemy: 9
+  TwoLevelCountEnemy: 7
+  ThreeLevelCountEnemy: 6
+  FourLevelCountEnemy: 6
+  FiveLevelCountEnemy: 6
+  SixLevelCountEnemy: 6
+  SevenLevelCountEnemy: 6
+  EightLevelCountEnemy: 6
+  NineLevelCountEnemy: 7
+  TenLevelCountEnemy: 9
+  MaxCountBullets: 20

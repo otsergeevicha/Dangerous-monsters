@@ -21,12 +21,14 @@ namespace Turrets
         private TurretData _turretData;
         private PoolMissiles _poolMissiles;
         private CartridgeGun _cartridgeGun;
+        private Transform _turretBody;
 
         public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles)
         {
             _cartridgeGun = cartridgeGun;
             _poolMissiles = poolMissiles;
             _turretData = turretData;
+            _turretBody = transform;
         }
 
         private void Start()
@@ -40,10 +42,10 @@ namespace Turrets
 
         public void OnActive()
         {
+            gameObject.SetActive(true);
             _trigger.OnActiveCollider();
             _trigger.SetRadiusTrigger(_turretData.RadiusDetection);
             _trigger.Invasion += OnAttack;
-            gameObject.SetActive(true);
         }
 
         public void InActive()
@@ -64,10 +66,11 @@ namespace Turrets
                     Vector3 fromTo = enemy.transform.position - transform.position;
                     Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
 
+                    _turretBody.LookAt(enemy.transform);
+                    
                     float axisX = fromToXZ.magnitude;
                     float axisY = fromTo.y;
 
-            
                     float angleInRadians = _turretData.AngleInDegrees * MathF.PI / 180;
                     float rootOfSpeed = (_ourGravity * axisX * axisX) / (2 * (axisY - Mathf.Tan(angleInRadians) * axisX) *
                                                                            Mathf.Pow(Mathf.Cos(angleInRadians), 2));
