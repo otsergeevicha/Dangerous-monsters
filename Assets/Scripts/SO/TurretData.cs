@@ -12,5 +12,8 @@ namespace SO
         [Header("Angle throw missile")]
         [Range(15f, 75f)]
         public float AngleInDegrees = 45f;
+
+        [Range(45f, 95f)] 
+        public float RotateSpeed = 55f;
     }
 }

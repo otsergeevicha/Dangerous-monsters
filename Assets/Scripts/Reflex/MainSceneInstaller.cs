@@ -23,6 +23,7 @@ namespace Reflex
         [SerializeField] private Transform[] _squareEnemySpawner = new Transform[4];
         [SerializeField] private TurretPlate[] _turretPlates;
         [SerializeField] private StoreAssistantPlate _storeAssistantPlate;
+        [SerializeField] private StoreTurretPlate[] _storeTurretPlates;
         
         [Header("Required configurations")]
         [SerializeField] private HeroData _heroData;
@@ -51,7 +52,7 @@ namespace Reflex
             hero.Construct(input, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
-            windowRoot.Construct(input, _storeAssistantPlate, _poolData, pool);
+            windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);
         }
     }
 }

@@ -39,18 +39,9 @@ namespace Assistant
         private void OnValidate() => 
             _ammoTriggers = Get<AmmoTriggers>();
 
-        private void Start()
+        public void OnActive(Transform spawnPoint)
         {
-            print("все здесь временно для тестов, должно все быть в методе OnActive. Сейчас для тестов в старте");
-            _ammoTriggers.StorageEntered += OnStorageEntered;
-            _ammoTriggers.StorageExited += OnStorageExited;
-            
-            _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
-            _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
-        }
-
-        public void OnActive()
-        {
+            SetPosition(spawnPoint);
             gameObject.SetActive(true);
             
             _ammoTriggers.StorageEntered += OnStorageEntered;
@@ -59,6 +50,9 @@ namespace Assistant
              _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
              _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
         }
+
+        private void SetPosition(Transform spawnPoint) => 
+            transform.position = spawnPoint.position;
 
         private void OnStorageEntered() => 
             Basket.Replenishment().Forget();
