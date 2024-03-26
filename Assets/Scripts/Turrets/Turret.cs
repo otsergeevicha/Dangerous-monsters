@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using Ammo;
 using Enemies;
@@ -37,6 +36,7 @@ namespace Turrets
         {
             gameObject.SetActive(true);
 
+            ResetCoroutine();
             transform.position = spawnPoint.position;
             
             _trigger.OnActiveCollider();
@@ -53,7 +53,7 @@ namespace Turrets
 
         public void Upgrade()
         {
-            
+            print("тут логика апгрейда турели");
         }
 
         private void OnAttack()
@@ -64,13 +64,18 @@ namespace Turrets
             {
                 if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
                 {
-                    if (_coroutine != null) 
-                        StopCoroutine(_coroutine);
+                    ResetCoroutine();
 
                     _coroutine = StartCoroutine(RotateTurretAndAttack(enemy));
                     break;
                 }
             }
+        }
+
+        private void ResetCoroutine()
+        {
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
         }
 
         private IEnumerator RotateTurretAndAttack(Enemy enemy)
@@ -93,50 +98,16 @@ namespace Turrets
                                                                  Mathf.Pow(Mathf.Cos(angleInRadians), 2));
             float speed = Mathf.Sqrt(Mathf.Abs(rootOfSpeed));
 
-            Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet => bullet.isActiveAndEnabled == false);
+            Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet => 
+                bullet.isActiveAndEnabled == false);
 
             if (missile != null && _cartridgeGun.CheckMagazine)
             {
                 missile.SetStartPosition(_spawnPointGrenade.position);
+                missile.OnActive();
                 missile.Throw(_spawnPointGrenade.forward * speed);
                 _cartridgeGun.Spend();
             }
         }
-
-        // private void OnAttack()
-        // {
-        //     _overlappedColliders = Physics.OverlapSphere(transform.position, _turretData.RadiusDetection);
-        //
-        //     for (int i = 0; i < _overlappedColliders.Length; i++)
-        //     {
-        //         if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
-        //         {
-        //             Vector3 fromTo = enemy.transform.position - transform.position;
-        //             Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
-        //
-        //             _turretBody.LookAt(enemy.transform);
-        //             
-        //             float axisX = fromToXZ.magnitude;
-        //             float axisY = fromTo.y;
-        //
-        //             float angleInRadians = _turretData.AngleInDegrees * MathF.PI / 180;
-        //             float rootOfSpeed = (_ourGravity * axisX * axisX) / (2 * (axisY - Mathf.Tan(angleInRadians) * axisX) *
-        //                                                                    Mathf.Pow(Mathf.Cos(angleInRadians), 2));
-        //             float speed = Mathf.Sqrt(Mathf.Abs(rootOfSpeed));
-        //
-        //             Missile missile =
-        //                 _poolMissiles.Missiles.FirstOrDefault(bullet => bullet.isActiveAndEnabled == false);
-        //
-        //             if (missile != null && _cartridgeGun.CheckMagazine)
-        //             {
-        //                 missile.SetStartPosition(_spawnPointGrenade.position);
-        //                 missile.Throw(_spawnPointGrenade.forward * speed);
-        //                 _cartridgeGun.Spend();
-        //             }
-        //             
-        //             break;
-        //         }
-        //     }
-        // }
     }
 }

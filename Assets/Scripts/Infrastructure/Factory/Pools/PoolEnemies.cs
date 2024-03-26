@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Enemies;
 using Enemies.AI;
-using Reflex;
+using Loots;
 using Services.Factory;
 using SO;
 
@@ -9,8 +9,6 @@ namespace Infrastructure.Factory.Pools
 {
     public class PoolEnemies
     {
-        public List<Enemy> Enemies { get; private set; } = new();
-        
         private readonly Dictionary<int, string[]> _levelEnemies = new Dictionary<int, string[]>
         {
             { 1, new[] { Constants.ZeroPath, Constants.OnePath, Constants.TwoPath } },
@@ -24,13 +22,18 @@ namespace Infrastructure.Factory.Pools
             { 9, new[] { Constants.SixPath, Constants.SevenPath, Constants.EightPath, Constants.NinePath } },
             { 10, new[] { Constants.SevenPath, Constants.EightPath, Constants.NinePath } }
         };
-
+        
         private DirectionOperator _directionOperator;
+        private HealthOperator _healthOperator;
+        private LootSpawner _lootSpawner;
 
         public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData,
-            DirectionOperator directionOperator)
+            DirectionOperator directionOperator, HealthOperator healthOperator, LootSpawner lootSpawner)
         {
+            _lootSpawner = lootSpawner;
+            _healthOperator = healthOperator;
             _directionOperator = directionOperator;
+            
             int[] levelCounts =
             {
                 poolData.OneLevelCountEnemy, poolData.TwoLevelCountEnemy, poolData.ThreeLevelCountEnemy,
@@ -48,13 +51,15 @@ namespace Infrastructure.Factory.Pools
             }
         }
 
+        public List<Enemy> Enemies { get; private set; } = new();
+
         private void CreateEnemies(int requiredCount, IGameFactory factory, Enemy[] enemies, string currentPath,
             EnemyData enemyData)
         {
             for (int i = 0; i < requiredCount; i++)
             {
                 Enemy enemy = factory.CreateEnemy(currentPath);
-                enemy.Construct(enemyData, _directionOperator);
+                enemy.Construct(enemyData, _directionOperator, _healthOperator, _lootSpawner);
                 enemy.InActive();
                 enemies[i] = enemy;
             }

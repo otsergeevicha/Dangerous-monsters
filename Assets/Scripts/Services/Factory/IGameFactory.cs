@@ -4,6 +4,7 @@ using CameraModule;
 using Canvases;
 using Enemies;
 using Infrastructure.Factory.Pools;
+using Loots;
 using Player;
 using Spawners;
 using Turrets;
@@ -22,5 +23,6 @@ namespace Services.Factory
         Turret CreateTurret();
         Missile CreateMissile();
         WindowRoot CreateWindowRoot();
+        Money CreateMoney();
     }
 }

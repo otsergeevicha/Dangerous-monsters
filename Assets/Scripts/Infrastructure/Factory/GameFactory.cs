@@ -4,6 +4,7 @@ using CameraModule;
 using Canvases;
 using Enemies;
 using Infrastructure.Factory.Pools;
+using Loots;
 using Player;
 using Services.Assets;
 using Services.Factory;
@@ -58,5 +59,9 @@ namespace Infrastructure.Factory
         public WindowRoot CreateWindowRoot() =>
             _assetsProvider.InstantiateEntity(Constants.WindowRootPath)
                 .GetComponent<WindowRoot>();
+
+        public Money CreateMoney() =>
+            _assetsProvider.InstantiateEntity(Constants.MoneyPath)
+                .GetComponent<Money>();
     }
 }

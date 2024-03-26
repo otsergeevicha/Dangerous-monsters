@@ -13,6 +13,7 @@
     public const string PoolPath = "Pools/Pool";
     public const string EnemySpawnerPath = "Spawners/EnemySpawner";
     public const string TurretPath = "Turrets/Turret";
+    public const string MoneyPath = "Loots/Money";
     
     //path enemies
     public const string ZeroPath = "Enemies/ZeroEnemy";

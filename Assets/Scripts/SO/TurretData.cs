@@ -13,7 +13,7 @@ namespace SO
         [Range(15f, 75f)]
         public float AngleInDegrees = 45f;
 
-        [Range(45f, 95f)] 
-        public float RotateSpeed = 55f;
+        [Range(145f, 195f)] 
+        public float RotateSpeed = 195f;
     }
 }
