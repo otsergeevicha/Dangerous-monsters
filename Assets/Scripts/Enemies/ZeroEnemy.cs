@@ -55,10 +55,8 @@ namespace Enemies
 
             if (_currentHealth <= 0)
             {
-                print("ghbikb");
-                Time.timeScale = 0;
-                InActive();
                 SpawnLoot();
+                InActive();
                 Died?.Invoke();
             }
         }

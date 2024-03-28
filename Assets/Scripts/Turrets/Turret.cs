@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Ammo;
+using Cysharp.Threading.Tasks;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
@@ -14,9 +15,9 @@ namespace Turrets
     {
         [SerializeField] private TurretTrigger _trigger;
         [SerializeField] private Transform _spawnPointGrenade;
-        
+
         private readonly float _ourGravity = Physics.gravity.y;
-        
+
         private Collider[] _overlappedColliders = new Collider[5];
         private TurretData _turretData;
         private PoolMissiles _poolMissiles;
@@ -38,7 +39,7 @@ namespace Turrets
 
             ResetCoroutine();
             transform.position = spawnPoint.position;
-            
+
             _trigger.OnActiveCollider();
             _trigger.SetRadiusTrigger(_turretData.RadiusDetection);
             _trigger.Invasion += OnAttack;
@@ -83,13 +84,14 @@ namespace Turrets
             Vector3 fromTo = enemy.transform.position - transform.position;
             fromTo.y = .0f;
             Quaternion lookRotation = Quaternion.LookRotation(fromTo);
-    
+
             while (_turretBody.rotation != lookRotation)
             {
-                _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, lookRotation, _turretData.RotateSpeed * Time.deltaTime);
+                _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, lookRotation,
+                    _turretData.RotateSpeed * Time.deltaTime);
                 yield return null;
             }
-    
+
             float axisX = fromTo.x;
             float axisY = fromTo.y;
 
@@ -98,7 +100,7 @@ namespace Turrets
                                                                  Mathf.Pow(Mathf.Cos(angleInRadians), 2));
             float speed = Mathf.Sqrt(Mathf.Abs(rootOfSpeed));
 
-            Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet => 
+            Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
                 bullet.isActiveAndEnabled == false);
 
             if (missile != null && _cartridgeGun.CheckMagazine)

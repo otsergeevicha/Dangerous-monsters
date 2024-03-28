@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54b9cba4e7419490d46aab28e1f588, type: 3}
   m_Name: AmmoData
   m_EditorClassIdentifier: 
+  RadiusExplosion: 5
+  MissileDamage: 25

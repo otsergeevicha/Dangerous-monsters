@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7200262325095376193}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Wrist_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 265896990902496791}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Head_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4051049807020894041}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Scapula_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 812413522273421411}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:MiddleFinger1_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2108844990316885275}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4807322487086472947}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Chest_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6479628119485452287}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:MiddleFinger4_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7931910252035399747}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:MiddleFinger4_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8165154747161742781}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:MiddleFinger1_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7058582377328944689}
   - component: {fileID: 7862408373897450830}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Nosedman_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3326856006697042902}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Knee_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4698016005183801352}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Wrist_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8114005412596322891}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Shoulder_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5764133853252646477}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Elbow_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +530,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6606504557774514571}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Hip_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1219770678366889850}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Toes_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,7 +594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 475699057114070307}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Neck_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7250653019640564650}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Spine1_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7375171649664582115}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Hip_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2119286329144572169}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:ToesEnd_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,7 +722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4290569048490561157}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Ankle_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4167904870311847372}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: 01_Nosedman_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -787,7 +787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2285263205704137026}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Shoulder_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -819,7 +819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1226908171904036656}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Ankle_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7323543238466904968}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Knee_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -883,7 +883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3090063667450026935}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Toes_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7081054265590454709}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Elbow_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,7 +947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7977702363800736147}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:ToesEnd_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -978,7 +978,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7565945959193761834}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Root_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 1680449323059798277}
   - component: {fileID: 2586181571190914082}
   - component: {fileID: 2622163675002286173}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FourEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1187,7 +1187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2710793565389467803}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:Scapula_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1219,7 +1219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3200034745739258665}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: NosedMan_Small:NosedMan_Small:HeadEnd_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}

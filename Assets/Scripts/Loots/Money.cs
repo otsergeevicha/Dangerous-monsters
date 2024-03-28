@@ -9,6 +9,9 @@ namespace Loots
 
         public void OnActive(int enemyId, Vector3 newPosition)
         {
+            if (newPosition.y < 0) 
+                newPosition.y = 0;
+
             transform.position = newPosition;
             SetNominal(enemyId);
             gameObject.SetActive(true);

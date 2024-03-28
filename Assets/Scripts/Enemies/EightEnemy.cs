@@ -55,15 +55,10 @@ namespace Enemies
 
             if (_currentHealth <= 0)
             {
-                OnDied();
                 SpawnLoot();
+                InActive();
+                Died?.Invoke();
             }
-        }
-
-        private void OnDied()
-        {
-            InActive();
-            Died?.Invoke();
         }
 
         private void SpawnLoot() => 
