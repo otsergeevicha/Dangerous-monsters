@@ -1,7 +1,7 @@
 ﻿using Plugins.MonoCache;
 using UnityEngine;
 
-namespace Loots
+namespace Bank
 {
     public class Money : MonoCache
     {

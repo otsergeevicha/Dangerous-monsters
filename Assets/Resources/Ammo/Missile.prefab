@@ -4894,7 +4894,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 3260857946622458862}
-  _particleSystem: {fileID: 808780877395915254}
 --- !u!54 &3260857946622458862
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4937,7 +4936,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

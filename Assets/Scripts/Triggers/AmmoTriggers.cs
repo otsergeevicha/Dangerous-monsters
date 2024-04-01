@@ -4,7 +4,7 @@ using Plugins.MonoCache;
 using Turrets.Children;
 using UnityEngine;
 
-namespace Ammo
+namespace Triggers
 {
     public class AmmoTriggers : MonoCache
     {

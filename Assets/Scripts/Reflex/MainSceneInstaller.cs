@@ -5,6 +5,7 @@ using Infrastructure.Factory.Pools;
 using Player;
 using Plugins.MonoCache;
 using Reflex.Core;
+using Services.Bank;
 using Services.Factory;
 using Services.Inputs;
 using SO;
@@ -41,6 +42,7 @@ namespace Reflex
         {
             IInputService input = container.Single<IInputService>();
             IGameFactory gameFactory = container.Single<IGameFactory>();
+            IWallet wallet = container.Single<IWallet>();
 
             Pool pool = gameFactory.CreatePool();
             CameraFollow cameraFollow = gameFactory.CreateCamera();
@@ -49,7 +51,7 @@ namespace Reflex
             EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
 
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData);
-            hero.Construct(input, _heroData, pool.PoolAmmoBox);
+            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
             windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);

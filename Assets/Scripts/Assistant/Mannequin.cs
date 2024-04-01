@@ -1,6 +1,6 @@
 ﻿using Plugins.MonoCache;
 
-namespace Canvases
+namespace Assistant
 {
     public class Mannequin : MonoCache {}
 }
