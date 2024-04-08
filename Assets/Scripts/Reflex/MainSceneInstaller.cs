@@ -1,4 +1,5 @@
-﻿using CameraModule;
+﻿using Agava.YandexGames;
+using CameraModule;
 using Canvases;
 using ContactPlatforms;
 using Infrastructure.Factory.Pools;
@@ -55,6 +56,8 @@ namespace Reflex
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
             windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);
+            
+            YandexGamesSdk.GameReady();
         }
     }
 }
