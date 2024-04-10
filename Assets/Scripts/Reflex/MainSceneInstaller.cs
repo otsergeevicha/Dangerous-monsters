@@ -56,8 +56,10 @@ namespace Reflex
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
             windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);
-            
+
+#if !UNITY_EDITOR
             YandexGamesSdk.GameReady();
+#endif
         }
     }
 }
