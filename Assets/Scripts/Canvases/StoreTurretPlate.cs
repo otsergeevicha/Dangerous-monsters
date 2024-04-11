@@ -3,7 +3,6 @@ using System.Linq;
 using Infrastructure.Factory.Pools;
 using Player;
 using Plugins.MonoCache;
-using TMPro;
 using Turrets;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,15 +15,15 @@ namespace Canvases
         [SerializeField] private Transform _spawnPoint;
         
         [Header("First")]
-        [SerializeField] private Image _icon;
-        [SerializeField] private TMP_Text _description;
+        [SerializeField] private Image _iconAdd;
+        [SerializeField] private Image _iconTurret;
         
         [Header("Second")]
-        [SerializeField] private Image _newIcon;
-        [SerializeField] private TMP_Text _newDescription;
+        [SerializeField] private GameObject _iconUpgrade;
 
+        private readonly float _waitTime = 2f;
+        
         private bool _isWaiting;
-        private float _waitTime = 2f;
         private float _currentFillAmount = 1f;
         private PoolTurrets _poolTurrets;
         private bool _purchased;
@@ -88,11 +87,8 @@ namespace Canvases
                     _purchased = true;
                 }
                 
-                _icon.gameObject.SetActive(false);
-                _newIcon.gameObject.SetActive(true);
-                    
-                _description.gameObject.SetActive(false);
-                _newDescription.gameObject.SetActive(true);
+                _iconAdd.gameObject.SetActive(false);
+                _iconUpgrade.gameObject.SetActive(true);
             }
         }
 
