@@ -32,8 +32,11 @@ namespace Bank
             WritingSave();
         }
 
-        public bool Check(int price) => 
-            _currentMoney >= price;
+        public bool Check(int price)
+        {
+            return true;
+            //return _currentMoney >= price;
+        }
 
         private void WritingSave()
         {
