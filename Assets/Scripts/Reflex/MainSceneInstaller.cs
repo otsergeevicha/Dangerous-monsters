@@ -26,6 +26,7 @@ namespace Reflex
         [SerializeField] private TurretPlate[] _turretPlates;
         [SerializeField] private StoreAssistantPlate _storeAssistantPlate;
         [SerializeField] private StoreTurretPlate[] _storeTurretPlates;
+        [SerializeField] private SectionPlate[] _sectionPlates;
         
         [Header("Required configurations")]
         [SerializeField] private HeroData _heroData;
@@ -35,6 +36,7 @@ namespace Reflex
         [SerializeField] private EnemySpawnerData _enemySpawnerData;
         [SerializeField] private BulletData _bulletData;
         [SerializeField] private TurretData _turretData;
+        [SerializeField] private PriceListData _priceList;
         
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
@@ -55,6 +57,10 @@ namespace Reflex
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
+
+            foreach (SectionPlate sectionPlate in _sectionPlates) 
+                sectionPlate.Construct(wallet, _priceList, _poolData);
+
             windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);
 
 #if !UNITY_EDITOR

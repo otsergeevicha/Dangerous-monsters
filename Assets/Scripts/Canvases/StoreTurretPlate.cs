@@ -16,7 +16,6 @@ namespace Canvases
         
         [Header("First")]
         [SerializeField] private Image _iconAdd;
-        [SerializeField] private Image _iconTurret;
         
         [Header("Second")]
         [SerializeField] private GameObject _iconUpgrade;

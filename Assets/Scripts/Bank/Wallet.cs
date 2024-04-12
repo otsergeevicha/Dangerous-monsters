@@ -8,38 +8,40 @@ namespace Bank
     public class Wallet : IWallet
     {
         private readonly ISave _save;
+        private int _currentMoney;
 
         public Wallet(ISave save)
         {
             _save = save;
-            CurrentMoney = save.AccessProgress().DataWallet.RemainingMoney;
+            _currentMoney = save.AccessProgress().DataWallet.RemainingMoney;
         }
 
-        public event Action<int> MoneyChanged; 
-
-        public int CurrentMoney { get; private set; }
+        public event Action<int> MoneyChanged;
 
         public void ApplyMoney(int money)
         {
-            CurrentMoney += money;
+            _currentMoney += money;
             Notify();
             WritingSave();
         }
 
         public void SpendMoney(int money)
         {
-            CurrentMoney -= Mathf.Clamp(money, 0, int.MaxValue);
+            _currentMoney -= Mathf.Clamp(money, 0, int.MaxValue);
             Notify();
             WritingSave();
         }
-        
+
+        public bool Check(int price) => 
+            _currentMoney >= price;
+
         private void WritingSave()
         {
-            _save.AccessProgress().DataWallet.Record(CurrentMoney);
+            _save.AccessProgress().DataWallet.Record(_currentMoney);
             _save.Save();
         }
 
         private void Notify() => 
-            MoneyChanged?.Invoke(CurrentMoney);
+            MoneyChanged?.Invoke(_currentMoney);
     }
 }
