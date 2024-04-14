@@ -14,7 +14,7 @@ namespace Enemies.Animation
             _enemyData = enemyData;
 
         private void OnValidate() => 
-            _animator = ChildrenGet<Animator>();
+            _animator ??= ChildrenGet<Animator>();
 
         public void EnableRun()
         {

@@ -3,7 +3,7 @@ using Enemies;
 using Plugins.MonoCache;
 using UnityEngine;
 
-namespace Turrets
+namespace Triggers
 {
     [RequireComponent(typeof(SphereCollider))]
     public class TurretTrigger : MonoCache
@@ -13,7 +13,7 @@ namespace Turrets
         public event Action Invasion;
 
         private void OnValidate() => 
-            _collider = Get<SphereCollider>();
+            _collider ??= Get<SphereCollider>();
 
         private void OnTriggerEnter(Collider collision)
         {

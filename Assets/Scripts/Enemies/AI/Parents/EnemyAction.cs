@@ -12,9 +12,9 @@ namespace Enemies.AI.Parents
         
         public override void OnAwake()
         {
-            Enemy = GetComponent<Enemy>();
-            Agent = GetComponent<NavMeshAgent>();
-            EnemyAnimation = GetComponent<EnemyAnimation>();
+            Enemy ??= GetComponent<Enemy>();
+            Agent ??= GetComponent<NavMeshAgent>();
+            EnemyAnimation ??= GetComponent<EnemyAnimation>();
         }
     }
 }

@@ -10,6 +10,7 @@
     public const string CameraPath = "Camera/MainCamera";
     public const string AmmoBoxPath = "Ammo/AmmoBox";
     public const string MissilePath = "Ammo/Missile";
+    public const string BulletPath = "Ammo/Bullet";
     public const string PoolPath = "Pools/Pool";
     public const string EnemySpawnerPath = "Spawners/EnemySpawner";
     public const string TurretPath = "Turrets/Turret";

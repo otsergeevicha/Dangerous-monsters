@@ -15,7 +15,7 @@ namespace Assistant
             _assistantData = assistantData;
 
         private void OnValidate() => 
-            _animator = Get<Animator>();
+            _animator ??= Get<Animator>();
         
         public void EnableRun()
         {

@@ -1,4 +1,5 @@
-﻿using ContactPlatforms;
+﻿using System;
+using ContactPlatforms;
 using Enemies.AI;
 using Loots;
 using Plugins.MonoCache;
@@ -21,6 +22,7 @@ namespace Infrastructure.Factory.Pools
         public PoolMissiles PoolMissiles { get; private set; }
         public PoolTurrets PoolTurrets { get; private set; }
         public PoolMoney PoolMoney { get; private set; }
+        public PoolBullet PoolBullet { get; private set; }
 
         public void Construct(IGameFactory factory, PoolData poolData,
             AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
@@ -28,16 +30,19 @@ namespace Infrastructure.Factory.Pools
         {
             _directionOperator = new DirectionOperator();
             _healthOperator = new HealthOperator();
-            
+
             PoolAmmoBox = new PoolAmmoBoxPlayer(factory, poolData.SizeAmmoBoxPlayer);
-            PoolCargoAssistant = new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
+            PoolCargoAssistant =
+                new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
             PoolMoney = new PoolMoney(factory, poolData.MaxCountMoney);
-            
+
             _lootSpawner = new LootSpawner(PoolMoney);
-            
-            PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _healthOperator, _lootSpawner);
-            PoolMissiles = new PoolMissiles(factory, poolData.MaxCountBullets, bulletData);
+
+            PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _healthOperator,
+                _lootSpawner);
+            PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
+            PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
         }
     }
 }

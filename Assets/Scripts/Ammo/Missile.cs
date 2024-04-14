@@ -18,7 +18,7 @@ namespace Ammo
             _bulletData = bulletData;
 
         private void OnValidate() => 
-            _rigidbody = Get<Rigidbody>();
+            _rigidbody ??= Get<Rigidbody>();
 
         private void OnTriggerEnter(Collider collision) => 
             Explosion();

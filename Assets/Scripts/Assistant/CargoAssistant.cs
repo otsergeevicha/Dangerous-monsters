@@ -38,7 +38,7 @@ namespace Assistant
         }
 
         private void OnValidate() => 
-            _ammoTriggers = Get<AmmoTriggers>();
+            _ammoTriggers ??= Get<AmmoTriggers>();
 
         public void OnActive(Transform spawnPoint)
         {

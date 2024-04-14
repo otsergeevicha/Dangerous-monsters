@@ -1,5 +1,7 @@
+using System;
 using CameraModule;
 using Infrastructure.Factory.Pools;
+using Player.ShootingModule;
 using Plugins.MonoCache;
 using Services.Bank;
 using Services.Inputs;
@@ -15,19 +17,29 @@ namespace Player
     [RequireComponent(typeof(LootTriggers))]
     public class Hero : MonoCache
     {
-        [SerializeField] private HeroMovement _heroMovement;
-        [SerializeField] private RootCamera _rootCamera;
-        [SerializeField] private BasketPlayer _basketPlayer;
-        [SerializeField] private AmmoTriggers _ammoTriggers;
-        [SerializeField] private LootTriggers _lootTriggers;
-        private IWallet _wallet;
+        [HideInInspector] [SerializeField] private HeroMovement _heroMovement;
+        [HideInInspector] [SerializeField] private RootCamera _rootCamera;
+        [HideInInspector] [SerializeField] private BasketPlayer _basketPlayer;
+        [HideInInspector] [SerializeField] private AmmoTriggers _ammoTriggers;
+        [HideInInspector] [SerializeField] private LootTriggers _lootTriggers;
+        [HideInInspector] [SerializeField] private WeaponHolder _weaponHolder;
 
-        public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool)
+        private IWallet _wallet;
+        private IMagazine _magazine;
+        
+        private HeroData _heroData;
+
+        public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
+            PoolBullet poolBullet, int maxCountBullets)
         {
+            _heroData = heroData;
             _wallet = wallet;
-            
+
             _heroMovement.Construct(input, heroData.Speed, heroData.IdleHash, heroData.RunHash);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
+
+            _magazine = new MagazineBullets(maxCountBullets / 2);
+            _weaponHolder.Construct(poolBullet, _magazine);
         }
 
         protected override void OnEnabled()
@@ -48,18 +60,26 @@ namespace Player
 
             _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
             _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
-            
+
             _lootTriggers.OnPickUpMoney -= ApplyMoney;
         }
 
         private void OnValidate()
         {
-            _heroMovement = Get<HeroMovement>();
-            _ammoTriggers = Get<AmmoTriggers>();
-            _lootTriggers = Get<LootTriggers>();
+            _heroMovement ??= Get<HeroMovement>();
+            _ammoTriggers ??= Get<AmmoTriggers>();
+            _lootTriggers ??= Get<LootTriggers>();
+            _weaponHolder ??= ChildrenGet<WeaponHolder>();
         }
 
-        private void ApplyMoney(int money) => 
+        public void SetActualRunHash(bool heroOnBase)
+        {
+            _heroMovement.SetRunHash(heroOnBase
+                ? _heroData.RunHash
+                : _heroData.RunGunHash);
+        }
+        
+        private void ApplyMoney(int money) =>
             _wallet.ApplyMoney(money);
 
         private void OnStorageEntered() =>
@@ -77,7 +97,7 @@ namespace Player
             cartridgeGun.ApplyBox(_basketPlayer);
         }
 
-        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) => 
+        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
             cartridgeGun.SetPresenceCourier(true);
 
         public Transform GetCameraRoot() =>

@@ -54,7 +54,7 @@ namespace Reflex
             EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
 
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData);
-            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox);
+            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
 

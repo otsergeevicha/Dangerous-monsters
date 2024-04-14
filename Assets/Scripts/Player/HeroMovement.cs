@@ -31,8 +31,8 @@ namespace Player
 
         private void OnValidate()
         {
-            _controller = Get<CharacterController>();
-            _animator = Get<Animator>();
+            _controller ??= Get<CharacterController>();
+            _animator ??= Get<Animator>();
         }
 
         protected override void UpdateCached() => 
@@ -40,6 +40,9 @@ namespace Player
 
         protected override void OnDisabled() => 
             _input.OffControls();
+
+        public void SetRunHash(int actualRunHash) => 
+            _runHash = actualRunHash;
 
         private void BaseLogic()
         {

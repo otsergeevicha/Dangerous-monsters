@@ -7,6 +7,7 @@ using Enemies;
 using Infrastructure.Factory.Pools;
 using Loots;
 using Player;
+using Player.ShootingModule;
 using Spawners;
 using Turrets;
 
@@ -25,5 +26,6 @@ namespace Services.Factory
         Missile CreateMissile();
         WindowRoot CreateWindowRoot();
         Money CreateMoney();
+        Bullet CreateBullet();
     }
 }

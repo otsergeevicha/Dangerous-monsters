@@ -1,5 +1,4 @@
-﻿using BehaviorDesigner.Runtime.Tasks;
-using Enemies.AI.Parents;
+﻿using Enemies.AI.Parents;
 
 namespace Enemies.AI
 {
@@ -10,11 +9,5 @@ namespace Enemies.AI
              if (Enemy.IsReached) 
                  Agent.SetDestination(Enemy.GetDirection());
          }
-         //
-        // public override TaskStatus OnUpdate()
-        // { 
-        //     Agent.SetDestination(Enemy.GetDirection());
-        //     return TaskStatus.Running;
-        // }
     }
 }

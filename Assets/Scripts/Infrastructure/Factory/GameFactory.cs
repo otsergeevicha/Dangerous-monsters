@@ -7,6 +7,7 @@ using Enemies;
 using Infrastructure.Factory.Pools;
 using Loots;
 using Player;
+using Player.ShootingModule;
 using Services.Assets;
 using Services.Factory;
 using Spawners;
@@ -64,5 +65,9 @@ namespace Infrastructure.Factory
         public Money CreateMoney() =>
             _assetsProvider.InstantiateEntity(Constants.MoneyPath)
                 .GetComponent<Money>();
+
+        public Bullet CreateBullet() =>
+            _assetsProvider.InstantiateEntity(Constants.BulletPath)
+                .GetComponent<Bullet>();
     }
 }

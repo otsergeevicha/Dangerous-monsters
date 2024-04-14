@@ -1,6 +1,5 @@
 ﻿using System;
 using Bank;
-using Loots;
 using Plugins.MonoCache;
 using UnityEngine;
 
