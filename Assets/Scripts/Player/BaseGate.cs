@@ -12,7 +12,7 @@ namespace Player
             if (collision.gameObject.TryGetComponent(out Hero hero))
             {
                 _heroOnBase = !_heroOnBase;
-                hero.SetActualRunHash(_heroOnBase);
+                hero.AnimationController.SetActualRunHash(_heroOnBase);
             }
         }
     }

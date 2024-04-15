@@ -1,4 +1,5 @@
 ﻿using System;
+using Player.Animation;
 using Plugins.MonoCache;
 using Services.Inputs;
 using UnityEngine;
@@ -12,18 +13,18 @@ namespace Player
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterController _controller;
-        
+
         private readonly float _rotationSpeed = 5.5f;
-        
+
         private IInputService _input;
         private int _speed;
-        private int _idleHash;
-        private int _runHash;
+        private HeroAnimation _heroAnimation;
+        private bool _isBattle;
+        private Transform _currentTarget;
 
-        public void Construct(IInputService input, int speed, int idleHash, int runHash)
+        public void Construct(IInputService input, int speed, HeroAnimation heroAnimation)
         {
-            _runHash = runHash;
-            _idleHash = idleHash;
+            _heroAnimation = heroAnimation;
             _speed = speed;
             _input = input;
             _input.OnControls();
@@ -35,14 +36,17 @@ namespace Player
             _animator ??= Get<Animator>();
         }
 
-        protected override void UpdateCached() => 
+        protected override void UpdateCached() =>
             BaseLogic();
 
-        protected override void OnDisabled() => 
+        protected override void OnDisabled() =>
             _input.OffControls();
 
-        public void SetRunHash(int actualRunHash) => 
-            _runHash = actualRunHash;
+        public void SetStateBattle(bool status, Transform target)
+        {
+            _currentTarget = target;
+            _isBattle = status;
+        }
 
         private void BaseLogic()
         {
@@ -50,20 +54,22 @@ namespace Player
 
             if (_input.MoveAxis.sqrMagnitude > Single.Epsilon)
             {
-                _animator.SetBool(_runHash, true);
-
+                _heroAnimation.EnableRun();
+                
                 movementDirection = new Vector3(_input.MoveAxis.x, Single.Epsilon, _input.MoveAxis.y);
 
                 if (movementDirection != Vector3.zero)
                 {
-                    Vector3 targetDirection = movementDirection.normalized;
+                    Vector3 targetDirection = _isBattle
+                        ? (_currentTarget.position - transform.position).normalized
+                        : movementDirection.normalized;
+                    
                     Rotate(targetDirection);
                 }
             }
             else
             {
-                _animator.SetBool(_runHash, false);
-                _animator.SetBool(_idleHash, true);
+                _heroAnimation.EnableIdle();
             }
 
             movementDirection += Physics.gravity;

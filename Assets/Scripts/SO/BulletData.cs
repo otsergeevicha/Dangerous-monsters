@@ -15,6 +15,6 @@ namespace SO
         public int BulletDamage = 1;
 
         [Range(1, 200)] 
-        public int BulletSpeed = 15;
+        public int BulletSpeed = 5;
     }
 }
