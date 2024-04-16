@@ -9,6 +9,7 @@ using Reflex.Core;
 using Services.Bank;
 using Services.Factory;
 using Services.Inputs;
+using Services.SDK;
 using SO;
 using Spawners;
 using Turrets;
@@ -43,6 +44,7 @@ namespace Reflex
 
         private void LoadLevel(Container container)
         {
+            ISDKService sdk = container.Single<ISDKService>();
             IInputService input = container.Single<IInputService>();
             IGameFactory gameFactory = container.Single<IGameFactory>();
             IWallet wallet = container.Single<IWallet>();

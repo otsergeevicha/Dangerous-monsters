@@ -1,6 +1,7 @@
 using Bank;
 using Infrastructure.Assets;
 using Infrastructure.Factory;
+using Infrastructure.SDK;
 using Inputs;
 using Plugins.MonoCache;
 using Reflex.Core;
@@ -9,6 +10,8 @@ using Services.Bank;
 using Services.Factory;
 using Services.Inputs;
 using Services.SaveLoad;
+using Services.SDK;
+using UnityEngine;
 
 namespace Reflex
 {
@@ -16,15 +19,22 @@ namespace Reflex
     {
         public void InstallBindings(ContainerBuilder descriptor)
         {
-            InputService inputService = new InputService();
-            GameFactory gameFactory = new GameFactory(new AssetsProvider());
-            SaveLoad saveLoad = new SaveLoad();
-            Wallet wallet = new Wallet(saveLoad);
+            SDKService sdkService = new SDKService();
+            
+            sdkService.OnActive(() =>
+            {
+                InputService inputService = new InputService();
+                GameFactory gameFactory = new GameFactory(new AssetsProvider());
+                SaveLoad saveLoad = new SaveLoad();
+                Wallet wallet = new Wallet(saveLoad);
 
-            descriptor.AddSingleton(inputService, typeof(IInputService));
-            descriptor.AddSingleton(gameFactory, typeof(IGameFactory));
-            descriptor.AddSingleton(saveLoad, typeof(ISave));
-            descriptor.AddSingleton(wallet, typeof(IWallet));
+                descriptor.AddSingleton(sdkService, typeof(ISDKService));
+                descriptor.AddSingleton(inputService, typeof(IInputService));
+                descriptor.AddSingleton(gameFactory, typeof(IGameFactory));
+                descriptor.AddSingleton(saveLoad, typeof(ISave));
+                descriptor.AddSingleton(wallet, typeof(IWallet));
+            },
+                (Debug.Log)).Forget();
         }
     }
 }
