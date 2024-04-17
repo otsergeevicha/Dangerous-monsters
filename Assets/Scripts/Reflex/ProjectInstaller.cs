@@ -33,8 +33,7 @@ namespace Reflex
                 descriptor.AddSingleton(gameFactory, typeof(IGameFactory));
                 descriptor.AddSingleton(saveLoad, typeof(ISave));
                 descriptor.AddSingleton(wallet, typeof(IWallet));
-            },
-                (Debug.Log)).Forget();
+            }, Debug.Log).Forget();
         }
     }
 }

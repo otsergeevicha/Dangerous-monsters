@@ -10,7 +10,6 @@ namespace CameraModule
         [SerializeField] private CinemachineVirtualCamera _zoomFollow;
 
         private readonly bool _cursorLocked = true;
-        private bool _zoom;
 
         public void Construct(Transform cameraRoot)
         {
@@ -23,6 +22,18 @@ namespace CameraModule
             SetCursorState(_cursorLocked);
         }
 
+        public void OnZoom()
+        {
+            _cameraFollow.gameObject.SetActive(false);
+            _zoomFollow.gameObject.SetActive(true);
+        }
+        
+        public void OffZoom()
+        {
+            _zoomFollow.gameObject.SetActive(false);
+            _cameraFollow.gameObject.SetActive(true);
+        }
+        
         private void SetCursorState(bool newState) =>
             Cursor.lockState = newState
                 ? CursorLockMode.Locked

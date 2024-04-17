@@ -8,8 +8,6 @@ namespace Player.Animation
     {
         [HideInInspector] [SerializeField] private Animator _animator;
 
-        private readonly float _rotationSpeed = 5.5f;
-        
         private HeroData _heroData;
         private int _runHash;
 
@@ -36,6 +34,11 @@ namespace Player.Animation
         public void EnableIdle()
         {
             _animator.SetBool(_runHash, false);
+        }
+
+        public void EnableShoot()
+        {
+            print("нужно сблендить анимация хотьбы или idle со стрельбой");
         }
     }
 }

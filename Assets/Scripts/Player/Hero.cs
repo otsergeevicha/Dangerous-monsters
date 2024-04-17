@@ -14,6 +14,7 @@ namespace Player
 {
     [RequireComponent(typeof(HeroAnimation))]
     [RequireComponent(typeof(HeroMovement))]
+    [RequireComponent(typeof(HeroShooting))]
     [RequireComponent(typeof(AmmoTriggers))]
     [RequireComponent(typeof(LootTriggers))]
     public class Hero : MonoCache
@@ -25,6 +26,8 @@ namespace Player
         [HideInInspector] [SerializeField] private LootTriggers _lootTriggers;
         [HideInInspector] [SerializeField] private WeaponHolder _weaponHolder;
         [HideInInspector] [SerializeField] private HeroAnimation _heroAnimation;
+        [HideInInspector] [SerializeField] private HeroShooting _heroShooting;
+        [HideInInspector] [SerializeField] private ShootingTriggers _triggers;
 
         private IWallet _wallet;
         private IMagazine _magazine;
@@ -37,9 +40,10 @@ namespace Player
             _heroAnimation.Construct(heroData);
             _heroMovement.Construct(input, heroData.Speed, _heroAnimation);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
-
+            
             _magazine = new MagazineBullets(maxCountBullets / 2);
             _weaponHolder.Construct(poolBullet, _magazine);
+            _heroShooting.Construct(_triggers, _heroAnimation, _heroMovement, _weaponHolder);
         }
 
         public HeroAnimation AnimationController => 
@@ -70,9 +74,11 @@ namespace Player
         private void OnValidate()
         {
             _heroMovement ??= Get<HeroMovement>();
+            _heroShooting ??= Get<HeroShooting>();
             _ammoTriggers ??= Get<AmmoTriggers>();
             _lootTriggers ??= Get<LootTriggers>();
             _heroAnimation ??= Get<HeroAnimation>();
+            _triggers ??= ChildrenGet<ShootingTriggers>();
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
         }
 

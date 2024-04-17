@@ -1,6 +1,5 @@
-﻿using Enemies;
-using Player;
-using Player.ShootingModule;
+﻿using System;
+using Enemies;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -8,32 +7,22 @@ namespace Triggers
 {
     public class ShootingTriggers : MonoCache
     {
-        [HideInInspector] [SerializeField] private WeaponHolder _weaponHolder;
-        [SerializeField] private HeroMovement _heroMovement;
-
-        private Enemy _enemy;
-
-        private void OnValidate() => 
-            _weaponHolder ??= ChildrenGet<WeaponHolder>();
+        public event Action OnZone;
+        public Enemy CurrentEnemy { get; private set; }
 
         private void OnTriggerEnter(Collider collision)
         {
             if (collision.gameObject.TryGetComponent(out Enemy enemy))
             {
-                _enemy = enemy;
-                
-                _weaponHolder.GetActiveGun().Shoot(enemy);
-                _heroMovement.SetStateBattle(true, enemy.transform);
+                CurrentEnemy = enemy;
+                OnZone?.Invoke();
             }
         }
 
         private void OnTriggerExit(Collider collision)
         {
-            if (collision.gameObject.TryGetComponent(out Enemy enemy) == _enemy)
-            {
-                _weaponHolder.GetActiveGun().OffShoot();
-                _heroMovement.SetStateBattle(false, null);
-            }
+            if (collision.gameObject.TryGetComponent(out Enemy enemy) == CurrentEnemy) 
+                CurrentEnemy = null;
         }
     }
 }
