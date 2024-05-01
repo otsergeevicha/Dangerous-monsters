@@ -8,6 +8,7 @@ using Infrastructure.Factory.Pools;
 using Loots;
 using Player;
 using Player.ShootingModule;
+using RingZone;
 using Services.Assets;
 using Services.Factory;
 using Spawners;
@@ -69,5 +70,13 @@ namespace Infrastructure.Factory
         public Bullet CreateBullet() =>
             _assetsProvider.InstantiateEntity(Constants.BulletPath)
                 .GetComponent<Bullet>();
+
+        public HeroAimRing CreateHeroAimRing() =>
+            _assetsProvider.InstantiateEntity(Constants.HeroAimRingPath)
+                .GetComponent<HeroAimRing>();
+
+        public EnemyRing CreateEnemyRing() =>
+            _assetsProvider.InstantiateEntity(Constants.EnemyRingPath)
+                .GetComponent<EnemyRing>();
     }
 }

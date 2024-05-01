@@ -8,6 +8,7 @@ using Infrastructure.Factory.Pools;
 using Loots;
 using Player;
 using Player.ShootingModule;
+using RingZone;
 using Spawners;
 using Turrets;
 
@@ -27,5 +28,7 @@ namespace Services.Factory
         WindowRoot CreateWindowRoot();
         Money CreateMoney();
         Bullet CreateBullet();
+        HeroAimRing CreateHeroAimRing();
+        EnemyRing CreateEnemyRing();
     }
 }

@@ -15,6 +15,8 @@
     public const string EnemySpawnerPath = "Spawners/EnemySpawner";
     public const string TurretPath = "Turrets/Turret";
     public const string MoneyPath = "Loots/Money";
+    public const string HeroAimRingPath = "RingZone/HeroAimRing";
+    public const string EnemyRingPath = "RingZone/EnemyRing";
     
     //path enemies
     public const string ZeroPath = "Enemies/ZeroEnemy";

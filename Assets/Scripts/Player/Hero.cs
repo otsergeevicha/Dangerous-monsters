@@ -3,6 +3,7 @@ using Infrastructure.Factory.Pools;
 using Player.Animation;
 using Player.ShootingModule;
 using Plugins.MonoCache;
+using RingZone;
 using Services.Bank;
 using Services.Inputs;
 using SO;
@@ -33,7 +34,7 @@ namespace Player
         private IMagazine _magazine;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
-            PoolBullet poolBullet, int maxCountBullets)
+            PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing)
         {
             _wallet = wallet;
 

@@ -8,6 +8,7 @@ namespace Triggers
     public class ShootingTriggers : MonoCache
     {
         public event Action OnZone;
+        public event Action Exited;
         public Enemy CurrentEnemy { get; private set; }
 
         private void OnTriggerEnter(Collider collision)
@@ -21,8 +22,11 @@ namespace Triggers
 
         private void OnTriggerExit(Collider collision)
         {
-            if (collision.gameObject.TryGetComponent(out Enemy enemy) == CurrentEnemy) 
+            if (collision.gameObject.TryGetComponent(out Enemy enemy) == CurrentEnemy)
+            {
+                Exited?.Invoke();
                 CurrentEnemy = null;
+            }
         }
     }
 }

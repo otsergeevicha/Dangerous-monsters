@@ -24,14 +24,14 @@ namespace CameraModule
 
         public void OnZoom()
         {
-            _cameraFollow.gameObject.SetActive(false);
             _zoomFollow.gameObject.SetActive(true);
+            _cameraFollow.gameObject.SetActive(false);
         }
         
         public void OffZoom()
         {
-            _zoomFollow.gameObject.SetActive(false);
             _cameraFollow.gameObject.SetActive(true);
+            _zoomFollow.gameObject.SetActive(false);
         }
         
         private void SetCursorState(bool newState) =>

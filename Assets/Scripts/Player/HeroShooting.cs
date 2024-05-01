@@ -1,6 +1,7 @@
 ﻿using Player.Animation;
 using Player.ShootingModule;
 using Plugins.MonoCache;
+using RingZone;
 using Triggers;
 
 namespace Player
