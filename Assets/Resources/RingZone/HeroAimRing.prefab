@@ -4827,10 +4827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6262c84a60014e3486d5f9fb1c00243e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainParticle: {fileID: 6265866569464595868}
-  _floorRing: {fileID: 19864916}
-  _magicGlow: {fileID: 19894408}
-  AOESmile: {fileID: 0}
+  _particle: {fileID: 6265866569464595868}
 --- !u!199 &5024240695177305118
 ParticleSystemRenderer:
   serializedVersion: 6

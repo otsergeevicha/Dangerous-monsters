@@ -61,7 +61,7 @@ namespace Reflex
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData);
-            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing);
+            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
 
@@ -69,7 +69,7 @@ namespace Reflex
                 sectionPlate.Construct(wallet, _priceList, _poolData);
 
             windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);
-            heroAimRing.Construct(hero.transform);
+            heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             _baseGate.Construct(heroAimRing, cameraFollow);
 
 #if !UNITY_EDITOR

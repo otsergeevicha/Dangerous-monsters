@@ -11,6 +11,10 @@ namespace SO
         [Range(5, 15)] 
         public int SizeBasket = 5;
         
+        [Header("Detection radius")]
+        [Range(5f, 25f)]
+        public float RadiusDetection = 5f;
+        
         [HideInInspector] public int IdleHash = Animator.StringToHash("Idle");
         [HideInInspector] public int RunHash = Animator.StringToHash("Run");
         [HideInInspector] public int RunGunHash = Animator.StringToHash("RunGun");

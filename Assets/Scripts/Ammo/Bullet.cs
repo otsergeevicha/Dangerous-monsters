@@ -9,6 +9,10 @@ namespace Ammo
     public class Bullet : MonoCache
     {
         [HideInInspector] [SerializeField] private Rigidbody _rigidbody;
+        
+        [SerializeField] private Transform _vfxHitGreen;
+        [SerializeField] private Transform _vfxHitRed;
+        
         private Vector3 _firstPosition;
         private BulletData _bulletData;
 
@@ -17,14 +21,6 @@ namespace Ammo
 
         public void Construct(BulletData bulletData) => 
             _bulletData = bulletData;
-
-        private void OnTriggerEnter(Collider hit)
-        {
-            if (hit.gameObject.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage(_bulletData.BulletDamage);
-
-            gameObject.SetActive(false);
-        }
 
         public void InActive() => 
             gameObject.SetActive(false);
@@ -36,6 +32,19 @@ namespace Ammo
             gameObject.SetActive(true);
             
             _rigidbody.velocity = transform.forward * _bulletData.BulletSpeed;
+        }
+
+        private void OnTriggerEnter(Collider hit)
+        {
+            if (hit.gameObject.TryGetComponent(out Enemy enemy))
+                enemy.TakeDamage(_bulletData.BulletDamage);
+
+            Instantiate(hit.GetComponent<Enemy>() != null
+                    ? _vfxHitGreen
+                    : _vfxHitRed, transform.position,
+                Quaternion.identity);
+            
+            gameObject.SetActive(false);
         }
     }
 }

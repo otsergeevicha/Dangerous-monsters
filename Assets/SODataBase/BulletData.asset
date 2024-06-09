@@ -15,4 +15,4 @@ MonoBehaviour:
   RadiusExplosion: 5
   MissileDamage: 5
   BulletDamage: 1
-  BulletSpeed: 1
+  BulletSpeed: 30

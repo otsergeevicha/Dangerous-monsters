@@ -14,6 +14,7 @@ namespace Enemies
         private int _maxHealth;
         private int _currentHealth;
         private LootSpawner _lootSpawner;
+        
         public override event Action Died;
         public override bool IsCalm { get; protected set; } = true;
         public override bool IsReached { get; protected set; }
@@ -42,7 +43,7 @@ namespace Enemies
             gameObject.SetActive(false);
             ResetHealth();
         }
-
+        
         public override Vector3 GetDirection() =>
             _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
 

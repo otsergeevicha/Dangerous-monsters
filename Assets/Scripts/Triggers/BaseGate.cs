@@ -17,13 +17,14 @@ namespace Triggers
             _cameraFollow = cameraFollow;
             _heroAimRing = heroAimRing;
         }
-
+        
         private void OnTriggerEnter(Collider collision)
         {
             if (collision.gameObject.TryGetComponent(out Hero hero))
             {
                 _heroOnBase = !_heroOnBase;
                 hero.AnimationController.SetActualRunHash(_heroOnBase);
+                hero.SetShootingState(_heroOnBase);
 
                 if (!_heroOnBase)
                 {

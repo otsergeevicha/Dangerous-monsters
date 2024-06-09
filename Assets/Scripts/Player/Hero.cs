@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using CameraModule;
+using Enemies;
 using Infrastructure.Factory.Pools;
 using Player.Animation;
 using Player.ShootingModule;
@@ -28,13 +30,12 @@ namespace Player
         [HideInInspector] [SerializeField] private WeaponHolder _weaponHolder;
         [HideInInspector] [SerializeField] private HeroAnimation _heroAnimation;
         [HideInInspector] [SerializeField] private HeroShooting _heroShooting;
-        [HideInInspector] [SerializeField] private ShootingTriggers _triggers;
 
         private IWallet _wallet;
         private IMagazine _magazine;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
-            PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing)
+            PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies)
         {
             _wallet = wallet;
 
@@ -44,7 +45,7 @@ namespace Player
             
             _magazine = new MagazineBullets(maxCountBullets / 2);
             _weaponHolder.Construct(poolBullet, _magazine);
-            _heroShooting.Construct(_triggers, _heroAnimation, _heroMovement, _weaponHolder);
+            _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, poolEnemies, enemyRing);
         }
 
         public HeroAnimation AnimationController => 
@@ -79,9 +80,18 @@ namespace Player
             _ammoTriggers ??= Get<AmmoTriggers>();
             _lootTriggers ??= Get<LootTriggers>();
             _heroAnimation ??= Get<HeroAnimation>();
-            _triggers ??= ChildrenGet<ShootingTriggers>();
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
         }
+
+        
+        public void SetShootingState(bool heroOnBase) => 
+            _heroShooting.SetOnBase(heroOnBase);
+
+        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
+            cartridgeGun.SetPresenceCourier(true);
+
+        public Transform GetCameraRoot() =>
+            _rootCamera.transform;
 
         private void ApplyMoney(int money) =>
             _wallet.ApplyMoney(money);
@@ -100,11 +110,5 @@ namespace Player
             cartridgeGun.SetPresenceCourier(false);
             cartridgeGun.ApplyBox(_basketPlayer);
         }
-
-        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
-            cartridgeGun.SetPresenceCourier(true);
-
-        public Transform GetCameraRoot() =>
-            _rootCamera.transform;
     }
 }

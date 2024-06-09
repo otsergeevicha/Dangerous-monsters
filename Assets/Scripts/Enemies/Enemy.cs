@@ -38,5 +38,6 @@ namespace Enemies
         public abstract bool IsReached { get; protected set; }
         public abstract void TakeDamage(int damage);
         public abstract event Action Died;
+
     }
 }

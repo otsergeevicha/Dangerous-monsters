@@ -42,7 +42,7 @@ namespace Enemies
             gameObject.SetActive(false);
             ResetHealth();
         }
-
+        
         public override Vector3 GetDirection() =>
             _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
 
