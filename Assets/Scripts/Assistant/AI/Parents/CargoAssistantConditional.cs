@@ -10,8 +10,8 @@ namespace Assistant.AI.Parents
 
         public override void OnAwake()
         {
-            CargoAssistant = GetComponent<CargoAssistant>();
-            Agent = GetComponent<NavMeshAgent>();
+            CargoAssistant ??= GetComponent<CargoAssistant>();
+            Agent ??= GetComponent<NavMeshAgent>();
         }
     }
 }

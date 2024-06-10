@@ -1,12 +1,11 @@
 ﻿using Plugins.MonoCache;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HpBar
 {
     public class HealthBar : MonoCache
     {
-        [SerializeField] private Image _image;
+        [SerializeField] private RectTransform _image;
 
         private Transform _followingTransform;
 
@@ -25,8 +24,9 @@ namespace HpBar
 
             if (_isChange)
             {
-                _currentFillAmount -= Time.deltaTime;
-                _image.fillAmount = _currentFillAmount;
+                var temp = _image.anchorMax;
+                temp.x -= Time.deltaTime;
+                _image.anchorMax = temp;
             
                 if (_currentFillAmount <= _targetFillAmount) 
                     _isChange = false;
