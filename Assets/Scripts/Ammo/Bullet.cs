@@ -28,7 +28,7 @@ namespace Ammo
         public void Shot(Vector3 currentPosition, Vector3 direction)
         {
             transform.position = currentPosition;
-            transform.LookAt(direction);
+            transform.LookAt(new Vector3(direction.x, direction.y + 1f, direction.z));
             gameObject.SetActive(true);
             
             _rigidbody.velocity = transform.forward * _bulletData.BulletSpeed;

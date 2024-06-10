@@ -4,10 +4,9 @@ using Bank;
 using CameraModule;
 using Canvases;
 using Enemies;
+using HpBar;
 using Infrastructure.Factory.Pools;
-using Loots;
 using Player;
-using Player.ShootingModule;
 using RingZone;
 using Services.Assets;
 using Services.Factory;
@@ -78,5 +77,9 @@ namespace Infrastructure.Factory
         public EnemyRing CreateEnemyRing() =>
             _assetsProvider.InstantiateEntity(Constants.EnemyRingPath)
                 .GetComponent<EnemyRing>();
+
+        public HealthBar CreateHealthBar() =>
+            _assetsProvider.InstantiateEntity(Constants.HPBarPath)
+                .GetComponent<HealthBar>();
     }
 }

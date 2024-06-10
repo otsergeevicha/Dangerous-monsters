@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CameraModule;
 using Enemies;
+using HpBar;
 using Infrastructure.Factory.Pools;
 using Player.Animation;
 using Player.ShootingModule;
@@ -35,13 +36,16 @@ namespace Player
         private IMagazine _magazine;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
-            PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies)
+            PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
+            HealthBar healthBar)
         {
+            healthBar.Construct(transform);
             _wallet = wallet;
 
             _heroAnimation.Construct(heroData);
             _heroMovement.Construct(input, heroData.Speed, _heroAnimation);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
+            //_heroHealth.Construct(healthBar);
             
             _magazine = new MagazineBullets(maxCountBullets / 2);
             _weaponHolder.Construct(poolBullet, _magazine);

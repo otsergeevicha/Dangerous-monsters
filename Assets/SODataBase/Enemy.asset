@@ -15,3 +15,13 @@ MonoBehaviour:
   IdleHash: 2081823275
   RunHash: 1748754976
   DeviationAmount: 15
+  ZeroLevelHealth: 5
+  OneLevelHealth: 5
+  TwoLevelHealth: 5
+  ThreeLevelHealth: 5
+  FourLevelHealth: 5
+  FiveLevelHealth: 5
+  SixLevelHealth: 5
+  SevenLevelHealth: 5
+  EightLevelHealth: 5
+  NineLevelHealth: 5

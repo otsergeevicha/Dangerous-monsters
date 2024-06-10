@@ -58,8 +58,12 @@ namespace Infrastructure.Factory.Pools
         {
             for (int i = 0; i < requiredCount; i++)
             {
+                var hpBar = factory.CreateHealthBar();
                 Enemy enemy = factory.CreateEnemy(currentPath);
-                enemy.Construct(enemyData, _directionOperator, _healthOperator, _lootSpawner);
+                
+                hpBar.Construct(enemy.transform);
+                
+                enemy.Construct(enemyData, _directionOperator, _healthOperator, _lootSpawner, hpBar);
                 enemy.InActive();
                 enemies[i] = enemy;
             }

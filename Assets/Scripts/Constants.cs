@@ -17,6 +17,7 @@
     public const string MoneyPath = "Loots/Money";
     public const string HeroAimRingPath = "RingZone/HeroAimRing";
     public const string EnemyRingPath = "RingZone/EnemyRing";
+    public const string HPBarPath = "Canvases/HPBar";
     
     //path enemies
     public const string ZeroPath = "Enemies/ZeroEnemy";

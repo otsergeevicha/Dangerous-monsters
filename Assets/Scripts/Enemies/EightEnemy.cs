@@ -1,5 +1,6 @@
 ﻿using System;
 using Enemies.AI;
+using HpBar;
 using Loots;
 using SO;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Enemies
         private int _maxHealth;
         private int _currentHealth;
         private LootSpawner _lootSpawner;
+        private HealthBar _healthBar;
         public override event Action Died;
         public override bool IsCalm { get; protected set; } = true;
         public override bool IsReached { get; protected set; }
@@ -23,14 +25,15 @@ namespace Enemies
             (int)EnemyId.EightLevel;
 
         public override void Construct(EnemyData enemyData, DirectionOperator directionOperator,
-            HealthOperator healthOperator, LootSpawner lootSpawner)
+            HealthOperator healthOperator, LootSpawner lootSpawner, HealthBar healthBar)
         {
+            _healthBar = healthBar;
             _lootSpawner = lootSpawner;
             _healthOperator = healthOperator;
             _directionOperator = directionOperator;
             EnemyData = enemyData;
             _maxHealth = EnemyData.EightLevelHealth;
-
+            
             ResetHealth();
         }
 
@@ -53,6 +56,8 @@ namespace Enemies
         {
             _currentHealth = _healthOperator.CalculateDamage(_currentHealth, damage);
 
+            _healthBar.ChangeValue(_currentHealth, _maxHealth);
+            
             if (_currentHealth <= 0)
             {
                 SpawnLoot();

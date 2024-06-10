@@ -1,5 +1,4 @@
-﻿using System;
-using Plugins.MonoCache;
+﻿using Plugins.MonoCache;
 using UnityEngine;
 
 namespace RingZone

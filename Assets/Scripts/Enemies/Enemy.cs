@@ -1,5 +1,6 @@
 ﻿using Enemies.AI;
 using Enemies.Animation;
+using HpBar;
 using Loots;
 using Plugins.MonoCache;
 using SO;
@@ -29,7 +30,7 @@ namespace Enemies
     {
         public abstract int GetId();
         public abstract void Construct(EnemyData enemyData, DirectionOperator directionOperator,
-            HealthOperator healthOperator, LootSpawner lootSpawner);
+            HealthOperator healthOperator, LootSpawner lootSpawner, HealthBar healthBar);
         public abstract void OnActive();
         public abstract void InActive();
         public abstract Vector3 GetDirection();
