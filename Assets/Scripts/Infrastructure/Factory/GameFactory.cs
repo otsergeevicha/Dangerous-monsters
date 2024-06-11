@@ -6,6 +6,7 @@ using Canvases;
 using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
+using Loots;
 using Player;
 using RingZone;
 using Services.Assets;

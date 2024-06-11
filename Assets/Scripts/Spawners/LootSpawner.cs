@@ -2,7 +2,7 @@
 using Infrastructure.Factory.Pools;
 using UnityEngine;
 
-namespace Loots
+namespace Spawners
 {
     public class LootSpawner
     {

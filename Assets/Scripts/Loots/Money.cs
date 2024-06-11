@@ -1,11 +1,18 @@
 ﻿using Plugins.MonoCache;
 using UnityEngine;
 
-namespace Bank
+namespace Loots
 {
     public class Money : MonoCache
     {
+        [HideInInspector] [SerializeField] private Animator _animator;
+        
+        private readonly int _pickUpHash = Animator.StringToHash("PickUp");
+        
         public int CurrentNominal { get; private set; } = 1;
+
+        private void OnValidate() => 
+            _animator ??= Get<Animator>();
 
         public void OnActive(int enemyId, Vector3 newPosition)
         {
@@ -17,9 +24,14 @@ namespace Bank
             gameObject.SetActive(true);
         }
 
-        public void InActive()
+        public void InActive() => 
+            _animator.SetTrigger(_pickUpHash);
+
+        private void EndPickUp()
         {
             ResetNominal();
+            _animator.ResetTrigger(_pickUpHash);
+            transform.localScale = new Vector3(1, 1, 1);
             gameObject.SetActive(false);
         }
 
