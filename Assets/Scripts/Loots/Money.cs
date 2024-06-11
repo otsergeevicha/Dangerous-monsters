@@ -24,7 +24,7 @@ namespace Loots
             gameObject.SetActive(true);
         }
 
-        public void InActive() => 
+        public void PickUp() => 
             _animator.SetTrigger(_pickUpHash);
 
         private void EndPickUp()

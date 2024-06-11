@@ -46,7 +46,7 @@ namespace Player
             _heroMovement.Construct(input, heroData.Speed, _heroAnimation);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
             //_heroHealth.Construct(healthBar);
-            
+
             _magazine = new MagazineBullets(maxCountBullets / 2);
             _weaponHolder.Construct(poolBullet, _magazine);
             _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, poolEnemies, enemyRing);
