@@ -1,4 +1,5 @@
 ﻿using System;
+using Canvases;
 
 namespace Player.ShootingModule
 {
@@ -10,9 +11,12 @@ namespace Player.ShootingModule
         private readonly HeroRegeneration _regeneration;
         private readonly int _maxSize;
         private int _size;
+        private Hud _hud;
 
-        public MagazineBullets(int size)
+        public MagazineBullets(int size, Hud hud)
         {
+            _hud = hud;
+            hud.WeaponReload(false);
             _size = size;
             _maxSize = size;
             _regeneration = new HeroRegeneration(this);
@@ -26,10 +30,14 @@ namespace Player.ShootingModule
 
         public void Replenishment(Action fulled)
         {
+            _hud.WeaponReload(true);
             _size++;
-            
-            if (_size >= _maxSize) 
+
+            if (_size >= _maxSize)
+            {
+                _hud.WeaponReload(false);
                 fulled?.Invoke();
+            }
         }
 
         public void Shortage()

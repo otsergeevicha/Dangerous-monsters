@@ -6,8 +6,12 @@ namespace Infrastructure.GroupData
     public class DataWallet
     {
         public int RemainingMoney { get; private set; }
+        public int RemainingGem { get; set; }
 
-        public void Record(int remainingMoney) => 
+        public void RecordMoney(int remainingMoney) => 
             RemainingMoney = remainingMoney;
+        
+        public void RecordGem(int remainingGem) => 
+            RemainingGem = remainingGem;
     }
 }

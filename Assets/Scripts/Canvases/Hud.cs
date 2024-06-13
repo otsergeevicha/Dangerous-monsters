@@ -9,6 +9,11 @@ namespace Canvases
         [SerializeField] private TMP_Text _money;
         [SerializeField] private TMP_Text _gem;
 
+        [SerializeField] private Canvas _weaponReload;
+
+        public void WeaponReload(bool flag) =>
+            _weaponReload.enabled = flag;
+
         public void UpdateMoneyView(int currentMoney) => 
             _money.text = currentMoney.ToString();
         

@@ -17,7 +17,10 @@ namespace Canvases
             _hud = hud;
             
             _wallet.MoneyChanged += _hud.UpdateMoneyView;
+            _wallet.GemChanged += _hud.UpdateGemView;
+            
             _hud.UpdateMoneyView(_wallet.ReadCurrentMoney());
+            _hud.UpdateGemView(_wallet.ReadCurrentGem());
             
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant);
 

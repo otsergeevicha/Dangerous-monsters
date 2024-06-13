@@ -17,6 +17,7 @@ namespace Bank
         }
 
         public event Action<int> MoneyChanged;
+        public event Action<int> GemChanged;
 
         public void ApplyMoney(int money)
         {
@@ -38,9 +39,12 @@ namespace Bank
         public int ReadCurrentMoney() => 
             _save.AccessProgress().DataWallet.RemainingMoney;
 
+        public int ReadCurrentGem() => 
+            _save.AccessProgress().DataWallet.RemainingGem;
+
         private void WritingSave()
         {
-            _save.AccessProgress().DataWallet.Record(_currentMoney);
+            _save.AccessProgress().DataWallet.RecordMoney(_currentMoney);
             _save.Save();
         }
 
