@@ -5,6 +5,9 @@ namespace SO
     [CreateAssetMenu(fileName = "NewHero", menuName = "Characters/Hero", order = 1)]
     public class HeroData : ScriptableObject
     {
+        [Range(1, 100)]
+        public int MaxHealth = 1;
+        
         [Range(3,6)]
         public int Speed = 3;
 

@@ -2,6 +2,7 @@
 using Enemies.AI;
 using HpBar;
 using Loots;
+using Modules;
 using SO;
 using Spawners;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Enemies
     public class TwoEnemy : Enemy
     {
         private DirectionOperator _directionOperator;
-        private HealthOperator _healthOperator;
+        private EnemyHealthModule _enemyHealthModule;
 
         private int _maxHealth;
         private int _currentHealth;
@@ -26,11 +27,11 @@ namespace Enemies
             (int)EnemyId.TwoLevel;
 
         public override void Construct(EnemyData enemyData, DirectionOperator directionOperator,
-            HealthOperator healthOperator, LootSpawner lootSpawner, HealthBar healthBar)
+            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar)
         {
             _healthBar = healthBar;
             _lootSpawner = lootSpawner;
-            _healthOperator = healthOperator;
+            _enemyHealthModule = enemyHealthModule;
             _directionOperator = directionOperator;
             EnemyData = enemyData;
             _maxHealth = EnemyData.TwoLevelHealth;
@@ -53,9 +54,9 @@ namespace Enemies
         public override void SetReached(bool flag) =>
             IsReached = flag;
         
-        public override void TakeDamage(int damage)
+        public override void ApplyDamage(int damage)
         {
-            _currentHealth = _healthOperator.CalculateDamage(_currentHealth, damage);
+            _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
             _healthBar.ChangeValue(_currentHealth, _maxHealth);
 

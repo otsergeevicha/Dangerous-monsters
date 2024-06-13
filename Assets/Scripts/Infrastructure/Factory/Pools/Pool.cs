@@ -2,6 +2,7 @@
 using ContactPlatforms;
 using Enemies.AI;
 using Loots;
+using Modules;
 using Plugins.MonoCache;
 using Services.Factory;
 using SO;
@@ -14,7 +15,7 @@ namespace Infrastructure.Factory.Pools
     public class Pool : MonoCache
     {
         private DirectionOperator _directionOperator;
-        private HealthOperator _healthOperator;
+        private EnemyHealthModule _enemyHealthModule;
         private LootSpawner _lootSpawner;
 
         public PoolAmmoBoxPlayer PoolAmmoBox { get; private set; }
@@ -30,7 +31,7 @@ namespace Infrastructure.Factory.Pools
             StorageAmmoPlate storageAmmoPlate, TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData)
         {
             _directionOperator = new DirectionOperator();
-            _healthOperator = new HealthOperator();
+            _enemyHealthModule = new EnemyHealthModule();
 
             PoolAmmoBox = new PoolAmmoBoxPlayer(factory, poolData.SizeAmmoBoxPlayer);
             PoolCargoAssistant =
@@ -39,7 +40,7 @@ namespace Infrastructure.Factory.Pools
 
             _lootSpawner = new LootSpawner(PoolMoney);
 
-            PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _healthOperator,
+            PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _enemyHealthModule,
                 _lootSpawner);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);

@@ -2,6 +2,7 @@
 using Enemies.Animation;
 using HpBar;
 using Loots;
+using Modules;
 using Plugins.MonoCache;
 using SO;
 using Spawners;
@@ -31,14 +32,14 @@ namespace Enemies
     {
         public abstract int GetId();
         public abstract void Construct(EnemyData enemyData, DirectionOperator directionOperator,
-            HealthOperator healthOperator, LootSpawner lootSpawner, HealthBar healthBar);
+            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar);
         public abstract void OnActive();
         public abstract void InActive();
         public abstract Vector3 GetDirection();
         public abstract void SetReached(bool flag);
         public abstract bool IsCalm { get; protected set; }
         public abstract bool IsReached { get; protected set; }
-        public abstract void TakeDamage(int damage);
+        public abstract void ApplyDamage(int damage);
         public abstract event Action Died;
 
     }

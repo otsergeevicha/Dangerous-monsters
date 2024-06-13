@@ -4,6 +4,7 @@ using Canvases;
 using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
+using Modules;
 using Player.Animation;
 using Player.ShootingModule;
 using Plugins.MonoCache;
@@ -35,18 +36,20 @@ namespace Player
 
         private IWallet _wallet;
         private IMagazine _magazine;
+        
+        private HeroHealthModule _heroHealthModule;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
             HealthBar healthBar, Hud hud)
         {
             healthBar.Construct(transform);
+            _heroHealthModule = new HeroHealthModule(healthBar, heroData);
             _wallet = wallet;
 
             _heroAnimation.Construct(heroData);
             _heroMovement.Construct(input, heroData.Speed, _heroAnimation);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
-            //_heroHealth.Construct(healthBar);
 
             _magazine = new MagazineBullets(maxCountBullets / 2, hud);
             _weaponHolder.Construct(poolBullet, _magazine);
@@ -92,11 +95,11 @@ namespace Player
         public void SetShootingState(bool heroOnBase) => 
             _heroShooting.SetOnBase(heroOnBase);
 
-        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
-            cartridgeGun.SetPresenceCourier(true);
-
         public Transform GetCameraRoot() =>
             _rootCamera.transform;
+
+        public void ApplyDamage(int damage) => 
+            _heroHealthModule.ApplyDamage(damage);
 
         private void ApplyMoney(int money) =>
             _wallet.ApplyMoney(money);
@@ -115,5 +118,8 @@ namespace Player
             cartridgeGun.SetPresenceCourier(false);
             cartridgeGun.ApplyBox(_basketPlayer);
         }
+
+        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
+            cartridgeGun.SetPresenceCourier(true);
     }
 }

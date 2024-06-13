@@ -2,6 +2,7 @@
 using Enemies;
 using Enemies.AI;
 using Loots;
+using Modules;
 using Services.Factory;
 using SO;
 using Spawners;
@@ -25,14 +26,14 @@ namespace Infrastructure.Factory.Pools
         };
         
         private DirectionOperator _directionOperator;
-        private HealthOperator _healthOperator;
+        private EnemyHealthModule _enemyHealthModule;
         private LootSpawner _lootSpawner;
 
         public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData,
-            DirectionOperator directionOperator, HealthOperator healthOperator, LootSpawner lootSpawner)
+            DirectionOperator directionOperator, EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner)
         {
             _lootSpawner = lootSpawner;
-            _healthOperator = healthOperator;
+            _enemyHealthModule = enemyHealthModule;
             _directionOperator = directionOperator;
             
             int[] levelCounts =
@@ -64,7 +65,7 @@ namespace Infrastructure.Factory.Pools
                 
                 hpBar.Construct(enemy.transform);
                 
-                enemy.Construct(enemyData, _directionOperator, _healthOperator, _lootSpawner, hpBar);
+                enemy.Construct(enemyData, _directionOperator, _enemyHealthModule, _lootSpawner, hpBar);
                 enemy.InActive();
                 enemies[i] = enemy;
             }

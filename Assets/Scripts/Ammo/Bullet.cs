@@ -37,7 +37,7 @@ namespace Ammo
         private void OnTriggerEnter(Collider hit)
         {
             if (hit.gameObject.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage(_bulletData.BulletDamage);
+                enemy.ApplyDamage(_bulletData.BulletDamage);
 
             Instantiate(hit.GetComponent<Enemy>() != null
                     ? _vfxHitGreen

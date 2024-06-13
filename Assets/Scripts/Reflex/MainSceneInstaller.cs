@@ -3,6 +3,7 @@ using CameraModule;
 using Canvases;
 using ContactPlatforms;
 using Infrastructure.Factory.Pools;
+using Modules;
 using Player;
 using Plugins.MonoCache;
 using Reflex.Core;

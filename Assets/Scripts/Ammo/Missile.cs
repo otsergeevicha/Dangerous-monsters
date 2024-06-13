@@ -32,7 +32,7 @@ namespace Ammo
             for (int i = 0; i < count; i++)
             {
                 if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
-                    enemy.TakeDamage(_bulletData.MissileDamage);
+                    enemy.ApplyDamage(_bulletData.MissileDamage);
             }
             
             InActive();
