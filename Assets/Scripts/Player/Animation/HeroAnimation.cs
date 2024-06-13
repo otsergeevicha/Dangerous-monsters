@@ -10,6 +10,7 @@ namespace Player.Animation
 
         private HeroData _heroData;
         private int _runHash;
+        private bool _heroOnBase = true;
 
         public void Construct(HeroData heroData)
         {
@@ -22,18 +23,25 @@ namespace Player.Animation
 
         public void SetActualRunHash(bool heroOnBase)
         {
+            _heroOnBase = heroOnBase;
+            
             _animator.SetBool(_runHash, false);
             _runHash = heroOnBase ? _heroData.RunHash : _heroData.RunGunHash;
         }
 
         public void EnableRun()
         {
+            _animator.SetBool(_heroData.IdleAimingHash, false);
             _animator.SetBool(_runHash, true);
         }
 
         public void EnableIdle()
         {
-            _animator.SetBool(_runHash, false);
+            if (!_heroOnBase) 
+                _animator.SetBool(_heroData.IdleAimingHash, true);
+            
+            if (_heroOnBase) 
+                _animator.SetBool(_runHash, false);
         }
 
         public void EnableShoot()

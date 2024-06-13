@@ -18,5 +18,6 @@ namespace SO
         [HideInInspector] public int IdleHash = Animator.StringToHash("Idle");
         [HideInInspector] public int RunHash = Animator.StringToHash("Run");
         [HideInInspector] public int RunGunHash = Animator.StringToHash("RunGun");
+        [HideInInspector] public int IdleAimingHash = Animator.StringToHash("IdleAiming");
     }
 }
