@@ -26,7 +26,7 @@ namespace Services.Factory
         EnemySpawner CreateEnemySpawner();
         Turret CreateTurret();
         Missile CreateMissile();
-        WindowRoot CreateWindowRoot();
+        Hud CreateHud();
         Money CreateMoney();
         Bullet CreateBullet();
         HeroAimRing CreateHeroAimRing();

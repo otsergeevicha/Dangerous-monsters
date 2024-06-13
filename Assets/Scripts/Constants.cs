@@ -5,7 +5,7 @@
 
     //paths
     public const string HeroPath = "Player/Hero";
-    public const string WindowRootPath = "Canvases/WindowRoot";
+    public const string HudPath = "Canvases/Hud";
     public const string CargoAssistantPath = "Assistants/CargoAssistant";
     public const string CameraPath = "Camera/MainCamera";
     public const string AmmoBoxPath = "Ammo/AmmoBox";
@@ -17,7 +17,7 @@
     public const string MoneyPath = "Loots/Money";
     public const string HeroAimRingPath = "RingZone/HeroAimRing";
     public const string EnemyRingPath = "RingZone/EnemyRing";
-    public const string HPBarPath = "Canvases/HPBar";
+    public const string HpBarPath = "Canvases/HPBar";
     
     //path enemies
     public const string ZeroPath = "Enemies/ZeroEnemy";

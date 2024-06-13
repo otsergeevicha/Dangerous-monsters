@@ -35,6 +35,9 @@ namespace Bank
         public bool Check(int price) => 
             _currentMoney >= price;
 
+        public int ReadCurrentMoney() => 
+            _save.AccessProgress().DataWallet.RemainingMoney;
+
         private void WritingSave()
         {
             _save.AccessProgress().DataWallet.Record(_currentMoney);

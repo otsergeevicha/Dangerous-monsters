@@ -59,9 +59,9 @@ namespace Infrastructure.Factory
             _assetsProvider.InstantiateEntity(Constants.MissilePath)
                 .GetComponent<Missile>();
 
-        public WindowRoot CreateWindowRoot() =>
-            _assetsProvider.InstantiateEntity(Constants.WindowRootPath)
-                .GetComponent<WindowRoot>();
+        public Hud CreateHud() =>
+            _assetsProvider.InstantiateEntity(Constants.HudPath)
+                .GetComponent<Hud>();
 
         public Money CreateMoney() =>
             _assetsProvider.InstantiateEntity(Constants.MoneyPath)
@@ -80,7 +80,7 @@ namespace Infrastructure.Factory
                 .GetComponent<EnemyRing>();
 
         public HealthBar CreateHealthBar() =>
-            _assetsProvider.InstantiateEntity(Constants.HPBarPath)
+            _assetsProvider.InstantiateEntity(Constants.HpBarPath)
                 .GetComponent<HealthBar>();
     }
 }

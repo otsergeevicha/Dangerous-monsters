@@ -394,7 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9058918860474082488}
   - component: {fileID: 3162986614419540320}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

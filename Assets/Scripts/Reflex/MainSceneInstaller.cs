@@ -41,6 +41,8 @@ namespace Reflex
         [SerializeField] private BulletData _bulletData;
         [SerializeField] private TurretData _turretData;
         [SerializeField] private PriceListData _priceList;
+
+        private WindowModule _windowModule;
         
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
@@ -52,9 +54,11 @@ namespace Reflex
             IGameFactory gameFactory = container.Single<IGameFactory>();
             IWallet wallet = container.Single<IWallet>();
 
+            _windowModule = new WindowModule();
+            
+            Hud hud = gameFactory.CreateHud();
             Pool pool = gameFactory.CreatePool();
             CameraFollow cameraFollow = gameFactory.CreateCamera();
-            WindowRoot windowRoot = gameFactory.CreateWindowRoot();
             Hero hero = gameFactory.CreateHero();
             EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
@@ -68,13 +72,18 @@ namespace Reflex
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);
 
-            windowRoot.Construct(input, _storeAssistantPlate, _storeTurretPlates, _poolData, pool);
+            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud);
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             _baseGate.Construct(heroAimRing, cameraFollow);
 
 #if !UNITY_EDITOR
             YandexGamesSdk.GameReady();
 #endif
+        }
+
+        protected override void OnDisabled()
+        {
+            _windowModule.Dispose();
         }
     }
 }
