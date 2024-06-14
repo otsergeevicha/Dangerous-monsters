@@ -58,6 +58,8 @@ namespace Reflex
             _windowModule = new WindowModule();
             
             Hud hud = gameFactory.CreateHud();
+            LoseScreen loseScreen = gameFactory.CreateLoseScreen();
+            StartScreen startScreen = gameFactory.CreateStartScreen();
             Pool pool = gameFactory.CreatePool();
             CameraFollow cameraFollow = gameFactory.CreateCamera();
             Hero hero = gameFactory.CreateHero();
@@ -66,14 +68,15 @@ namespace Reflex
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData);
-            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud);
+            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);
+            
+            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
 
-            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud);
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             _baseGate.Construct(heroAimRing, cameraFollow);
 
@@ -82,9 +85,7 @@ namespace Reflex
 #endif
         }
 
-        protected override void OnDisabled()
-        {
+        protected override void OnDisabled() => 
             _windowModule.Dispose();
-        }
     }
 }

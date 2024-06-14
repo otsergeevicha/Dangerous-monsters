@@ -18,6 +18,8 @@
     public const string HeroAimRingPath = "RingZone/HeroAimRing";
     public const string EnemyRingPath = "RingZone/EnemyRing";
     public const string HpBarPath = "Canvases/HPBar";
+    public const string LoseScreenPath = "Canvases/LoseScreen";
+    public const string StartScreenPath = "Canvases/StartScreen";
     
     //path enemies
     public const string ZeroPath = "Enemies/ZeroEnemy";

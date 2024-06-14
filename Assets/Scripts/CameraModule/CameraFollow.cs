@@ -19,7 +19,7 @@ namespace CameraModule
             _cameraFollow.LookAt = cameraRoot;
             _zoomFollow.LookAt = cameraRoot;
             
-            SetCursorState(_cursorLocked);
+           // SetCursorState(_cursorLocked);
         }
 
         public void OnZoom()

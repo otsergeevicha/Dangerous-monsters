@@ -1,6 +1,5 @@
 ﻿using Ammo;
 using Assistant;
-using Bank;
 using CameraModule;
 using Canvases;
 using Enemies;
@@ -8,7 +7,6 @@ using HpBar;
 using Infrastructure.Factory.Pools;
 using Loots;
 using Player;
-using Player.ShootingModule;
 using RingZone;
 using Spawners;
 using Turrets;
@@ -32,5 +30,7 @@ namespace Services.Factory
         HeroAimRing CreateHeroAimRing();
         EnemyRing CreateEnemyRing();
         HealthBar CreateHealthBar();
+        LoseScreen CreateLoseScreen();
+        StartScreen CreateStartScreen();
     }
 }

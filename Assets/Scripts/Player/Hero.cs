@@ -38,14 +38,18 @@ namespace Player
         private IMagazine _magazine;
         
         private HeroHealthModule _heroHealthModule;
+        private WindowModule _windowModule;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
-            HealthBar healthBar, Hud hud)
+            HealthBar healthBar, Hud hud, WindowModule windowModule)
         {
+            _windowModule = windowModule;
+            _wallet = wallet;
+            
             healthBar.Construct(transform);
             _heroHealthModule = new HeroHealthModule(healthBar, heroData);
-            _wallet = wallet;
+            _heroHealthModule.Died += OnDied;
 
             _heroAnimation.Construct(heroData);
             _heroMovement.Construct(input, heroData.Speed, _heroAnimation);
@@ -68,6 +72,7 @@ namespace Player
             _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
 
             _lootTriggers.OnPickUpMoney += ApplyMoney;
+
         }
 
         protected override void OnDisabled()
@@ -79,6 +84,8 @@ namespace Player
             _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
 
             _lootTriggers.OnPickUpMoney -= ApplyMoney;
+            
+            _heroHealthModule.Died -= OnDied;
         }
 
         private void OnValidate()
@@ -91,7 +98,7 @@ namespace Player
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
         }
 
-        
+
         public void SetShootingState(bool heroOnBase) => 
             _heroShooting.SetOnBase(heroOnBase);
 
@@ -100,6 +107,9 @@ namespace Player
 
         public void ApplyDamage(int damage) => 
             _heroHealthModule.ApplyDamage(damage);
+
+        private void OnDied() => 
+            _windowModule.HeroDied();
 
         private void ApplyMoney(int money) =>
             _wallet.ApplyMoney(money);

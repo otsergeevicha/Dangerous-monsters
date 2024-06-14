@@ -1,6 +1,5 @@
 ﻿using Ammo;
 using Assistant;
-using Bank;
 using CameraModule;
 using Canvases;
 using Enemies;
@@ -82,5 +81,13 @@ namespace Infrastructure.Factory
         public HealthBar CreateHealthBar() =>
             _assetsProvider.InstantiateEntity(Constants.HpBarPath)
                 .GetComponent<HealthBar>();
+
+        public LoseScreen CreateLoseScreen() =>
+            _assetsProvider.InstantiateEntity(Constants.LoseScreenPath)
+                .GetComponent<LoseScreen>();
+
+        public StartScreen CreateStartScreen() =>
+            _assetsProvider.InstantiateEntity(Constants.StartScreenPath)
+                .GetComponent<StartScreen>();
     }
 }
