@@ -18,6 +18,7 @@ namespace Canvases
 
         public void OnActive()
         {
+            Time.timeScale = 0;
             _canvas.enabled = true;
             SetCursorState(false);
         }
@@ -25,6 +26,7 @@ namespace Canvases
         public void InActive()
         {
             OnClickReStart?.Invoke();
+            Time.timeScale = 1;
             _canvas.enabled = false;
             
             SetCursorState(true);

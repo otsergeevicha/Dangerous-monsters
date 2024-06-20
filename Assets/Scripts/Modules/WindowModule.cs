@@ -3,6 +3,7 @@ using Infrastructure.Factory.Pools;
 using Services.Bank;
 using Services.Inputs;
 using SO;
+using Triggers;
 
 namespace Modules
 {
@@ -33,7 +34,7 @@ namespace Modules
 
             _hud.UpdateMoneyView(_wallet.ReadCurrentMoney());
             _hud.UpdateGemView(_wallet.ReadCurrentGem());
-
+            
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant);
 
             for (int i = 0; i < storeTurretPlates.Length; i++)
