@@ -75,9 +75,10 @@ namespace Reflex
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);
             
+            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
+            
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             _baseGate.Construct(heroAimRing, cameraFollow);
-            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
 
 #if !UNITY_EDITOR
             YandexGamesSdk.GameReady();

@@ -44,6 +44,8 @@ namespace Ammo
                     : _vfxHitRed, transform.position,
                 Quaternion.identity);
             
+            print("вынести это в объекты получаемые урон от пули");
+            
             gameObject.SetActive(false);
         }
     }

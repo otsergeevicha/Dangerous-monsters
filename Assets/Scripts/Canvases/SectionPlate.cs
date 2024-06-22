@@ -74,8 +74,8 @@ namespace Canvases
         {
             int currentPrice = _poolData.CurrentLevelGame * _priceList.SectionPriceMultiplier;
             
-            if (_wallet.Check(currentPrice))
-            {
+           if (_wallet.Check(currentPrice))
+           {
                 _wallet.SpendMoney(currentPrice);
                 OnAdditionalSection();
                 gameObject.SetActive(false);

@@ -1,7 +1,4 @@
-﻿using System;
-using CameraModule;
-using Enemies;
-using HpBar;
+﻿using CameraModule;
 using Player;
 using Plugins.MonoCache;
 using RingZone;
@@ -14,14 +11,11 @@ namespace Triggers
         private HeroAimRing _heroAimRing;
         private bool _heroOnBase = true;
         private CameraFollow _cameraFollow;
-        private HealthBar _healthBar;
 
         public void Construct(HeroAimRing heroAimRing, CameraFollow cameraFollow)
         {
             _cameraFollow = cameraFollow;
             _heroAimRing = heroAimRing;
-            
-            _healthBar.Construct(transform);
         }
         
         private void OnTriggerEnter(Collider collision)
@@ -31,7 +25,7 @@ namespace Triggers
                 _heroOnBase = !_heroOnBase;
                 hero.AnimationController.SetActualRunHash(_heroOnBase);
                 hero.SetShootingState(_heroOnBase);
-
+                
                 if (!_heroOnBase)
                 {
                     _heroAimRing.OnActive();
