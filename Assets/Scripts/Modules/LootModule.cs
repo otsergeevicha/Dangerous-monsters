@@ -1,5 +1,4 @@
 ﻿using System;
-using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,14 +37,6 @@ namespace Modules
             _randomBox ??= ChildrenGet<RandomBox>();
         }
 
-        private void OnTriggerEnter(Collider collision)
-        {
-            if (collision.gameObject.TryGetComponent(out Hero hero))
-            {
-                
-            }
-        }
-
         public void OnActive(int currentLoot, int percentFreeChance)
         {
             if (GetRandom(percentFreeChance))
@@ -56,43 +47,38 @@ namespace Modules
             {
                 Debug.Log("Прок платного лута");
             }
+            
+            switch (currentLoot)
+            {
+               case (int)TypeLoot.Money:
+                   _randomBox.OnActive(currentLoot);
+                   break;
+               
+               case (int)TypeLoot.Gem:
+                   _randomBox.OnActive(currentLoot);
+                   break;
 
-            OnCurrentLoot(currentLoot);
+               case (int)TypeLoot.Upgrade:
+                   _randomBox.OnActive(currentLoot);
+                   break;
+               
+               case (int)TypeLoot.Magnet:
+                   _magnet.OnActive();
+                   break;
+               
+               case (int)TypeLoot.Health:
+                   _medicalBox.OnActive();
+                   break;
+               
+               default:
+                   _medicalBox.OnActive();
+                   Debug.Log("incorrect choice loot spawn");
+                   break;
+            }
         }
 
         public void InActive() => 
             gameObject.SetActive(false);
-
-        private void OnCurrentLoot(int currentLoot)
-        {
-            switch (currentLoot)
-            {
-                case (int)TypeLoot.Money:
-                    _randomBox.OnActive(currentLoot);
-                    break;
-
-                case (int)TypeLoot.Gem:
-                    _randomBox.OnActive(currentLoot);
-                    break;
-
-                case (int)TypeLoot.Upgrade:
-                    _randomBox.OnActive(currentLoot);
-                    break;
-
-                case (int)TypeLoot.Magnet:
-                    _magnet.OnActive();
-                    break;
-
-                case (int)TypeLoot.Health:
-                    _medicalBox.OnActive();
-                    break;
-
-                default:
-                    _medicalBox.OnActive();
-                    Debug.Log("incorrect choice loot spawn");
-                    break;
-            }
-        }
 
         private bool GetRandom(int percentFreeChance) => 
             Random.Range(Single.Epsilon, MaxInclusive) <= percentFreeChance;
