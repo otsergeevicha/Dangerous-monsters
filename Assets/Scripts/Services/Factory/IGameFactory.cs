@@ -6,6 +6,7 @@ using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
 using Loots;
+using Modules;
 using Player;
 using RingZone;
 using Spawners;
@@ -32,5 +33,6 @@ namespace Services.Factory
         HealthBar CreateHealthBar();
         LoseScreen CreateLoseScreen();
         StartScreen CreateStartScreen();
+        LootPoint CreateLootPoint();
     }
 }

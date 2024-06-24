@@ -7,7 +7,10 @@ namespace Infrastructure.Factory.Pools
 {
     public class PoolMissiles
     {
-        public List<Missile> Missiles { get; private set; } = new();
+        private readonly List<Missile> _missiles = new();
+
+        public IReadOnlyList<Missile> Missiles =>
+            _missiles.AsReadOnly();
         
         public PoolMissiles(IGameFactory factory, int maxCountBullets, BulletData bulletData)
         {
@@ -16,7 +19,7 @@ namespace Infrastructure.Factory.Pools
                 Missile missile = factory.CreateMissile();
                 missile.Construct(bulletData);
                 missile.InActive();
-                Missiles.Add(missile);
+                _missiles.Add(missile);
             }
         }
     }

@@ -6,15 +6,18 @@ namespace Infrastructure.Factory.Pools
 {
     public class PoolMoney
     {
-        public List<Money> Moneys { get; private set; } = new();
+        private readonly List<Money> _moneys  = new();
         
+        public IReadOnlyList<Money> Moneys => 
+            _moneys.AsReadOnly();
+
         public PoolMoney(IGameFactory factory, int maxCountMoney)
         {
             for (int i = 0; i < maxCountMoney; i++)
             {
                 Money money = factory.CreateMoney();
                 money.gameObject.SetActive(false);
-                Moneys.Add(money);
+                _moneys.Add(money);
             }
         }
     }

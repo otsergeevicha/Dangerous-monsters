@@ -52,16 +52,6 @@ namespace Spawners
             }
         }
 
-        private async UniTaskVoid LaunchSpawn()
-        {
-            while (_isWork)
-            {
-                ReuseEnemy();
-                
-                await UniTask.Delay(_enemySpawnerData.IntervalSpawn);
-            }
-        }
-
         private Vector3 GetRandomPoint()
         {
             float randomX = Random.Range(Mathf.Min(_squarePoints[0].position.x, _squarePoints[1].position.x),
@@ -71,6 +61,16 @@ namespace Spawners
                 Mathf.Max(_squarePoints[1].position.z, _squarePoints[3].position.z));
 
             return new Vector3(randomX, 0f, randomZ);
+        }
+
+        private async UniTaskVoid LaunchSpawn()
+        {
+            while (_isWork)
+            {
+                ReuseEnemy();
+                
+                await UniTask.Delay(_enemySpawnerData.IntervalSpawn);
+            }
         }
     }
 }

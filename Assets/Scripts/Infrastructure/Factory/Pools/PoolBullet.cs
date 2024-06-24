@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Ammo;
-using Player.ShootingModule;
 using Services.Factory;
 using SO;
 
@@ -8,7 +7,10 @@ namespace Infrastructure.Factory.Pools
 {
     public class PoolBullet
     {
-        public List<Bullet> Bullets { get; private set; } = new();
+        private readonly List<Bullet> _bullets = new();
+
+        public IReadOnlyList<Bullet> Bullets =>
+            _bullets.AsReadOnly();
 
         public PoolBullet(IGameFactory factory, int maxCountBullets, BulletData bulletData)
         {
@@ -17,7 +19,7 @@ namespace Infrastructure.Factory.Pools
                 Bullet bullet = factory.CreateBullet();
                 bullet.Construct(bulletData);
                 bullet.InActive();
-                Bullets.Add(bullet);
+                _bullets.Add(bullet);
             }
         }
     }

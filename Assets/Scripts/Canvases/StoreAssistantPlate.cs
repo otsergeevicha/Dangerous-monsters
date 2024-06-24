@@ -20,10 +20,11 @@ namespace Canvases
         private const string ColorText = "<#64b0ef>";
         private const string MaxText = "MAX";
 
+        private readonly float _waitTime = 2f;
+        
         private int _currentCountAssistant = 0;
         private int _maxAssistant;
         private bool _isWaiting;
-        private float _waitTime = 2f;
         private float _currentFillAmount = 1f;
         private PoolCargoAssistant _poolAssistant;
 

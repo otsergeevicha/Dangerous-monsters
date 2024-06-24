@@ -85,7 +85,7 @@ namespace Enemies
         }
 
         private void SpawnLoot() => 
-            _lootSpawner.Spawn(GetId(), transform.position);
+            _lootSpawner.SpawnMoney(GetId(), transform.position);
         
         private void ResetHealth() => 
             _currentHealth = _maxHealth;

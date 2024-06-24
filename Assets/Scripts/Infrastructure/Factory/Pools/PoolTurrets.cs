@@ -7,8 +7,11 @@ namespace Infrastructure.Factory.Pools
 {
     public class PoolTurrets
     {
-        public List<Turret> Turrets { get; private set; } = new();
-        
+       private readonly List<Turret> _turrets = new();
+
+       public IReadOnlyList<Turret> Turrets =>
+           _turrets.AsReadOnly();
+
         public PoolTurrets(IGameFactory factory, TurretPlate[] turretPlates, TurretData turretData,
             PoolMissiles poolMissiles)
         {
@@ -19,7 +22,7 @@ namespace Infrastructure.Factory.Pools
                 Turret turret = factory.CreateTurret();
                 turret.Construct(turretPlates[i].GetCartridgeGun, turretData, poolMissiles);
                 turret.InActive();
-                Turrets.Add(turret);
+                _turrets.Add(turret);
             }
         }
     }

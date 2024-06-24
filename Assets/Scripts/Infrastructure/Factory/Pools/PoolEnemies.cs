@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Enemies;
 using Enemies.AI;
-using Loots;
 using Modules;
 using Services.Factory;
 using SO;

@@ -5,6 +5,11 @@ namespace SO
     [CreateAssetMenu(fileName = "NewPool", menuName = "Pools/Create", order = 1)]
     public class PoolData : ScriptableObject
     {
+        [Range(1, 10)]
+        public int MaxCountLootBoxes = 5;
+        [Range(0, 100)]
+        public int PercentSpawnFreeLoot = 50;
+        
         [Range(1, 15)]
         public int SizeAmmoBoxPlayer = 5;
 
