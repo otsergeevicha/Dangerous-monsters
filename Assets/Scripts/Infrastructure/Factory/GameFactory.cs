@@ -6,13 +6,13 @@ using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
 using Loots;
-using Modules;
 using Player;
 using RingZone;
 using Services.Assets;
 using Services.Factory;
 using Spawners;
 using Turrets;
+using Workers;
 
 namespace Infrastructure.Factory
 {
@@ -94,5 +94,13 @@ namespace Infrastructure.Factory
         public LootPoint CreateLootPoint() =>
             _assetsProvider.InstantiateEntity(Constants.LootPointPath)
                 .GetComponent<LootPoint>();
+
+        public Worker CreateWorker() =>
+            _assetsProvider.InstantiateEntity(Constants.WorkerPath)
+                .GetComponent<Worker>();
+
+        public WorkerSpawner CreateWorkerSpawner() =>
+            _assetsProvider.InstantiateEntity(Constants.WorkerSpawnerPath)
+                .GetComponent<WorkerSpawner>();
     }
 }

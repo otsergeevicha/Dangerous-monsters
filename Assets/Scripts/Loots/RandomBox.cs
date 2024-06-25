@@ -1,5 +1,4 @@
 ﻿using System;
-using Modules;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -43,8 +42,8 @@ namespace Loots
                     break;
             }
             
-            _animatorBody.enabled = false;
-            _animatorCap.enabled = true;
+            _animatorBody.enabled = true;
+            _animatorCap.enabled = false;
             
             gameObject.SetActive(true);
         }

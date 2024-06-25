@@ -11,6 +11,7 @@ using Player;
 using RingZone;
 using Spawners;
 using Turrets;
+using Workers;
 
 namespace Services.Factory
 {
@@ -34,5 +35,7 @@ namespace Services.Factory
         LoseScreen CreateLoseScreen();
         StartScreen CreateStartScreen();
         LootPoint CreateLootPoint();
+        Worker CreateWorker();
+        WorkerSpawner CreateWorkerSpawner();
     }
 }

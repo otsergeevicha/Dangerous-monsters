@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Infrastructure.Factory.Pools;
 using Loots;
-using Modules;
 using SO;
 using UnityEngine;
 
@@ -9,10 +8,10 @@ namespace Spawners
 {
     public class LootSpawner
     {
-        private Transform[] _squareLootSpawner;
+        private readonly Transform[] _squareLootSpawner;
         private readonly PoolLootBoxes _poolLootBoxes;
         private readonly PoolMoney _poolMoney;
-        private PoolData _poolData;
+        private readonly PoolData _poolData;
 
         public LootSpawner(PoolMoney poolMoney, PoolLootBoxes poolLootBoxes, Transform[] squareLootSpawner,
             PoolData poolData)

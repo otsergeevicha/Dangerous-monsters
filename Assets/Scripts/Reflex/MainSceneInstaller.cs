@@ -65,6 +65,7 @@ namespace Reflex
             CameraFollow cameraFollow = gameFactory.CreateCamera();
             Hero hero = gameFactory.CreateHero();
             EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
+            WorkerSpawner workerSpawner = gameFactory.CreateWorkerSpawner();
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
@@ -72,10 +73,11 @@ namespace Reflex
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
+            workerSpawner.Construct(pool.PoolWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);
-            
+
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);

@@ -21,11 +21,12 @@ namespace Infrastructure.Factory.Pools
         public PoolAmmoBoxPlayer PoolAmmoBox { get; private set; }
         public PoolCargoAssistant PoolCargoAssistant { get; private set; }
         public PoolEnemies PoolEnemies { get; private set; }
-        public PoolMissiles PoolMissiles { get; private set; }
-        public PoolTurrets PoolTurrets { get; private set; }
-        public PoolMoney PoolMoney { get; private set; }
         public PoolBullet PoolBullet { get; private set; }
-        public PoolLootBoxes PoolLootBoxes { get; private set; }
+        public PoolTurrets PoolTurrets { get; private set; }
+        public PoolWorkers PoolWorkers { get; private set; }
+        private PoolMissiles PoolMissiles { get; set; }
+        private PoolMoney PoolMoney { get; set; }
+        private PoolLootBoxes PoolLootBoxes { get; set; }
 
         public void Construct(IGameFactory factory, PoolData poolData,
             AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
@@ -48,6 +49,7 @@ namespace Infrastructure.Factory.Pools
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
+            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers);
         }
 
         protected override void OnDisabled() => 

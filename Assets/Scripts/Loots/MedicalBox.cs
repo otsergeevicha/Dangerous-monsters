@@ -15,8 +15,8 @@ namespace Loots
         {
             gameObject.SetActive(true);
             
-            _animatorBody.enabled = false;
-            _animatorCap.enabled = true;
+            _animatorBody.enabled = true;
+            _animatorCap.enabled = false;
             
                 /*
                  * 1. включиться
