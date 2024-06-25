@@ -24,10 +24,13 @@ namespace Canvases
         private float _currentFillAmount = 1f;
         private Worker _currentWorker;
         private PoolWorkers _workers;
+        private Vector3 _workplace;
 
-        public void Construct(PoolWorkers workers)
+        public void Construct(PoolWorkers workers, Vector3 workplace)
         {
+            _workplace = workplace;
             _workers = workers;
+            _timerWaiting = _timerSeconds;
             Spawn();
         }
 
@@ -64,8 +67,6 @@ namespace Canvases
                         FinishWaiting();
                         _isWaiting = false;
                         _currentFillAmount = 1f;
-                    
-                        Interactable(false);
                     }
                 }
 
@@ -77,8 +78,9 @@ namespace Canvases
                     }
                     else
                     {
-                        Spawn();
                         Interactable(true);
+                        _image.fillAmount = _currentFillAmount;
+                        Spawn();
                         _timerWaiting = _timerSeconds;
                         _isEmptyPlace = false;
                     }
@@ -96,7 +98,7 @@ namespace Canvases
             if (_currentWorker != null)
             {
                 _currentWorker.OnActive();
-                _currentWorker.transform.position = transform.position;
+                _currentWorker.transform.position = new Vector3(transform.position.x, -.44f, transform.position.z);
 
                 _isEmptyPlace = false;
             }
@@ -109,7 +111,8 @@ namespace Canvases
 
         private void FinishWaiting()
         {
-            _currentWorker.FollowHero();
+            _currentWorker.SendWorkplace(_workplace);
+            Interactable(false);
             _isEmptyPlace = true;
         }
 

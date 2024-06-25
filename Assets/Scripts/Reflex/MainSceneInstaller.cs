@@ -23,7 +23,8 @@ namespace Reflex
 {
     public class MainSceneInstaller : MonoCache, IInstaller
     {
-        [Header("Objects with scene")]
+        [Header("Objects with scene")] 
+        [SerializeField] private Transform _workplace;
         [SerializeField] private CartridgeGun[] _cartridgeGuns;
         [SerializeField] private StorageAmmoPlate _storageAmmoPlate;
         [SerializeField] private Transform[] _squareEnemySpawner = new Transform[4];
@@ -43,6 +44,7 @@ namespace Reflex
         [SerializeField] private BulletData _bulletData;
         [SerializeField] private TurretData _turretData;
         [SerializeField] private PriceListData _priceList;
+        [SerializeField] private WorkerData _workerData;
 
         private WindowModule _windowModule;
         
@@ -69,11 +71,11 @@ namespace Reflex
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData);
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
-            workerSpawner.Construct(pool.PoolWorkers);
+            workerSpawner.Construct(pool.PoolWorkers, _workplace.position);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);

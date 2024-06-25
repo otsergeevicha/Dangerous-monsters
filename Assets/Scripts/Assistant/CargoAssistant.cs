@@ -1,5 +1,4 @@
-﻿using Ammo;
-using ContactPlatforms;
+﻿using ContactPlatforms;
 using Plugins.MonoCache;
 using SO;
 using Triggers;
