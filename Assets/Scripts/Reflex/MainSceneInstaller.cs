@@ -24,7 +24,7 @@ namespace Reflex
     public class MainSceneInstaller : MonoCache, IInstaller
     {
         [Header("Objects with scene")] 
-        [SerializeField] private Transform _workplace;
+        [SerializeField] private Workplace _workplace;
         [SerializeField] private CartridgeGun[] _cartridgeGuns;
         [SerializeField] private StorageAmmoPlate _storageAmmoPlate;
         [SerializeField] private Transform[] _squareEnemySpawner = new Transform[4];
@@ -75,7 +75,8 @@ namespace Reflex
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
-            workerSpawner.Construct(pool.PoolWorkers, _workplace.position);
+            workerSpawner.Construct(pool.PoolWorkers, _workplace.transform.position);
+            _workplace.Construct(_poolData.MaxCountWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);

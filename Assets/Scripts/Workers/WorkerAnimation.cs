@@ -19,22 +19,22 @@ namespace Workers
 
         public void EnableSitingIdle()
         {
-            throw new System.NotImplementedException();
+           // throw new System.NotImplementedException();
         }
 
         public void EnableRun()
         {
-            throw new System.NotImplementedException();
+          //  throw new System.NotImplementedException();
         }
 
         public void EnableWalk()
         {
-            throw new System.NotImplementedException();
+           // throw new System.NotImplementedException();
         }
 
         public void EnableIdle()
         {
-            throw new System.NotImplementedException();
+           // throw new System.NotImplementedException();
         }
     }
 }
