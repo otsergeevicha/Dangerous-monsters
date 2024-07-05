@@ -3072,6 +3072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 3640318104427335533}
+  _particle: {fileID: 4549480851949344180}
 --- !u!222 &2689070004816824059
 CanvasRenderer:
   m_ObjectHideFlags: 0

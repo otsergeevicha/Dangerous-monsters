@@ -7,11 +7,15 @@ namespace Canvases
     public class LoseScreen : MonoCache
     {
         [HideInInspector] [SerializeField] private Canvas _canvas;
+        [SerializeField] private ParticleSystem _particle;
 
         public event Action OnClickReStart;
         
-        private void Start() => 
+        private void Start()
+        {
             _canvas.enabled = false;
+            _particle.gameObject.SetActive(false);
+        }
 
         private void OnValidate() => 
             _canvas ??= Get<Canvas>();
@@ -19,7 +23,7 @@ namespace Canvases
         public void OnActive()
         {
             Time.timeScale = 0;
-            _canvas.enabled = true;
+            _particle.gameObject.SetActive(true);
             SetCursorState(false);
         }
 
@@ -27,7 +31,7 @@ namespace Canvases
         {
             OnClickReStart?.Invoke();
             Time.timeScale = 1;
-            _canvas.enabled = false;
+            _particle.gameObject.SetActive(false);
             
             SetCursorState(true);
         }

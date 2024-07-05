@@ -1,7 +1,7 @@
 ﻿using Agava.YandexGames;
 using CameraModule;
 using Canvases;
-using ContactPlatforms;
+using ContactZones;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player;
@@ -25,6 +25,8 @@ namespace Reflex
     {
         [Header("Objects with scene")] 
         [SerializeField] private Workplace _workplace;
+        [SerializeField] private StorageGem _storageGem;
+        [SerializeField] private Transform[] _gemMiners = new Transform[3];
         [SerializeField] private CartridgeGun[] _cartridgeGuns;
         [SerializeField] private StorageAmmoPlate _storageAmmoPlate;
         [SerializeField] private Transform[] _squareEnemySpawner = new Transform[4];
@@ -71,11 +73,11 @@ namespace Reflex
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem.gameObject.transform.position);
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
-            workerSpawner.Construct(pool.PoolWorkers, _workplace.transform.position);
+            workerSpawner.Construct(pool.PoolWorkers, _workplace.gameObject.transform.position);
             _workplace.Construct(_poolData.MaxCountWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 

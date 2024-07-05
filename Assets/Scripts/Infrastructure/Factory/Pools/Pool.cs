@@ -1,4 +1,4 @@
-﻿using ContactPlatforms;
+﻿using ContactZones;
 using Enemies.AI;
 using Modules;
 using Plugins.MonoCache;
@@ -31,7 +31,8 @@ namespace Infrastructure.Factory.Pools
         public void Construct(IGameFactory factory, PoolData poolData,
             AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
             StorageAmmoPlate storageAmmoPlate, TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData,
-            Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData)
+            Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData, Transform[] gemMiners,
+            Vector3 storageGem)
         {
             _directionOperator = new DirectionOperator();
             _enemyHealthModule = new EnemyHealthModule();
@@ -49,7 +50,7 @@ namespace Infrastructure.Factory.Pools
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
-            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData);
+            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners, storageGem);
         }
 
         protected override void OnDisabled() => 

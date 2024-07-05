@@ -5,7 +5,12 @@ namespace Workers.AI
 {
     public class IsReadyFollowWorkplace : WorkerConditional
     {
-        public override TaskStatus OnUpdate() => 
-            Worker.IsReadyWork ? TaskStatus.Success : TaskStatus.Failure;
+        public override TaskStatus OnUpdate()
+        {
+            if (Worker.IsReadyWork && !Worker.AtWork)
+                return TaskStatus.Success;
+
+            return TaskStatus.Failure;
+        }
     }
 }

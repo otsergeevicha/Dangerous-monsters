@@ -31,6 +31,7 @@ namespace Canvases
             _workplace = workplace;
             _workers = workers;
             _timerWaiting = _timerSeconds;
+            
             Spawn();
         }
 
@@ -98,8 +99,8 @@ namespace Canvases
             if (_currentWorker != null)
             {
                 _currentWorker.OnActive();
-                _currentWorker.transform.position = new Vector3(transform.position.x, -.44f, transform.position.z);
-
+                _currentWorker.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+                _currentWorker.transform.rotation = Quaternion.Euler(-42f, 180f, 0f);
                 _isEmptyPlace = false;
             }
             else

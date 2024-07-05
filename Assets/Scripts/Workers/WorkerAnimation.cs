@@ -1,4 +1,5 @@
-﻿using Plugins.MonoCache;
+﻿using System;
+using Plugins.MonoCache;
 using SO;
 using UnityEngine;
 
@@ -14,27 +15,48 @@ namespace Workers
         public void Construct(WorkerData workerData) => 
             _workerData = workerData;
 
+        public event Action OnProcessMining;
+
         private void OnValidate() => 
             _animator ??= Get<Animator>();
 
-        public void EnableSitingIdle()
-        {
-           // throw new System.NotImplementedException();
-        }
+        public void EnableSitingIdle() => 
+            _animator.SetBool(_workerData.IdleSitingHash, true);
 
         public void EnableRun()
         {
-          //  throw new System.NotImplementedException();
+            _animator.SetBool(_workerData.IdleSitingHash, false);
+            _animator.SetBool(_workerData.WalkingHash, false);
+            _animator.SetBool(_workerData.MiningHash, false);
+            
+            _animator.SetBool(_workerData.SlowRunHash, true);
         }
 
         public void EnableWalk()
         {
-           // throw new System.NotImplementedException();
+            _animator.SetBool(_workerData.IdleSitingHash, false);
+            _animator.SetBool(_workerData.SlowRunHash, false);
+            _animator.SetBool(_workerData.MiningHash, false);
+            
+            _animator.SetBool(_workerData.WalkingHash, true);
         }
 
         public void EnableIdle()
         {
-           // throw new System.NotImplementedException();
+            _animator.SetBool(_workerData.IdleSitingHash, false);
+           _animator.SetBool(_workerData.SlowRunHash, false);
+           _animator.SetBool(_workerData.WalkingHash, false);
+           _animator.SetBool(_workerData.MiningHash, false);
+        }
+
+        public void EnableMine()
+        {
+            _animator.SetBool(_workerData.IdleSitingHash, false);
+            _animator.SetBool(_workerData.SlowRunHash, false);
+            _animator.SetBool(_workerData.WalkingHash, false);
+            _animator.SetBool(_workerData.MiningHash, true);
+            
+            OnProcessMining?.Invoke();
         }
     }
 }
