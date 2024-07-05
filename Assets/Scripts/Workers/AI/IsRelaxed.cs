@@ -7,7 +7,7 @@ namespace Workers.AI
     {
         public override TaskStatus OnUpdate()
         {
-            if (!Worker.IsHandEmpty && !Worker.IsStorageEmpty && Worker.AtWork)
+            if (!Worker.IsHandEmpty && Worker.IsStorageFulled && Worker.AtWork)
                 return TaskStatus.Success;
 
             return TaskStatus.Failure;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ContactZones;
 using Services.Factory;
 using SO;
 using UnityEngine;
@@ -14,12 +15,12 @@ namespace Infrastructure.Factory.Pools
             _workers.AsReadOnly();
 
         public PoolWorkers(IGameFactory factory, int maxCountWorkers, WorkerData workerData, Transform[] gemMiners,
-            Vector3 storageGem)
+            Vector3 storageGemPoint, StorageGem storageGem)
         {
             for (int i = 0; i < maxCountWorkers; i++)
             {
                 Worker worker = factory.CreateWorker();
-                worker.Construct(workerData, gemMiners, storageGem);
+                worker.Construct(workerData, gemMiners, storageGemPoint, storageGem);
                 worker.InActive();
                 _workers.Add(worker);
             }

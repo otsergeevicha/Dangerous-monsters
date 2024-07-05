@@ -15,8 +15,6 @@ namespace Workers
         public void Construct(WorkerData workerData) => 
             _workerData = workerData;
 
-        public event Action OnProcessMining;
-
         private void OnValidate() => 
             _animator ??= Get<Animator>();
 
@@ -54,9 +52,8 @@ namespace Workers
             _animator.SetBool(_workerData.IdleSitingHash, false);
             _animator.SetBool(_workerData.SlowRunHash, false);
             _animator.SetBool(_workerData.WalkingHash, false);
-            _animator.SetBool(_workerData.MiningHash, true);
             
-            OnProcessMining?.Invoke();
+            _animator.SetBool(_workerData.MiningHash, true);
         }
     }
 }

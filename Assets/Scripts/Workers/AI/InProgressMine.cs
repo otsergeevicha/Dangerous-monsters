@@ -6,6 +6,6 @@ namespace Workers.AI
     public class InProgressMine : WorkerConditional
     {
         public override TaskStatus OnUpdate() =>
-            Worker.IsProcessMining ? TaskStatus.Running : TaskStatus.Failure;
+            Worker.IsProcessMining ? TaskStatus.Success : TaskStatus.Failure;
     }
 }

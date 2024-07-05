@@ -1,4 +1,5 @@
-﻿using Plugins.MonoCache;
+﻿using ContactZones;
+using Plugins.MonoCache;
 using SO;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,10 +14,12 @@ namespace Workers
         [SerializeField] private Transform _hummer;
         [SerializeField] private Transform _gem;
         private Transform[] _gemMiners;
+        private StorageGem _storageGem;
 
-        public void Construct(WorkerData workerData, Transform[] gemMiners, Vector3 storageGem)
+        public void Construct(WorkerData workerData, Transform[] gemMiners, Vector3 storageGemPoint, StorageGem storageGem)
         {
-            StorageGemPoint = storageGem;
+            _storageGem = storageGem;
+            StorageGemPoint = storageGemPoint;
             _gemMiners = gemMiners;
             WorkerData = workerData;
             WorkerAnimation = Get<WorkerAnimation>();
@@ -34,15 +37,31 @@ namespace Workers
         public bool IsReadyWork { get; private set; }
         public bool IsProcessMining { get; set; }
         public bool AtWork { get; private set; }
-        public bool IsStorageEmpty { get; set; }
+
+        public bool IsStorageFulled => 
+            _storageGem.IsFulled;
+
         public bool IsHandEmpty { get; set; } = true;
+
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.TryGetComponent(out StorageGem storage))
+            {
+                if (!IsHandEmpty)
+                {
+                    storage.ApplyGem();
+                    IsHandEmpty = true;
+                    _gem.gameObject.SetActive(false);
+                }
+            }
+        }
 
         public void OnActive() => 
             gameObject.SetActive(true);
 
         public void InActive() => 
             gameObject.SetActive(false);
-
+        
         public void SendWorkplace(Vector3 workplace)
         {
             Workplace = workplace;

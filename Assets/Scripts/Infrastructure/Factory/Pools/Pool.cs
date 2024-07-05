@@ -32,7 +32,7 @@ namespace Infrastructure.Factory.Pools
             AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
             StorageAmmoPlate storageAmmoPlate, TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData,
             Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData, Transform[] gemMiners,
-            Vector3 storageGem)
+            StorageGem storageGem)
         {
             _directionOperator = new DirectionOperator();
             _enemyHealthModule = new EnemyHealthModule();
@@ -50,7 +50,7 @@ namespace Infrastructure.Factory.Pools
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
-            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners, storageGem);
+            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners, storageGem.transform.position, storageGem);
         }
 
         protected override void OnDisabled() => 
