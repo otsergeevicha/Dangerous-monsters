@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using Loots;
 using Plugins.MonoCache;
 using UnityEngine;
@@ -9,10 +11,18 @@ namespace ContactZones
     {
         [SerializeField] private Gem[] _gems = new Gem[27];
 
+        private const int MillisecondsDelay = 500;
+        private const int CountReturnGems = 1;
+
+        private bool _isReplenishment;
+        
         private int _currentAmountGems = 0;
         private int _maxAmount;
 
         public bool IsFulled { get; private set; }
+
+        public bool IsEmpty => 
+            _currentAmountGems == 0;
 
         private void Start()
         {
@@ -44,7 +54,10 @@ namespace ContactZones
             }
         }
 
-        public void Spend()
+        public void HeroOut() => 
+            _isReplenishment = false;
+
+        private void Spend()
         {
             Gem gem = _gems.LastOrDefault(gem => gem.isActiveAndEnabled);
             
@@ -57,6 +70,26 @@ namespace ContactZones
                     _currentAmountGems = 0;
                 
                 gem.InActive();
+            }
+        }
+
+        public async UniTaskVoid GetGem(Action<int> countGem)
+        {
+            _isReplenishment = true;
+
+            while (_isReplenishment)
+            {
+                if (IsEmpty)
+                {
+                    _isReplenishment = false;
+                }
+                else
+                {
+                    countGem?.Invoke(CountReturnGems);
+                    Spend();
+                }
+
+                await UniTask.Delay(MillisecondsDelay);
             }
         }
     }

@@ -11,5 +11,6 @@ namespace Services.Bank
         bool Check(int price);
         int ReadCurrentMoney();
         int ReadCurrentGem();
+        void ApplyGem(int gem);
     }
 }

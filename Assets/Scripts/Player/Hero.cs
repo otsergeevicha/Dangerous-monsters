@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CameraModule;
 using Canvases;
+using ContactZones;
 using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
@@ -70,6 +71,9 @@ namespace Player
 
             _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
             _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
+            
+            _lootTriggers.StorageGemEntered += OnStorageGemEntered;
+            _lootTriggers.StorageGemExited += OnStorageGemExited;
 
             _lootTriggers.OnPickUpMoney += ApplyMoney;
 
@@ -82,6 +86,9 @@ namespace Player
 
             _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
             _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
+            
+            _lootTriggers.StorageGemEntered -= OnStorageGemEntered;
+            _lootTriggers.StorageGemExited -= OnStorageGemExited;
 
             _lootTriggers.OnPickUpMoney -= ApplyMoney;
             
@@ -119,6 +126,17 @@ namespace Player
 
         private void OnStorageExited() =>
             _basketPlayer.StopReplenishment();
+
+        private void OnStorageGemEntered(StorageGem storageGem)
+        {
+            if (storageGem.IsEmpty)
+                return;
+
+            storageGem.GetGem(_wallet.ApplyGem).Forget();
+        }
+
+        private void OnStorageGemExited(StorageGem storageGem) => 
+            storageGem.HeroOut();
 
         private void OnCartridgeGunEntered(CartridgeGun cartridgeGun)
         {

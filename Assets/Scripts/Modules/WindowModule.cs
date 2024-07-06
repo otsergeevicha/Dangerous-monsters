@@ -46,6 +46,8 @@ namespace Modules
         public void Dispose()
         {
             _wallet.MoneyChanged -= _hud.UpdateMoneyView;
+            _wallet.GemChanged -= _hud.UpdateGemView;
+            
             _startScreen.OnClickStart -= LaunchGame;
             _loseScreen.OnClickReStart -= TryAgain;
         }

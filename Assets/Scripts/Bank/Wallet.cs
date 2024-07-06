@@ -9,6 +9,7 @@ namespace Bank
     {
         private readonly ISave _save;
         private int _currentMoney;
+        private int _currentGem;
 
         public Wallet(ISave save)
         {
@@ -22,14 +23,28 @@ namespace Bank
         public void ApplyMoney(int money)
         {
             _currentMoney += money;
-            Notify();
+            MoneyChanged?.Invoke(_currentMoney);
             WritingSave();
         }
 
         public void SpendMoney(int money)
         {
             _currentMoney -= Mathf.Clamp(money, 0, int.MaxValue);
-            Notify();
+            MoneyChanged?.Invoke(_currentMoney);
+            WritingSave();
+        }
+
+        public void ApplyGem(int gem)
+        {
+            _currentGem += gem;
+            GemChanged?.Invoke(_currentGem);
+            WritingSave();
+        }
+
+        public void SpendGem(int gem)
+        {
+            _currentGem -= Mathf.Clamp(gem, 0, int.MaxValue);
+            GemChanged?.Invoke(_currentGem);
             WritingSave();
         }
 
@@ -45,10 +60,8 @@ namespace Bank
         private void WritingSave()
         {
             _save.AccessProgress().DataWallet.RecordMoney(_currentMoney);
+            _save.AccessProgress().DataWallet.RecordGem(_currentGem);
             _save.Save();
         }
-
-        private void Notify() => 
-            MoneyChanged?.Invoke(_currentMoney);
     }
 }
