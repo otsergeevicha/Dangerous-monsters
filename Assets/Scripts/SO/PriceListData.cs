@@ -7,5 +7,8 @@ namespace SO
     {
         [Range(1, 1000)]
         public int SectionPriceMultiplier = 100;
+
+        [Range(3, 1000)] 
+        public int PriceTransitionPlate = 3;
     }
 }

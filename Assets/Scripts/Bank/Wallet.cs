@@ -15,6 +15,7 @@ namespace Bank
         {
             _save = save;
             _currentMoney = save.AccessProgress().DataWallet.RemainingMoney;
+            _currentGem = save.AccessProgress().DataWallet.RemainingGem;
         }
 
         public event Action<int> MoneyChanged;

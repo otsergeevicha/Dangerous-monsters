@@ -27,6 +27,7 @@ namespace Reflex
         [SerializeField] private Workplace _workplace;
         [SerializeField] private StorageGem _storageGem;
         [SerializeField] private Transform[] _gemMiners = new Transform[3];
+        [SerializeField] private TransitionPlate[] _transitionPlates = new TransitionPlate[2];
         [SerializeField] private CartridgeGun[] _cartridgeGuns;
         [SerializeField] private StorageAmmoPlate _storageAmmoPlate;
         [SerializeField] private Transform[] _squareEnemySpawner = new Transform[4];
@@ -82,6 +83,9 @@ namespace Reflex
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
                 sectionPlate.Construct(wallet, _priceList, _poolData);
+
+            foreach (TransitionPlate plate in _transitionPlates)
+                plate.Construct(wallet, _priceList.PriceTransitionPlate);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
             
