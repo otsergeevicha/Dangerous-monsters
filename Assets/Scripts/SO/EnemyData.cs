@@ -10,26 +10,48 @@ namespace SO
         
         [HideInInspector] public float DeviationAmount = 15f;
 
-        [Header("Health enemies")] 
+        [Header("Health simple enemies")] 
         [Range(1, 50)]
-        public int ZeroLevelHealth = 1;
+        public int ZeroEnemyHealth = 1;
         [Range(1, 50)]
-        public int OneLevelHealth = 1;
+        public int OneEnemyHealth = 1;
         [Range(1, 50)]
-        public int TwoLevelHealth = 1;
+        public int TwoEnemyHealth = 1;
         [Range(1, 50)]
-        public int ThreeLevelHealth = 1;
+        public int ThreeEnemyHealth = 1;
         [Range(1, 50)]
-        public int FourLevelHealth = 1;
+        public int FourEnemyHealth = 1;
         [Range(1, 50)]
-        public int FiveLevelHealth = 1;
+        public int FiveEnemyHealth = 1;
         [Range(1, 50)]
-        public int SixLevelHealth = 1;
+        public int SixEnemyHealth = 1;
         [Range(1, 50)]
-        public int SevenLevelHealth = 1;
+        public int SevenEnemyHealth = 1;
         [Range(1, 50)]
-        public int EightLevelHealth = 1;
+        public int EightEnemyHealth = 1;
         [Range(1, 50)]
-        public int NineLevelHealth = 1;
+        public int NineEnemyHealth = 1;
+        
+        [Header("Health boss enemies")] 
+        [Range(1, 500)]
+        public int OneBossHealth = 1;
+        [Range(1, 500)]
+        public int TwoBossHealth = 1;
+        [Range(1, 500)]
+        public int ThreeBossHealth = 1;
+        [Range(1, 500)]
+        public int FourBossHealth = 1;
+        [Range(1, 500)]
+        public int FiveBossHealth = 1;
+        [Range(1, 500)]
+        public int SixBossHealth = 1;
+        [Range(1, 500)]
+        public int SevenBossHealth = 1;
+        [Range(1, 500)]
+        public int EightBossHealth = 1;
+        [Range(1, 500)]
+        public int NineBossHealth = 1;
+        [Range(1, 500)]
+        public int TenBossHealth = 1;
     }
 }

@@ -25,16 +25,28 @@
     public const string StartScreenPath = "Canvases/StartScreen";
     
     //path enemies
-    public const string ZeroPath = "Enemies/ZeroEnemy";
-    public const string OnePath = "Enemies/OneEnemy";
-    public const string TwoPath = "Enemies/TwoEnemy";
-    public const string ThreePath = "Enemies/ThreeEnemy";
-    public const string FourPath = "Enemies/FourEnemy";
-    public const string FivePath = "Enemies/FiveEnemy";
-    public const string SixPath = "Enemies/SixEnemy";
-    public const string SevenPath = "Enemies/SevenEnemy";
-    public const string EightPath = "Enemies/EightEnemy";
-    public const string NinePath = "Enemies/NineEnemy";
+    public const string ZeroPath = "Enemies/SimpleEnemy/ZeroEnemy";
+    public const string OnePath = "Enemies/SimpleEnemy/OneEnemy";
+    public const string TwoPath = "Enemies/SimpleEnemy/TwoEnemy";
+    public const string ThreePath = "Enemies/SimpleEnemy/ThreeEnemy";
+    public const string FourPath = "Enemies/SimpleEnemy/FourEnemy";
+    public const string FivePath = "Enemies/SimpleEnemy/FiveEnemy";
+    public const string SixPath = "Enemies/SimpleEnemy/SixEnemy";
+    public const string SevenPath = "Enemies/SimpleEnemy/SevenEnemy";
+    public const string EightPath = "Enemies/SimpleEnemy/EightEnemy";
+    public const string NinePath = "Enemies/SimpleEnemy/NineEnemy";
+    
+    //path bosses
+    public const string OneBossPath = "Enemies/Bosses/OneLevelBoss";
+    public const string TwoBossPath = "Enemies/Bosses/TwoLevelBoss";
+    public const string ThreeBossPath = "Enemies/Bosses/ThreeLevelBoss";
+    public const string FourBossPath = "Enemies/Bosses/FourLevelBoss";
+    public const string FiveBossPath = "Enemies/Bosses/FiveLevelBoss";
+    public const string SixBossPath = "Enemies/Bosses/SixLevelBoss";
+    public const string SevenBossPath = "Enemies/Bosses/SevenLevelBoss";
+    public const string EightBossPath = "Enemies/Bosses/EightLevelBoss";
+    public const string NineBossPath = "Enemies/Bosses/NineLevelBoss";
+    public const string TenBossPath = "Enemies/Bosses/TenLevelBoss";
 
     //check device
     public const string KeyboardMouse = "KeyboardMouse";

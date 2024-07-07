@@ -24,6 +24,7 @@ namespace Reflex
     public class MainSceneInstaller : MonoCache, IInstaller
     {
         [Header("Objects with scene")] 
+        [SerializeField] private Transform _spawnPointBoss;
         [SerializeField] private Workplace _workplace;
         [SerializeField] private StorageGem _storageGem;
         [SerializeField] private Transform[] _gemMiners = new Transform[3];
@@ -74,10 +75,10 @@ namespace Reflex
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, _spawnPointBoss.position);
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
-            enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData);
+            enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);
             workerSpawner.Construct(pool.PoolWorkers, _workplace.gameObject.transform.position);
             _workplace.Construct(_poolData.MaxCountWorkers);
 

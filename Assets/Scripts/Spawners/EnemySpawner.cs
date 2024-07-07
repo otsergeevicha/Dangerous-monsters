@@ -11,34 +11,35 @@ namespace Spawners
     public class EnemySpawner : MonoCache
     {
         private Transform[] _squarePoints;
-        private PoolEnemies _pool;
+        private PoolEnemies _poolSimpleEnemies;
         private EnemySpawnerData _enemySpawnerData;
+        
         private bool _isWork = true;
-
-        public void Construct(Transform[] squareEnemySpawner, PoolEnemies pool, EnemySpawnerData enemySpawnerData)
+        
+        public void Construct(Transform[] squareEnemySpawner, PoolEnemies poolSimpleEnemies, EnemySpawnerData enemySpawnerData, PoolBosses poolBosses, PoolData poolData)
         {
             _enemySpawnerData = enemySpawnerData;
-            _pool = pool;
+            _poolSimpleEnemies = poolSimpleEnemies;
             _squarePoints = squareEnemySpawner;
 
-            foreach (Enemy enemy in _pool.Enemies) 
+            foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
                 enemy.Died += ReuseEnemy;
+            
+            poolBosses.Bosses[poolData.CurrentLevelGame - 1].OnActive();
         }
 
-        private void Start()
-        {
+        private void Start() => 
             LaunchSpawn().Forget();
-        }
 
         protected override void OnDisabled()
         {
-            foreach (Enemy enemy in _pool.Enemies) 
+            foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
                 enemy.Died -= ReuseEnemy;
         }
 
         private void ReuseEnemy()
         {
-            Enemy currentEnemy = _pool.Enemies.FirstOrDefault(enemy =>
+            Enemy currentEnemy = _poolSimpleEnemies.Enemies.FirstOrDefault(enemy =>
                 enemy.isActiveAndEnabled == false);
 
             if (currentEnemy != null)

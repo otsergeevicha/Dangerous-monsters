@@ -21,6 +21,7 @@ namespace Infrastructure.Factory.Pools
         public PoolAmmoBoxPlayer PoolAmmoBox { get; private set; }
         public PoolCargoAssistant PoolCargoAssistant { get; private set; }
         public PoolEnemies PoolEnemies { get; private set; }
+        public PoolBosses PoolBosses { get; private set; }
         public PoolBullet PoolBullet { get; private set; }
         public PoolTurrets PoolTurrets { get; private set; }
         public PoolWorkers PoolWorkers { get; private set; }
@@ -32,7 +33,7 @@ namespace Infrastructure.Factory.Pools
             AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
             StorageAmmoPlate storageAmmoPlate, TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData,
             Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData, Transform[] gemMiners,
-            StorageGem storageGem)
+            StorageGem storageGem, Vector3 spawnPointBoss)
         {
             _directionOperator = new DirectionOperator();
             _enemyHealthModule = new EnemyHealthModule();
@@ -47,6 +48,7 @@ namespace Infrastructure.Factory.Pools
 
             PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _enemyHealthModule,
                 _lootSpawner);
+            PoolBosses = new PoolBosses(factory, enemyData,_directionOperator, _enemyHealthModule, _lootSpawner, spawnPointBoss);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);

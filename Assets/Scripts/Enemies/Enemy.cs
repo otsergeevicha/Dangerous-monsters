@@ -24,24 +24,40 @@ namespace Enemies
         EightLevel,
         NineLevel
     }
+    
+    enum BossId
+    {
+        OneLevel = 10,
+        TwoLevel = 20,
+        ThreeLevel = 30,
+        FourLevel = 40,
+        FiveLevel = 50,
+        SixLevel = 60,
+        SevenLevel = 70,
+        EightLevel = 80,
+        NineLevel = 90,
+        TenLevel = 100
+    }
 
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(EnemyAnimation))]
     public abstract class Enemy : MonoCache
     {
+        protected int MaxHealth;
+        
         private HealthBar _healthBar;
         private LootSpawner _lootSpawner;
         private EnemyHealthModule _enemyHealthModule;
         private DirectionOperator _directionOperator;
-        private int _maxHealth;
-        private EnemyData _enemyData;
         private int _currentHealth;
 
         public event Action Died;
         public bool IsCalm { get; protected set; } = true;
         public bool IsReached { get; private set; }
+        protected EnemyData EnemyData { get; private set; }
         
         protected abstract int GetId();
+        protected abstract void SetCurrentHealth();
         public void Construct(EnemyData enemyData, DirectionOperator directionOperator,
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar)
         {
@@ -49,14 +65,13 @@ namespace Enemies
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
             _directionOperator = directionOperator;
-            _enemyData = enemyData;
-            _maxHealth = enemyData.EightLevelHealth;
+            EnemyData = enemyData;
             
             ResetHealth();
         }
-
+        
         public Vector3 GetDirection() => 
-            _directionOperator.Generate(transform.position, Vector3.zero, _enemyData.DeviationAmount);
+            _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
 
         public void SetReached(bool flag) =>
             IsReached = flag;
@@ -65,7 +80,7 @@ namespace Enemies
         {
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
-            _healthBar.ChangeValue(_currentHealth, _maxHealth);
+            _healthBar.ChangeValue(_currentHealth, MaxHealth);
             
             if (_currentHealth <= 0)
             {
@@ -88,6 +103,6 @@ namespace Enemies
             _lootSpawner.SpawnMoney(GetId(), transform.position);
         
         private void ResetHealth() => 
-            _currentHealth = _maxHealth;
+            _currentHealth = MaxHealth;
     }
 }
