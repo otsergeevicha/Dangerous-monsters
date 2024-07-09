@@ -65,5 +65,18 @@ namespace Modules
         {
             _startScreen.OnActive();
         }
+
+        public void WinScreen()
+        {
+            //1.откл управление
+            //2. экран вина
+            //3. тайм скейл 0
+        }
+
+        public void UpLevelCompleted()
+        {
+            //1. активируем кнопку продолжить
+            //2. тайм скейл =1
+        }
     }
 }

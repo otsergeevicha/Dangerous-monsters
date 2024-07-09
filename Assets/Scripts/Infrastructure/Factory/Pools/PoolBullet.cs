@@ -22,5 +22,11 @@ namespace Infrastructure.Factory.Pools
                 _bullets.Add(bullet);
             }
         }
+
+        public void AdaptingLevel()
+        {
+            foreach (Bullet bullet in _bullets) 
+                bullet.InActive();
+        }
     }
 }

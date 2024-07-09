@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ammo;
 using Services.Factory;
@@ -55,6 +56,12 @@ namespace Infrastructure.Factory.Pools
                 _ammoBoxes[i].SetPosition(new Vector3(basketTransform.position.x, basketTransform.position.y + ratePositionY, basketTransform.position.z));
                 ratePositionY += .4f;
             }
+        }
+
+        public void AdaptingLevel()
+        {
+            foreach (AmmoBox box in _ammoBoxes) 
+                box.InActive();
         }
     }
 }

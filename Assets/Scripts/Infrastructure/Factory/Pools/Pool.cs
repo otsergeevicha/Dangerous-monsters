@@ -33,7 +33,7 @@ namespace Infrastructure.Factory.Pools
             AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
             StorageAmmoPlate storageAmmoPlate, TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData,
             Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData, Transform[] gemMiners,
-            StorageGem storageGem, Vector3 spawnPointBoss)
+            StorageGem storageGem, Vector3 spawnPointBoss, FinishPlate finishPlate)
         {
             _directionOperator = new DirectionOperator();
             _enemyHealthModule = new EnemyHealthModule();
@@ -47,12 +47,25 @@ namespace Infrastructure.Factory.Pools
             _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData);
 
             PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _enemyHealthModule,
-                _lootSpawner);
-            PoolBosses = new PoolBosses(factory, enemyData,_directionOperator, _enemyHealthModule, _lootSpawner, spawnPointBoss);
+                _lootSpawner, finishPlate);
+            PoolBosses = new PoolBosses(factory, enemyData,_directionOperator, _enemyHealthModule, _lootSpawner, spawnPointBoss, finishPlate);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
             PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners, storageGem.transform.position, storageGem);
+        }
+
+        public void UpdateLevel()
+        {
+            PoolAmmoBox.AdaptingLevel();
+            PoolCargoAssistant.AdaptingLevel();
+            PoolMoney.AdaptingLevel();
+            PoolEnemies.AdaptingLevel();
+            PoolBosses.AdaptingLevel();
+            PoolMissiles.AdaptingLevel();
+            PoolTurrets.AdaptingLevel();
+            PoolBullet.AdaptingLevel();
+            PoolWorkers.AdaptingLevel();
         }
 
         protected override void OnDisabled() => 

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using ContactZones;
 using Enemies;
 using Enemies.AI;
 using Modules;
 using Services.Factory;
 using SO;
 using Spawners;
+using UnityEngine;
 
 namespace Infrastructure.Factory.Pools
 {
@@ -24,38 +26,62 @@ namespace Infrastructure.Factory.Pools
             { 10, new[] { Constants.SevenPath, Constants.EightPath, Constants.NinePath } }
         };
         
-        private DirectionOperator _directionOperator;
-        private EnemyHealthModule _enemyHealthModule;
-        private LootSpawner _lootSpawner;
+        private readonly IGameFactory _factory;
+        private readonly DirectionOperator _directionOperator;
+        private readonly EnemyHealthModule _enemyHealthModule;
+        private readonly LootSpawner _lootSpawner;
+        private readonly PoolData _poolData;
+        private readonly EnemyData _enemyData;
+        private readonly FinishPlate _finishPlate;
+        private int[] _levelCounts;
 
         public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData,
-            DirectionOperator directionOperator, EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner)
+            DirectionOperator directionOperator, EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner,
+            FinishPlate finishPlate)
         {
+            _factory = factory;
+            _finishPlate = finishPlate;
+            _enemyData = enemyData;
+            _poolData = poolData;
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
             _directionOperator = directionOperator;
             
-            int[] levelCounts =
-            {
-                poolData.OneLevelCountEnemy, poolData.TwoLevelCountEnemy, poolData.ThreeLevelCountEnemy,
-                poolData.FourLevelCountEnemy, poolData.FiveLevelCountEnemy, poolData.SixLevelCountEnemy, 
-                poolData.SevenLevelCountEnemy, poolData.EightLevelCountEnemy, poolData.NineLevelCountEnemy, 
-                poolData.TenLevelCountEnemy
-            };
-
-            string[] paths = _levelEnemies[poolData.CurrentLevelGame];
-
-            foreach (string path in paths)
-            {
-                Enemy[] enemies = new Enemy[levelCounts[poolData.CurrentLevelGame - 1]];
-                CreateEnemies(levelCounts[poolData.CurrentLevelGame - 1], factory, enemies, path, enemyData);
-            }
+            Create();
         }
 
         public List<Enemy> Enemies { get; private set; } = new();
 
+        public void AdaptingLevel()
+        {
+            foreach (Enemy enemy in Enemies) 
+                Object.Destroy(enemy);
+
+            Enemies = new List<Enemy>();
+            Create();
+        }
+
+        private void Create()
+        {
+            _levelCounts = new[]
+            {
+                _poolData.OneLevelCountEnemy, _poolData.TwoLevelCountEnemy, _poolData.ThreeLevelCountEnemy,
+                _poolData.FourLevelCountEnemy, _poolData.FiveLevelCountEnemy, _poolData.SixLevelCountEnemy,
+                _poolData.SevenLevelCountEnemy, _poolData.EightLevelCountEnemy, _poolData.NineLevelCountEnemy,
+                _poolData.TenLevelCountEnemy
+            };
+
+            string[] paths = _levelEnemies[_poolData.CurrentLevelGame];
+
+            foreach (string path in paths)
+            {
+                Enemy[] enemies = new Enemy[_levelCounts[_poolData.CurrentLevelGame - 1]];
+                CreateEnemies(_levelCounts[_poolData.CurrentLevelGame - 1], _factory, enemies, path, _enemyData, _finishPlate);
+            }
+        }
+
         private void CreateEnemies(int requiredCount, IGameFactory factory, Enemy[] enemies, string currentPath,
-            EnemyData enemyData)
+            EnemyData enemyData, FinishPlate finishPlate)
         {
             for (int i = 0; i < requiredCount; i++)
             {
@@ -63,8 +89,9 @@ namespace Infrastructure.Factory.Pools
                 Enemy enemy = factory.CreateEnemy(currentPath);
                 
                 hpBar.Construct(enemy.transform);
-                
-                enemy.Construct(enemyData, _directionOperator, _enemyHealthModule, _lootSpawner, hpBar);
+
+                if (finishPlate != null)
+                    enemy.Construct(enemyData, _directionOperator, _enemyHealthModule, _lootSpawner, hpBar, finishPlate);
                 enemy.InActive();
                 enemies[i] = enemy;
             }

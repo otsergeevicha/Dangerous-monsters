@@ -2,6 +2,7 @@
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
+using SO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,11 +26,13 @@ namespace ContactZones
         private bool _isWaiting;
         private float _currentFillAmount = 1f;
         private IWallet _wallet;
+        private PriceListData _priceList;
 
-        public void Construct(IWallet wallet, int maxRequiredGem)
+        public void Construct(IWallet wallet, PriceListData priceList)
         {
+            _priceList = priceList;
             _wallet = wallet;
-            _maxGem = maxRequiredGem;
+            _maxGem = priceList.PriceTransitionPlate;
 
             UpdateSlotText();
             ResetFill();
@@ -68,6 +71,16 @@ namespace ContactZones
                     _currentFillAmount = 1f;
                 }
             }
+        }
+
+        public void UpdateLevel()
+        {
+            _border.gameObject.SetActive(true);
+            gameObject.SetActive(true);
+            _currentCountGem = 0;
+            _priceList.PriceTransitionPlate *= _priceList.MultiplierIncreasePrice;
+            _maxGem = _priceList.PriceTransitionPlate;
+            UpdateSlotText();
         }
 
         private void FinishWaiting()

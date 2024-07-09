@@ -25,5 +25,11 @@ namespace Infrastructure.Factory.Pools
                 _workers.Add(worker);
             }
         }
+
+        public void AdaptingLevel()
+        {
+            foreach (Worker worker in _workers) 
+                worker.InActive();
+        }
     }
 }

@@ -10,5 +10,8 @@ namespace SO
 
         [Range(3, 1000)] 
         public int PriceTransitionPlate = 3;
+
+        [Range(3, 1000)] 
+        public int MultiplierIncreasePrice = 3;
     }
 }

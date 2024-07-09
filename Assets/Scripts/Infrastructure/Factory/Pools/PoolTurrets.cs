@@ -25,5 +25,11 @@ namespace Infrastructure.Factory.Pools
                 _turrets.Add(turret);
             }
         }
+
+        public void AdaptingLevel()
+        {
+            foreach (Turret turret in _turrets) 
+                turret.InActive();
+        }
     }
 }

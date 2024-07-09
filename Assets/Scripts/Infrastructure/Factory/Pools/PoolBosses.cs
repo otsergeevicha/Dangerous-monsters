@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ContactZones;
 using Enemies;
 using Enemies.AI;
 using Modules;
@@ -31,18 +32,19 @@ namespace Infrastructure.Factory.Pools
 
         public PoolBosses(IGameFactory factory, EnemyData enemyData,
             DirectionOperator directionOperator,
-            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint)
+            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint, FinishPlate finishPlate)
         {
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
             _directionOperator = directionOperator;
 
-            CreateBosses(factory, enemyData, spawnPoint);
+            CreateBosses(factory, enemyData, spawnPoint, finishPlate);
         }
 
         public List<Enemy> Bosses { get; private set; } = new();
         
-        private void CreateBosses(IGameFactory factory, EnemyData enemyData, Vector3 spawnPoint)
+        private void CreateBosses(IGameFactory factory, EnemyData enemyData, Vector3 spawnPoint,
+            FinishPlate finishPlate)
         {
             for (int i = 1; i < 11; i++)
             {
@@ -51,12 +53,18 @@ namespace Infrastructure.Factory.Pools
                 
                 hpBar.Construct(boss.transform);
                 
-                boss.Construct(enemyData, _directionOperator, _enemyHealthModule, _lootSpawner, hpBar);
+                boss.Construct(enemyData, _directionOperator, _enemyHealthModule, _lootSpawner, hpBar, finishPlate);
                 boss.transform.position = spawnPoint;
                 boss.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 boss.InActive();
                 Bosses.Add(boss);
             }
+        }
+
+        public void AdaptingLevel()
+        {
+            foreach (Enemy boss in Bosses) 
+                boss.InActive();
         }
     }
 }

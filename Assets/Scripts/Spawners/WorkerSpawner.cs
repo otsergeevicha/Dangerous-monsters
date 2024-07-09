@@ -1,6 +1,5 @@
 ﻿using Canvases;
 using Infrastructure.Factory.Pools;
-using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -14,6 +13,12 @@ namespace Spawners
         {
             foreach (WorkerSpawnPoint spawnPoint in _workerSpawnPoints) 
                 spawnPoint.Construct(pool, workplace);
+        }
+
+        public void UpdateLevel()
+        {
+            foreach (WorkerSpawnPoint spawnPoint in _workerSpawnPoints)
+                spawnPoint.OnActiveSpawner();
         }
     }
 }

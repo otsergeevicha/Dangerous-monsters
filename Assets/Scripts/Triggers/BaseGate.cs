@@ -38,5 +38,8 @@ namespace Triggers
                 }
             }
         }
+
+        public void UpdateLevel() => 
+            _heroOnBase = true;
     }
 }

@@ -22,5 +22,11 @@ namespace Infrastructure.Factory.Pools
                 _missiles.Add(missile);
             }
         }
+
+        public void AdaptingLevel()
+        {
+            foreach (Missile missile in _missiles) 
+                missile.InActive();
+        }
     }
 }

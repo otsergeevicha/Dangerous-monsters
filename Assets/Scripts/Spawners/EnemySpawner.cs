@@ -15,9 +15,13 @@ namespace Spawners
         private EnemySpawnerData _enemySpawnerData;
         
         private bool _isWork = true;
-        
+        private PoolData _poolData;
+        private PoolBosses _poolBosses;
+
         public void Construct(Transform[] squareEnemySpawner, PoolEnemies poolSimpleEnemies, EnemySpawnerData enemySpawnerData, PoolBosses poolBosses, PoolData poolData)
         {
+            _poolBosses = poolBosses;
+            _poolData = poolData;
             _enemySpawnerData = enemySpawnerData;
             _poolSimpleEnemies = poolSimpleEnemies;
             _squarePoints = squareEnemySpawner;
@@ -25,7 +29,7 @@ namespace Spawners
             foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
                 enemy.Died += ReuseEnemy;
             
-            poolBosses.Bosses[poolData.CurrentLevelGame - 1].OnActive();
+            ActiveCurrentBoss();
         }
 
         private void Start() => 
@@ -36,6 +40,9 @@ namespace Spawners
             foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
                 enemy.Died -= ReuseEnemy;
         }
+
+        public void ActiveCurrentBoss() => 
+            _poolBosses.Bosses[_poolData.CurrentLevelGame - 1].OnActive();
 
         private void ReuseEnemy()
         {

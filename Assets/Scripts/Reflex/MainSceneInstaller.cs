@@ -24,6 +24,7 @@ namespace Reflex
     public class MainSceneInstaller : MonoCache, IInstaller
     {
         [Header("Objects with scene")] 
+        [SerializeField] private FinishPlate _finishPlate;
         [SerializeField] private Transform _spawnPointBoss;
         [SerializeField] private Workplace _workplace;
         [SerializeField] private StorageGem _storageGem;
@@ -51,7 +52,8 @@ namespace Reflex
         [SerializeField] private WorkerData _workerData;
 
         private WindowModule _windowModule;
-        
+        private LevelModule _levelModule;
+
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
 
@@ -75,7 +77,7 @@ namespace Reflex
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, _spawnPointBoss.position);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, _spawnPointBoss.position, _finishPlate);
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);
@@ -86,19 +88,26 @@ namespace Reflex
                 sectionPlate.Construct(wallet, _priceList, _poolData);
 
             foreach (TransitionPlate plate in _transitionPlates)
-                plate.Construct(wallet, _priceList.PriceTransitionPlate);
+                plate.Construct(wallet, _priceList);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             _baseGate.Construct(heroAimRing, cameraFollow);
+            
+            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner);
 
+            _finishPlate.InActive();
+            
 #if !UNITY_EDITOR
             YandexGamesSdk.GameReady();
 #endif
         }
 
-        protected override void OnDisabled() => 
+        protected override void OnDisabled()
+        {
             _windowModule.Dispose();
+            _levelModule.Dispose();
+        }
     }
 }

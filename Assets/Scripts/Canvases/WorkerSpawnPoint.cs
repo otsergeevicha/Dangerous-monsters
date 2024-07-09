@@ -92,6 +92,9 @@ namespace Canvases
         public void ResetLogic() => 
             _endSpawn = false;
 
+        public void OnActiveSpawner() => 
+            _endSpawn = true;
+
         private void Spawn()
         {
             _currentWorker = _workers.Workers.FirstOrDefault(worker => worker.isActiveAndEnabled == false);

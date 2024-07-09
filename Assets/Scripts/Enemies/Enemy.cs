@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using ContactZones;
 using Enemies.AI;
 using Enemies.Animation;
 using HpBar;
@@ -24,7 +26,7 @@ namespace Enemies
         EightLevel,
         NineLevel
     }
-    
+
     enum BossId
     {
         OneLevel = 10,
@@ -43,39 +45,45 @@ namespace Enemies
     [RequireComponent(typeof(EnemyAnimation))]
     public abstract class Enemy : MonoCache
     {
-        protected int MaxHealth;
+       private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
         
+        protected int MaxHealth;
+
         private HealthBar _healthBar;
         private LootSpawner _lootSpawner;
         private EnemyHealthModule _enemyHealthModule;
         private DirectionOperator _directionOperator;
+        private FinishPlate _finishPlate;
+        
         private int _currentHealth;
 
         public event Action Died;
         public bool IsCalm { get; protected set; } = true;
         public bool IsReached { get; private set; }
         protected EnemyData EnemyData { get; private set; }
-        
+
         protected abstract int GetId();
         protected abstract void SetCurrentHealth();
+
         public void Construct(EnemyData enemyData, DirectionOperator directionOperator,
-            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar)
+            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate)
         {
+            _finishPlate = finishPlate;
             _healthBar = healthBar;
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
             _directionOperator = directionOperator;
             EnemyData = enemyData;
-            
+
             ResetHealth();
         }
-        
-        public Vector3 GetDirection() => 
+
+        public Vector3 GetDirection() =>
             _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
 
         public void SetReached(bool flag) =>
             IsReached = flag;
-        
+
         public void ApplyDamage(int damage)
         {
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
@@ -84,13 +92,19 @@ namespace Enemies
             
             if (_currentHealth <= 0)
             {
-                SpawnLoot();
+                if (_bossLevels.Contains((BossId)GetId()))
+                    _finishPlate.OnActive();
+                else
+                {
+                    SpawnLoot();
+                    Died?.Invoke();
+                }
+
                 InActive();
-                Died?.Invoke();
             }
         }
-        
-        public virtual void OnActive() => 
+
+        public virtual void OnActive() =>
             gameObject.SetActive(true);
 
         public virtual void InActive()
@@ -99,10 +113,10 @@ namespace Enemies
             ResetHealth();
         }
 
-        private void SpawnLoot() => 
+        private void SpawnLoot() =>
             _lootSpawner.SpawnMoney(GetId(), transform.position);
-        
-        private void ResetHealth() => 
+
+        private void ResetHealth() =>
             _currentHealth = MaxHealth;
     }
 }

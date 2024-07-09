@@ -27,5 +27,11 @@ namespace Infrastructure.Factory.Pools
                 _assistants.Add(cargoAssistant);
             }
         }
+
+        public void AdaptingLevel()
+        {
+            foreach (CargoAssistant assistant in _assistants) 
+                assistant.InActive();
+        }
     }
 }

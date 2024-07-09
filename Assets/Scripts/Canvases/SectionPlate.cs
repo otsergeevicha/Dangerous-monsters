@@ -70,6 +70,16 @@ namespace Canvases
             }
         }
 
+        public void UpdateLevel()
+        {
+            _section.SetActive(false);
+            
+            foreach (GameObject inActiveObject in _inActiveObjects) 
+                inActiveObject.SetActive(true);
+            
+            UpdatePrice();
+        }
+
         private void FinishWaiting()
         {
             int currentPrice = _poolData.CurrentLevelGame * _priceList.SectionPriceMultiplier;

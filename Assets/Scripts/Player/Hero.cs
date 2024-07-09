@@ -115,6 +115,9 @@ namespace Player
         public void ApplyDamage(int damage) => 
             _heroHealthModule.ApplyDamage(damage);
 
+        public void UpdateLevel() => 
+            transform.position = Vector3.zero;
+
         private void OnDied() => 
             _windowModule.HeroDied();
 
