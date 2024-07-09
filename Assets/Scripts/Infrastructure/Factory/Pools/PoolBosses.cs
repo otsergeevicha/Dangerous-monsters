@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using ContactZones;
 using Enemies;
-using Enemies.AI;
 using Modules;
 using Services.Factory;
 using SO;
@@ -28,15 +27,12 @@ namespace Infrastructure.Factory.Pools
         
         private LootSpawner _lootSpawner;
         private EnemyHealthModule _enemyHealthModule;
-        private DirectionOperator _directionOperator;
 
         public PoolBosses(IGameFactory factory, EnemyData enemyData,
-            DirectionOperator directionOperator,
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint, FinishPlate finishPlate)
         {
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
-            _directionOperator = directionOperator;
 
             CreateBosses(factory, enemyData, spawnPoint, finishPlate);
         }
@@ -53,7 +49,7 @@ namespace Infrastructure.Factory.Pools
                 
                 hpBar.Construct(boss.transform);
                 
-                boss.Construct(enemyData, _directionOperator, _enemyHealthModule, _lootSpawner, hpBar, finishPlate);
+                boss.Construct(enemyData, _enemyHealthModule, _lootSpawner, hpBar, finishPlate);
                 boss.transform.position = spawnPoint;
                 boss.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 boss.InActive();

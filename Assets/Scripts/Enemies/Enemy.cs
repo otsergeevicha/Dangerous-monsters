@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using ContactZones;
-using Enemies.AI;
 using Enemies.Animation;
 using HpBar;
 using Modules;
@@ -45,51 +44,41 @@ namespace Enemies
     [RequireComponent(typeof(EnemyAnimation))]
     public abstract class Enemy : MonoCache
     {
-       private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
-        
+        private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
+
         protected int MaxHealth;
 
         private HealthBar _healthBar;
         private LootSpawner _lootSpawner;
         private EnemyHealthModule _enemyHealthModule;
-        private DirectionOperator _directionOperator;
         private FinishPlate _finishPlate;
-        
+
         private int _currentHealth;
 
         public event Action Died;
-        public bool IsCalm { get; protected set; } = true;
-        public bool IsReached { get; private set; }
         protected EnemyData EnemyData { get; private set; }
 
         protected abstract int GetId();
         protected abstract void SetCurrentHealth();
 
-        public void Construct(EnemyData enemyData, DirectionOperator directionOperator,
+        public void Construct(EnemyData enemyData,
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate)
         {
             _finishPlate = finishPlate;
             _healthBar = healthBar;
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
-            _directionOperator = directionOperator;
             EnemyData = enemyData;
 
             ResetHealth();
         }
-
-        public Vector3 GetDirection() =>
-            _directionOperator.Generate(transform.position, Vector3.zero, EnemyData.DeviationAmount);
-
-        public void SetReached(bool flag) =>
-            IsReached = flag;
 
         public void ApplyDamage(int damage)
         {
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
             _healthBar.ChangeValue(_currentHealth, MaxHealth);
-            
+
             if (_currentHealth <= 0)
             {
                 if (_bossLevels.Contains((BossId)GetId()))
@@ -111,6 +100,12 @@ namespace Enemies
         {
             gameObject.SetActive(false);
             ResetHealth();
+        }
+
+        public void OnDestroy()
+        {
+            Destroy(_healthBar);
+            Destroy(this);
         }
 
         private void SpawnLoot() =>

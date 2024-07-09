@@ -67,6 +67,7 @@ namespace Reflex
             _windowModule = new WindowModule();
             
             Hud hud = gameFactory.CreateHud();
+            WinScreen winScreen = gameFactory.CreateWinScreen();
             LoseScreen loseScreen = gameFactory.CreateLoseScreen();
             StartScreen startScreen = gameFactory.CreateStartScreen();
             Pool pool = gameFactory.CreatePool();
@@ -78,7 +79,7 @@ namespace Reflex
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, _spawnPointBoss.position, _finishPlate);
-            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, gameFactory.CreateHealthBar(), hud, _windowModule);
+            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, gameFactory.CreateHealthBar(), hud, _windowModule);
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);
             workerSpawner.Construct(pool.PoolWorkers, _workplace.gameObject.transform.position);
@@ -90,7 +91,7 @@ namespace Reflex
             foreach (TransitionPlate plate in _transitionPlates)
                 plate.Construct(wallet, _priceList);
 
-            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, input);
+            _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, winScreen, input);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             _baseGate.Construct(heroAimRing, cameraFollow);

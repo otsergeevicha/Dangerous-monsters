@@ -1,5 +1,4 @@
 ﻿using ContactZones;
-using Enemies.AI;
 using Modules;
 using Plugins.MonoCache;
 using Services.Factory;
@@ -14,7 +13,6 @@ namespace Infrastructure.Factory.Pools
 {
     public class Pool : MonoCache
     {
-        private DirectionOperator _directionOperator;
         private EnemyHealthModule _enemyHealthModule;
         private LootSpawner _lootSpawner;
 
@@ -35,24 +33,26 @@ namespace Infrastructure.Factory.Pools
             Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData, Transform[] gemMiners,
             StorageGem storageGem, Vector3 spawnPointBoss, FinishPlate finishPlate)
         {
-            _directionOperator = new DirectionOperator();
             _enemyHealthModule = new EnemyHealthModule();
 
             PoolAmmoBox = new PoolAmmoBoxPlayer(factory, poolData.SizeAmmoBoxPlayer);
-            PoolCargoAssistant = new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
-            
+            PoolCargoAssistant =
+                new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
+
             PoolMoney = new PoolMoney(factory, poolData.MaxCountMoney);
             PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, sdkService);
 
             _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData);
 
-            PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _directionOperator, _enemyHealthModule,
+            PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _enemyHealthModule,
                 _lootSpawner, finishPlate);
-            PoolBosses = new PoolBosses(factory, enemyData,_directionOperator, _enemyHealthModule, _lootSpawner, spawnPointBoss, finishPlate);
+            PoolBosses = new PoolBosses(factory, enemyData, _enemyHealthModule, _lootSpawner,
+                spawnPointBoss, finishPlate);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
-            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners, storageGem.transform.position, storageGem);
+            PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners,
+                storageGem.transform.position, storageGem);
         }
 
         public void UpdateLevel()
@@ -68,7 +68,7 @@ namespace Infrastructure.Factory.Pools
             PoolWorkers.AdaptingLevel();
         }
 
-        protected override void OnDisabled() => 
+        protected override void OnDisabled() =>
             _lootSpawner.Dispose();
     }
 }

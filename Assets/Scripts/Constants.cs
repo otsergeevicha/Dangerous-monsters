@@ -23,7 +23,8 @@
     public const string HpBarPath = "Canvases/HPBar";
     public const string LoseScreenPath = "Canvases/LoseScreen";
     public const string StartScreenPath = "Canvases/StartScreen";
-    
+    public const string WinScreenPath = "Canvases/WinScreen";
+
     //path enemies
     public const string ZeroPath = "Enemies/SimpleEnemy/ZeroEnemy";
     public const string OnePath = "Enemies/SimpleEnemy/OneEnemy";

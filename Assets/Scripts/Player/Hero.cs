@@ -40,11 +40,16 @@ namespace Player
         
         private HeroHealthModule _heroHealthModule;
         private WindowModule _windowModule;
+        private List<Enemy> _poolEnemies;
+        private List<Enemy> _poolBosses;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
+            List<Enemy> poolBosses,
             HealthBar healthBar, Hud hud, WindowModule windowModule)
         {
+            _poolBosses = poolBosses;
+            _poolEnemies = poolEnemies;
             _windowModule = windowModule;
             _wallet = wallet;
             
@@ -58,7 +63,8 @@ namespace Player
 
             _magazine = new MagazineBullets(maxCountBullets / 2, hud);
             _weaponHolder.Construct(poolBullet, _magazine);
-            _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, poolEnemies, enemyRing);
+            _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
+            _heroShooting.MergeEnemies(poolEnemies, poolBosses);
         }
 
         public HeroAnimation AnimationController => 
@@ -115,8 +121,13 @@ namespace Player
         public void ApplyDamage(int damage) => 
             _heroHealthModule.ApplyDamage(damage);
 
-        public void UpdateLevel() => 
-            transform.position = Vector3.zero;
+        public void UpdateLevel()
+        {
+            _heroMovement.SetStartPosition();
+            _heroMovement.SetStateBattle(false, null);
+            _heroShooting.SetOnBase(true);
+            _heroShooting.MergeEnemies(_poolEnemies, _poolBosses);
+        }
 
         private void OnDied() => 
             _windowModule.HeroDied();

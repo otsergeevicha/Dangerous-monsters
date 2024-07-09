@@ -13,12 +13,14 @@ namespace Modules
         private LoseScreen _loseScreen;
         private IInputService _input;
         private StartScreen _startScreen;
+        private WinScreen _winScreen;
 
         public void Construct(StoreAssistantPlate storeAssistantPlate,
             StoreTurretPlate[] storeTurretPlates, PoolData poolData,
-            Pool pool, IWallet wallet, Hud hud, LoseScreen loseScreen, StartScreen startScreen,
+            Pool pool, IWallet wallet, Hud hud, LoseScreen loseScreen, StartScreen startScreen, WinScreen winScreen,
             IInputService input)
         {
+            _winScreen = winScreen;
             _input = input;
             _startScreen = startScreen;
             _loseScreen = loseScreen;
@@ -68,15 +70,11 @@ namespace Modules
 
         public void WinScreen()
         {
-            //1.откл управление
-            //2. экран вина
-            //3. тайм скейл 0
+            _input.OffControls();
+            _winScreen.OnActive();
         }
 
-        public void UpLevelCompleted()
-        {
-            //1. активируем кнопку продолжить
-            //2. тайм скейл =1
-        }
+        public void UpLevelCompleted() => 
+            _winScreen.ActiveButtonContinue();
     }
 }

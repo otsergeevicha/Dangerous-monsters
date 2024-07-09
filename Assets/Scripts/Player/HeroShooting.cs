@@ -16,17 +16,16 @@ namespace Player
 
         private bool _heroOnBase = true;
         private float _heroDataRadiusDetection;
-        private List<Enemy> _poolEnemies;
+        private List<Enemy> _enemies = new List<Enemy>();
         private EnemyRing _enemyRing;
         private bool _haveTarget;
         private Enemy _currentEnemy;
         private int _requestTarget;
 
         public void Construct(HeroAnimation heroAnimation, HeroMovement heroMovement,
-            WeaponHolder weaponHolder, float heroDataRadiusDetection, List<Enemy> poolEnemies, EnemyRing enemyRing)
+            WeaponHolder weaponHolder, float heroDataRadiusDetection, EnemyRing enemyRing)
         {
             _enemyRing = enemyRing;
-            _poolEnemies = poolEnemies;
             _heroDataRadiusDetection = heroDataRadiusDetection;
 
             _heroMovement = heroMovement;
@@ -58,12 +57,18 @@ namespace Player
         public void SetOnBase(bool heroOnBase) =>
             _heroOnBase = heroOnBase;
 
+        public void MergeEnemies(List<Enemy> poolSimpleEnemies, List<Enemy> poolBosses)
+        {
+            _enemies.AddRange(poolSimpleEnemies);
+            _enemies.AddRange(poolBosses);
+        }
+
         private void FindNearestEnemy()
         {
             float minDistance = _heroDataRadiusDetection;
             Vector3 heroPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
-            foreach (var enemy in _poolEnemies)
+            foreach (var enemy in _enemies)
             {
                 Vector3 enemyPosition = new Vector3(enemy.transform.position.x, enemy.transform.position.y,
                     enemy.transform.position.z);

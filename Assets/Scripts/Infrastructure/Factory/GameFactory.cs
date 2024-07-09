@@ -86,6 +86,10 @@ namespace Infrastructure.Factory
         public LoseScreen CreateLoseScreen() =>
             _assetsProvider.InstantiateEntity(Constants.LoseScreenPath)
                 .GetComponent<LoseScreen>();
+        
+        public WinScreen CreateWinScreen() =>
+            _assetsProvider.InstantiateEntity(Constants.WinScreenPath)
+                .GetComponent<WinScreen>();
 
         public StartScreen CreateStartScreen() =>
             _assetsProvider.InstantiateEntity(Constants.StartScreenPath)

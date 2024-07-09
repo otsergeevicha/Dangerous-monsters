@@ -24,6 +24,7 @@ namespace Canvases
         {
             Time.timeScale = 0;
             _particle.gameObject.SetActive(true);
+            _canvas.enabled = true;
             SetCursorState(false);
         }
 

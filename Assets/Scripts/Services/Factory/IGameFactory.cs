@@ -37,5 +37,6 @@ namespace Services.Factory
         LootPoint CreateLootPoint();
         Worker CreateWorker();
         WorkerSpawner CreateWorkerSpawner();
+        WinScreen CreateWinScreen();
     }
 }

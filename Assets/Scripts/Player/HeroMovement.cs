@@ -21,6 +21,7 @@ namespace Player
         private HeroAnimation _heroAnimation;
         private bool _isBattle;
         private Transform _currentTarget;
+        private Vector3 _startPosition;
 
         public void Construct(IInputService input, int speed, HeroAnimation heroAnimation)
         {
@@ -28,6 +29,8 @@ namespace Player
             _speed = speed;
             _input = input;
             _input.OnControls();
+
+            _startPosition = transform.position;
         }
 
         private void OnValidate()
@@ -82,6 +85,12 @@ namespace Player
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, _rotationSpeed * Time.deltaTime, 0.0f);
             newDirection.y = 0.0f;
             transform.rotation = Quaternion.LookRotation(newDirection);
+        }
+
+        public void SetStartPosition()
+        {
+            transform.position = _startPosition;
+            _input.OnControls();
         }
     }
 }

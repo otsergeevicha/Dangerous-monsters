@@ -5,6 +5,7 @@ using Player;
 using SO;
 using Spawners;
 using Triggers;
+using UnityEngine;
 
 namespace Modules
 {
@@ -45,14 +46,13 @@ namespace Modules
 
         private void Up()
         {
-            _poolData.CurrentLevelGame++;
-            
             _windowModule.WinScreen();
-            
+            _poolData.CurrentLevelGame++;
+
             _pool.UpdateLevel();
-            _enemySpawner.ActiveCurrentBoss();
-            _hero.UpdateLevel();
             _baseGate.UpdateLevel();
+            _hero.UpdateLevel();
+            _enemySpawner.ActiveCurrentBoss();
 
             foreach (SectionPlate plate in _sectionPlates) 
                 plate.UpdateLevel();
@@ -61,7 +61,6 @@ namespace Modules
                 plate.UpdateLevel();
             
             _workerSpawner.UpdateLevel();
-
             _windowModule.UpLevelCompleted();
         }
     }
