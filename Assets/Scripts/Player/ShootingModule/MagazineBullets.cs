@@ -30,14 +30,16 @@ namespace Player.ShootingModule
 
         public void Replenishment(Action fulled)
         {
-            _hud.WeaponReload(true);
             _size++;
 
             if (_size >= _maxSize)
             {
                 _hud.WeaponReload(false);
                 fulled?.Invoke();
+                return;
             }
+            
+            _hud.WeaponReload(true);
         }
 
         public void Shortage()
@@ -51,5 +53,8 @@ namespace Player.ShootingModule
                 _regeneration.Launch(DelayRegenerationMagazine).Forget();
             }
         }
+
+        public void UpdateLevel() => 
+            _size = _maxSize;
     }
 }

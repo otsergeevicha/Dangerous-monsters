@@ -10,5 +10,6 @@ namespace Player.ShootingModule
         void Replenishment(Action fulled);
 
         void Shortage();
+        void UpdateLevel();
     }
 }

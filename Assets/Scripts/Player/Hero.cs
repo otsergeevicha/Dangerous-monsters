@@ -123,10 +123,12 @@ namespace Player
 
         public void UpdateLevel()
         {
+            _heroShooting.SetOnBase(true);
             _heroMovement.SetStartPosition();
             _heroMovement.SetStateBattle(false, null);
-            _heroShooting.SetOnBase(true);
             _heroShooting.MergeEnemies(_poolEnemies, _poolBosses);
+            _heroAnimation.EnableIdle();
+            _magazine.UpdateLevel();
         }
 
         private void OnDied() => 

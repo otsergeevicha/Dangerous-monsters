@@ -59,8 +59,12 @@ namespace Player
 
         public void MergeEnemies(List<Enemy> poolSimpleEnemies, List<Enemy> poolBosses)
         {
+            _enemies = new List<Enemy>();
+            
             _enemies.AddRange(poolSimpleEnemies);
             _enemies.AddRange(poolBosses);
+            
+            OffShoot();
         }
 
         private void FindNearestEnemy()

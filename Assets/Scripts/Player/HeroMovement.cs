@@ -89,7 +89,9 @@ namespace Player
 
         public void SetStartPosition()
         {
+            _controller.enabled = false;
             transform.position = _startPosition;
+            _controller.enabled = true;
             _input.OnControls();
         }
     }
