@@ -17,8 +17,6 @@ namespace Canvases
         {
             Time.timeScale = 0;
             _canvas.enabled = true;
-            
-            SetCursorState(false);
         }
         
         public void InActive()
@@ -26,13 +24,6 @@ namespace Canvases
             _canvas.enabled = false;
             OnClickStart?.Invoke();
             Time.timeScale = 1;
-
-            SetCursorState(true);
         }
-        
-        private void SetCursorState(bool newState) =>
-            Cursor.lockState = newState
-                ? CursorLockMode.Locked
-                : CursorLockMode.None;
     }
 }

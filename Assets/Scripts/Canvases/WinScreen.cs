@@ -1,5 +1,4 @@
-﻿using System;
-using Plugins.MonoCache;
+﻿using Plugins.MonoCache;
 using UnityEngine;
 
 namespace Canvases
@@ -25,7 +24,6 @@ namespace Canvases
             Time.timeScale = 0;
             _particle.gameObject.SetActive(true);
             _canvas.enabled = true;
-            SetCursorState(false);
         }
 
         public void InActive()
@@ -34,13 +32,7 @@ namespace Canvases
             _particle.gameObject.SetActive(false);
             _buttonContinue.SetActive(false);
             _canvas.enabled = false;
-            SetCursorState(true);
         }
-        
-        private void SetCursorState(bool newState) =>
-            Cursor.lockState = newState
-                ? CursorLockMode.Locked
-                : CursorLockMode.None;
 
         public void ActiveButtonContinue() => 
             _buttonContinue.SetActive(true);

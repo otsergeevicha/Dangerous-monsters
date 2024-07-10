@@ -25,7 +25,6 @@ namespace Canvases
             Time.timeScale = 0;
             _particle.gameObject.SetActive(true);
             _canvas.enabled = true;
-            SetCursorState(false);
         }
 
         public void InActive()
@@ -33,13 +32,6 @@ namespace Canvases
             OnClickReStart?.Invoke();
             Time.timeScale = 1;
             _particle.gameObject.SetActive(false);
-            
-            SetCursorState(true);
         }
-        
-        private void SetCursorState(bool newState) =>
-            Cursor.lockState = newState
-                ? CursorLockMode.Locked
-                : CursorLockMode.None;
     }
 }

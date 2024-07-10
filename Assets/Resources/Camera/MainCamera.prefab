@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraFollow: {fileID: 1116587246278530772}
   _zoomFollow: {fileID: 5206003190659601474}
+  _camera: {fileID: 2987411136873670651}
 --- !u!1 &4436728647222325245
 GameObject:
   m_ObjectHideFlags: 0

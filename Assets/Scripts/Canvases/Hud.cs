@@ -1,4 +1,5 @@
-﻿using Plugins.MonoCache;
+﻿using JoystickLogic;
+using Plugins.MonoCache;
 using TMPro;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace Canvases
 {
     public class Hud : MonoCache
     {
+        [SerializeField] private Joystick _joystick;
         [SerializeField] private TMP_Text _money;
         [SerializeField] private TMP_Text _gem;
 
@@ -19,5 +21,8 @@ namespace Canvases
         
         public void UpdateGemView(int currentGem) => 
             _gem.text = currentGem.ToString();
+
+        public void InjectCamera(Camera mainCamera) => 
+            _joystick.InjectCamera(mainCamera);
     }
 }

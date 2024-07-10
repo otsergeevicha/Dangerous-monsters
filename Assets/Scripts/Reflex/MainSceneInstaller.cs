@@ -91,6 +91,7 @@ namespace Reflex
             foreach (TransitionPlate plate in _transitionPlates)
                 plate.Construct(wallet, _priceList);
 
+            hud.InjectCamera(cameraFollow.GetCameraMain);
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, pool, wallet, hud, loseScreen, startScreen, winScreen, input);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
