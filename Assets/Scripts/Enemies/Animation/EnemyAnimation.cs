@@ -16,16 +16,39 @@ namespace Enemies.Animation
         private void OnValidate() => 
             _animator ??= ChildrenGet<Animator>();
 
-        public void EnableRun()
-        {
-            _animator.SetBool(_enemyData.IdleHash, false);
-            _animator.SetBool(_enemyData.RunHash, true);
-        }
-        
         public void EnableIdle()
         {
-            _animator.SetBool(_enemyData.RunHash, false);
-            _animator.SetBool(_enemyData.IdleHash, true);
+            throw new System.NotImplementedException();
+        }
+
+        public void EnablePursuit()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void EnableRun()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void EnableAgro()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void EnableAttack()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void EnableEnrage()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void EnableDie()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

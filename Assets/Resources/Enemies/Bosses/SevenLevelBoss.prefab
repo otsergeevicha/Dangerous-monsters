@@ -334,6 +334,8 @@ GameObject:
   - component: {fileID: 4862070233154853460}
   - component: {fileID: 7225229002448775614}
   - component: {fileID: 2369296071415378123}
+  - component: {fileID: 956198387094887599}
+  - component: {fileID: 6256204667253846628}
   m_Layer: 13
   m_Name: SevenLevelBoss
   m_TagString: Untagged
@@ -404,6 +406,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6301b3b46042ee961a0761dadcbe84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &956198387094887599
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548082390591789511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8238504
+  m_Height: 4.766739
+  m_Direction: 1
+  m_Center: {x: 0.048040867, y: 2.373715, z: 0}
+--- !u!54 &6256204667253846628
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548082390591789511}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2687654603543829252
 GameObject:
   m_ObjectHideFlags: 0

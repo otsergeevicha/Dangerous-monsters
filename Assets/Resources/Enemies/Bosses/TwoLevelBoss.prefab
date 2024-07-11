@@ -239,6 +239,8 @@ GameObject:
   - component: {fileID: 6125292344105994705}
   - component: {fileID: 984721011049930664}
   - component: {fileID: 929662476816238164}
+  - component: {fileID: 1493507241400478557}
+  - component: {fileID: 7632900380336731774}
   m_Layer: 13
   m_Name: TwoLevelBoss
   m_TagString: Untagged
@@ -309,6 +311,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2950a3da0d9049e8a1d63ceb26669ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &1493507241400478557
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2658627216836917089}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.85
+  m_Height: 4.7844543
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.3725724, z: 0}
+--- !u!54 &7632900380336731774
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2658627216836917089}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3113719872801765467
 GameObject:
   m_ObjectHideFlags: 0

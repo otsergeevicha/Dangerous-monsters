@@ -10,6 +10,12 @@ namespace SO
         
         [HideInInspector] public float DeviationAmount = 15f;
 
+        [Header("Speed enemies")]
+        [Range(1, 10)] 
+        public int Speed = 5;
+        [Range(1, 10)]
+        public int EscapeSpeed = 5;
+        
         [Header("Health simple enemies")] 
         [Range(1, 50)]
         public int ZeroEnemyHealth = 1;

@@ -56,7 +56,15 @@ namespace Enemies
         private int _currentHealth;
 
         public event Action Died;
-        protected EnemyData EnemyData { get; private set; }
+        public EnemyData EnemyData { get; private set; }
+        public bool IsBattle { get; private set; }
+        public bool IsAgro { get; private set; }
+        public bool IsAttackRange { get; private set; }
+        public bool IsFear { get; private set; }
+        public bool IsLowHp { get; private set; }
+        public bool IsDie { get; private set; }
+        public EnemyAnimation EnemyAnimation { get; private set; }
+        public Vector3 GetTarget { get; private set; }
 
         protected abstract int GetId();
         protected abstract void SetCurrentHealth();
