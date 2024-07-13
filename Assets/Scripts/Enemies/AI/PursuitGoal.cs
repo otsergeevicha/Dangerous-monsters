@@ -8,7 +8,7 @@ namespace Enemies.AI
         {
             Enemy.EnemyAnimation.EnablePursuit();
             Agent.speed = Enemy.EnemyData.Speed;
-            Agent.SetDestination(Enemy.GetTarget);
+            Agent.destination = Enemy.GetTarget;
         }
     }
 }

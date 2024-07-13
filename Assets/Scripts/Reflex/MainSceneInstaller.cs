@@ -78,8 +78,13 @@ namespace Reflex
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, _spawnPointBoss.position, _finishPlate);
-            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, gameFactory.CreateHealthBar(), hud, _windowModule);
+            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
+                _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, 
+                _spawnPointBoss.position, _finishPlate, hero, _baseGate.transform.position);
+            
+            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, 
+                enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, gameFactory.CreateHealthBar(), hud, _windowModule);
+            
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);
             workerSpawner.Construct(pool.PoolWorkers, _workplace.gameObject.transform.position);

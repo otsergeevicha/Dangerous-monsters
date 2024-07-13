@@ -8,7 +8,7 @@ namespace Workers.AI
         {
             Worker.WorkerAnimation.EnableWalk();
             Agent.speed = Worker.WorkerData.Speed;
-            Agent.SetDestination(Worker.StorageGemPoint);
+            Agent.destination = Worker.StorageGemPoint;
         }
     }
 }

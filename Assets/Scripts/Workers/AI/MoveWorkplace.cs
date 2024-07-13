@@ -8,7 +8,7 @@ namespace Workers.AI
         {
             Worker.WorkerAnimation.EnableRun();
             Agent.speed = Worker.WorkerData.Speed;
-            Agent.SetDestination(Worker.Workplace);
+            Agent.destination = Worker.Workplace;
         }
     }
 }

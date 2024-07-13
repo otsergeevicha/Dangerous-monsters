@@ -266,7 +266,7 @@ MonoBehaviour:
   logTaskChanges: 0
   group: 0
   resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
+  externalBehavior: {fileID: 11400000, guid: a0248b22bcedf1a41a6b2286c5e04b8c, type: 2}
   mBehaviorSource:
     behaviorName: Cargo Assistant
     behaviorDescription: 
@@ -280,7 +280,7 @@ MonoBehaviour:
         Storage","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(0.7000122,136.6)"},"ID":6,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Assistant.AI.IsReadyDelivery","NodeData":{"Offset":"(-42.0999756,149)"},"ID":7,"Name":"Is
         Ready Delivery","Instant":true},{"Type":"Assistant.AI.MoveCartridgeGun","NodeData":{"Offset":"(105.100037,153.800049)"},"ID":8,"Name":"Move
         Cartridge Gun","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(257.900024,141.800049)"},"ID":9,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Assistant.AI.IdleState","NodeData":{"Offset":"(-0.0999755859,147.800049)"},"ID":10,"Name":"Idle
-        State","Instant":true}]}]}]},"Variables":[null,null,null,null]}'
+        State","Instant":true}]}]}]}}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 

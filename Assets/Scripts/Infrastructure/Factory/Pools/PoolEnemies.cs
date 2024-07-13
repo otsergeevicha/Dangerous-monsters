@@ -2,9 +2,11 @@
 using ContactZones;
 using Enemies;
 using Modules;
+using Player;
 using Services.Factory;
 using SO;
 using Spawners;
+using UnityEngine;
 
 namespace Infrastructure.Factory.Pools
 {
@@ -31,10 +33,14 @@ namespace Infrastructure.Factory.Pools
         private readonly EnemyData _enemyData;
         private readonly FinishPlate _finishPlate;
         private int[] _levelCounts;
+        private Hero _hero;
+        private Vector3 _baseGate;
 
         public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData,EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner,
-            FinishPlate finishPlate)
+            FinishPlate finishPlate, Hero hero, Vector3 baseGate)
         {
+            _baseGate = baseGate;
+            _hero = hero;
             _factory = factory;
             _finishPlate = finishPlate;
             _enemyData = enemyData;
@@ -86,7 +92,7 @@ namespace Infrastructure.Factory.Pools
                 hpBar.Construct(enemy.transform);
 
                 if (finishPlate != null)
-                    enemy.Construct(enemyData, _enemyHealthModule, _lootSpawner, hpBar, finishPlate);
+                    enemy.Construct(enemyData, _enemyHealthModule, _lootSpawner, hpBar, finishPlate, _hero, _baseGate);
                 
                 enemy.InActive();
                 enemies[i] = enemy;

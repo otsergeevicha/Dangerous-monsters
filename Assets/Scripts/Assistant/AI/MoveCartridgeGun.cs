@@ -17,7 +17,7 @@ namespace Assistant.AI
             {
                 CargoAssistant.AssistantAnimation.EnableRun();
                 Agent.speed = CargoAssistant.AssistantData.Speed;
-                Agent.SetDestination(_gun.transform.position);
+                Agent.destination = _gun.transform.position;
             }
         }
 

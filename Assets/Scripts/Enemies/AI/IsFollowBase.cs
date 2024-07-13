@@ -3,9 +3,9 @@ using Enemies.AI.Parent;
 
 namespace Enemies.AI
 {
-    public class IsBattle : EnemyConditional
+    public class IsFollowBase : EnemyConditional
     {
         public override TaskStatus OnUpdate() => 
-            Enemy.IsBattle ? TaskStatus.Success : TaskStatus.Failure;
+            Enemy.IsFollowBase ? TaskStatus.Success : TaskStatus.Failure;
     }
 }

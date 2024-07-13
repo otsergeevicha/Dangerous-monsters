@@ -78,7 +78,7 @@ namespace Player
                     enemy.transform.position.z);
                 float distance = Vector3.Distance(heroPosition, enemyPosition);
 
-                if (distance <= _heroDataRadiusDetection && distance < minDistance)
+                if (distance <= _heroDataRadiusDetection && distance < minDistance && enemy.IsDie == false)
                 {
                     _currentEnemy = enemy;
                     _requestTarget++;

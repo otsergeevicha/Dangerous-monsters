@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 namespace Enemies.AI.Parent
 {
-    public class EnemyConditional : Action
+    public class EnemyConditional : Conditional
     {
         protected Enemy Enemy;
         protected NavMeshAgent Agent;

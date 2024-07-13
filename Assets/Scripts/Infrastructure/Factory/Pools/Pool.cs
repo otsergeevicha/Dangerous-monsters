@@ -1,5 +1,6 @@
 ﻿using ContactZones;
 using Modules;
+using Player;
 using Plugins.MonoCache;
 using Services.Factory;
 using Services.SDK;
@@ -27,11 +28,11 @@ namespace Infrastructure.Factory.Pools
         private PoolMoney PoolMoney { get; set; }
         private PoolLootBoxes PoolLootBoxes { get; set; }
 
-        public void Construct(IGameFactory factory, PoolData poolData,
-            AssistantData assistantData, EnemyData enemyData, CartridgeGun[] cartridgeGuns,
-            StorageAmmoPlate storageAmmoPlate, TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData,
-            Transform[] squareLootSpawner, ISDKService sdkService, WorkerData workerData, Transform[] gemMiners,
-            StorageGem storageGem, Vector3 spawnPointBoss, FinishPlate finishPlate)
+        public void Construct(IGameFactory factory, PoolData poolData, AssistantData assistantData, 
+            EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate, 
+            TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner, 
+            ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem, 
+            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Vector3 baseGate)
         {
             _enemyHealthModule = new EnemyHealthModule();
 
@@ -45,9 +46,9 @@ namespace Infrastructure.Factory.Pools
             _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData);
 
             PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _enemyHealthModule,
-                _lootSpawner, finishPlate);
+                _lootSpawner, finishPlate, hero, baseGate);
             PoolBosses = new PoolBosses(factory, enemyData, _enemyHealthModule, _lootSpawner,
-                spawnPointBoss, finishPlate);
+                spawnPointBoss, finishPlate, hero, baseGate);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
             PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);

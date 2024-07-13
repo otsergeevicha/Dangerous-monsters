@@ -2,6 +2,7 @@
 using ContactZones;
 using Enemies;
 using Modules;
+using Player;
 using Services.Factory;
 using SO;
 using Spawners;
@@ -27,10 +28,14 @@ namespace Infrastructure.Factory.Pools
         
         private LootSpawner _lootSpawner;
         private EnemyHealthModule _enemyHealthModule;
+        private Hero _hero;
+        private Vector3 _baseGate;
 
         public PoolBosses(IGameFactory factory, EnemyData enemyData,
-            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint, FinishPlate finishPlate)
+            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint, FinishPlate finishPlate, Hero hero, Vector3 baseGate)
         {
+            _baseGate = baseGate;
+            _hero = hero;
             _lootSpawner = lootSpawner;
             _enemyHealthModule = enemyHealthModule;
 
@@ -49,7 +54,7 @@ namespace Infrastructure.Factory.Pools
                 
                 hpBar.Construct(boss.transform);
                 
-                boss.Construct(enemyData, _enemyHealthModule, _lootSpawner, hpBar, finishPlate);
+                boss.Construct(enemyData, _enemyHealthModule, _lootSpawner, hpBar, finishPlate, _hero, _baseGate);
                 boss.transform.position = spawnPoint;
                 boss.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 boss.InActive();

@@ -7,5 +7,8 @@
         
         protected override void SetCurrentHealth() => 
             MaxHealth = EnemyData.NineEnemyHealth;
+        
+        protected override void SetCurrentDamage() => 
+            Damage = EnemyData.NineEnemyDamage;
     }
 }

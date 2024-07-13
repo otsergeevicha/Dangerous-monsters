@@ -7,5 +7,8 @@
         
         protected override void SetCurrentHealth() => 
             MaxHealth = EnemyData.ThreeBossHealth;
+        
+        protected override void SetCurrentDamage() => 
+            Damage = EnemyData.ThreeBossDamage;
     }
 }
