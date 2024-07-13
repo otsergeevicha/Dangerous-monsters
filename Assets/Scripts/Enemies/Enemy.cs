@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using BehaviorDesigner.Runtime;
 using ContactZones;
 using Enemies.Animation;
 using HpBar;
@@ -49,7 +48,6 @@ namespace Enemies
         
         private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
         private readonly float _agroDistance = 8;
-        private readonly float _attackDistance = 1.5f;
 
         protected int MaxHealth;
         protected int Damage;
@@ -92,7 +90,6 @@ namespace Enemies
             SetCurrentDamage();
             
             EnemyAnimation.Construct(enemyData);
-            
             EnemyAnimation.IsDamaged += TakeDamage;
             EnemyAnimation.AttackEnded += EndAttack;
             EnemyAnimation.DiedComplete += Death;
@@ -110,46 +107,16 @@ namespace Enemies
         private void OnValidate() => 
             EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
 
-        protected override void UpdateCached()
-        {
-            if (!_onMap)
-                return;
-
-            float currentDistance = Vector3.Distance(transform.position, _hero.transform.position);
-
-            if (currentDistance <= _attackDistance)
-            {
-                GetTarget = _hero.transform.position;
-                IsAgro = false;
-                IsFollowBase = false;
-                IsAttackRange = true;
-                return;
-            }
-
-            if (currentDistance <= _agroDistance)
-            {
-                GetTarget = _hero.transform.position;
-                IsFollowBase = false;
-                IsAttackRange = false;
-                IsAgro = true;
-                return;
-            }
-            
-            GetTarget = new Vector3(_baseGate.x, 0, _baseGate.z);
-            IsAgro = false;
-            IsAttackRange = false;
-            IsFollowBase = true;
-        }
-
         private void TakeDamage() =>
             _hero.ApplyDamage(Damage);
 
-        private void EndAttack() =>
-            IsAttackRange = false;
+        private void EndAttack()
+        {
+            
+        }
 
         private void Death()
         {
-            IsDie = false;
             Died?.Invoke();
             SpawnLoot();
             InActive();
@@ -169,25 +136,16 @@ namespace Enemies
                     _finishPlate.OnActive();
 
                 _currentHealth = 0;
-                
-                _onMap = false;
-                IsFollowBase = false;
-                IsAttackRange = false;
-                IsAgro = false;
-                IsDie = true;
             }
         }
 
         public virtual void OnActive()
         {
-            _onMap = true;
-            IsDie = false;
             gameObject.SetActive(true);
         }
 
         public virtual void InActive()
         {
-            _onMap = false;
             gameObject.SetActive(false);
             ResetHealth();
         }

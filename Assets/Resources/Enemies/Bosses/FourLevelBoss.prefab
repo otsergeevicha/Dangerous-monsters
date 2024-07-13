@@ -140,7 +140,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7468629954351737497}
   - component: {fileID: 8139351149088065216}
-  - component: {fileID: 4600524264227738609}
   - component: {fileID: 4880645034338942909}
   - component: {fileID: 7638282234014662800}
   - component: {fileID: 2084969006280769578}
@@ -190,19 +189,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4600524264227738609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 594590257129200796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &4880645034338942909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4aa83845aaa478d808fde6995c99342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 2321098369709728263}
 --- !u!136 &7638282234014662800
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -644,6 +631,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6717662712859104424}
+  - component: {fileID: 8018521173541130633}
+  - component: {fileID: 2321098369709728263}
   m_Layer: 13
   m_Name: 03_Knight_H
   m_TagString: Untagged
@@ -668,6 +657,41 @@ Transform:
   - {fileID: 5797671023646300791}
   m_Father: {fileID: 7468629954351737497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &8018521173541130633
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993898254396552138}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 27775579cac11e64d835236e1701871d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2321098369709728263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993898254396552138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 8018521173541130633}
+  _attackPoint: {fileID: 3722698222733853663}
 --- !u!1 &4110812539072740854
 GameObject:
   m_ObjectHideFlags: 0

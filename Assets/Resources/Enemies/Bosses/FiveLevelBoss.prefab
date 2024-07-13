@@ -754,6 +754,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8787144286001223250}
+  - component: {fileID: 5131066353560008291}
+  - component: {fileID: 1397802405748450191}
   m_Layer: 13
   m_Name: 03_Treestor_H
   m_TagString: Untagged
@@ -778,6 +780,41 @@ Transform:
   - {fileID: 7174039657617593001}
   m_Father: {fileID: 1857494393874843810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5131066353560008291
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313700668004748724}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba4c7497ca047b540b83222c9b750fb4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1397802405748450191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313700668004748724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5131066353560008291}
+  _attackPoint: {fileID: 3126465419681806391}
 --- !u!1 &6116136365887525395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,7 +1050,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1857494393874843810}
   - component: {fileID: 6860379366415863439}
-  - component: {fileID: 3994319488589780926}
   - component: {fileID: 299866531522803321}
   - component: {fileID: 5206796371442936738}
   - component: {fileID: 1932958444973888713}
@@ -1063,19 +1099,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3994319488589780926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470324256343387386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &299866531522803321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,6 +1111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c936655db67448ba24058b283534726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 1397802405748450191}
 --- !u!136 &5206796371442936738
 CapsuleCollider:
   m_ObjectHideFlags: 0

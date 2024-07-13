@@ -235,7 +235,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4814798482908022792}
   - component: {fileID: 3454399178330796660}
-  - component: {fileID: 7934458440192924906}
   - component: {fileID: 35724019016984039}
   - component: {fileID: 5456255868856912477}
   - component: {fileID: 668836036217799980}
@@ -285,19 +284,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7934458440192924906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3024734663113323505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &35724019016984039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c14ce26efc4541be7b470fa754326c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 2398860900230415765}
 --- !u!136 &5456255868856912477
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1056,6 +1043,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6954669557888350519}
+  - component: {fileID: 2737442567246617756}
+  - component: {fileID: 2398860900230415765}
   m_Layer: 13
   m_Name: Wedger_H
   m_TagString: Untagged
@@ -1080,6 +1069,41 @@ Transform:
   - {fileID: 8747368836670806125}
   m_Father: {fileID: 4814798482908022792}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2737442567246617756
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6899443657336443810}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5347f821897ea75449a03793d6e85d3a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2398860900230415765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6899443657336443810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2737442567246617756}
+  _attackPoint: {fileID: 604683231182626480}
 --- !u!1 &7433985439899103502
 GameObject:
   m_ObjectHideFlags: 0

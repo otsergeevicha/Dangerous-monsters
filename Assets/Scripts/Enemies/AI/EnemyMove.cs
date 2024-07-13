@@ -2,7 +2,7 @@
 
 namespace Enemies.AI
 {
-    public class PursuitGoal : EnemyAction
+    public class EnemyMove : EnemyAction
     {
         public override void OnStart()
         {

@@ -754,6 +754,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4167904870311847372}
+  - component: {fileID: 3045748345970868008}
+  - component: {fileID: 2017941060949670468}
   m_Layer: 13
   m_Name: 01_Nosedman_S
   m_TagString: Untagged
@@ -778,6 +780,41 @@ Transform:
   - {fileID: 2108844990316885275}
   m_Father: {fileID: 7257604445336189306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3045748345970868008
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070915067630584390}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ef71180f73c9e2f45b0152fd9ebad6bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2017941060949670468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070915067630584390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3045748345970868008}
+  _attackPoint: {fileID: 8165154747161742781}
 --- !u!1 &5368574809109932794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,11 +1051,9 @@ GameObject:
   - component: {fileID: 7257604445336189306}
   - component: {fileID: 2679651419274852814}
   - component: {fileID: 5988576550743016700}
-  - component: {fileID: 5205873705418378343}
   - component: {fileID: 2586181571190914082}
   - component: {fileID: 2622163675002286173}
   - component: {fileID: 4794285276305168205}
-  - component: {fileID: 4016376554883759799}
   m_Layer: 13
   m_Name: FourEnemy
   m_TagString: Untagged
@@ -1054,6 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc0e8381a9f42f4a90dedc30207164e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 2017941060949670468}
 --- !u!195 &5988576550743016700
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1076,20 +1112,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
---- !u!114 &5205873705418378343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7428878135858604479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  _attackPoint: {fileID: 0}
 --- !u!136 &2586181571190914082
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1180,27 +1202,6 @@ MonoBehaviour:
       Version: 1.7.2
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
---- !u!95 &4016376554883759799
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7428878135858604479}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7777924846535139020
 GameObject:
   m_ObjectHideFlags: 0

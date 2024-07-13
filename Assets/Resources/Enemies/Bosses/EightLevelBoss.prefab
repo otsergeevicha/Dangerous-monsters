@@ -589,7 +589,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8200507215461364797}
   - component: {fileID: 4043829413273884156}
-  - component: {fileID: 2258013197078357761}
   - component: {fileID: 4694591578421522247}
   - component: {fileID: 4527329500455488501}
   - component: {fileID: 2031490512347959163}
@@ -639,19 +638,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2258013197078357761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4154670651638770830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &4694591578421522247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e899e71767f4c11842763266f892cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 9167558855294693658}
 --- !u!136 &4527329500455488501
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -859,6 +846,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5588094114590497756}
+  - component: {fileID: 2513208660422125216}
+  - component: {fileID: 9167558855294693658}
   m_Layer: 13
   m_Name: 03_Nosedman_B
   m_TagString: Untagged
@@ -883,6 +872,41 @@ Transform:
   - {fileID: 7796420716647774586}
   m_Father: {fileID: 8200507215461364797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2513208660422125216
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385037027535114012}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c4cb676da10e7a847bc66043188b41ce, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9167558855294693658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385037027535114012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2513208660422125216}
+  _attackPoint: {fileID: 1247574218794607599}
 --- !u!1 &6023458900348833390
 GameObject:
   m_ObjectHideFlags: 0

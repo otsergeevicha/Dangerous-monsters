@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 527842099031141182}
   - component: {fileID: 289540106160958603}
-  - component: {fileID: 6490080823682171128}
   - component: {fileID: 3042889094531495418}
   - component: {fileID: 4396968776946322833}
   - component: {fileID: 5904605695268396804}
@@ -91,19 +90,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6490080823682171128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429368104272451525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &3042889094531495418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5542ad495c4624955972ca9dace597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 5473176555607045720}
 --- !u!54 &4396968776946322833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -447,6 +434,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7116751116767225000}
+  - component: {fileID: 565130422718350729}
+  - component: {fileID: 5473176555607045720}
   m_Layer: 13
   m_Name: 03_Monkeydong_B
   m_TagString: Untagged
@@ -471,6 +460,41 @@ Transform:
   - {fileID: 4426260226180362730}
   m_Father: {fileID: 527842099031141182}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &565130422718350729
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2523427794518237677}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b0e6934055930fd4c8b36325e9410583, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5473176555607045720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2523427794518237677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 565130422718350729}
+  _attackPoint: {fileID: 0}
 --- !u!1 &2566975285457565861
 GameObject:
   m_ObjectHideFlags: 0

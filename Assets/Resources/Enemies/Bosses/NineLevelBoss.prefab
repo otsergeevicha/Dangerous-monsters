@@ -466,6 +466,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5590277827677690666}
+  - component: {fileID: 1290486429523172323}
+  - component: {fileID: 786185739781068748}
   m_Layer: 13
   m_Name: Catcher_B
   m_TagString: Untagged
@@ -490,6 +492,41 @@ Transform:
   - {fileID: 8339079209189890659}
   m_Father: {fileID: 7252328168533873627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1290486429523172323
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3786677185612542249}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 503d774ab2c70c742a4dc1936c3526aa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &786185739781068748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3786677185612542249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1290486429523172323}
+  _attackPoint: {fileID: 5556010338746139332}
 --- !u!1 &3916738413335967352
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +632,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7252328168533873627}
   - component: {fileID: 4349753696455225000}
-  - component: {fileID: 3377116695831570486}
   - component: {fileID: 3130327924284932545}
   - component: {fileID: 2591748190418093262}
   - component: {fileID: 7798891739909065196}
@@ -645,19 +681,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3377116695831570486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4643384417291088864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &3130327924284932545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,6 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfd0f91b49e4a1caaacfd8dbd34d2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 786185739781068748}
 --- !u!136 &2591748190418093262
 CapsuleCollider:
   m_ObjectHideFlags: 0

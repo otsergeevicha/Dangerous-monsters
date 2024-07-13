@@ -73,6 +73,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1857040214261427126}
+  - component: {fileID: 1128956390353094523}
+  - component: {fileID: 1538638734453037260}
   m_Layer: 13
   m_Name: 03_Spike_H
   m_TagString: Untagged
@@ -97,6 +99,41 @@ Transform:
   - {fileID: 170509054432366940}
   m_Father: {fileID: 6249335682470288236}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1128956390353094523
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370629515447234887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0b7af5b239c12124fbaae01193698390, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1538638734453037260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370629515447234887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1128956390353094523}
+  _attackPoint: {fileID: 3769629238980767025}
 --- !u!1 &741746243548701203
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +274,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6249335682470288236}
   - component: {fileID: 6125292344105994705}
-  - component: {fileID: 984721011049930664}
   - component: {fileID: 929662476816238164}
   - component: {fileID: 1493507241400478557}
   - component: {fileID: 7632900380336731774}
@@ -287,19 +323,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &984721011049930664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2658627216836917089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
 --- !u!114 &929662476816238164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2950a3da0d9049e8a1d63ceb26669ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyAnimation: {fileID: 1538638734453037260}
 --- !u!136 &1493507241400478557
 CapsuleCollider:
   m_ObjectHideFlags: 0

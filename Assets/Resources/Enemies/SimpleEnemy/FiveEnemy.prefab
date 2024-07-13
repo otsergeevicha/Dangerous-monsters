@@ -201,6 +201,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4332916248831636816}
+  - component: {fileID: 6011839396587936241}
+  - component: {fileID: 652429880286474483}
   m_Layer: 13
   m_Name: 01_Pitboy_S
   m_TagString: Untagged
@@ -225,6 +227,41 @@ Transform:
   - {fileID: 5172855462777298309}
   m_Father: {fileID: 6393706155420690053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &6011839396587936241
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579636607574657019}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a8be62db752a5b4d8004d226e47e03a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &652429880286474483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579636607574657019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6011839396587936241}
+  _attackPoint: {fileID: 6345574428590315173}
 --- !u!1 &2869034452560418986
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,11 +785,9 @@ GameObject:
   - component: {fileID: 6393706155420690053}
   - component: {fileID: 2698720409822489541}
   - component: {fileID: 2842018292035303551}
-  - component: {fileID: 6973045776286576108}
   - component: {fileID: 5617052843816502699}
   - component: {fileID: 4103672484533100361}
   - component: {fileID: -774525440972827199}
-  - component: {fileID: 398220181040197432}
   m_Layer: 13
   m_Name: FiveEnemy
   m_TagString: Untagged
@@ -810,20 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38f3006efa844508b95776fa2c7774f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6973045776286576108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6322658795651346784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed8226ccf08b4f73a0d2b431dbcfac8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
-  _attackPoint: {fileID: 0}
+  EnemyAnimation: {fileID: 652429880286474483}
 --- !u!136 &5617052843816502699
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -914,27 +936,6 @@ MonoBehaviour:
       Version: 1.7.2
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
---- !u!95 &398220181040197432
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6322658795651346784}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6557076184583317986
 GameObject:
   m_ObjectHideFlags: 0
