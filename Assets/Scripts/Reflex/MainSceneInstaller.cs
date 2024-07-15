@@ -83,7 +83,7 @@ namespace Reflex
                 _spawnPointBoss.position, _finishPlate, hero, _baseGate.transform.position);
             
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, 
-                enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, gameFactory.CreateHealthBar(), hud, _windowModule);
+                enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, gameFactory.CreateHealthBar(), hud, _windowModule, cameraFollow);
             
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);

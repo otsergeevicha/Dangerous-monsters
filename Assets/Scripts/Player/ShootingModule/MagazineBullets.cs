@@ -5,13 +5,12 @@ namespace Player.ShootingModule
 {
     public class MagazineBullets : IMagazine
     {
-        
         private const int DelayRegenerationMagazine = 5000;
-        
-        private readonly HeroRegeneration _regeneration;
+
+        private readonly MagazineReload _magazineReload;
         private readonly int _maxSize;
+        private readonly Hud _hud;
         private int _size;
-        private Hud _hud;
 
         public MagazineBullets(int size, Hud hud)
         {
@@ -19,14 +18,23 @@ namespace Player.ShootingModule
             hud.WeaponReload(false);
             _size = size;
             _maxSize = size;
-            _regeneration = new HeroRegeneration(this);
+            _magazineReload = new MagazineReload(this);
         }
 
-        public void Spend() => 
+        public void Spend() =>
             _size--;
 
-        public bool Check() => 
-            _size != 0;
+        public bool Check()
+        {
+            if (_size == 0)
+            {
+                _hud.WeaponReload(true);
+                return false;
+            }
+
+            _hud.WeaponReload(false);
+            return true;
+        }
 
         public void Replenishment(Action fulled)
         {
@@ -34,27 +42,24 @@ namespace Player.ShootingModule
 
             if (_size >= _maxSize)
             {
-                _hud.WeaponReload(false);
+                _magazineReload.StopReplenishment();
                 fulled?.Invoke();
-                return;
             }
-            
-            _hud.WeaponReload(true);
         }
 
         public void Shortage()
         {
-            if (_regeneration.IsWaiting)
+            if (_magazineReload.IsCharge)
                 return;
 
-            if (_size < _maxSize)
+            if (_size == 0)
             {
-                _regeneration.StopReplenishment();
-                _regeneration.Launch(DelayRegenerationMagazine).Forget();
+                _magazineReload.StopReplenishment();
+                _magazineReload.Launch(DelayRegenerationMagazine).Forget();
             }
         }
 
-        public void UpdateLevel() => 
+        public void UpdateLevel() =>
             _size = _maxSize;
     }
 }

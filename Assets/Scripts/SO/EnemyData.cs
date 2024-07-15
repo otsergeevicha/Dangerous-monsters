@@ -16,6 +16,16 @@ namespace SO
         [Range(1, 10)] 
         public int Speed = 5;
         
+        [Header("Agro radius enemies")]
+        [Range(5, 15)] 
+        public int AgroDistance = 5;
+        [Range(2, 5)] 
+        public int AttackDistance = 2;
+        
+        [Header("Time pursuit enemies")]
+        [Range(1, 15)] 
+        public int TimePursuit = 1;
+        
         [Header("Health simple enemies")] 
         [Range(1, 50)]
         public int ZeroEnemyHealth = 1;

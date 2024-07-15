@@ -8,6 +8,7 @@ using Player;
 using Plugins.MonoCache;
 using SO;
 using Spawners;
+using Triggers;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -42,12 +43,14 @@ namespace Enemies
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(EnemyTriggers))]
     public abstract class Enemy : MonoCache
     {
-        public EnemyAnimation EnemyAnimation;
-        
+        [HideInInspector] [SerializeField] private EnemyTriggers _enemyTriggers;
+
+        [HideInInspector] public EnemyAnimation EnemyAnimation;
+
         private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
-        private readonly float _agroDistance = 8;
 
         protected int MaxHealth;
         protected int Damage;
@@ -61,6 +64,9 @@ namespace Enemies
         private Hero _hero;
         private Vector3 _baseGate;
         private bool _onMap;
+        private float _agroDistance;
+        private float _timePursuit;
+        private float _attackRange;
 
         public event Action Died;
         public EnemyData EnemyData { get; private set; }
@@ -88,44 +94,80 @@ namespace Enemies
 
             SetCurrentHealth();
             SetCurrentDamage();
-            
+
             EnemyAnimation.Construct(enemyData);
+            
             EnemyAnimation.IsDamaged += TakeDamage;
-            EnemyAnimation.AttackEnded += EndAttack;
             EnemyAnimation.DiedComplete += Death;
 
             ResetHealth();
+
+            _agroDistance = EnemyData.AgroDistance;
+            _attackRange = EnemyData.AttackDistance;
+            _timePursuit = EnemyData.TimePursuit;
+
+            _enemyTriggers.Construct(this);
+            _enemyTriggers.SetAgroZone(_agroDistance);
         }
 
-        protected override void OnDisabled()
+        protected override void OnDisabled() =>
+            DisposeDependency();
+
+        private void OnValidate()
         {
-            EnemyAnimation.IsDamaged -= TakeDamage;
-            EnemyAnimation.AttackEnded -= EndAttack;
-            EnemyAnimation.DiedComplete -= Death;
+            EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
+            _enemyTriggers ??= Get<EnemyTriggers>();
         }
 
-        private void OnValidate() => 
-            EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
+        protected override void UpdateCached()
+        {
+            if (IsFollowBase)
+            {
+                GetTarget = _baseGate;
+                return;
+            }
+
+            float currentDistance = Vector3.Distance(transform.position, _hero.transform.position);
+
+            IsAttackRange = currentDistance <= _attackRange;
+
+            if (currentDistance >= _agroDistance)
+            {
+                GetTarget = _hero.transform.position;
+
+                _timePursuit -= Time.deltaTime;
+
+                if (Mathf.Approximately(_timePursuit, Single.Epsilon))
+                {
+                    _timePursuit = EnemyData.TimePursuit;
+                    IsFollowBase = true;
+                }
+            }
+            else
+                _timePursuit = EnemyData.TimePursuit;
+        }
+
+        public void OnAgro()
+        {
+            IsFollowBase = false;
+            IsAgro = true;
+        }
 
         private void TakeDamage() =>
             _hero.ApplyDamage(Damage);
-
-        private void EndAttack()
-        {
-            
-        }
 
         private void Death()
         {
             Died?.Invoke();
             SpawnLoot();
             InActive();
+            IsDie = false;
         }
 
         public void ApplyDamage(int damage)
         {
             EnemyAnimation.EnableHit();
-            
+
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
             _healthBar.ChangeValue(_currentHealth, MaxHealth);
@@ -136,11 +178,13 @@ namespace Enemies
                     _finishPlate.OnActive();
 
                 _currentHealth = 0;
+                IsDie = true;
             }
         }
 
         public virtual void OnActive()
         {
+            IsFollowBase = true;
             gameObject.SetActive(true);
         }
 
@@ -152,6 +196,8 @@ namespace Enemies
 
         public void OnDestroy()
         {
+            DisposeDependency();
+
             Destroy(_healthBar);
             Destroy(this);
         }
@@ -161,5 +207,11 @@ namespace Enemies
 
         private void ResetHealth() =>
             _currentHealth = MaxHealth;
+
+        private void DisposeDependency()
+        {
+            EnemyAnimation.IsDamaged -= TakeDamage;
+            EnemyAnimation.DiedComplete -= Death;
+        }
     }
 }

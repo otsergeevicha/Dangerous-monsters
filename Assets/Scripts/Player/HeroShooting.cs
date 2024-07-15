@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CameraModule;
 using Enemies;
 using Player.Animation;
 using Player.ShootingModule;
@@ -54,8 +55,11 @@ namespace Player
             }
         }
 
-        public void SetOnBase(bool heroOnBase) =>
+        public void SetOnBase(bool heroOnBase)
+        {
             _heroOnBase = heroOnBase;
+            _weaponHolder.Disarmed(heroOnBase);
+        }
 
         public void MergeEnemies(List<Enemy> poolSimpleEnemies, List<Enemy> poolBosses)
         {
@@ -74,9 +78,7 @@ namespace Player
 
             foreach (var enemy in _enemies)
             {
-                Vector3 enemyPosition = new Vector3(enemy.transform.position.x, enemy.transform.position.y,
-                    enemy.transform.position.z);
-                float distance = Vector3.Distance(heroPosition, enemyPosition);
+                float distance = Vector3.Distance(heroPosition, enemy.transform.position);
 
                 if (distance <= _heroDataRadiusDetection && distance < minDistance && enemy.IsDie == false)
                 {
@@ -98,15 +100,18 @@ namespace Player
 
         private void OffShoot()
         {
-            _weaponHolder.GetActiveGun().OffShoot();
+            _weaponHolder.GetActiveGun()?.OffShoot();
             _heroMovement.SetStateBattle(false, null);
         }
 
         private void Shoot(Enemy enemy)
         {
-            _heroAnimation.EnableShoot();
-            _weaponHolder.GetActiveGun().Shoot(enemy);
-            _heroMovement.SetStateBattle(true, enemy.transform);
+            if (!_heroOnBase)
+            {
+                _heroAnimation.EnableShoot();
+                _weaponHolder.GetActiveGun().Shoot(enemy);
+                _heroMovement.SetStateBattle(true, enemy.transform);
+            }
         }
     }
 }

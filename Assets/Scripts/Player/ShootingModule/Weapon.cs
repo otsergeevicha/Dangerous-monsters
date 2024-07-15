@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
+using CameraModule;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Infrastructure.Factory.Pools;
@@ -20,9 +21,11 @@ namespace Player.ShootingModule
         private PoolBullet _pool;
         private Enemy _currentTarget;
         private bool _isAttack;
+        private CameraFollow _camera;
 
-        public void Construct(PoolBullet poolBullet, IMagazine magazine)
+        public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow)
         {
+            _camera = cameraFollow;
             _magazine = magazine;
             _pool = poolBullet;
         }
@@ -53,6 +56,8 @@ namespace Player.ShootingModule
                             bullet.isActiveAndEnabled == false)
                         ?.Shot(_spawnPoint.position, _currentTarget.transform.position);
 
+                    _camera.Shake();
+                    
                     _magazine.Spend();
                 }
 

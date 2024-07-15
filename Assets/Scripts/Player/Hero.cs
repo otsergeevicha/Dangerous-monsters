@@ -46,7 +46,7 @@ namespace Player
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
             List<Enemy> poolBosses,
-            HealthBar healthBar, Hud hud, WindowModule windowModule)
+            HealthBar healthBar, Hud hud, WindowModule windowModule, CameraFollow cameraFollow)
         {
             _poolBosses = poolBosses;
             _poolEnemies = poolEnemies;
@@ -62,7 +62,7 @@ namespace Player
             _basketPlayer.Construct(pool, heroData.SizeBasket);
 
             _magazine = new MagazineBullets(maxCountBullets / 2, hud);
-            _weaponHolder.Construct(poolBullet, _magazine);
+            _weaponHolder.Construct(poolBullet, _magazine, cameraFollow);
             _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
             _heroShooting.MergeEnemies(poolEnemies, poolBosses);
         }
