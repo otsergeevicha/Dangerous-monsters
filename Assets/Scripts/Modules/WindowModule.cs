@@ -1,7 +1,10 @@
 ﻿using Canvases;
+using Canvases.UpgradePlayer;
 using Infrastructure.Factory.Pools;
+using Player;
 using Services.Bank;
 using Services.Inputs;
+using Services.SDK;
 using SO;
 
 namespace Modules
@@ -14,12 +17,17 @@ namespace Modules
         private IInputService _input;
         private StartScreen _startScreen;
         private WinScreen _winScreen;
+        private UpgradePlayerBoard _upgradePlayerBoard;
+        private UpgradeHeroScreen _upgradeHeroScreen;
 
         public void Construct(StoreAssistantPlate storeAssistantPlate,
             StoreTurretPlate[] storeTurretPlates, PoolData poolData,
             Pool pool, IWallet wallet, Hud hud, LoseScreen loseScreen, StartScreen startScreen, WinScreen winScreen,
-            IInputService input)
+            IInputService input, UpgradePlayerBoard upgradePlayerBoard, UpgradeHeroScreen upgradeHeroScreen,
+            HeroData heroData, PriceListData priceList, Hero hero, ISDKService sdk)
         {
+            _upgradeHeroScreen = upgradeHeroScreen;
+            _upgradePlayerBoard = upgradePlayerBoard;
             _winScreen = winScreen;
             _input = input;
             _startScreen = startScreen;
@@ -33,6 +41,9 @@ namespace Modules
             _startScreen.OnClickStart += LaunchGame;
             _loseScreen.OnClickReStart += TryAgain;
 
+            _upgradePlayerBoard.OnEntered += OnHeroUpgrade;
+            _wallet.MoneyChanged += _upgradeHeroScreen.UpdateMoneyView;
+
             _hud.UpdateMoneyView(_wallet.ReadCurrentMoney());
             _hud.UpdateGemView(_wallet.ReadCurrentGem());
             
@@ -41,6 +52,8 @@ namespace Modules
             for (int i = 0; i < storeTurretPlates.Length; i++)
                 storeTurretPlates[i].Construct(pool.PoolTurrets);
 
+            upgradeHeroScreen.Construct(_input, heroData, priceList, _wallet, hero, sdk);
+            
             _input.OffControls();
             startScreen.OnActive();
         }
@@ -52,12 +65,20 @@ namespace Modules
             
             _startScreen.OnClickStart -= LaunchGame;
             _loseScreen.OnClickReStart -= TryAgain;
+            
+            _upgradePlayerBoard.OnEntered -= OnHeroUpgrade;
+            _wallet.MoneyChanged -= _upgradeHeroScreen.UpdateMoneyView;
         }
 
         public void HeroDied()
         {
             _input.OffControls();
             _loseScreen.OnActive();
+        }
+
+        private void OnHeroUpgrade()
+        {
+            _upgradeHeroScreen.OnActive();
         }
 
         private void LaunchGame() => 

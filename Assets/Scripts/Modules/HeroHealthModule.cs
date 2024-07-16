@@ -25,7 +25,6 @@ namespace Modules
 
         public void ApplyDamage(int damage)
         {
-            Debug.Log("djn");
             _currentHealth -= Mathf.Clamp(damage, _minHealth, _maxHealth);
 
             if (_currentHealth <= 0)

@@ -34,5 +34,8 @@ namespace RingZone
 
         public void InActive() => 
             gameObject.SetActive(false);
+
+        public void ChangeRadius(float newRadius) => 
+            _heroDataRadiusDetection = newRadius / 2;
     }
 }

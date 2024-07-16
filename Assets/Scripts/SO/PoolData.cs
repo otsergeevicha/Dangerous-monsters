@@ -13,11 +13,7 @@ namespace SO
         [Range(0, 100)]
         public int PercentSpawnFreeLoot = 50;
         
-        [Range(1, 15)]
-        public int SizeAmmoBoxPlayer = 5;
-
-        [Range(1, 10)]
-        public int SizeBasketAssistant = 5;
+        public readonly int SizeAmmoBoxPlayer = 15;
 
         [Range(1, 4)]
         public int MaxCountCargoAssistant = 1;

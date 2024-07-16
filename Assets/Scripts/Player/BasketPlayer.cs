@@ -18,9 +18,6 @@ namespace Player
         public bool IsEmpty => 
             _currentCount == 0;
 
-        public int CountBoxes =>
-            _currentCount;
-
         public void Construct(PoolAmmoBoxPlayer pool, int sizeBasket)
         {
             _maxSizeBasket = sizeBasket;
@@ -41,6 +38,9 @@ namespace Player
                 _currentCount = 0;
         }
 
+        public void Upgrade(int newSizeBasket) => 
+            _maxSizeBasket = newSizeBasket;
+        
         private bool CheckFull() => 
             _currentCount == _maxSizeBasket;
 

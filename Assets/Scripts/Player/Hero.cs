@@ -42,12 +42,16 @@ namespace Player
         private WindowModule _windowModule;
         private List<Enemy> _poolEnemies;
         private List<Enemy> _poolBosses;
+        private HeroData _heroData;
+        private HeroAimRing _aimRing;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
             List<Enemy> poolBosses,
-            HealthBar healthBar, Hud hud, WindowModule windowModule, CameraFollow cameraFollow)
+            HealthBar healthBar, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing)
         {
+            _aimRing = aimRing;
+            _heroData = heroData;
             _poolBosses = poolBosses;
             _poolEnemies = poolEnemies;
             _windowModule = windowModule;
@@ -69,7 +73,7 @@ namespace Player
 
         public HeroAnimation AnimationController => 
             _heroAnimation;
-        
+
         protected override void OnEnabled()
         {
             _ammoTriggers.StorageEntered += OnStorageEntered;
@@ -121,6 +125,15 @@ namespace Player
         public void ApplyDamage(int damage) => 
             _heroHealthModule.ApplyDamage(damage);
 
+        public void Upgrade()
+        {
+            _heroHealthModule.Reset();
+            _heroMovement.Upgrade(_heroData.Speed);
+            _basketPlayer.Upgrade(_heroData.SizeBasket);
+            _heroShooting.Upgrade(_heroData.RadiusDetection);
+            _aimRing.ChangeRadius(_heroData.RadiusDetection);
+        }
+        
         public void UpdateLevel()
         {
             _heroShooting.SetOnBase(true);

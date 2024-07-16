@@ -1,5 +1,4 @@
 ﻿using System;
-using Modules;
 using Player;
 using Plugins.MonoCache;
 using Services.SDK;
@@ -139,16 +138,12 @@ namespace Loots
                 _isFreeLoot = true;
                 FreeConfig();
                 OnCurrentLoot(currentLoot);
-                
-                Debug.Log("Прок бесплатного лута");
             }
             else
             {
                 _isFreeLoot = false;
                 PayConfig();
                 OnCurrentLoot(currentLoot);
-                
-                Debug.Log("Прок платного лута");
             }
         }
 

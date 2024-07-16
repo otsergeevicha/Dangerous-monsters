@@ -2,6 +2,7 @@
 using Assistant;
 using CameraModule;
 using Canvases;
+using Canvases.UpgradePlayer;
 using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
@@ -38,5 +39,6 @@ namespace Services.Factory
         Worker CreateWorker();
         WorkerSpawner CreateWorkerSpawner();
         WinScreen CreateWinScreen();
+        UpgradeHeroScreen CreateUpgradeHeroScreen();
     }
 }

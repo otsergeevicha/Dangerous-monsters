@@ -2,6 +2,7 @@
 using Assistant;
 using CameraModule;
 using Canvases;
+using Canvases.UpgradePlayer;
 using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
@@ -90,6 +91,10 @@ namespace Infrastructure.Factory
         public WinScreen CreateWinScreen() =>
             _assetsProvider.InstantiateEntity(Constants.WinScreenPath)
                 .GetComponent<WinScreen>();
+
+        public UpgradeHeroScreen CreateUpgradeHeroScreen() =>
+            _assetsProvider.InstantiateEntity(Constants.UpgradeHeroScreenPath)
+                .GetComponent<UpgradeHeroScreen>();
 
         public StartScreen CreateStartScreen() =>
             _assetsProvider.InstantiateEntity(Constants.StartScreenPath)

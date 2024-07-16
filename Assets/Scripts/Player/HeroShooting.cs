@@ -71,6 +71,9 @@ namespace Player
             OffShoot();
         }
 
+        public void Upgrade(float newRadiusDetection) => 
+            _heroDataRadiusDetection = newRadiusDetection;
+        
         private void FindNearestEnemy()
         {
             float minDistance = _heroDataRadiusDetection;

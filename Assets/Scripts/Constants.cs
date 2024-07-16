@@ -24,6 +24,7 @@
     public const string LoseScreenPath = "Canvases/LoseScreen";
     public const string StartScreenPath = "Canvases/StartScreen";
     public const string WinScreenPath = "Canvases/WinScreen";
+    public const string UpgradeHeroScreenPath = "Canvases/UpgradeHeroScreen";
 
     //path enemies
     public const string ZeroPath = "Enemies/SimpleEnemy/ZeroEnemy";

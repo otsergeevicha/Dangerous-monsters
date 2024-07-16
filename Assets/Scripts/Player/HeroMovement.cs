@@ -39,19 +39,7 @@ namespace Player
             _animator ??= Get<Animator>();
         }
 
-        protected override void UpdateCached() =>
-            BaseLogic();
-
-        protected override void OnDisabled() =>
-            _input.OffControls();
-
-        public void SetStateBattle(bool status, Transform target)
-        {
-            _currentTarget = target;
-            _isBattle = status;
-        }
-
-        private void BaseLogic()
+        protected override void UpdateCached()
         {
             Vector3 movementDirection = Vector3.zero;
 
@@ -79,6 +67,18 @@ namespace Player
 
             _controller.Move(movementDirection * (_speed * Time.deltaTime));
         }
+
+        protected override void OnDisabled() =>
+            _input.OffControls();
+
+        public void SetStateBattle(bool status, Transform target)
+        {
+            _currentTarget = target;
+            _isBattle = status;
+        }
+        
+        public void Upgrade(int newSpeed) => 
+            _speed = newSpeed;
 
         private void Rotate(Vector3 targetDirection)
         {
