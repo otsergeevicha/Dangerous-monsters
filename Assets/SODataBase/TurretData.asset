@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023593070b244b11b17259266dfe4f36, type: 3}
   m_Name: TurretData
   m_EditorClassIdentifier: 
-  RadiusDetection: 15
+  RadiusDetection: 5
   AngleInDegrees: 45
   RotateSpeed: 95

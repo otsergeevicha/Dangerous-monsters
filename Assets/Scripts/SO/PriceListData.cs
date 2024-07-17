@@ -13,6 +13,11 @@ namespace SO
 
         [Range(3, 1000)] 
         public int MultiplierIncreasePrice = 3;
+        
+        [Range(100, 5000)]
+        public int StartPriceTurret = 100;        
+        [Range(100, 5000)]
+        public int StepIncreasePriceTurret = 100;
 
         [Header("Price upgrade hero")] 
         [Range(50, 1000)]

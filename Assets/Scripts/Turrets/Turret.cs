@@ -4,6 +4,7 @@ using Ammo;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
+using Services.Bank;
 using SO;
 using Triggers;
 using Turrets.Children;
@@ -22,17 +23,22 @@ namespace Turrets
         private CartridgeGun _cartridgeGun;
         private Transform _turretBody;
         private Coroutine _coroutine;
+        
+        private int _price;
 
         public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles)
         {
+
             _cartridgeGun = cartridgeGun;
             _poolMissiles = poolMissiles;
             _turretData = turretData;
             _turretBody = transform;
         }
 
-        public void OnActive(Transform spawnPoint)
+        public void OnActive(Transform spawnPoint, int currentPrice)
         {
+            _price = currentPrice;
+            
             gameObject.SetActive(true);
 
             ResetCoroutine();
@@ -52,8 +58,15 @@ namespace Turrets
 
         public void Upgrade()
         {
-            print("тут логика апгрейда турели");
+            _turretData.RadiusDetection++;
+            _trigger.SetRadiusTrigger(_turretData.RadiusDetection);
         }
+
+        public int GetPrice() => 
+            _price;
+
+        public void IncreasePrice(int stepIncreasePrice) => 
+            _price += stepIncreasePrice;
 
         private void OnAttack()
         {

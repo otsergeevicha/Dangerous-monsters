@@ -2,6 +2,7 @@
 using Modules;
 using Player;
 using Plugins.MonoCache;
+using Services.Bank;
 using Services.Factory;
 using Services.SDK;
 using SO;
@@ -28,10 +29,10 @@ namespace Infrastructure.Factory.Pools
         private PoolMoney PoolMoney { get; set; }
         private PoolLootBoxes PoolLootBoxes { get; set; }
 
-        public void Construct(IGameFactory factory, PoolData poolData, AssistantData assistantData, 
-            EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate, 
-            TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner, 
-            ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem, 
+        public void Construct(IGameFactory factory, PoolData poolData, AssistantData assistantData,
+            EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate,
+            TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner,
+            ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
             Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Vector3 baseGate)
         {
             _enemyHealthModule = new EnemyHealthModule();

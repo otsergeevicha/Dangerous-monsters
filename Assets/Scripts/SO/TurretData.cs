@@ -7,7 +7,7 @@ namespace SO
     {
         [Header("Detection radius")]
         [Range(5f, 25f)]
-        public float RadiusDetection = 15f;
+        public float RadiusDetection = 5f;
 
         [Header("Angle throw missile")]
         [Range(15f, 75f)]

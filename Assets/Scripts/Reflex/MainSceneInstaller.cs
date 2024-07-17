@@ -96,7 +96,7 @@ namespace Reflex
             _workplace.Construct(_poolData.MaxCountWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
-                sectionPlate.Construct(wallet, _priceList, _poolData);
+                sectionPlate.Construct(wallet, _priceList, _poolData, sdk);
 
             foreach (TransitionPlate plate in _transitionPlates)
                 plate.Construct(wallet, _priceList);

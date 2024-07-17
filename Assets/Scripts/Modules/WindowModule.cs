@@ -50,7 +50,7 @@ namespace Modules
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant);
 
             for (int i = 0; i < storeTurretPlates.Length; i++)
-                storeTurretPlates[i].Construct(pool.PoolTurrets);
+                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, sdk);
 
             upgradeHeroScreen.Construct(_input, heroData, priceList, _wallet, hero, sdk);
             
