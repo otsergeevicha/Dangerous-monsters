@@ -20,4 +20,4 @@ MonoBehaviour:
   StepIncreaseHealthHero: 10
   PriceHeroSpeed: 50
   PriceHeroBasket: 50
-  PriceHeroFiringRange: 44
+  PriceHeroFiringRange: 50
