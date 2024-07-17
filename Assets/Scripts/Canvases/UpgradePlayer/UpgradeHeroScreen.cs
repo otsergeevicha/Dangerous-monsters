@@ -37,7 +37,7 @@ namespace Canvases.UpgradePlayer
             _timer = _timerSeconds;
 
             foreach (HeroLot heroLot in _heroLots) 
-                heroLot.Construct(heroData, priceList, wallet, hero, sdk);
+                heroLot.Construct(heroData, priceList, wallet, hero, sdk, this);
         }
 
         private void Start()
@@ -58,7 +58,7 @@ namespace Canvases.UpgradePlayer
                 
                 if (_timer > 0)
                 {
-                    _timer -= Time.deltaTime;
+                    _timer -= Time.unscaledDeltaTime;
                     UpdateTimeView();
                 }
                 else
@@ -88,7 +88,7 @@ namespace Canvases.UpgradePlayer
         public void GetGift()
         {
             _timer = _timerSeconds;
-            _isGift = true;
+            _isGift = false;
 
             foreach (HeroLot heroLot in _heroLots) 
                 heroLot.MakeFree();
@@ -101,6 +101,12 @@ namespace Canvases.UpgradePlayer
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(_timer);
             _timerView.text = $"{timeSpan.Minutes:00}:{timeSpan.Seconds:00}";
+        }
+
+        public void ReturnPrice()
+        {
+            foreach (HeroLot heroLot in _heroLots) 
+                heroLot.ReturnPriceView();
         }
     }
 }

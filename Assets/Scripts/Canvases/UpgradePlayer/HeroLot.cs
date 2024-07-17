@@ -5,30 +5,33 @@ using Services.SDK;
 using SO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Canvases.UpgradePlayer
 {
     public abstract class HeroLot : MonoCache
     {
+        [SerializeField] protected Button _activeButton;
+
         [SerializeField] protected TMP_Text ValueView;
-        
+
         [SerializeField] protected TMP_Text PriceView;
-        
+
         [SerializeField] protected GameObject Ad;
-        
+
         [SerializeField] protected GameObject MaxLevel;
         [SerializeField] protected GameObject ReadyUpgrade;
 
         private const string FreeLot = "Free";
-        
+
         protected int CurrentValue;
         protected int CurrentPrice;
-        
+
         protected HeroData HeroData;
         protected PriceListData PriceList;
-        
+
         private UpgradeHeroScreen _upgradeHeroScreen;
-        
+
         private IWallet _wallet;
         private int _tempPrice;
         private Hero _hero;
@@ -41,8 +44,9 @@ namespace Canvases.UpgradePlayer
         protected abstract bool CheckUpperLimit();
 
         public void Construct(HeroData heroData, PriceListData priceList,
-            IWallet wallet, Hero hero, ISDKService sdk)
+            IWallet wallet, Hero hero, ISDKService sdk, UpgradeHeroScreen upgradeHeroScreen)
         {
+            _upgradeHeroScreen = upgradeHeroScreen;
             _sdk = sdk;
             _hero = hero;
             _wallet = wallet;
@@ -53,10 +57,93 @@ namespace Canvases.UpgradePlayer
             UpdateValue();
 
             _wallet.MoneyChanged += SetConfigurationPrice;
+
+            SetConfigurationValue();
+            _tempPrice = CurrentPrice;
         }
 
-        protected override void OnDisabled() => 
+        protected override void OnDisabled() =>
             _wallet.MoneyChanged -= SetConfigurationPrice;
+
+        public void MakeFree()
+        {
+            if (!CheckUpperLimit())
+            {
+                _tempPrice = CurrentPrice;
+                
+                Ad.SetActive(false);
+                PriceView.gameObject.SetActive(true);
+                
+                CurrentPrice = 0;
+                PriceView.text = FreeLot;
+            }
+        }
+
+        public void Purchase()
+        {
+            if (CurrentPrice != 0)
+                _tempPrice = CurrentPrice;
+
+            if (_wallet.Check(CurrentPrice))
+            {
+                CurrentValue++;
+                Upgrade();
+                UpdateValue();
+
+                _wallet.SpendMoney(CurrentPrice);
+
+                CurrentPrice = _tempPrice;
+                
+                IncreasePrice();
+                UpdatePrice();
+                
+                _tempPrice = CurrentPrice;
+
+                _hero.Upgrade();
+            }
+            else
+            {
+                _sdk.AdReward(delegate
+                {
+                    CurrentValue++;
+                    Upgrade();
+                    UpdateValue();
+
+                    _hero.Upgrade();
+                });
+            }
+
+            _upgradeHeroScreen.ReturnPrice();
+        }
+
+        public void ReturnPriceView()
+        {
+            CurrentPrice = _tempPrice;
+            UpdateValueView();
+            UpdatePriceView();
+            SetConfigurationPrice(_wallet.ReadCurrentMoney());
+            SetConfigurationValue();
+        }
+
+        private void SetConfigurationValue()
+        {
+            if (CheckUpperLimit())
+            {
+                MaxLevel.SetActive(true);
+                ReadyUpgrade.SetActive(false);
+
+                _activeButton.interactable = false;
+                Ad.SetActive(false);
+                PriceView.gameObject.SetActive(false);
+            }
+            else
+            {
+                MaxLevel.SetActive(false);
+                ReadyUpgrade.SetActive(true);
+
+                _activeButton.interactable = true;
+            }
+        }
 
         private void SetConfigurationPrice(int moneyAmount)
         {
@@ -71,69 +158,11 @@ namespace Canvases.UpgradePlayer
                 PriceView.gameObject.SetActive(false);
             }
         }
-        
-        public void MakeFree()
-        {
-            _tempPrice = CurrentPrice;
 
-            CurrentPrice = 0;
-            PriceView.text = FreeLot;
-        }
-
-        public void Purchase()
-        {
-            if (_wallet.Check(CurrentPrice))
-            {
-                CurrentValue++;
-                Upgrade();
-                UpdateValue();
-
-                IncreasePrice();
-                UpdatePrice();
-
-                _hero.Upgrade();
-
-                _wallet.SpendMoney(CurrentPrice);
-            }
-            else
-            {
-                _sdk.AdReward(delegate
-                {
-                    CurrentValue++;
-                    Upgrade();
-                    UpdateValue();
-                    
-                    _hero.Upgrade();
-                });
-            }
-            
-            if (CurrentPrice == 0) 
-                CurrentPrice = _tempPrice;
-            
-            UpdateValueView();
-            UpdatePriceView();
-
-            SetConfigurationValue();
-        }
-
-        private void SetConfigurationValue()
-        {
-            if (CheckUpperLimit())
-            {
-                MaxLevel.SetActive(true);
-                ReadyUpgrade.SetActive(false);
-            }
-            else
-            {
-                MaxLevel.SetActive(false);
-                ReadyUpgrade.SetActive(true);
-            }
-        }
-
-        private void UpdateValueView() => 
-            ValueView.text = CurrentValue.ToString();
-
-        private void UpdatePriceView() => 
+        private void UpdatePriceView() =>
             PriceView.text = CurrentPrice.ToString();
+
+        private void UpdateValueView() =>
+            ValueView.text = CurrentValue.ToString();
     }
 }

@@ -15,26 +15,23 @@ namespace SO
         public int MultiplierIncreasePrice = 3;
 
         [Header("Price upgrade hero")] 
-        [Range(0, 1000)]
-        public int PriceHeroHealth = 1;
+        [Range(50, 1000)]
+        public int PriceHeroHealth = 50;
         [Range(3, 1000)] 
         public int MultiplierPriceHeroHealth = 3;
         [Range(10, 100)] 
         public int StepIncreaseHealthHero = 10;
         
-        [Range(0, 1000)]
-        public int PriceHeroSpeed = 1;
-        [Range(3, 1000)] 
-        public int MultiplierPriceHeroSpeed = 3;
+        [Range(50, 1000)]
+        public int PriceHeroSpeed = 50;
+        public readonly int MultiplierPriceHeroSpeed = 1;
         
-        [Range(0, 1000)]
-        public int PriceHeroBasket = 1;
-        [Range(3, 1000)] 
-        public int MultiplierPriceHeroBasket = 3;
+        [Range(50, 1000)]
+        public int PriceHeroBasket = 50;
+        public readonly int MultiplierPriceHeroBasket = 1;
         
-        [Range(0, 1000)]
-        public int PriceHeroFiringRange = 1;
-        [Range(3, 1000)] 
-        public int MultiplierPriceHeroFiringRange = 3;
+        [Range(50, 1000)]
+        public int PriceHeroFiringRange = 50;
+        public readonly int MultiplierPriceHeroFiringRange = 1;
     }
 }

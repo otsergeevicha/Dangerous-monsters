@@ -14,7 +14,7 @@ namespace Canvases.UpgradePlayer
             HeroData.RadiusDetection++;
 
         protected override void IncreasePrice() => 
-            PriceList.PriceHeroSpeed += PriceList.MultiplierPriceHeroFiringRange;
+            PriceList.PriceHeroFiringRange += PriceList.MultiplierPriceHeroFiringRange;
         
         protected override bool CheckUpperLimit() => 
             Mathf.Approximately(HeroData.RadiusDetection, HeroData.UpperLimitRadiusDetection);

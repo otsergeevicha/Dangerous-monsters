@@ -15,3 +15,9 @@ MonoBehaviour:
   SectionPriceMultiplier: 100
   PriceTransitionPlate: 3
   MultiplierIncreasePrice: 3
+  PriceHeroHealth: 50
+  MultiplierPriceHeroHealth: 3
+  StepIncreaseHealthHero: 10
+  PriceHeroSpeed: 50
+  PriceHeroBasket: 50
+  PriceHeroFiringRange: 44
