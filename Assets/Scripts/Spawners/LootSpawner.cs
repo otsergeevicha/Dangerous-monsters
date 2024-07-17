@@ -23,7 +23,7 @@ namespace Spawners
 
             foreach (LootPoint lootPoint in _poolLootBoxes.LootPoints)
             {
-                lootPoint.OnActive(Random.Range(0, (int)TypeLoot.Upgrade), _poolData.PercentSpawnFreeLoot);
+                lootPoint.OnActive(Random.Range(0, (int)TypeLoot.Health), _poolData.PercentSpawnFreeLoot);
                 lootPoint.transform.position = GetRandomPoint();
                 lootPoint.OnPickUp += ReSpawnLoot;
             }
@@ -48,7 +48,7 @@ namespace Spawners
             if (lootPoint != null)
             {
                 lootPoint.transform.position = GetRandomPoint();
-                lootPoint.OnActive(Random.Range(0, (int)TypeLoot.Upgrade), _poolData.PercentSpawnFreeLoot);
+                lootPoint.OnActive(Random.Range(0, (int)TypeLoot.Health), _poolData.PercentSpawnFreeLoot);
             }
         }
 

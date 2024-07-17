@@ -14,8 +14,7 @@ namespace Loots
         Money,
         Gem,
         Magnet,
-        Health,
-        Upgrade
+        Health
     }
     
     public class LootPoint : MonoCache
@@ -46,8 +45,14 @@ namespace Loots
         private float _timer;
         private float _currentFillAmount = 1f;
 
-        public void Construct(ISDKService sdkService) => 
+        public void Construct(ISDKService sdkService, Hero hero)
+        {
             _sdkService = sdkService;
+
+            _magnet.Construct(hero);
+            _medicalBox.Construct(hero);
+            _randomBox.Construct(hero);
+        }
 
         public event Action OnPickUp;
         
@@ -99,7 +104,7 @@ namespace Loots
             {
                 if (_timer > 0)
                 {
-                    _timer -= Time.deltaTime;
+                    _timer -= Time.unscaledDeltaTime;
                     UpdateTimeView();
                 }
                 else
@@ -194,11 +199,6 @@ namespace Loots
                     break;
 
                 case (int)TypeLoot.Gem:
-                    _randomBox.OnActive(currentLoot);
-                    _actualLoot = _randomBox;
-                    break;
-
-                case (int)TypeLoot.Upgrade:
                     _randomBox.OnActive(currentLoot);
                     _actualLoot = _randomBox;
                     break;

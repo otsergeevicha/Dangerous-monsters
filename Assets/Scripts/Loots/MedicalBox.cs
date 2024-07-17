@@ -1,5 +1,5 @@
 ﻿using System;
-using Modules;
+using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -10,26 +10,23 @@ namespace Loots
         [Header("Animators")] 
         [SerializeField] private Animator _animatorBody;
         [SerializeField] private Animator _animatorCap;
-        
+
+        private Hero _hero;
+
+        public void Construct(Hero hero) => 
+            _hero = hero;
+
         public void OnActive()
         {
             gameObject.SetActive(true);
             
             _animatorBody.enabled = true;
             _animatorCap.enabled = false;
-            
-                /*
-                 * 1. включиться
-                 * 2. после реварда анимация открытия
-                 * 3. оверлап и вознаграждение героя
-                 * 4. анимация отключения
-                 * 5. оповещение о вознаграждение
-                 * 6. выключение
-                 */
         }
 
         public void Open(Action opened)
         {
+            _hero.OnHealing();
             opened?.Invoke();
             _animatorBody.enabled = false;
             _animatorCap.enabled = true;

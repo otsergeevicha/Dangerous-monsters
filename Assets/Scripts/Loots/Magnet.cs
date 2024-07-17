@@ -1,11 +1,15 @@
 ﻿using System;
-using Modules;
+using Player;
 using Plugins.MonoCache;
 
 namespace Loots
 {
     public class Magnet : MonoCache, ILoot
     {
+        private Hero _hero;
+
+        public void Construct(Hero hero) => 
+            _hero = hero;
 
         public void OnActive()
         {
@@ -14,12 +18,11 @@ namespace Loots
 
         public void Open(Action opened)
         {
+            _hero.OnMagnetEffect();
             opened?.Invoke();
         }
 
-        public void InActive()
-        {
+        public void InActive() => 
             gameObject.SetActive(false);
-        }
     }
 }

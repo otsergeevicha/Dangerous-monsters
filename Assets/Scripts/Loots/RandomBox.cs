@@ -1,4 +1,5 @@
 ﻿using System;
+using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -15,17 +16,25 @@ namespace Loots
         [Header("Gem box meshes")]
         [SerializeField] private Mesh _meshUpGem;
         [SerializeField] private Mesh _meshBottomGem;
-        [Header("Upgrade box meshes")]
-        [SerializeField] private Mesh _meshUpUpgrade;
-        [SerializeField] private Mesh _meshBottomUpgrade;
 
         [Header("Animators")] 
         [SerializeField] private Animator _animatorBody;
         [SerializeField] private Animator _animatorCap;
 
+        private const int AmountMoney = 100;
+        private const int AmountGem = 100;
+        
+        private Hero _hero;
+        private int _currentLoot;
+
+        public void Construct(Hero hero) => 
+            _hero = hero;
+
         public void OnActive(int currentLoot)
         {
-            switch (currentLoot)
+            _currentLoot = currentLoot;
+            
+            switch (_currentLoot)
             {
                 case (int)TypeLoot.Money:
                     SetMeshFilter(_meshUpMoney, _meshBottomMoney);
@@ -33,11 +42,8 @@ namespace Loots
                 case (int)TypeLoot.Gem:
                     SetMeshFilter(_meshUpGem, _meshBottomGem);
                     break;
-                case (int)TypeLoot.Upgrade:
-                    SetMeshFilter(_meshUpUpgrade, _meshBottomUpgrade);
-                    break;
                 default:
-                    SetMeshFilter(_meshUpUpgrade, _meshBottomUpgrade);
+                    SetMeshFilter(_meshUpMoney, _meshBottomMoney);
                     Debug.Log("Incorrect choice mesh filter");
                     break;
             }
@@ -50,6 +56,20 @@ namespace Loots
 
         public void Open(Action opened)
         {
+            switch (_currentLoot)
+            {
+                case (int)TypeLoot.Money:
+                    _hero.ApplyMoney(AmountMoney);
+                    break;
+                case (int)TypeLoot.Gem:
+                    _hero.ApplyGem(AmountGem);
+                    break;
+                default:
+                    _hero.ApplyMoney(AmountMoney);
+                    Debug.Log("Incorrect choice mesh filter");
+                    break;
+            }
+            
             opened?.Invoke();
             _animatorBody.enabled = false;
             _animatorCap.enabled = true;

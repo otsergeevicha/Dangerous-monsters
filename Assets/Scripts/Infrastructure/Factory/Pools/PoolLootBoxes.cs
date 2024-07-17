@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Loots;
 using Modules;
+using Player;
 using Services.Factory;
 using Services.SDK;
 
@@ -13,12 +14,12 @@ namespace Infrastructure.Factory.Pools
         public IReadOnlyList<LootPoint> LootPoints =>
             _lootPoints.AsReadOnly();
 
-        public PoolLootBoxes(IGameFactory factory, int countLootPoints, ISDKService sdkService)
+        public PoolLootBoxes(IGameFactory factory, int countLootPoints, ISDKService sdkService, Hero hero)
         {
             for (int i = 0; i < countLootPoints; i++)
             {
                 LootPoint lootPoint = factory.CreateLootPoint();
-                lootPoint.Construct(sdkService);
+                lootPoint.Construct(sdkService, hero);
                 lootPoint.gameObject.SetActive(false);
                 _lootPoints.Add(lootPoint);
             }

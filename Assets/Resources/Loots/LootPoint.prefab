@@ -20947,6 +20947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animatorBody: {fileID: 4956856546394728852}
   _animatorCap: {fileID: 23368075396434473}
+  _healingEffect: {fileID: 0}
 --- !u!95 &4956856546394728852
 Animator:
   serializedVersion: 5

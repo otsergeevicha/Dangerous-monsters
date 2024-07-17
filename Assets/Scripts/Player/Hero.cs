@@ -35,6 +35,9 @@ namespace Player
         [HideInInspector] [SerializeField] private HeroAnimation _heroAnimation;
         [HideInInspector] [SerializeField] private HeroShooting _heroShooting;
 
+        [SerializeField] private GameObject _healingEffect;
+        [SerializeField] private MagnetEffect _magnetEffect;
+
         private IWallet _wallet;
         private IMagazine _magazine;
         
@@ -69,6 +72,8 @@ namespace Player
             _weaponHolder.Construct(poolBullet, _magazine, cameraFollow);
             _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
             _heroShooting.MergeEnemies(poolEnemies, poolBosses);
+            
+            _healingEffect.SetActive(false);
         }
 
         public HeroAnimation AnimationController => 
@@ -112,7 +117,9 @@ namespace Player
             _ammoTriggers ??= Get<AmmoTriggers>();
             _lootTriggers ??= Get<LootTriggers>();
             _heroAnimation ??= Get<HeroAnimation>();
+            
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
+            _magnetEffect ??= ChildrenGet<MagnetEffect>();
         }
 
 
@@ -125,6 +132,13 @@ namespace Player
         public void ApplyDamage(int damage) => 
             _heroHealthModule.ApplyDamage(damage);
 
+        public void OnHealing()
+        {
+            _healingEffect.SetActive(false);
+            _healingEffect.SetActive(true);
+            _heroHealthModule.Reset();
+        }
+
         public void Upgrade()
         {
             _heroHealthModule.Reset();
@@ -133,7 +147,13 @@ namespace Player
             _heroShooting.Upgrade(_heroData.RadiusDetection);
             _aimRing.ChangeRadius(_heroData.RadiusDetection);
         }
-        
+
+        public void ApplyMoney(int money) =>
+            _wallet.ApplyMoney(money);
+
+        public void ApplyGem(int gem) =>
+            _wallet.ApplyGem(gem);
+
         public void UpdateLevel()
         {
             _heroShooting.SetOnBase(true);
@@ -146,9 +166,6 @@ namespace Player
 
         private void OnDied() => 
             _windowModule.HeroDied();
-
-        private void ApplyMoney(int money) =>
-            _wallet.ApplyMoney(money);
 
         private void OnStorageEntered() =>
             _basketPlayer.Replenishment().Forget();
@@ -178,5 +195,8 @@ namespace Player
 
         private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
             cartridgeGun.SetPresenceCourier(true);
+
+        public void OnMagnetEffect() => 
+            _magnetEffect.OnActive();
     }
 }

@@ -42,7 +42,7 @@ namespace Infrastructure.Factory.Pools
                 new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
 
             PoolMoney = new PoolMoney(factory, poolData.MaxCountMoney);
-            PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, sdkService);
+            PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, sdkService, hero);
 
             _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData);
 
