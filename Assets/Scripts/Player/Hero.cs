@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CameraModule;
 using Canvases;
@@ -36,7 +37,6 @@ namespace Player
         [HideInInspector] [SerializeField] private HeroShooting _heroShooting;
 
         [SerializeField] private GameObject _healingEffect;
-        [SerializeField] private MagnetEffect _magnetEffect;
 
         private IWallet _wallet;
         private IMagazine _magazine;
@@ -60,6 +60,7 @@ namespace Player
             _windowModule = windowModule;
             _wallet = wallet;
             
+            _aimRing.MagnetEffect.Construct(this);
             healthBar.Construct(transform);
             _heroHealthModule = new HeroHealthModule(healthBar, heroData);
             _heroHealthModule.Died += OnDied;
@@ -119,7 +120,6 @@ namespace Player
             _heroAnimation ??= Get<HeroAnimation>();
             
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
-            _magnetEffect ??= ChildrenGet<MagnetEffect>();
         }
 
 
@@ -164,6 +164,9 @@ namespace Player
             _magazine.UpdateLevel();
         }
 
+        public void OnMagnetEffect() =>
+            _aimRing.MagnetEffect.OnActive();
+
         private void OnDied() => 
             _windowModule.HeroDied();
 
@@ -195,8 +198,5 @@ namespace Player
 
         private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
             cartridgeGun.SetPresenceCourier(true);
-
-        public void OnMagnetEffect() => 
-            _magnetEffect.OnActive();
     }
 }

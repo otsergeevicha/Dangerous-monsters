@@ -1,19 +1,24 @@
-﻿using Plugins.MonoCache;
+﻿using Player;
+using Plugins.MonoCache;
 using UnityEngine;
 
 namespace RingZone
 {
     public class HeroAimRing : MonoCache
     {
-        [SerializeField] private ParticleSystem _particle;
+        [SerializeField] private ParticleSystem _particleOne;
+        [SerializeField] private ParticleSystem _particleTwo;
+
+        public MagnetEffect MagnetEffect;
         
-        private Transform _followingTransform;
+        private Transform _following;
         private float _heroDataRadiusDetection;
 
         public void Construct(Transform heroTransform, float heroDataRadiusDetection)
         {
-            _heroDataRadiusDetection = heroDataRadiusDetection/2;
-            _followingTransform = heroTransform;
+            _heroDataRadiusDetection = heroDataRadiusDetection/4;
+            _following = heroTransform;
+
             InActive();
         }
 
@@ -22,15 +27,15 @@ namespace RingZone
             if (!isActiveAndEnabled)
                 return;
 
-            _particle.startSize = _heroDataRadiusDetection;
-            
-            transform.position =
-                new Vector3(_followingTransform.position.x, 1f,
-                    _followingTransform.position.z);
+            transform.position = new Vector3(_following.position.x, 1f, _following.position.z);
         }
 
-        public void OnActive() => 
+        public void OnActive()
+        {
             gameObject.SetActive(true);
+            _particleOne.startSize = _heroDataRadiusDetection;
+            _particleTwo.startSize = _heroDataRadiusDetection;
+        }
 
         public void InActive() => 
             gameObject.SetActive(false);

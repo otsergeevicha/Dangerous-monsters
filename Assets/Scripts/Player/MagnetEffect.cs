@@ -6,13 +6,12 @@ namespace Player
 {
     public class MagnetEffect : MonoCache
     {
-        [HideInInspector] [SerializeField] private Hero _hero;
-        
         private readonly float _duringSeconds = 10f;
         private float _timer;
+        private Hero _hero;
 
-        private void OnValidate() => 
-            _hero ??= Get<Hero>();
+        public void Construct(Hero hero) => 
+            _hero = hero;
 
         private void OnTriggerEnter(Collider collision)
         {
@@ -36,8 +35,8 @@ namespace Player
 
         public void OnActive()
         {
-            _timer = _duringSeconds;
             gameObject.SetActive(true);
+            _timer = _duringSeconds;
         }
 
         public void InActive() => 

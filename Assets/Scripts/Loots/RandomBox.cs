@@ -21,6 +21,9 @@ namespace Loots
         [SerializeField] private Animator _animatorBody;
         [SerializeField] private Animator _animatorCap;
 
+        [SerializeField] private GameObject _gem;
+        [SerializeField] private GameObject _money;
+
         private const int AmountMoney = 100;
         private const int AmountGem = 100;
         
@@ -37,12 +40,19 @@ namespace Loots
             switch (_currentLoot)
             {
                 case (int)TypeLoot.Money:
+                {
+                    _money.SetActive(true);
                     SetMeshFilter(_meshUpMoney, _meshBottomMoney);
                     break;
+                }
                 case (int)TypeLoot.Gem:
+                {
+                    _gem.SetActive(true);
                     SetMeshFilter(_meshUpGem, _meshBottomGem);
                     break;
+                }
                 default:
+                    _money.SetActive(true);
                     SetMeshFilter(_meshUpMoney, _meshBottomMoney);
                     Debug.Log("Incorrect choice mesh filter");
                     break;
@@ -79,6 +89,9 @@ namespace Loots
         {
             _animatorBody.enabled = true;
             _animatorCap.enabled = false;
+            
+            _money.SetActive(false);
+            _gem.SetActive(false);
             
             gameObject.SetActive(false);
         }
