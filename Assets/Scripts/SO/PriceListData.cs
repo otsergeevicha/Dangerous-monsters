@@ -38,5 +38,10 @@ namespace SO
         [Range(50, 1000)]
         public int PriceHeroFiringRange = 50;
         public readonly int MultiplierPriceHeroFiringRange = 1;
+        
+        [Range(50, 1000)]
+        public int LoseBonusMoney = 500;
+        [Range(50, 1000)]
+        public int LoseBonusGem = 50;
     }
 }

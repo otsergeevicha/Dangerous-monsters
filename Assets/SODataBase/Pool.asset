@@ -15,8 +15,6 @@ MonoBehaviour:
   MaxCountWorkers: 4
   MaxCountLootBoxes: 5
   PercentSpawnFreeLoot: 50
-  SizeAmmoBoxPlayer: 5
-  SizeBasketAssistant: 5
   MaxCountCargoAssistant: 2
   CurrentLevelGame: 1
   OneLevelCountEnemy: 9

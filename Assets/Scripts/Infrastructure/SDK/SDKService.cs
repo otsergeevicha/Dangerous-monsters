@@ -12,12 +12,23 @@ namespace Infrastructure.SDK
         {
 #if UNITY_EDITOR
             rewardCompleted?.Invoke();
-            Debug.Log("AD showed");
+            Debug.Log("Reward showed");
             return;
 #endif
 
             _yandex.ShowReward(() =>
                 rewardCompleted?.Invoke());
+        }
+
+        public void ShowInterstitial(Action adCompleted)
+        {
+#if UNITY_EDITOR
+            adCompleted?.Invoke();
+            Debug.Log("Interstitial showed");
+            return;
+#endif
+            _yandex.InterstitialAd(()=>
+                adCompleted?.Invoke());
         }
     }
 }

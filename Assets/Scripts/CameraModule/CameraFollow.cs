@@ -1,5 +1,4 @@
-﻿using System;
-using Cinemachine;
+﻿using Cinemachine;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace CameraModule
         [SerializeField] private CinemachineVirtualCamera _zoomFollow;
         [SerializeField] private Camera _camera;
         
-        private readonly float _shakeIntensity = 2f;
+        private readonly float _shakeIntensity = 1.5f;
         private readonly float _shakeTime = .2f;
         
         private CinemachineBasicMultiChannelPerlin _perlin;

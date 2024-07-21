@@ -46,6 +46,9 @@ namespace Modules
 
             _hud.UpdateMoneyView(_wallet.ReadCurrentMoney());
             _hud.UpdateGemView(_wallet.ReadCurrentGem());
+
+            _winScreen.Construct(_wallet, sdk);
+            _loseScreen.Construct(wallet, sdk, priceList);
             
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant);
 

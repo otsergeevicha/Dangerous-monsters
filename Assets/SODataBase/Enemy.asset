@@ -18,9 +18,12 @@ MonoBehaviour:
   DeathHash: 646380074
   DeviationAmount: 15
   Speed: 5
-  ZeroEnemyHealth: 50
-  OneEnemyHealth: 50
-  TwoEnemyHealth: 50
+  AgroDistance: 5
+  AttackDistance: 2
+  TimePursuit: 1
+  ZeroEnemyHealth: 1
+  OneEnemyHealth: 1
+  TwoEnemyHealth: 1
   ThreeEnemyHealth: 1
   FourEnemyHealth: 1
   FiveEnemyHealth: 1

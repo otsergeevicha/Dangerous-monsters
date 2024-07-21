@@ -15,9 +15,13 @@ MonoBehaviour:
   SectionPriceMultiplier: 100
   PriceTransitionPlate: 3
   MultiplierIncreasePrice: 3
+  StartPriceTurret: 100
+  StepIncreasePriceTurret: 100
   PriceHeroHealth: 50
   MultiplierPriceHeroHealth: 3
   StepIncreaseHealthHero: 10
   PriceHeroSpeed: 50
   PriceHeroBasket: 50
   PriceHeroFiringRange: 50
+  LoseBonusMoney: 500
+  LoseBonusGem: 50

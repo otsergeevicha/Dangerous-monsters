@@ -10,17 +10,27 @@ namespace Infrastructure.SDK
             VideoAd.Show(OnOpenCallback, () => onCompleted?.Invoke(), OnCloseCallback, OnErrorCallback);
         }
 
+        public void InterstitialAd(Action action)
+        {
+            Agava.YandexGames.InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback, OnOfflineCallback);
+        }
+
         private void OnOpenCallback()
         {
             throw new NotImplementedException();
         }
 
-        private void OnRewardedCallback()
+        private void OnCloseCallback(bool flag)
         {
             throw new NotImplementedException();
         }
 
         private void OnCloseCallback()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnOfflineCallback()
         {
             throw new NotImplementedException();
         }
