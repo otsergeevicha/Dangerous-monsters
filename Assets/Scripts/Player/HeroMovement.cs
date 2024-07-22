@@ -8,7 +8,6 @@ namespace Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(Hero))]
-    [RequireComponent(typeof(Animator))]
     public class HeroMovement : MonoCache
     {
         [SerializeField] private Animator _animator;

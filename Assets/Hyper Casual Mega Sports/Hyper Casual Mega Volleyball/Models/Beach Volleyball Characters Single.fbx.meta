@@ -3,7 +3,12 @@ guid: c87f07d65d9d41729edeb2341acdb449
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 722c16cc90da2f54b851aea52c00d947, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -78,7 +83,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human:
@@ -363,7 +368,7 @@ ModelImporter:
       parentName: DEF.spine.02
       position: {x: 9.718347e-17, y: 0.18732451, z: 5.820766e-10}
       rotation: {x: 0.009013977, y: -4.263256e-14, z: -0.000000002149099, w: 0.99995935}
-      scale: {x: 1, y: 0.99999774, z: 1}
+      scale: {x: 1, y: 0.99999547, z: 1}
     - name: DEF.chest
       parentName: DEF.spine.01
       position: {x: 4.3064807e-16, y: 0.1883956, z: 0.0000000011641532}
@@ -378,137 +383,282 @@ ModelImporter:
       parentName: DEF.neck
       position: {x: 1.3896634e-22, y: 0.090895414, z: 7.1054274e-15}
       rotation: {x: 9.3132246e-10, y: 1.421332e-14, z: -6.096457e-17, w: 1}
-      scale: {x: 1, y: 0.9999988, z: 0.99999774}
+      scale: {x: 1, y: 0.9999977, z: 0.99999547}
     - name: DEF.shoulder.L
       parentName: DEF.chest
       position: {x: -0.039685447, y: 0.12887442, z: 0.00093504565}
       rotation: {x: -0.01311122, y: 0.012632267, z: 0.77793235, w: 0.6280842}
-      scale: {x: 1.0000024, y: 1.0000073, z: 0.9999998}
+      scale: {x: 1.0000045, y: 1.0000147, z: 0.9999998}
     - name: DEF.arm.L
       parentName: DEF.shoulder.L
       position: {x: -0.0032045825, y: 0.1548418, z: -0.00033212107}
       rotation: {x: 0.008495604, y: -0.011926456, z: -0.10890841, w: 0.9939439}
-      scale: {x: 1.0000083, y: 0.99999326, z: 0.9999961}
+      scale: {x: 1.0000241, y: 0.99998164, z: 0.9999916}
     - name: DEF.forarm.L
       parentName: DEF.arm.L
       position: {x: 0.000000022152335, y: 0.24963391, z: -2.3283064e-10}
       rotation: {x: 0.0034945742, y: 0.00067951804, z: 0.0013796043, w: 0.9999927}
-      scale: {x: 1.0000023, y: 1.0000042, z: 1.0000006}
+      scale: {x: 1.0000023, y: 1.0000079, z: 1.0000006}
     - name: DEF.hand.L
       parentName: DEF.forarm.L
       position: {x: 0.00000004721778, y: 0.28986725, z: 4.656613e-10}
       rotation: {x: -0.009780135, y: 0.0012108654, z: 0.026527476, w: 0.9995995}
-      scale: {x: 0.9999997, y: 0.9999949, z: 1.0000039}
+      scale: {x: 1.0000017, y: 0.9999853, z: 1.0000085}
     - name: DEF.fingers.01.L
       parentName: DEF.hand.L
       position: {x: -0.000000018657374, y: 0.07841773, z: 0.0000000011641532}
       rotation: {x: -0.0010409774, y: 0.0054191477, z: -0.01571314, w: 0.99986136}
-      scale: {x: 1.0000079, y: 1.0000161, z: 0.99999964}
+      scale: {x: 1.0000129, y: 1.0000336, z: 0.99999964}
     - name: DEF.fingers.02.L
       parentName: DEF.fingers.01.L
       position: {x: 0.000000014901161, y: 0.032498967, z: 0.000000001906301}
       rotation: {x: 0.000068054695, y: -0.0056768768, z: -0.009168667, w: 0.9999419}
-      scale: {x: 1.0000045, y: 1.0000011, z: 0.99999994}
+      scale: {x: 1.0000063, y: 1.0000042, z: 1.0000032}
     - name: DEF.fingers.03.L
       parentName: DEF.fingers.02.L
       position: {x: 0.000000048018926, y: 0.032317884, z: -4.2451992e-10}
       rotation: {x: -4.874891e-10, y: -0.0008726147, z: 0.000000068534426, w: 0.99999964}
-      scale: {x: 1.0000043, y: 1.0000106, z: 0.9999977}
+      scale: {x: 1.000014, y: 1.0000204, z: 0.9999927}
     - name: DEF.thumb.01.L
       parentName: DEF.hand.L
       position: {x: 0.0006318296, y: 0.055761058, z: 0.035725877}
-      rotation: {x: 0.32612026, y: 0.6284514, z: 0.29836732, w: 0.6400558}
-      scale: {x: 1.0000155, y: 1.0000081, z: 1.0000044}
+      rotation: {x: 0.32612196, y: 0.6284505, z: 0.29836902, w: 0.64005506}
+      scale: {x: 1.0000381, y: 1.0000147, z: 1.0000062}
     - name: DEF.thumb.02.L
       parentName: DEF.thumb.01.L
       position: {x: 0.00000002188608, y: 0.026171228, z: -0.000000015454134}
       rotation: {x: -0.04144987, y: -0.00018444654, z: -0.03986382, w: 0.9983451}
-      scale: {x: 1.0000403, y: 1.0000213, z: 1.0000138}
+      scale: {x: 1.0000813, y: 1.0000396, z: 1.0000259}
     - name: DEF.shoulder.R
       parentName: DEF.chest
       position: {x: 0.039685447, y: 0.12887442, z: 0.0009350266}
       rotation: {x: -0.0131114, y: -0.012632113, z: -0.77793235, w: 0.6280842}
-      scale: {x: 1.0000024, y: 1.0000074, z: 0.99999994}
+      scale: {x: 1.0000045, y: 1.0000147, z: 0.99999994}
     - name: DEF.arm.R
       parentName: DEF.shoulder.R
       position: {x: 0.0032047092, y: 0.1548418, z: -0.0003321201}
       rotation: {x: 0.008495606, y: 0.011926458, z: 0.108908385, w: 0.9939439}
-      scale: {x: 1.0000105, y: 0.99999386, z: 0.9999955}
+      scale: {x: 1.000028, y: 0.9999845, z: 0.999991}
     - name: DEF.forarm.R
       parentName: DEF.arm.R
       position: {x: 0.00000009678001, y: 0.2496339, z: 1.1641532e-10}
       rotation: {x: 0.0034945724, y: -0.00067951804, z: -0.001379582, w: 0.9999927}
-      scale: {x: 1.0000005, y: 1, z: 1}
+      scale: {x: 0.9999998, y: 1.0000001, z: 1}
     - name: DEF.hand.R
       parentName: DEF.forarm.R
       position: {x: -0.00000016680178, y: 0.28986728, z: -0.0000000010477379}
       rotation: {x: -0.009780133, y: -0.0012108651, z: -0.026527511, w: 0.9995995}
-      scale: {x: 0.9999979, y: 0.999994, z: 1.0000043}
+      scale: {x: 0.99999994, y: 0.9999792, z: 1.0000088}
     - name: DEF.fingers.01.R
       parentName: DEF.hand.R
       position: {x: 0.00000002597335, y: 0.078417696, z: 5.820766e-10}
       rotation: {x: -0.0010409812, y: -0.005419147, z: 0.015713204, w: 0.99986136}
-      scale: {x: 1.0000068, y: 1.0000163, z: 1}
+      scale: {x: 1.0000111, y: 1.0000378, z: 1}
     - name: DEF.fingers.02.R
       parentName: DEF.fingers.01.R
       position: {x: -0.00000001967419, y: 0.03249904, z: -0.0000000020372681}
       rotation: {x: 0.00006805575, y: 0.0056768786, z: 0.009168638, w: 0.9999418}
-      scale: {x: 1.000005, y: 0.999999, z: 1}
+      scale: {x: 1.0000066, y: 1.0000036, z: 1.0000026}
     - name: DEF.fingers.03.R
       parentName: DEF.fingers.02.R
       position: {x: -0.0000001657617, y: 0.032317907, z: 2.5844019e-10}
       rotation: {x: -0.0000000012660166, y: 0.00087261526, z: -0.00000006109093, w: 0.9999997}
-      scale: {x: 1.0000049, y: 1.0000097, z: 0.9999999}
+      scale: {x: 1.0000131, y: 1.0000187, z: 0.9999971}
     - name: DEF.thumb.01.R
       parentName: DEF.hand.R
       position: {x: -0.0006318228, y: 0.055761024, z: 0.03572588}
-      rotation: {x: -0.32612348, y: 0.62845117, z: 0.29836437, w: -0.6400558}
-      scale: {x: 1.0000259, y: 1.0000117, z: 1.0000091}
+      rotation: {x: -0.32612213, y: 0.62845117, z: 0.29836613, w: -0.64005566}
+      scale: {x: 1.0000631, y: 1.0000211, z: 1.0000136}
     - name: DEF.thumb.02.R
       parentName: DEF.thumb.01.R
       position: {x: 0.000000017229468, y: 0.026171217, z: -0.00000013739918}
       rotation: {x: -0.04144979, y: 0.00018447633, z: 0.039863903, w: 0.998345}
-      scale: {x: 1.000008, y: 1.0000051, z: 1.000003}
+      scale: {x: 1.0000175, y: 1.0000025, z: 1.0000055}
     - name: DEF.leg.L
       parentName: DEF.hips
       position: {x: -0.1290082, y: 0.11208186, z: -0.0004227946}
       rotation: {x: 0.003088606, y: 0.0028642947, z: 0.9986244, w: 0.05226463}
-      scale: {x: 0.999981, y: 1.0000086, z: 0.9999998}
+      scale: {x: 0.9999862, y: 1.0000169, z: 0.9999998}
     - name: DEF.shin.L
       parentName: DEF.leg.L
       position: {x: -0.000000010926669, y: 0.32846698, z: -2.3283064e-10}
       rotation: {x: -0.049057025, y: 0.005214101, z: 0.020401657, w: 0.998574}
-      scale: {x: 1.000017, y: 1.0000272, z: 0.99999714}
+      scale: {x: 1.0000349, y: 1.000053, z: 0.9999932}
     - name: DEF.foot.L
       parentName: DEF.shin.L
       position: {x: 1.8189894e-10, y: 0.3054716, z: -0.000000002561137}
       rotation: {x: 0.6132462, y: 0.023040866, z: 0.036767278, w: 0.7886992}
-      scale: {x: 1.0000155, y: 0.99999654, z: 1.0000284}
+      scale: {x: 1.0000311, y: 0.999981, z: 1.0000691}
     - name: DEF.toe.L
       parentName: DEF.foot.L
       position: {x: 0.000000017578714, y: 0.13812588, z: -0.000000007916242}
       rotation: {x: 0.14831777, y: -0.014448069, z: -0.0023203285, w: 0.9888315}
-      scale: {x: 1.0000099, y: 1.000112, z: 0.99988544}
+      scale: {x: 1.0000237, y: 1.0004283, z: 0.9995648}
     - name: DEF.leg.R
       parentName: DEF.hips
       position: {x: 0.1290082, y: 0.11208186, z: -0.0004227946}
       rotation: {x: -0.003088606, y: 0.0028642947, z: 0.9986244, w: -0.05226463}
-      scale: {x: 0.999981, y: 1.0000086, z: 0.9999998}
+      scale: {x: 0.9999862, y: 1.0000169, z: 0.9999998}
     - name: DEF.shin.R
       parentName: DEF.leg.R
       position: {x: 0.000000010926669, y: 0.32846698, z: -2.3283064e-10}
       rotation: {x: -0.049057025, y: -0.005214101, z: -0.020401657, w: 0.998574}
-      scale: {x: 1.000017, y: 1.0000272, z: 0.99999714}
+      scale: {x: 1.0000349, y: 1.000053, z: 0.9999932}
     - name: DEF.foot.R
       parentName: DEF.shin.R
       position: {x: -1.8189894e-10, y: 0.3054716, z: -0.000000002561137}
       rotation: {x: 0.6132462, y: -0.023040866, z: -0.036767278, w: 0.7886992}
-      scale: {x: 1.0000155, y: 0.99999654, z: 1.0000284}
+      scale: {x: 1.0000311, y: 0.999981, z: 1.0000691}
     - name: DEF.toe.R
       parentName: DEF.foot.R
       position: {x: -0.000000017578714, y: 0.13812588, z: -0.000000007916242}
       rotation: {x: 0.14831777, y: 0.014448069, z: 0.0023203285, w: 0.9888315}
-      scale: {x: 1.0000099, y: 1.000112, z: 0.99988544}
+      scale: {x: 1.0000237, y: 1.0004283, z: 0.9995648}
+    - name: Hair_Woman_01
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_02
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_03
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_04
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_05
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_06
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_07
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_08
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair_Woman_09
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 01
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 02
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 11
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 12
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 13
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 14
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 15
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 21
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man 22
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man bandana 21
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man bandana 22
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Cap 01
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Cap 02
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Cap Judge
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Hair 11
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Hair 12
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Hair 13
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Hair 14
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Hair 15
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Man Judge
+      parentName: Beach Volleyball Characters Single(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - name: Woman_01
       parentName: Beach Volleyball Characters Single(Clone)
       position: {x: -0, y: 0, z: 0}
@@ -554,151 +704,6 @@ ModelImporter:
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_04
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_07
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_09
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_02
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_03
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_01
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_08
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_06
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Hair_Woman_05
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 15
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 21
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 12
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 01
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 14
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 13
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 02
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 22
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man 11
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Hair 13
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Cap 01
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Cap 02
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man bandana 21
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Hair 15
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Hair 14
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man bandana 22
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Hair 12
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Hair 11
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Judge
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Man Cap Judge
-      parentName: Beach Volleyball Characters Single(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -712,7 +717,7 @@ ModelImporter:
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  autoGenerateAvatarMappingIfUnspecified: 1
+  autoGenerateAvatarMappingIfUnspecified: 0
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1

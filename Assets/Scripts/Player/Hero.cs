@@ -26,14 +26,14 @@ namespace Player
     [RequireComponent(typeof(LootTriggers))]
     public class Hero : MonoCache
     {
-        [HideInInspector] [SerializeField] private HeroMovement _heroMovement;
-        [HideInInspector] [SerializeField] private RootCamera _rootCamera;
-        [HideInInspector] [SerializeField] private BasketPlayer _basketPlayer;
-        [HideInInspector] [SerializeField] private AmmoTriggers _ammoTriggers;
-        [HideInInspector] [SerializeField] private LootTriggers _lootTriggers;
-        [HideInInspector] [SerializeField] private WeaponHolder _weaponHolder;
-        [HideInInspector] [SerializeField] private HeroAnimation _heroAnimation;
-        [HideInInspector] [SerializeField] private HeroShooting _heroShooting;
+        [SerializeField] private HeroMovement _heroMovement;
+        [SerializeField] private RootCamera _rootCamera;
+        [SerializeField] private BasketPlayer _basketPlayer;
+        [SerializeField] private AmmoTriggers _ammoTriggers;
+        [SerializeField] private LootTriggers _lootTriggers;
+        [SerializeField] private WeaponHolder _weaponHolder;
+        [SerializeField] private HeroAnimation _heroAnimation;
+        [SerializeField] private HeroShooting _heroShooting;
 
         [SerializeField] private GameObject _healingEffect;
 
@@ -70,7 +70,7 @@ namespace Player
 
             _magazine = new MagazineBullets(maxCountBullets / 2, hud);
             _weaponHolder.Construct(poolBullet, _magazine, cameraFollow);
-            _heroShooting.Construct(_heroAnimation, _heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
+            _heroShooting.Construct(_heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
             _heroShooting.MergeEnemies(poolEnemies, poolBosses);
             
             _healingEffect.SetActive(false);

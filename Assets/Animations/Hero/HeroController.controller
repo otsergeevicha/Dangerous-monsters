@@ -72,7 +72,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 925c1a961de8bba45a1d4d3abc03637c, type: 2}
+  m_Motion: {fileID: 7400000, guid: f2d270da23c1b4f4c99aa9f6e21a877e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -261,7 +261,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: UpperBodyAiming
     m_StateMachine: {fileID: 6237791239764900436}
-    m_Mask: {fileID: 31900000, guid: 3a467d104d88c184a9f9aa7847fea54b, type: 2}
+    m_Mask: {fileID: 31900000, guid: d856a3384ace20c4dbcc3d9a7d08afdd, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0

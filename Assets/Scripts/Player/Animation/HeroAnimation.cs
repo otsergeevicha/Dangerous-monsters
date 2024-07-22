@@ -6,7 +6,7 @@ namespace Player.Animation
 {
     public class HeroAnimation : MonoCache
     {
-        [HideInInspector] [SerializeField] private Animator _animator;
+        [SerializeField] private Animator _animator;
 
         private HeroData _heroData;
         private int _runHash;
@@ -43,11 +43,5 @@ namespace Player.Animation
             if (_heroOnBase) 
                 _animator.SetBool(_runHash, false);
         }
-
-        // public void EnableShoot() => 
-        //     _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime));
-        //
-        // public void DisableShoot() => 
-        //     _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime));
     }
 }

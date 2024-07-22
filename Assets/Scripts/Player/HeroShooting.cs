@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using CameraModule;
+﻿using System;
+using System.Collections.Generic;
 using Enemies;
-using Player.Animation;
 using Player.ShootingModule;
 using Plugins.MonoCache;
 using RingZone;
@@ -11,7 +10,8 @@ namespace Player
 {
     public class HeroShooting : MonoCache
     {
-        private HeroAnimation _heroAnimation;
+        [SerializeField] private Animator _animator;
+        
         private WeaponHolder _weaponHolder;
         private HeroMovement _heroMovement;
 
@@ -22,8 +22,10 @@ namespace Player
         private bool _haveTarget;
         private Enemy _currentEnemy;
         private int _requestTarget;
+        
+        private float _timerDownGun;
 
-        public void Construct(HeroAnimation heroAnimation, HeroMovement heroMovement,
+        public void Construct(HeroMovement heroMovement,
             WeaponHolder weaponHolder, float heroDataRadiusDetection, EnemyRing enemyRing)
         {
             _enemyRing = enemyRing;
@@ -31,7 +33,6 @@ namespace Player
 
             _heroMovement = heroMovement;
             _weaponHolder = weaponHolder;
-            _heroAnimation = heroAnimation;
         }
 
         protected override void UpdateCached()
@@ -43,15 +44,23 @@ namespace Player
 
             if (_requestTarget == 1)
             {
+                _timerDownGun = 2f;
+
+                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f,  1f));
+                
                 _enemyRing.OnActive(_currentEnemy.transform);
                 Shoot(_currentEnemy);
             }
             
             if (!_haveTarget)
             {
+                _timerDownGun -= Time.deltaTime;
+
+                if (_timerDownGun <= Single.Epsilon)
+                    _animator.SetLayerWeight(1, 0);
+
                 _requestTarget = 0;
                 OffShoot();
-                //_heroAnimation.DisableShoot();
                 _enemyRing.InActive();
             }
         }
@@ -112,7 +121,6 @@ namespace Player
         {
             if (!_heroOnBase)
             {
-               // _heroAnimation.EnableShoot();
                 _weaponHolder.GetActiveGun().Shoot(enemy);
                 _heroMovement.SetStateBattle(true, enemy.transform);
             }
