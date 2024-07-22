@@ -13,7 +13,7 @@ namespace Player.ShootingModule
     {
         [SerializeField] private Transform _spawnPoint;
         
-        private const int DelayShots = 200;
+        private const int DelayShots = 500;
         
         private readonly CancellationTokenSource _shootToken = new ();
 

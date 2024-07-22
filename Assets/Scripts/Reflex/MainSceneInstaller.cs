@@ -55,6 +55,7 @@ namespace Reflex
 
         private WindowModule _windowModule;
         private LevelModule _levelModule;
+        private EffectModule _effectModule;
 
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
@@ -67,6 +68,7 @@ namespace Reflex
             IWallet wallet = container.Single<IWallet>();
 
             _windowModule = new WindowModule();
+            _effectModule = new EffectModule();
             
             Hud hud = gameFactory.CreateHud();
             WinScreen winScreen = gameFactory.CreateWinScreen();
@@ -83,7 +85,9 @@ namespace Reflex
 
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
                 _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, 
-                _spawnPointBoss.position, _finishPlate, hero, _baseGate.transform.position);
+                _spawnPointBoss.position, _finishPlate, hero, _baseGate.transform.position, _effectModule);
+
+            _effectModule.Construct(pool.PoolEffects);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             

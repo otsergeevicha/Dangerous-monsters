@@ -25,6 +25,7 @@ namespace Infrastructure.Factory.Pools
         public PoolBullet PoolBullet { get; private set; }
         public PoolTurrets PoolTurrets { get; private set; }
         public PoolWorkers PoolWorkers { get; private set; }
+        public PoolEffects PoolEffects { get; private set; }
         private PoolMissiles PoolMissiles { get; set; }
         private PoolMoney PoolMoney { get; set; }
         private PoolLootBoxes PoolLootBoxes { get; set; }
@@ -33,10 +34,12 @@ namespace Infrastructure.Factory.Pools
             EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate,
             TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner,
             ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
-            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Vector3 baseGate)
+            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Vector3 baseGate, EffectModule effectModule)
         {
             _enemyHealthModule = new EnemyHealthModule();
 
+            PoolEffects = new PoolEffects(factory, poolData.MaxCountBullets);
+            
             PoolAmmoBox = new PoolAmmoBoxPlayer(factory, poolData.SizeAmmoBoxPlayer);
             PoolCargoAssistant =
                 new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
@@ -52,7 +55,7 @@ namespace Infrastructure.Factory.Pools
                 spawnPointBoss, finishPlate, hero, baseGate);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
-            PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData);
+            PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData, effectModule);
             PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners,
                 storageGem.transform.position, storageGem);
         }
@@ -68,6 +71,7 @@ namespace Infrastructure.Factory.Pools
             PoolTurrets.AdaptingLevel();
             PoolBullet.AdaptingLevel();
             PoolWorkers.AdaptingLevel();
+            PoolEffects.AdaptingLevel();
         }
 
         protected override void OnDisabled() =>

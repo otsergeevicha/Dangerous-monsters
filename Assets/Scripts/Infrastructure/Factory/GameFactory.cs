@@ -3,6 +3,7 @@ using Assistant;
 using CameraModule;
 using Canvases;
 using Canvases.UpgradePlayer;
+using Effects;
 using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
@@ -95,6 +96,10 @@ namespace Infrastructure.Factory
         public UpgradeHeroScreen CreateUpgradeHeroScreen() =>
             _assetsProvider.InstantiateEntity(Constants.UpgradeHeroScreenPath)
                 .GetComponent<UpgradeHeroScreen>();
+
+        public VfxHitRed CreateVfxHit() =>
+            _assetsProvider.InstantiateEntity(Constants.VfxHitRedPath)
+                .GetComponent<VfxHitRed>();
 
         public StartScreen CreateStartScreen() =>
             _assetsProvider.InstantiateEntity(Constants.StartScreenPath)

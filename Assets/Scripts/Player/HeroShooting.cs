@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Enemies;
+using Modules;
 using Player.ShootingModule;
 using Plugins.MonoCache;
 using RingZone;
@@ -11,6 +12,8 @@ namespace Player
     public class HeroShooting : MonoCache
     {
         [SerializeField] private Animator _animator;
+        
+        private readonly float _waitingDownGun = 2f;
         
         private WeaponHolder _weaponHolder;
         private HeroMovement _heroMovement;
@@ -44,7 +47,7 @@ namespace Player
 
             if (_requestTarget == 1)
             {
-                _timerDownGun = 2f;
+                _timerDownGun = _waitingDownGun;
 
                 _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f,  1f));
                 
@@ -121,8 +124,8 @@ namespace Player
         {
             if (!_heroOnBase)
             {
-                _weaponHolder.GetActiveGun().Shoot(enemy);
                 _heroMovement.SetStateBattle(true, enemy.transform);
+                _weaponHolder.GetActiveGun().Shoot(enemy);
             }
         }
     }

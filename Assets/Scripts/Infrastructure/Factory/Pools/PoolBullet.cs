@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Ammo;
+using Modules;
 using Services.Factory;
 using SO;
 
@@ -12,12 +13,12 @@ namespace Infrastructure.Factory.Pools
         public IReadOnlyList<Bullet> Bullets =>
             _bullets.AsReadOnly();
 
-        public PoolBullet(IGameFactory factory, int maxCountBullets, BulletData bulletData)
+        public PoolBullet(IGameFactory factory, int maxCountBullets, BulletData bulletData, EffectModule effectModule)
         {
             for (int i = 0; i < maxCountBullets; i++)
             {
                 Bullet bullet = factory.CreateBullet();
-                bullet.Construct(bulletData);
+                bullet.Construct(bulletData, effectModule);
                 bullet.InActive();
                 _bullets.Add(bullet);
             }

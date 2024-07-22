@@ -1,52 +1,66 @@
 ﻿using Enemies;
+using Modules;
 using Plugins.MonoCache;
 using SO;
 using UnityEngine;
 
 namespace Ammo
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class Bullet : MonoCache
     {
-        [HideInInspector] [SerializeField] private Rigidbody _rigidbody;
-        
-        [SerializeField] private Transform _vfxHitGreen;
-        [SerializeField] private Transform _vfxHitRed;
-        
         private Vector3 _firstPosition;
         private BulletData _bulletData;
+        private EffectModule _effectModule;
+        private bool _isActive;
+        private float _distanceBefore;
+        private int _speed;
+        private Vector3 _moveDirection;
+        private Vector3 _targetPosition;
 
-        private void OnValidate() => 
-            _rigidbody ??= Get<Rigidbody>();
-
-        public void Construct(BulletData bulletData) => 
-            _bulletData = bulletData;
-
-        public void InActive() => 
-            gameObject.SetActive(false);
-
-        public void Shot(Vector3 currentPosition, Vector3 direction)
+        public void Construct(BulletData bulletData, EffectModule effectModule)
         {
-            transform.position = currentPosition;
-            transform.LookAt(new Vector3(direction.x, direction.y + 1f, direction.z));
-            gameObject.SetActive(true);
+            _effectModule = effectModule;
+            _bulletData = bulletData;
+            _speed = _bulletData.BulletSpeed;
+        }
+
+        protected override void UpdateCached()
+        {
+            if (!_isActive)
+                return;
             
-            _rigidbody.velocity = transform.forward * _bulletData.BulletSpeed;
+            transform.position += _moveDirection * (Time.deltaTime * _speed);
+
+            if (_distanceBefore <= Vector3.Distance(transform.position, _targetPosition)) 
+                InActive();
+        }
+
+        public void InActive()
+        {
+            _isActive = false;
+            gameObject.SetActive(false);
+        }
+
+        public void Shot(Vector3 currentPosition, Vector3 targetPosition)
+        {
+            _targetPosition = new Vector3(targetPosition.x, targetPosition.y + 1, targetPosition.z);
+            
+            transform.position = currentPosition;
+             _distanceBefore = Vector3.Distance(currentPosition, _targetPosition);
+             _moveDirection = (_targetPosition - currentPosition).normalized;
+             
+            gameObject.SetActive(true);
+
+             _isActive = true;
         }
 
         private void OnTriggerEnter(Collider hit)
         {
             if (hit.gameObject.TryGetComponent(out Enemy enemy))
+            {
                 enemy.ApplyDamage(_bulletData.BulletDamage);
-
-            Instantiate(hit.GetComponent<Enemy>() != null
-                    ? _vfxHitGreen
-                    : _vfxHitRed, transform.position,
-                Quaternion.identity);
-            
-            print("вынести это в объекты получаемые урон от пули");
-            
-            gameObject.SetActive(false);
+                _effectModule.OnHitEnemy(new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z));
+            }
         }
     }
 }
