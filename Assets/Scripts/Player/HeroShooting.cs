@@ -51,6 +51,7 @@ namespace Player
             {
                 _requestTarget = 0;
                 OffShoot();
+                //_heroAnimation.DisableShoot();
                 _enemyRing.InActive();
             }
         }
@@ -111,7 +112,7 @@ namespace Player
         {
             if (!_heroOnBase)
             {
-                _heroAnimation.EnableShoot();
+               // _heroAnimation.EnableShoot();
                 _weaponHolder.GetActiveGun().Shoot(enemy);
                 _heroMovement.SetStateBattle(true, enemy.transform);
             }

@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 5d60d797c8a7c19429790cdf4db56522
 ModelImporter:
-  serializedVersion: 19301
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: -967743913869607151
@@ -17,6 +17,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -33,7 +34,144 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|Armature_Footbal_SingleAction
+      takeName: Armature|Armature_Footbal_SingleAction
+      internalID: -967743913869607151
+      firstFrame: 0
+      lastFrame: 43
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000000000000000000000000000000000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/DEF.hips
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.L/DEF.shin.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.L/DEF.shin.L/DEF.foot.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.L/DEF.shin.L/DEF.foot.L/DEF.toe.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.R/DEF.shin.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.R/DEF.shin.R/DEF.foot.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.leg.R/DEF.shin.R/DEF.foot.R/DEF.toe.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.neck
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.neck/DEF.head
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L/DEF.hand.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L/DEF.hand.L/DEF.fingers.01.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L/DEF.hand.L/DEF.fingers.01.L/DEF.fingers.02.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L/DEF.hand.L/DEF.fingers.01.L/DEF.fingers.02.L/DEF.fingers.03.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L/DEF.hand.L/DEF.thumb.01.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.L/DEF.arm.L/DEF.forarm.L/DEF.hand.L/DEF.thumb.01.L/DEF.thumb.02.L
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R/DEF.hand.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R/DEF.hand.R/DEF.fingers.01.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R/DEF.hand.R/DEF.fingers.01.R/DEF.fingers.02.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R/DEF.hand.R/DEF.fingers.01.R/DEF.fingers.02.R/DEF.fingers.03.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R/DEF.hand.R/DEF.thumb.01.R
+        weight: 1
+      - path: Armature/DEF.hips/DEF.spine.02/DEF.spine.01/DEF.chest/DEF.shoulder.R/DEF.arm.R/DEF.forarm.R/DEF.hand.R/DEF.thumb.01.R/DEF.thumb.02.R
+        weight: 1
+      - path: Man Better 02.001
+        weight: 0
+      - path: Man Better 03.001
+        weight: 0
+      - path: Man Better 05.001
+        weight: 0
+      - path: Man Cap Better 02.001
+        weight: 0
+      - path: Man Cap Better 03.001
+        weight: 0
+      - path: Man Cap Better 05.001
+        weight: 0
+      - path: Man Catcher 02.001
+        weight: 0
+      - path: Man Catcher 03.001
+        weight: 0
+      - path: Man Catcher 05.001
+        weight: 0
+      - path: Man Helmet Catcher 02.001
+        weight: 0
+      - path: Man Helmet Catcher 03.001
+        weight: 0
+      - path: Man Helmet Catcher 05.001
+        weight: 0
+      - path: Man Helmet Judge 01.001
+        weight: 0
+      - path: Man Judge 01.001
+        weight: 0
+      - path: Man Pitcher 02.001
+        weight: 0
+      - path: Man Pitcher 03.001
+        weight: 0
+      - path: Man Pitcher 05.001
+        weight: 0
+      - path: Man Pitcher Cap 02.001
+        weight: 0
+      - path: Man Pitcher Cap 03.001
+        weight: 0
+      - path: Man Pitcher Cap 05.001
+        weight: 0
+      maskType: 0
+      maskSource: {fileID: 31900000, guid: 3a467d104d88c184a9f9aa7847fea54b, type: 2}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -42,27 +180,35 @@ ModelImporter:
     addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -620,6 +766,9 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

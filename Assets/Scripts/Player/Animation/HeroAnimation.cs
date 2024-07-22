@@ -44,9 +44,10 @@ namespace Player.Animation
                 _animator.SetBool(_runHash, false);
         }
 
-        public void EnableShoot()
-        {
-            print("нужно сблендить анимация хотьбы или idle со стрельбой");
-        }
+        // public void EnableShoot() => 
+        //     _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, Time.deltaTime));
+        //
+        // public void DisableShoot() => 
+        //     _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 0f, Time.deltaTime));
     }
 }
