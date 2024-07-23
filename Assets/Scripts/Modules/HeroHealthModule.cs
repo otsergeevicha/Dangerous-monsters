@@ -33,7 +33,7 @@ namespace Modules
                 Died?.Invoke();
             }
             
-            _healthBar.ChangeValue(_currentHealth, _maxHealth);
+            _healthBar.ChangeValue(_currentHealth, _maxHealth, damage);
         }
 
         public void Reset()

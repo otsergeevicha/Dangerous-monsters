@@ -170,7 +170,7 @@ namespace Enemies
 
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
-            _healthBar.ChangeValue(_currentHealth, MaxHealth);
+            _healthBar.ChangeValue(_currentHealth, MaxHealth, damage);
 
             if (_currentHealth <= 0)
             {

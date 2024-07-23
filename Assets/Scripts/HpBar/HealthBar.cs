@@ -1,65 +1,61 @@
-﻿using System;
+﻿using System.Collections;
+using System.Linq;
+using Effects;
 using Plugins.MonoCache;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HpBar
 {
     public class HealthBar : MonoCache
     {
         [SerializeField] private Canvas _mainCanvas;
-        [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private RectTransform _image;
+        [SerializeField] private Slider _sliderHP;
+
+        [SerializeField] private FloatingHitText[] _floatingHit = new FloatingHitText[5];
 
         private Transform _followingTransform;
-
-        private float _targetFillAmount;
-        private bool _isChange;
-        private bool _isLowHp;
-        private float _waitTime = 2f;
+        private Coroutine _coroutine;
 
         public void Construct(Transform following)
         {
             _followingTransform = following;
             _mainCanvas.enabled = false;
+
+            foreach (FloatingHitText hitText in _floatingHit) 
+                hitText.EndAnimation();
         }
 
         protected override void UpdateCached()
         {
+            if (!_mainCanvas.enabled)
+                return;
+
             transform.position = new Vector3(_followingTransform.position.x, 2.5f, _followingTransform.position.z);
-
-            if (_isChange)
-            {
-                _mainCanvas.enabled = true;
-
-                var temp = _image.anchorMax;
-                temp.x -= Time.deltaTime / 2;
-                _image.anchorMax = temp;
-
-                if (temp.x <= _targetFillAmount)
-                {
-                    _isChange = false;
-                    _isLowHp = true;
-                }
-            }
-
-            if (_isLowHp)
-            {
-                _waitTime -= Time.deltaTime / 2;
-                _canvasGroup.alpha = _waitTime;
-
-                if (_waitTime <= Single.Epsilon)
-                {
-                    _mainCanvas.enabled = false;
-                    _isLowHp = false;
-                    _canvasGroup.alpha = 1;
-                }
-            }
         }
 
-        public void ChangeValue(float current, float max)
+        public void ChangeValue(float current, float max, int damage)
         {
-            _isChange = true;
-            _targetFillAmount = current / max;
+            _floatingHit.FirstOrDefault(text => 
+                !text.IsActive)?.OnActive(damage);
+            
+            _mainCanvas.enabled = true;
+            
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
+
+            _coroutine = StartCoroutine(UpdateView(current, max));
+        }
+
+        private IEnumerator UpdateView(float current, float max)
+        {
+            float targetValue = current / max;
+
+            while (!Mathf.Approximately(_sliderHP.value, targetValue))
+            {
+                _sliderHP.value = Mathf.MoveTowards(_sliderHP.value, targetValue, Time.deltaTime * .5f);
+                yield return null;
+            }
         }
     }
 }
