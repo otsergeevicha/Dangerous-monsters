@@ -692,6 +692,7 @@ GameObject:
   - component: {fileID: 4763782139115913794}
   - component: {fileID: 5262864499663523705}
   - component: {fileID: 1431589400773556703}
+  - component: {fileID: 5488103105269647323}
   m_Layer: 13
   m_Name: TwoEnemy
   m_TagString: Untagged
@@ -727,6 +728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4af56a050f44f39965fbb063fde941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyTriggers: {fileID: 5488103105269647323}
+  EnemyAnimation: {fileID: 1015036009529979288}
 --- !u!195 &7476391789098821471
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -764,7 +767,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -846,6 +849,19 @@ MonoBehaviour:
       Version: 1.7.2
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
+--- !u!114 &5488103105269647323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6419924713999422261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 0}
 --- !u!1 &6661078962457428319
 GameObject:
   m_ObjectHideFlags: 0

@@ -246,7 +246,6 @@ GameObject:
   - component: {fileID: -6775000575265737243}
   - component: {fileID: 1758720767066938076}
   - component: {fileID: -5957814398502355940}
-  - component: {fileID: 3605624960961484987}
   - component: {fileID: 1178956254883365992}
   m_Layer: 13
   m_Name: ZeroEnemy
@@ -322,7 +321,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -397,27 +396,6 @@ MonoBehaviour:
       Version: 1.7.2
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
---- !u!135 &3605624960961484987
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278996877863313785}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1178956254883365992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,6 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 0}
 --- !u!1 &1338709784157274767
 GameObject:
   m_ObjectHideFlags: 0

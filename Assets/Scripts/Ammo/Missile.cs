@@ -1,7 +1,7 @@
 ﻿using Enemies;
+using Modules;
 using Plugins.MonoCache;
 using SO;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Ammo
@@ -17,9 +17,11 @@ namespace Ammo
         private bool _isActive;
         private float _distanceBefore;
         private float _speed;
+        private EffectModule _effectModule;
 
-        public void Construct(BulletData bulletData)
+        public void Construct(BulletData bulletData, EffectModule effectModule)
         {
+            _effectModule = effectModule;
             _bulletData = bulletData;
             _speed = _bulletData.MissileSpeed;
         }
@@ -49,6 +51,7 @@ namespace Ammo
                         enemy.ApplyDamage(_bulletData.MissileDamage);
                 }
             
+                _effectModule.OnExplosion(transform.position);
                 InActive();
             }
         }
@@ -59,14 +62,10 @@ namespace Ammo
             gameObject.SetActive(false);
         }
 
-        public void SetStartPosition(Vector3 newPosition)
-        {
-            transform.position = newPosition;
-            transform.rotation = quaternion.identity;
-        }
-
         public void Throw(Vector3 currentPosition, Vector3 targetPosition)
         {
+            transform.position = currentPosition;
+            
             _targetPosition = new Vector3(targetPosition.x, targetPosition.y + 1, targetPosition.z);
             _distanceBefore = Vector3.Distance(currentPosition, _targetPosition);
             _moveDirection = (_targetPosition - currentPosition).normalized;

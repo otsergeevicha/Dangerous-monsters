@@ -26,6 +26,7 @@
     public const string WinScreenPath = "Canvases/WinScreen";
     public const string UpgradeHeroScreenPath = "Canvases/UpgradeHeroScreen";
     public const string VfxHitRedPath = "Effects/VfxHitRed";
+    public const string VfxExplosionMissilePath = "Effects/ExplosionMissile";
 
     //path enemies
     public const string ZeroPath = "Enemies/SimpleEnemy/ZeroEnemy";

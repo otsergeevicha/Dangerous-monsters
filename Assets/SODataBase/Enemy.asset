@@ -21,9 +21,9 @@ MonoBehaviour:
   AgroDistance: 5
   AttackDistance: 2
   TimePursuit: 1
-  ZeroEnemyHealth: 24
-  OneEnemyHealth: 24
-  TwoEnemyHealth: 21
+  ZeroEnemyHealth: 1
+  OneEnemyHealth: 1
+  TwoEnemyHealth: 1
   ThreeEnemyHealth: 1
   FourEnemyHealth: 1
   FiveEnemyHealth: 1

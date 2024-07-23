@@ -101,6 +101,10 @@ namespace Infrastructure.Factory
             _assetsProvider.InstantiateEntity(Constants.VfxHitRedPath)
                 .GetComponent<VfxHitRed>();
 
+        public VfxMissileExplosion CreateVfxExplosion() =>
+            _assetsProvider.InstantiateEntity(Constants.VfxExplosionMissilePath)
+                .GetComponent<VfxMissileExplosion>();
+
         public StartScreen CreateStartScreen() =>
             _assetsProvider.InstantiateEntity(Constants.StartScreenPath)
                 .GetComponent<StartScreen>();

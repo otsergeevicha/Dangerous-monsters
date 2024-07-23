@@ -42,5 +42,6 @@ namespace Services.Factory
         WinScreen CreateWinScreen();
         UpgradeHeroScreen CreateUpgradeHeroScreen();
         VfxHitRed CreateVfxHit();
+        VfxMissileExplosion CreateVfxExplosion();
     }
 }

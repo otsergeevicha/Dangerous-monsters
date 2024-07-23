@@ -1054,6 +1054,7 @@ GameObject:
   - component: {fileID: 2586181571190914082}
   - component: {fileID: 2622163675002286173}
   - component: {fileID: 4794285276305168205}
+  - component: {fileID: 706212998849292672}
   m_Layer: 13
   m_Name: FourEnemy
   m_TagString: Untagged
@@ -1089,6 +1090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc0e8381a9f42f4a90dedc30207164e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyTriggers: {fileID: 706212998849292672}
   EnemyAnimation: {fileID: 2017941060949670468}
 --- !u!195 &5988576550743016700
 NavMeshAgent:
@@ -1127,7 +1129,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1202,6 +1204,19 @@ MonoBehaviour:
       Version: 1.7.2
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
+--- !u!114 &706212998849292672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428878135858604479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 0}
 --- !u!1 &7777924846535139020
 GameObject:
   m_ObjectHideFlags: 0

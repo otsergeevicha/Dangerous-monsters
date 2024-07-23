@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d54b9cba4e7419490d46aab28e1f588, type: 3}
   m_Name: BulletData
   m_EditorClassIdentifier: 
-  RadiusExplosion: 5
-  MissileDamage: 5
+  RadiusExplosion: 1
+  MissileDamage: 2
   BulletDamage: 1
   BulletSpeed: 20
+  MissileSpeed: 3

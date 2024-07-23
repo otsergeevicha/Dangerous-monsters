@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Triggers
 {
-    [RequireComponent(typeof(SphereCollider))]
     public class EnemyTriggers : MonoCache
     {
         [HideInInspector] [SerializeField] private  SphereCollider _collider;
@@ -20,9 +19,9 @@ namespace Triggers
 
         public void SetAgroZone(float agroDistance)
         {
-            _collider.isTrigger = true;
-            _collider.center = transform.position;
-            _collider.radius = agroDistance;
+            // _collider.isTrigger = true;
+            // _collider.center = transform.position;
+            // _collider.radius = agroDistance;
         }
 
         private void OnTriggerEnter(Collider collision)

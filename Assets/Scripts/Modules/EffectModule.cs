@@ -18,5 +18,12 @@ namespace Modules
                 effect.isActiveAndEnabled == false && effect.TryGetComponent(out VfxHitRed _))
               ?.OnActive(spawnPoint);
         }
+
+        public void OnExplosion(Vector3 spawnPoint)
+        {
+            _poolEffects.Effects.FirstOrDefault(effect =>
+                    effect.isActiveAndEnabled == false && effect.TryGetComponent(out VfxMissileExplosion _))
+                ?.OnActive(spawnPoint);
+        }
     }
 }

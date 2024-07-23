@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Linq;
 using Ammo;
+using Canvases;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
-using Services.Bank;
 using SO;
 using Triggers;
 using Turrets.Children;
@@ -17,6 +17,11 @@ namespace Turrets
         [SerializeField] private TurretTrigger _trigger;
         [SerializeField] private Transform _spawnPointGrenade;
 
+        [SerializeField] private CanvasTurretLowAmmo _canvasTurret;
+        [SerializeField] private Animation _animationLowAmmo;
+        
+        private readonly WaitForSeconds _waitSeconds = new (.5f);
+
         private Collider[] _overlappedColliders = new Collider[5];
         private TurretData _turretData;
         private PoolMissiles _poolMissiles;
@@ -28,11 +33,12 @@ namespace Turrets
 
         public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles)
         {
-
             _cartridgeGun = cartridgeGun;
             _poolMissiles = poolMissiles;
             _turretData = turretData;
             _turretBody = transform;
+            
+            _canvasTurret.transform.SetParent(null);
         }
 
         public void OnActive(Transform spawnPoint, int currentPrice)
@@ -53,6 +59,7 @@ namespace Turrets
 
         public void InActive()
         {
+            _animationLowAmmo.Stop();
             _trigger.InActiveCollider();
             _trigger.Invasion -= OnAttack;
             gameObject.SetActive(false);
@@ -72,19 +79,43 @@ namespace Turrets
 
         private void OnAttack()
         {
-            _overlappedColliders = Physics.OverlapSphere(transform.position, _turretData.RadiusDetection);
-
-            for (int i = 0; i < _overlappedColliders.Length; i++)
+            if (_cartridgeGun.CheckMagazine)
             {
-                if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
+                _overlappedColliders = Physics.OverlapSphere(transform.position, _turretData.RadiusDetection);
+
+                for (int i = 0; i < _overlappedColliders.Length; i++)
                 {
-                    if (_coroutine != null)
-                        StopCoroutine(_coroutine);
+                    if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
+                    {
+                        if (_coroutine != null)
+                            StopCoroutine(_coroutine);
             
-                    _coroutine = StartCoroutine(RotateTurretAndAttack(enemy.transform.position));
-                    break;
+                        _coroutine = StartCoroutine(RotateTurretAndAttack(enemy.transform.position));
+                        break;
+                    }
                 }
             }
+            else
+            {
+                _animationLowAmmo.Play();
+                
+                if (_coroutine != null)
+                    StopCoroutine(_coroutine);
+            }
+        }
+
+        private void Shoot(Vector3 targetPosition)
+        {
+            Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
+                bullet.isActiveAndEnabled == false);
+
+            if (missile != null)
+            {
+                missile.Throw(_spawnPointGrenade.position, targetPosition);
+                _cartridgeGun.Spend();
+            }
+            
+            OnAttack();
         }
 
         private IEnumerator RotateTurretAndAttack(Vector3 enemyPosition)
@@ -99,23 +130,10 @@ namespace Turrets
                     _turretData.RotateSpeed * Time.deltaTime);
                 yield return null;
             }
-
-            Shoot(enemyPosition);
-        }
-
-        private void Shoot(Vector3 targetPosition)
-        {
-            Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
-                bullet.isActiveAndEnabled == false);
-
-            if (missile != null && _cartridgeGun.CheckMagazine)
-            {
-                missile.SetStartPosition(_spawnPointGrenade.position);
-                missile.Throw(_spawnPointGrenade.position, targetPosition);
-                _cartridgeGun.Spend();
-            }
             
-            OnAttack();
+            yield return _waitSeconds;
+            
+            Shoot(enemyPosition);
         }
     }
 }

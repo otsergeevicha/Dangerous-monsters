@@ -11,13 +11,20 @@ namespace Infrastructure.Factory.Pools
         public IReadOnlyList<Effect> Effects =>
             _effects.AsReadOnly();
 
-        public PoolEffects(IGameFactory factory, int maxCountBullets)
+        public PoolEffects(IGameFactory factory, int maxCountBullets, int maxCountMissile)
         {
             for (int i = 0; i < maxCountBullets / 2; i++)
             {
                 VfxHitRed vfxHit = factory.CreateVfxHit();
                 vfxHit.InActive();
                 _effects.Add(vfxHit);
+            }
+
+            for (int i = 0; i < maxCountMissile; i++)
+            {
+                VfxMissileExplosion vfxMissileExplosion = factory.CreateVfxExplosion();
+                vfxMissileExplosion.InActive();
+                _effects.Add(vfxMissileExplosion);
             }
         }
 

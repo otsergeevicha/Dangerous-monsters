@@ -15,6 +15,7 @@ namespace Effects
 
         public void OnActive(Vector3 spawnPoint)
         {
+            transform.position = spawnPoint;
             gameObject.SetActive(true);
             _particle.Play();
         }
