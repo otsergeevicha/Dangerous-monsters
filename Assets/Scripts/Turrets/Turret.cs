@@ -41,7 +41,9 @@ namespace Turrets
             
             gameObject.SetActive(true);
 
-            ResetCoroutine();
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
+            
             transform.position = spawnPoint.position;
 
             _trigger.OnActiveCollider();
@@ -76,23 +78,18 @@ namespace Turrets
             {
                 if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
                 {
-                    ResetCoroutine();
-
-                    _coroutine = StartCoroutine(RotateTurretAndAttack(enemy));
+                    if (_coroutine != null)
+                        StopCoroutine(_coroutine);
+            
+                    _coroutine = StartCoroutine(RotateTurretAndAttack(enemy.transform.position));
                     break;
                 }
             }
         }
 
-        private void ResetCoroutine()
+        private IEnumerator RotateTurretAndAttack(Vector3 enemyPosition)
         {
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
-        }
-
-        private IEnumerator RotateTurretAndAttack(Enemy enemy)
-        {
-            Vector3 fromTo = enemy.transform.position - transform.position;
+            Vector3 fromTo = enemyPosition - transform.position;
             fromTo.y = .0f;
             Quaternion lookRotation = Quaternion.LookRotation(fromTo);
 
@@ -103,13 +100,10 @@ namespace Turrets
                 yield return null;
             }
 
-            float axisX = fromTo.x;
-            float axisY = fromTo.y;
-
-            Shoot(12f);
+            Shoot(enemyPosition);
         }
 
-        private void Shoot(float speed)
+        private void Shoot(Vector3 targetPosition)
         {
             Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
                 bullet.isActiveAndEnabled == false);
@@ -117,10 +111,11 @@ namespace Turrets
             if (missile != null && _cartridgeGun.CheckMagazine)
             {
                 missile.SetStartPosition(_spawnPointGrenade.position);
-                missile.OnActive();
-                missile.Throw(_spawnPointGrenade.forward * speed);
+                missile.Throw(_spawnPointGrenade.position, targetPosition);
                 _cartridgeGun.Spend();
             }
+            
+            OnAttack();
         }
     }
 }

@@ -9,40 +9,55 @@ namespace Ammo
     [RequireComponent(typeof(Rigidbody))]
     public class Missile : MonoCache
     {
-        [HideInInspector] [SerializeField] private Rigidbody _rigidbody;
         
         private BulletData _bulletData;
         private Collider[] _overlappedColliders;
+        private Vector3 _targetPosition;
+        private Vector3 _moveDirection;
+        private bool _isActive;
+        private float _distanceBefore;
+        private float _speed;
 
-        public void Construct(BulletData bulletData) => 
-            _bulletData = bulletData;
-
-        private void OnValidate() => 
-            _rigidbody ??= Get<Rigidbody>();
-
-        private void OnTriggerEnter(Collider collision) => 
-            Explosion();
-
-        private void Explosion()
+        public void Construct(BulletData bulletData)
         {
-            _overlappedColliders = Physics.OverlapSphere(transform.position, _bulletData.RadiusExplosion);
-
-            int count = _overlappedColliders.Length;
-            
-            for (int i = 0; i < count; i++)
-            {
-                if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
-                    enemy.ApplyDamage(_bulletData.MissileDamage);
-            }
-            
-            InActive();
+            _bulletData = bulletData;
+            _speed = _bulletData.MissileSpeed;
         }
 
-        public void OnActive() => 
-            gameObject.SetActive(true);
+        protected override void UpdateCached()
+        {
+            if (!_isActive)
+                return;
+            
+            transform.position += _moveDirection * (Time.deltaTime * _speed);
+
+            if (_distanceBefore <= Vector3.Distance(transform.position, _targetPosition)) 
+                InActive();
+        }
         
-        public void InActive() => 
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.TryGetComponent(out Enemy _))
+            {
+                _overlappedColliders = Physics.OverlapSphere(transform.position, _bulletData.RadiusExplosion);
+
+                int count = _overlappedColliders.Length;
+            
+                for (int i = 0; i < count; i++)
+                {
+                    if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
+                        enemy.ApplyDamage(_bulletData.MissileDamage);
+                }
+            
+                InActive();
+            }
+        }
+
+        public void InActive()
+        {
+            _isActive = false;
             gameObject.SetActive(false);
+        }
 
         public void SetStartPosition(Vector3 newPosition)
         {
@@ -50,10 +65,15 @@ namespace Ammo
             transform.rotation = quaternion.identity;
         }
 
-        public void Throw(Vector3 forward)
+        public void Throw(Vector3 currentPosition, Vector3 targetPosition)
         {
-            transform.forward = forward;
-            _rigidbody.velocity = forward;
+            _targetPosition = new Vector3(targetPosition.x, targetPosition.y + 1, targetPosition.z);
+            _distanceBefore = Vector3.Distance(currentPosition, _targetPosition);
+            _moveDirection = (_targetPosition - currentPosition).normalized;
+            
+            gameObject.SetActive(true);
+            
+            _isActive = true;
         }
     }
 }

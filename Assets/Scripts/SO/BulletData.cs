@@ -16,5 +16,8 @@ namespace SO
 
         [Range(20, 200)] 
         public int BulletSpeed = 20;
+        
+        [Range(1, 200)] 
+        public int MissileSpeed = 10;
     }
 }
