@@ -51,7 +51,10 @@ namespace Player
 
                 _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f,  1f));
                 
+                _heroMovement.SetStateBattle(true, _currentEnemy.transform);
+
                 _enemyRing.OnActive(_currentEnemy.transform);
+                
                 Shoot(_currentEnemy);
             }
             
@@ -62,6 +65,7 @@ namespace Player
                 if (_timerDownGun <= Single.Epsilon)
                     _animator.SetLayerWeight(1, 0);
 
+                _heroMovement.SetStateBattle(false, null);
                 _requestTarget = 0;
                 OffShoot();
                 _enemyRing.InActive();
@@ -114,19 +118,13 @@ namespace Player
             }
         }
 
-        private void OffShoot()
-        {
-            _weaponHolder.GetActiveGun()?.OffShoot();
-            _heroMovement.SetStateBattle(false, null);
-        }
-
         private void Shoot(Enemy enemy)
         {
-            if (!_heroOnBase)
-            {
-                _heroMovement.SetStateBattle(true, enemy.transform);
+            if (!_heroOnBase) 
                 _weaponHolder.GetActiveGun().Shoot(enemy);
-            }
         }
+
+        private void OffShoot() => 
+            _weaponHolder.GetActiveGun()?.OffShoot();
     }
 }
