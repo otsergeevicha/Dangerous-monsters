@@ -16,7 +16,7 @@ namespace CameraModule
         private CinemachineBasicMultiChannelPerlin _perlin;
         private float _timer;
         private bool _isShake;
-
+        
         public void Construct(Transform cameraRoot)
         {
             _cameraFollow.Follow = cameraRoot;
@@ -25,7 +25,7 @@ namespace CameraModule
             _cameraFollow.LookAt = cameraRoot;
             _zoomFollow.LookAt = cameraRoot;
 
-            _perlin = _zoomFollow.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            _perlin = _zoomFollow.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); 
             StopShake();
         }
 

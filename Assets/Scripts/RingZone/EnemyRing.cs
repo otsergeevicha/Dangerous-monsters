@@ -1,4 +1,5 @@
-﻿using Plugins.MonoCache;
+﻿using Enemies;
+using Plugins.MonoCache;
 using UnityEngine;
 
 namespace RingZone
@@ -6,8 +7,9 @@ namespace RingZone
     public class EnemyRing : MonoCache
     {
         private Transform _followingTransform;
+        private Enemy _enemy;
 
-        private void Start() => 
+        private void Start() =>
             InActive();
 
         protected override void UpdateCached()
@@ -15,13 +17,20 @@ namespace RingZone
             if (!isActiveAndEnabled)
                 return;
 
+            if (_enemy.IsDie)
+            {
+                InActive();
+                return;
+            }
+
             transform.position = _followingTransform.position;
         }
 
-        public void OnActive(Transform enemyTransform)
+        public void OnActive(Enemy enemy)
         {
-            _followingTransform = enemyTransform;
+            _enemy = enemy;
             gameObject.SetActive(true);
+            _followingTransform = enemy.transform;
         }
 
         public void InActive()

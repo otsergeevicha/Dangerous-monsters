@@ -45,22 +45,18 @@ namespace Player
             if (_input.MoveAxis.sqrMagnitude > Single.Epsilon)
             {
                 _heroAnimation.EnableRun();
-                
                 movementDirection = new Vector3(_input.MoveAxis.x, Single.Epsilon, _input.MoveAxis.y);
-
-                if (movementDirection != Vector3.zero)
-                {
-                    Vector3 targetDirection = _isBattle
-                        ? (_currentTarget.position - transform.position).normalized
-                        : movementDirection.normalized;
-                    
-                    Rotate(targetDirection);
-                }
             }
             else
             {
                 _heroAnimation.EnableIdle();
             }
+            
+            Vector3 targetDirection = _isBattle
+                ? (_currentTarget.position - transform.position).normalized
+                : movementDirection.normalized;
+                    
+            Rotate(targetDirection);
 
             movementDirection += Physics.gravity;
 

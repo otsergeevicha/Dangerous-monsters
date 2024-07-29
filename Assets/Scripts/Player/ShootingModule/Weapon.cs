@@ -12,19 +12,22 @@ namespace Player.ShootingModule
     public class Weapon : MonoCache
     {
         [SerializeField] private Transform _spawnPoint;
-        
+
         private const int DelayShots = 500;
-        
-        private readonly CancellationTokenSource _shootToken = new ();
+
+        private readonly CancellationTokenSource _shootToken = new();
 
         private IMagazine _magazine;
         private PoolBullet _pool;
         private Enemy _currentTarget;
         private bool _isAttack;
         private CameraFollow _camera;
+        private AudioSource _audioSource;
 
-        public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow)
+        public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow,
+            AudioSource audioSource)
         {
+            _audioSource = audioSource;
             _camera = cameraFollow;
             _magazine = magazine;
             _pool = poolBullet;
@@ -36,10 +39,10 @@ namespace Player.ShootingModule
             _currentTarget = enemy;
 
             _currentTarget.Died += OffShoot;
-            
+
             ImitationQueue().Forget();
         }
-        
+
         public void OffShoot()
         {
             _isAttack = false;
@@ -52,12 +55,13 @@ namespace Player.ShootingModule
             {
                 if (_magazine.Check())
                 {
+                    _audioSource.Play();
+                    
                     _pool.Bullets.FirstOrDefault(bullet =>
                             bullet.isActiveAndEnabled == false)
                         ?.Shot(_spawnPoint.position, _currentTarget.transform.position);
 
-                    _camera.Shake();
-                    
+                   // _camera.Shake();
                     _magazine.Spend();
                 }
 

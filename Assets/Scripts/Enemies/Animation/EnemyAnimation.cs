@@ -1,7 +1,7 @@
-﻿using System;
-using Plugins.MonoCache;
+﻿using Plugins.MonoCache;
 using SO;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemies.Animation
 {
@@ -11,19 +11,19 @@ namespace Enemies.Animation
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _attackPoint;
 
-        private const string LayerName = "Hero";
+        private const string LayerName = "Player";
         private readonly float _cleavage = 0.5f;
-        
+
         private Collider[] _hits = new Collider[1];
         private int _layerMask;
         private EnemyData _enemyData;
+        private Enemy _enemy;
+        private NavMeshAgent _agent;
 
-        public event Action IsDamaged;
-        public event Action AttackEnded;
-        public event Action DiedComplete;
-
-        public void Construct(EnemyData enemyData)
+        public void Construct(EnemyData enemyData, Enemy enemy, NavMeshAgent agent)
         {
+            _agent = agent;
+            _enemy = enemy;
             _enemyData = enemyData;
             _layerMask = 1 << LayerMask.NameToLayer(LayerName);
         }
@@ -33,24 +33,17 @@ namespace Enemies.Animation
 
         private void HitHero()
         {
-            print("атака");
             Physics.OverlapSphereNonAlloc(_attackPoint.position, _cleavage, _hits, _layerMask);
 
             if (_hits[0] != null) 
-                IsDamaged?.Invoke();
+                _enemy.TakeDamage();
         }
 
-        private void EndAttack()
-        {
-            print("конец атаки");
-            AttackEnded?.Invoke();
-        }
+        private void Death() =>
+            _enemy.Death();
 
-        private void Death()
-        {
-            print("дошли");
-            DiedComplete?.Invoke();
-        }
+        private void EndAttack() =>
+            _enemy.AttackCompleted();
 
         public void EnableIdle()
         {
@@ -58,8 +51,9 @@ namespace Enemies.Animation
             _animator.SetBool(_enemyData.AttackHash, false);
         }
 
-        public void EnablePursuit()
+        public void EnableRun()
         {
+            _agent.isStopped = false;
             _animator.SetBool(_enemyData.WalkHash, true);
             _animator.SetBool(_enemyData.AttackHash, false);
         }
@@ -72,14 +66,15 @@ namespace Enemies.Animation
 
         public void EnableAttack()
         {
-            _animator.SetBool(_enemyData.WalkHash, true);
-            _animator.SetBool(_enemyData.AttackHash, false);
+            _agent.isStopped = true;
+            _animator.SetBool(_enemyData.WalkHash, false);
+            _animator.SetBool(_enemyData.AttackHash, true);
         }
 
-        public void EnableDie() => 
+        public void EnableDie()
+        {
+            _agent.isStopped = true;
             _animator.SetTrigger(_enemyData.DeathHash);
-        
-        public void EnableHit() => 
-            _animator.SetTrigger(_enemyData.HitHash);
+        }
     }
 }

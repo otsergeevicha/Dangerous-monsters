@@ -16,14 +16,12 @@ MonoBehaviour:
   AttackHash: 1080829965
   HitHash: 1654612129
   DeathHash: 646380074
-  DeviationAmount: 15
   Speed: 5
   AgroDistance: 5
   AttackDistance: 2
-  TimePursuit: 1
-  ZeroEnemyHealth: 1
-  OneEnemyHealth: 1
-  TwoEnemyHealth: 1
+  ZeroEnemyHealth: 6
+  OneEnemyHealth: 8
+  TwoEnemyHealth: 9
   ThreeEnemyHealth: 1
   FourEnemyHealth: 1
   FiveEnemyHealth: 1

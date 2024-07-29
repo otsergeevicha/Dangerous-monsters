@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 3042889094531495418}
   - component: {fileID: 4396968776946322833}
   - component: {fileID: 5904605695268396804}
-  - component: {fileID: -2420607423975447186}
   m_Layer: 13
   m_Name: OneLevelBoss
   m_TagString: Untagged
@@ -66,6 +65,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7116751116767225000}
+  - {fileID: 7910043311211484347}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &289540106160958603
@@ -102,7 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5542ad495c4624955972ca9dace597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyTriggers: {fileID: 7414533682292417970}
   EnemyAnimation: {fileID: 5473176555607045720}
+  _agent: {fileID: 289540106160958603}
 --- !u!54 &4396968776946322833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,53 +155,6 @@ CapsuleCollider:
   m_Height: 5.0202403
   m_Direction: 1
   m_Center: {x: 0, y: 2.410465, z: 0}
---- !u!114 &-2420607423975447186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429368104272451525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 0
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 11400000, guid: 2b9aa3ce63076dd42be155d05af80b1e, type: 2}
-  mBehaviorSource:
-    behaviorName: Boss
-    behaviorDescription: 
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(321,27)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(1,107)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(2,109)"},"ID":2,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-435.5877,105.3954)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Enemies.AI.IsAgro","NodeData":{"Offset":"(-98.22972,142.677551)"},"ID":4,"Name":"Is
-        Agro","Instant":true},{"Type":"Enemies.AI.PursuitGoal","NodeData":{"Offset":"(27.2693825,162.637909)"},"ID":5,"Name":"Pursuit
-        Goal","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-196.378815,129.1694)"},"ID":6,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Enemies.AI.IsAttackRange","NodeData":{"Offset":"(-82.59067,124.820496)"},"ID":7,"Name":"Is
-        Attack Range","Instant":true},{"Type":"Enemies.AI.Attack","NodeData":{"Offset":"(41.0900345,168.485077)"},"ID":8,"Name":"Attack","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(7.641073,156.11293)"},"ID":9,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Enemies.AI.IsLowHp","NodeData":{"Offset":"(-52.17718,120.121277)"},"ID":10,"Name":"Is
-        Low Hp","Instant":true},{"Type":"Enemies.AI.Enrage","NodeData":{"Offset":"(75.9404144,159.215881)"},"ID":11,"Name":"Enrage","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(237.574463,111.6279)"},"ID":12,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Enemies.AI.IsDie","NodeData":{"Offset":"(-44.54565,160.158813)"},"ID":13,"Name":"Is
-        Die","Instant":true},{"Type":"Enemies.AI.Die","NodeData":{"Offset":"(76.87068,207.521576)"},"ID":14,"Name":"Die","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(487.109253,110)"},"ID":15,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"Enemies.AI.IsBattle","NodeData":{"Offset":"(-61.4630127,139.294189)"},"ID":16,"Name":"Is
-        Battle","Instant":true},{"Type":"Enemies.AI.EnemyIdle","NodeData":{"Offset":"(62.5848122,182.435654)"},"ID":17,"Name":"Enemy
-        Idle","Instant":true}]}]}]}}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects: []
-        byteData: 
-        byteDataArray: 
-      Version: 1.7.2
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
 --- !u!1 &444872307953476595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,3 +1227,69 @@ Transform:
   - {fileID: 6483227695374512233}
   m_Father: {fileID: 73104728764108225}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9065846522301018306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7910043311211484347}
+  - component: {fileID: 379221419685135317}
+  - component: {fileID: 7414533682292417970}
+  m_Layer: 28
+  m_Name: EnemyTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7910043311211484347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065846522301018306}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 527842099031141182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &379221419685135317
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065846522301018306}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 8
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7414533682292417970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065846522301018306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

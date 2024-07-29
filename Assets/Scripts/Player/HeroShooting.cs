@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Enemies;
-using Modules;
 using Player.ShootingModule;
 using Plugins.MonoCache;
 using RingZone;
@@ -50,10 +49,8 @@ namespace Player
                 _timerDownGun = _waitingDownGun;
 
                 _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f,  1f));
-                
                 _heroMovement.SetStateBattle(true, _currentEnemy.transform);
-
-                _enemyRing.OnActive(_currentEnemy.transform);
+                _enemyRing.OnActive(_currentEnemy);
                 
                 Shoot(_currentEnemy);
             }
@@ -75,6 +72,11 @@ namespace Player
         public void SetOnBase(bool heroOnBase)
         {
             _heroOnBase = heroOnBase;
+            _animator.SetLayerWeight(1, 0);
+            _requestTarget = 0;
+            OffShoot();
+            _enemyRing.InActive();
+            _haveTarget = false;
             _weaponHolder.Disarmed(heroOnBase);
         }
 

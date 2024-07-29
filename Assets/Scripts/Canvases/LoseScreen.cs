@@ -85,6 +85,7 @@ namespace Canvases
             OnClickReStart?.Invoke();
             Time.timeScale = 1;
             _particle.gameObject.SetActive(false);
+            _canvas.enabled = false;
         }
     }
 }

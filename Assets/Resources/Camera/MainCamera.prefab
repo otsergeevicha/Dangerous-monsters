@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7835114697992906478}
   - component: {fileID: 1612317547298711753}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: CinemachineBrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 5692997020625058244}
   - component: {fileID: 1935659725479931075}
   - component: {fileID: 5503165218066130634}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: MainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 6785735583995344104}
   - component: {fileID: 76605035690505095}
   - component: {fileID: 4956504120969991225}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4552225052720531345}
   - component: {fileID: 5206003190659601474}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: Zoom Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 5171247542590396336}
   - component: {fileID: 6924989774653964774}
   - component: {fileID: 2299418357450505983}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3428846280920598685}
   - component: {fileID: 1116587246278530772}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: First Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}

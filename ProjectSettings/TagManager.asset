@@ -34,8 +34,8 @@ TagManager:
   - Nature
   - UpgradePlayerBoard
   - MagnetEffect
-  - 
-  - 
+  - EnemyTrigger
+  - Camera
   - 
   - 
   m_SortingLayers:

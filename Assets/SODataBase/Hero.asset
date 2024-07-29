@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d25feb1add374f2c8eaef2c3b49c2edd, type: 3}
   m_Name: Hero
   m_EditorClassIdentifier: 
-  MaxHealth: 1
+  MaxHealth: 2
   Speed: 6
   SizeBasket: 5
   RadiusDetection: 5

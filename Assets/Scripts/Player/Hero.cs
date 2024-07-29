@@ -46,12 +46,14 @@ namespace Player
         private List<Enemy> _poolBosses;
         private HeroData _heroData;
         private HeroAimRing _aimRing;
+        private HealthBar _healthBar;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
             List<Enemy> poolBosses,
             HealthBar healthBar, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing)
         {
+            _healthBar = healthBar;
             _aimRing = aimRing;
             _heroData = heroData;
             _poolBosses = poolBosses;
@@ -91,7 +93,6 @@ namespace Player
             _lootTriggers.StorageGemExited += OnStorageGemExited;
 
             _lootTriggers.OnPickUpMoney += ApplyMoney;
-
         }
 
         protected override void OnDisabled()
@@ -120,7 +121,6 @@ namespace Player
             
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
         }
-
 
         public void SetShootingState(bool heroOnBase) => 
             _heroShooting.SetOnBase(heroOnBase);
@@ -165,6 +165,15 @@ namespace Player
 
         public void OnMagnetEffect() =>
             _aimRing.MagnetEffect.OnActive();
+
+        public void TryAgain()
+        {
+            _healthBar.InActive();
+            _heroHealthModule.Reset();
+            _heroMovement.SetStartPosition();
+            _aimRing.InActive();
+            _heroShooting.SetOnBase(true);
+        }
 
         private void OnDied() => 
             _windowModule.HeroDied();

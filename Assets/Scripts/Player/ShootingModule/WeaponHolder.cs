@@ -9,11 +9,12 @@ namespace Player.ShootingModule
     public class WeaponHolder : MonoCache
     {
         [SerializeField] private Weapon[] _weapons;
+        [SerializeField] private AudioSource _audioSource;
 
         public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow)
         {
             foreach (Weapon weapon in _weapons)
-                weapon.Construct(poolBullet, magazine, cameraFollow);
+                weapon.Construct(poolBullet, magazine, cameraFollow, _audioSource);
             
             Disarmed(true);
         }

@@ -38,6 +38,7 @@ namespace Modules
 
         public void Reset()
         {
+            _healthBar.HealingValue();
             _maxHealth = _heroData.MaxHealth;
             _currentHealth = _heroData.MaxHealth;
         }

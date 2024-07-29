@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using ContactZones;
 using Enemies.Animation;
@@ -43,12 +44,11 @@ namespace Enemies
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(EnemyTriggers))]
     public abstract class Enemy : MonoCache
     {
         [HideInInspector] [SerializeField] private EnemyTriggers _enemyTriggers;
-
         [HideInInspector] public EnemyAnimation EnemyAnimation;
+        [SerializeField] private NavMeshAgent _agent;
 
         private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
 
@@ -61,24 +61,20 @@ namespace Enemies
         private FinishPlate _finishPlate;
 
         private int _currentHealth;
-        private Hero _hero;
-        private Vector3 _baseGate;
         private bool _onMap;
-        private float _agroDistance;
-        private float _timePursuit;
-        private float _attackRange;
 
-        public event Action Died;
-        public EnemyData EnemyData { get; private set; }
-        public bool IsFollowBase { get; private set; }
-        public bool IsAgro { get; private set; }
-        public bool IsAttackRange { get; private set; }
+        private Hero _hero;
+        private Coroutine _coroutine;
+        private bool _isAgro;
+        private Vector3 _baseGate;
+        
         public bool IsDie { get; private set; }
-        public Vector3 GetTarget { get; private set; }
+        protected EnemyData EnemyData { get; private set; }
 
         protected abstract int GetId();
         protected abstract void SetCurrentHealth();
         protected abstract void SetCurrentDamage();
+        public event Action Died;
 
         public void Construct(EnemyData enemyData,
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate,
@@ -95,82 +91,89 @@ namespace Enemies
             SetCurrentHealth();
             SetCurrentDamage();
 
-            EnemyAnimation.Construct(enemyData);
-            
-            EnemyAnimation.IsDamaged += TakeDamage;
-            EnemyAnimation.DiedComplete += Death;
+            EnemyAnimation.Construct(enemyData, this, _agent);
+
+            _enemyTriggers.OnAgro += () =>
+            {
+                EnemyAnimation.EnableRun();
+
+                _agent.destination = _hero.transform.position;
+                _isAgro = true;
+                _coroutine = StartCoroutine(CheckAttackRange());
+            };
+
+            _enemyTriggers.NonAgro += () =>
+            {
+                EnemyAnimation.EnableRun();
+
+                _isAgro = false;
+                _agent.destination = baseGate;
+
+                if (_coroutine != null)
+                    StopCoroutine(CheckAttackRange());
+            };
 
             ResetHealth();
 
-            _agroDistance = EnemyData.AgroDistance;
-            _attackRange = EnemyData.AttackDistance;
-            _timePursuit = EnemyData.TimePursuit;
-
-            _enemyTriggers.Construct(this);
-            _enemyTriggers.SetAgroZone(_agroDistance);
-        }
-
-        protected override void OnDisabled() =>
-            DisposeDependency();
-
-        private void OnValidate()
-        {
-            EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
-            _enemyTriggers ??= Get<EnemyTriggers>();
+            _agent.speed = enemyData.Speed;
         }
 
         protected override void UpdateCached()
         {
-            if (IsFollowBase)
-            {
-                GetTarget = _baseGate;
+            if ((Vector3.Distance(transform.position, _hero.transform.position) > EnemyData.AgroDistance) && _agent.isStopped) 
                 return;
-            }
-
-            float currentDistance = Vector3.Distance(transform.position, _hero.transform.position);
-
-            IsAttackRange = currentDistance <= _attackRange;
-
-            if (currentDistance >= _agroDistance)
+            
+            if (_isAgro)
             {
-                GetTarget = _hero.transform.position;
+                EnemyAnimation.EnableRun();
+                _agent.destination = _hero.transform.position;
 
-                _timePursuit -= Time.deltaTime;
-
-                if (Mathf.Approximately(_timePursuit, Single.Epsilon))
-                {
-                    _timePursuit = EnemyData.TimePursuit;
-                    IsFollowBase = true;
-                }
+                _coroutine = StartCoroutine(CheckAttackRange());
             }
-            else
-                _timePursuit = EnemyData.TimePursuit;
+
+            if (!_isAgro)
+            {
+                EnemyAnimation.EnableRun();
+                _agent.destination = _baseGate;
+
+                if (_coroutine != null)
+                    StopCoroutine(CheckAttackRange());
+            }
         }
 
-        public void OnAgro()
+        private void OnValidate()
         {
-            IsFollowBase = false;
-            IsAgro = true;
+            EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
+            _enemyTriggers ??= ChildrenGet<EnemyTriggers>();
+            _agent ??= Get<NavMeshAgent>();
         }
 
-        private void TakeDamage() =>
-            _hero.ApplyDamage(Damage);
-
-        private void Death()
+        public virtual void OnActive()
         {
-            Died?.Invoke();
-            SpawnLoot();
-            InActive();
             IsDie = false;
+            gameObject.SetActive(true);
+
+            EnemyAnimation.EnableRun();
+            _isAgro = false;
+            _agent.destination = _baseGate;
+
+            if (_coroutine != null)
+                StopCoroutine(CheckAttackRange());
+        }
+
+        public virtual void InActive()
+        {
+            IsDie = false;
+            gameObject.SetActive(false);
+            ResetHealth();
         }
 
         public void ApplyDamage(int damage)
         {
-            EnemyAnimation.EnableHit();
-
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
             _healthBar.ChangeValue(_currentHealth, MaxHealth, damage);
+            _agent.isStopped = false;
 
             if (_currentHealth <= 0)
             {
@@ -178,26 +181,51 @@ namespace Enemies
                     _finishPlate.OnActive();
 
                 _currentHealth = 0;
+                _healthBar.InActive();
+                Died?.Invoke();
                 IsDie = true;
+                _agent.isStopped = true;
+                EnemyAnimation.EnableDie();
             }
         }
 
-        public virtual void OnActive()
+        public void AttackCompleted()
         {
-            IsFollowBase = true;
-            gameObject.SetActive(true);
-        }
+            if (Vector3.Distance(transform.position, _hero.transform.position) <= EnemyData.AttackDistance)
+            {
+                EnemyAnimation.EnableAttack();
+                return;
+            }
 
-        public virtual void InActive()
+            if (_isAgro)
+            {
+                EnemyAnimation.EnableRun();
+                _agent.destination = _hero.transform.position;
+
+                _coroutine = StartCoroutine(CheckAttackRange());
+            }
+
+            if (!_isAgro)
+            {
+                EnemyAnimation.EnableRun();
+                _agent.destination = _baseGate;
+
+                if (_coroutine != null)
+                    StopCoroutine(CheckAttackRange());
+            }
+        }
+        
+        public void TakeDamage() =>
+            _hero.ApplyDamage(Damage);
+
+        public void Death()
         {
-            gameObject.SetActive(false);
-            ResetHealth();
+            SpawnLoot();
+            InActive();
         }
 
         public void OnDestroy()
         {
-            DisposeDependency();
-
             Destroy(_healthBar);
             Destroy(this);
         }
@@ -208,10 +236,18 @@ namespace Enemies
         private void ResetHealth() =>
             _currentHealth = MaxHealth;
 
-        private void DisposeDependency()
+        private IEnumerator CheckAttackRange()
         {
-            EnemyAnimation.IsDamaged -= TakeDamage;
-            EnemyAnimation.DiedComplete -= Death;
+            while (_isAgro)
+            {
+                if (Vector3.Distance(transform.position, _hero.transform.position) <= EnemyData.AttackDistance)
+                {
+                    EnemyAnimation.EnableAttack();
+                    yield break;
+                }
+
+                yield return null;
+            }
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Modules
         private WinScreen _winScreen;
         private UpgradePlayerBoard _upgradePlayerBoard;
         private UpgradeHeroScreen _upgradeHeroScreen;
+        private Hero _hero;
 
         public void Construct(StoreAssistantPlate storeAssistantPlate,
             StoreTurretPlate[] storeTurretPlates, PoolData poolData,
@@ -26,6 +27,7 @@ namespace Modules
             IInputService input, UpgradePlayerBoard upgradePlayerBoard, UpgradeHeroScreen upgradeHeroScreen,
             HeroData heroData, PriceListData priceList, Hero hero, ISDKService sdk)
         {
+            _hero = hero;
             _upgradeHeroScreen = upgradeHeroScreen;
             _upgradePlayerBoard = upgradePlayerBoard;
             _winScreen = winScreen;
@@ -39,7 +41,7 @@ namespace Modules
             _wallet.GemChanged += _hud.UpdateGemView;
 
             _startScreen.OnClickStart += LaunchGame;
-            _loseScreen.OnClickReStart += TryAgain;
+            _loseScreen.OnClickReStart += _hero.TryAgain;
 
             _upgradePlayerBoard.OnEntered += OnHeroUpgrade;
             _wallet.MoneyChanged += _upgradeHeroScreen.UpdateMoneyView;
@@ -67,7 +69,7 @@ namespace Modules
             _wallet.GemChanged -= _hud.UpdateGemView;
             
             _startScreen.OnClickStart -= LaunchGame;
-            _loseScreen.OnClickReStart -= TryAgain;
+            _loseScreen.OnClickReStart -= _hero.TryAgain;
             
             _upgradePlayerBoard.OnEntered -= OnHeroUpgrade;
             _wallet.MoneyChanged -= _upgradeHeroScreen.UpdateMoneyView;
@@ -79,18 +81,11 @@ namespace Modules
             _loseScreen.OnActive();
         }
 
-        private void OnHeroUpgrade()
-        {
+        private void OnHeroUpgrade() => 
             _upgradeHeroScreen.OnActive();
-        }
 
         private void LaunchGame() => 
             _input.OnControls();
-
-        private void TryAgain()
-        {
-            _startScreen.OnActive();
-        }
 
         public void WinScreen()
         {
