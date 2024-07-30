@@ -8,6 +8,9 @@ namespace Infrastructure.SDK
     {
         private readonly YandexSdk _yandex = new();
 
+        public void Inject(AudioListener audioListener) => 
+            _yandex.Inject(audioListener);
+
         public void AdReward(Action rewardCompleted)
         {
 #if UNITY_EDITOR

@@ -4,6 +4,7 @@ using Canvases;
 using Canvases.UpgradePlayer;
 using ContactZones;
 using Infrastructure.Factory.Pools;
+using Infrastructure.SDK;
 using Modules;
 using Player;
 using Plugins.MonoCache;
@@ -22,9 +23,11 @@ using UnityEngine;
 
 namespace Reflex
 {
+    [RequireComponent(typeof(FocusGame))]
     public class MainSceneInstaller : MonoCache, IInstaller
     {
         [Header("Objects with scene")] 
+        [SerializeField] private FocusGame _focusGame;
         [SerializeField] private UpgradePlayerBoard _upgradePlayerBoard;
         [SerializeField] private FinishPlate _finishPlate;
         [SerializeField] private Transform _spawnPointBoss;
@@ -83,6 +86,12 @@ namespace Reflex
             HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = gameFactory.CreateEnemyRing();
 
+            sdk.Inject(cameraFollow.GetListener);
+            
+#if !UNITY_EDITOR
+            _focusGame.Construct(cameraFollow.GetListener);
+#endif
+            
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
                 _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, 
                 _spawnPointBoss.position, _finishPlate, hero, _baseGate.transform.position, _effectModule);

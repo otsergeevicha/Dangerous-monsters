@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Services.SDK
 {
@@ -6,5 +7,6 @@ namespace Services.SDK
     {
         void AdReward(Action rewardCompleted);
         void ShowInterstitial(Action adCompleted);
+        void Inject(AudioListener audioListener);
     }
 }

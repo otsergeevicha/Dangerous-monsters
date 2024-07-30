@@ -6,6 +6,8 @@ namespace CameraModule
 {
     public class CameraFollow : MonoCache
     {
+        [SerializeField] private AudioListener _audioListener;
+        
         [SerializeField] private CinemachineVirtualCamera _cameraFollow;
         [SerializeField] private CinemachineVirtualCamera _zoomFollow;
         [SerializeField] private Camera _camera;
@@ -40,6 +42,9 @@ namespace CameraModule
             }
         }
 
+        public AudioListener GetListener =>
+            _audioListener;
+        
         public void Shake()
         {
             _isShake = true;

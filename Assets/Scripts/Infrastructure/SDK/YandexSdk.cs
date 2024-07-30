@@ -1,43 +1,52 @@
 ﻿using System;
 using Agava.YandexGames;
+using UnityEngine;
 
 namespace Infrastructure.SDK
 {
     public class YandexSdk
     {
+        private AudioListener _audioListener;
+
+        public void Inject(AudioListener audioListener) =>
+            _audioListener = audioListener;
+
         public void ShowReward(Action onCompleted)
         {
-            VideoAd.Show(OnOpenCallback, () => onCompleted?.Invoke(), OnCloseCallback, OnErrorCallback);
+            VideoAd.Show(Mute
+                , () =>
+                {
+                    onCompleted?.Invoke();
+                    UnMute();
+                }, UnMute
+                , (string _) => { UnMute(); });
         }
 
         public void InterstitialAd(Action action)
         {
-            Agava.YandexGames.InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback, OnOfflineCallback);
+            Agava.YandexGames.InterstitialAd.Show(Mute
+                , (bool _) => action?.Invoke()
+                , (string _) =>
+                {
+                    action?.Invoke();
+                    UnMute();
+                }, () =>
+                {
+                    action?.Invoke();
+                    UnMute();
+                });
         }
 
-        private void OnOpenCallback()
+        private void Mute()
         {
-            throw new NotImplementedException();
+            Time.timeScale = 0;
+            _audioListener.enabled = false;
         }
 
-        private void OnCloseCallback(bool flag)
+        private void UnMute()
         {
-            throw new NotImplementedException();
-        }
-
-        private void OnCloseCallback()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnOfflineCallback()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnErrorCallback(string obj)
-        {
-            throw new NotImplementedException();
+            Time.timeScale = 1;
+            _audioListener.enabled = true;
         }
     }
 }
