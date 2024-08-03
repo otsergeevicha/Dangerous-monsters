@@ -50,14 +50,6 @@ namespace HpBar
             _coroutine = StartCoroutine(UpdateView(current, max));
         }
 
-        public void HealingValue()
-        {
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
-
-            _coroutine = StartCoroutine(UpdateView(1f, 1f));
-        }
-
         private IEnumerator UpdateView(float current, float max)
         {
             float targetValue = current / max;

@@ -46,6 +46,8 @@ namespace Modules
             _upgradePlayerBoard.OnEntered += OnHeroUpgrade;
             _wallet.MoneyChanged += _upgradeHeroScreen.UpdateMoneyView;
 
+            _hud.OnGameOver += HeroDied;
+
             _hud.UpdateMoneyView(_wallet.ReadCurrentMoney());
             _hud.UpdateGemView(_wallet.ReadCurrentGem());
 
@@ -73,6 +75,8 @@ namespace Modules
             
             _upgradePlayerBoard.OnEntered -= OnHeroUpgrade;
             _wallet.MoneyChanged -= _upgradeHeroScreen.UpdateMoneyView;
+            
+            _hud.OnGameOver -= HeroDied;
         }
 
         public void HeroDied()
@@ -91,6 +95,7 @@ namespace Modules
         {
             _input.OffControls();
             _winScreen.OnActive();
+            _hud.UpdateMonstersCounter();
         }
 
         public void UpLevelCompleted() => 

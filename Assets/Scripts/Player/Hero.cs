@@ -3,7 +3,6 @@ using CameraModule;
 using Canvases;
 using ContactZones;
 using Enemies;
-using HpBar;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player.Animation;
@@ -46,14 +45,13 @@ namespace Player
         private List<Enemy> _poolBosses;
         private HeroData _heroData;
         private HeroAimRing _aimRing;
-        private HealthBar _healthBar;
+        private Hud _hud;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             PoolBullet poolBullet, int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
-            List<Enemy> poolBosses,
-            HealthBar healthBar, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing)
+            List<Enemy> poolBosses,Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing)
         {
-            _healthBar = healthBar;
+            _hud = hud;
             _aimRing = aimRing;
             _heroData = heroData;
             _poolBosses = poolBosses;
@@ -62,8 +60,7 @@ namespace Player
             _wallet = wallet;
             
             _aimRing.MagnetEffect.Construct(this);
-            healthBar.Construct(transform);
-            _heroHealthModule = new HeroHealthModule(healthBar, heroData);
+            _heroHealthModule = new HeroHealthModule(hud.GetHeroHealthView, heroData);
             _heroHealthModule.Died += OnDied;
 
             _heroAnimation.Construct(heroData);
@@ -122,8 +119,11 @@ namespace Player
             _weaponHolder ??= ChildrenGet<WeaponHolder>();
         }
 
-        public void SetShootingState(bool heroOnBase) => 
+        public void SetShootingState(bool heroOnBase)
+        {
             _heroShooting.SetOnBase(heroOnBase);
+            _hud.HealthView(!heroOnBase);
+        }
 
         public Transform GetCameraRoot() =>
             _rootCamera.transform;
@@ -168,7 +168,6 @@ namespace Player
 
         public void TryAgain()
         {
-            _healthBar.InActive();
             _heroHealthModule.Reset();
             _heroMovement.SetStartPosition();
             _aimRing.InActive();

@@ -44,6 +44,7 @@ namespace Reflex
         [SerializeField] private StoreTurretPlate[] _storeTurretPlates;
         [SerializeField] private SectionPlate[] _sectionPlates;
         [SerializeField] private BaseGate _baseGate;
+        [SerializeField] private MonstersPortal _monstersPortal;
         
         [Header("Required configurations")]
         [SerializeField] private HeroData _heroData;
@@ -94,14 +95,14 @@ namespace Reflex
             
             pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
                 _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, 
-                _spawnPointBoss.position, _finishPlate, hero, _baseGate.transform.position, _effectModule);
+                _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform.position, _effectModule);
 
             _effectModule.Construct(pool.PoolEffects);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             
             hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, 
-                enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, gameFactory.CreateHealthBar(), hud, _windowModule, cameraFollow, heroAimRing);
+                enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, hud, _windowModule, cameraFollow, heroAimRing);
             
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);
@@ -114,7 +115,7 @@ namespace Reflex
             foreach (TransitionPlate plate in _transitionPlates)
                 plate.Construct(wallet, _priceList);
 
-            hud.InjectCamera(cameraFollow.GetCameraMain);
+            hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, input);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, 
                 pool, wallet, hud, loseScreen, startScreen, winScreen, input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, sdk);

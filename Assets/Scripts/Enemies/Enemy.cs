@@ -118,6 +118,15 @@ namespace Enemies
             _agent.speed = enemyData.Speed;
         }
 
+        public void Escape()
+        {
+            _healthBar.InActive();
+            Died?.Invoke();
+            IsDie = true;
+            _agent.isStopped = true;
+            InActive();
+        }
+
         protected override void UpdateCached()
         {
             if ((Vector3.Distance(transform.position, _hero.transform.position) > EnemyData.AgroDistance) && _agent.isStopped) 
@@ -214,7 +223,7 @@ namespace Enemies
                     StopCoroutine(CheckAttackRange());
             }
         }
-        
+
         public void TakeDamage() =>
             _hero.ApplyDamage(Damage);
 

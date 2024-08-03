@@ -1,4 +1,5 @@
-﻿using Services.Inputs;
+﻿using System;
+using Services.Inputs;
 using UnityEngine;
 
 namespace Inputs
@@ -7,16 +8,21 @@ namespace Inputs
     {
         private readonly MapInputs _input = new ();
 
-         public Vector2 MoveAxis =>
+        public InputService()
+        {
+            _input.Player.Joystick.started += _ => OnControls();
+        }
+
+        public Vector2 MoveAxis =>
              _input.Player.Move.ReadValue<Vector2>();
 
-         public bool IsCurrentDevice() =>
-             _input.KeyboardMouseScheme.name == Constants.KeyboardMouse;
-        
-         public void OnControls() =>
-             _input.Player.Enable();
-        
-         public void OffControls() =>
+        public Vector2 TouchJoystick => 
+            _input.Player.Joystick.ReadValue<Vector2>();
+
+        public void OnControls() => 
+            _input.Player.Enable();
+
+        public void OffControls() => 
              _input.Player.Disable();
     }
 }

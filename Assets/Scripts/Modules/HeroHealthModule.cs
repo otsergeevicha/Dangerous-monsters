@@ -1,5 +1,5 @@
 ﻿using System;
-using HpBar;
+using Canvases;
 using SO;
 using UnityEngine;
 
@@ -10,12 +10,12 @@ namespace Modules
         private int _maxHealth;
         private int _minHealth = 0;
         private int _currentHealth;
-        private HealthBar _healthBar;
         private HeroData _heroData;
+        private HealthView _healthView;
 
-        public HeroHealthModule(HealthBar healthBar, HeroData heroData)
+        public HeroHealthModule(HealthView healthView, HeroData heroData)
         {
-            _healthBar = healthBar;
+            _healthView = healthView;
             _heroData = heroData;
             
             Reset();
@@ -33,12 +33,12 @@ namespace Modules
                 Died?.Invoke();
             }
             
-            _healthBar.ChangeValue(_currentHealth, _maxHealth, damage);
+            _healthView.ChangeValue(_currentHealth, _maxHealth, damage);
         }
 
         public void Reset()
         {
-            _healthBar.HealingValue();
+            _healthView.HealingValue();
             _maxHealth = _heroData.MaxHealth;
             _currentHealth = _heroData.MaxHealth;
         }

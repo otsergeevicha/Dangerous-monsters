@@ -15,16 +15,16 @@ namespace Canvases
 
         [SerializeField] private TMP_Text _remainingMoney;
         [SerializeField] private TMP_Text _remainingGem;
-        
+
         [SerializeField] private TMP_Text _bonusMoney;
         [SerializeField] private TMP_Text _bonusGem;
-        
+
         public event Action OnClickReStart;
-        
+
         private IWallet _wallet;
         private ISDKService _sdk;
         private bool _isAdShowed;
-        
+
         private PriceListData _priceList;
 
         public void Construct(IWallet wallet, ISDKService sdk, PriceListData priceList)
@@ -33,17 +33,17 @@ namespace Canvases
             _sdk = sdk;
             _wallet = wallet;
         }
-        
+
         private void Start()
         {
             _canvas.enabled = false;
             _particle.gameObject.SetActive(false);
         }
 
-        private void OnValidate() => 
+        private void OnValidate() =>
             _canvas ??= Get<Canvas>();
 
-        
+
         public void RewardBonus()
         {
             _sdk.AdReward(delegate
@@ -57,6 +57,7 @@ namespace Canvases
                 _isAdShowed = true;
             });
         }
+
         public void OnActive()
         {
             Time.timeScale = 0;
@@ -65,7 +66,7 @@ namespace Canvases
 
             _bonusMoney.text = _priceList.LoseBonusMoney.ToString();
             _bonusGem.text = _priceList.LoseBonusGem.ToString();
-            
+
             _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
             _remainingGem.text = _wallet.ReadCurrentGem().ToString();
         }
@@ -73,11 +74,16 @@ namespace Canvases
         public void InActive()
         {
             if (_isAdShowed == false)
+            {
                 _sdk.ShowInterstitial(TryAgain);
-            else
-                TryAgain();
+                return;
+            }
 
-            _isAdShowed = false;
+            if (_isAdShowed)
+            {
+                TryAgain();
+                _isAdShowed = false;
+            }
         }
 
         private void TryAgain()

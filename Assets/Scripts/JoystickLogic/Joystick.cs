@@ -1,7 +1,9 @@
-﻿using Plugins.MonoCache;
+﻿using Agava.WebUtility;
+using Plugins.MonoCache;
+using Services.Inputs;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
-using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace JoystickLogic
@@ -27,23 +29,14 @@ namespace JoystickLogic
         private readonly VirtualJoystickType _joystickType = VirtualJoystickType.Floating;
         private Vector2 _initialPosition = Vector2.zero;
         private Camera _camera;
+        
+        private IInputService _inputService;
 
-        protected override void OnEnabled()
+        public void Construct(Camera mainCamera, IInputService inputService)
         {
-            EnhancedTouchSupport.Enable();
-            ETouch.Touch.onFingerDown += OnDown;
-            ETouch.Touch.onFingerUp += OnUp;
-        }
-
-        protected override void OnDisabled()
-        {
-            ETouch.Touch.onFingerDown -= OnDown;
-            ETouch.Touch.onFingerUp -= OnUp;
-            EnhancedTouchSupport.Disable();
-        }
-
-        private void Awake()
-        {
+            _inputService = inputService;
+            _camera = mainCamera;
+            
             Vector2 center = new Vector2(0.5f, 0.5f);
             
             _centerArea.pivot = center;
@@ -63,6 +56,26 @@ namespace JoystickLogic
                 _bgCanvasGroup.alpha = _hideOnPointerUp ? 0 : 1;
         }
 
+        protected override void OnEnabled()
+        {
+            // _inputService.GetRootInput.Player.Joystick.started += OnUp;
+            // _inputService.GetRootInput.Player.Joystick.canceled += OnDown;
+
+            // ETouch.EnhancedTouchSupport.Enable();
+            // ETouch.Touch.onFingerDown += OnDown;
+            // ETouch.Touch.onFingerUp += OnUp;
+        }
+
+        protected override void OnDisabled()
+        {
+            // _inputService.GetRootInput.Player.Joystick.started -= OnUp;
+            // _inputService.GetRootInput.Player.Joystick.canceled -= OnDown;
+            
+            // ETouch.Touch.onFingerDown -= OnDown;
+            // ETouch.Touch.onFingerUp -= OnUp;
+            // ETouch.EnhancedTouchSupport.Disable();
+        }
+
         private void OnValidate()
         {
             _canvas ??= GetComponentInParent<Canvas>();
@@ -71,30 +84,27 @@ namespace JoystickLogic
             _handleStickController ??= _handle.gameObject.GetComponent<OnScreenStick>();
         }
 
-        public void OnDown(Finger touchedFinger)
-        {
-            if (_joystickType == VirtualJoystickType.Floating)
-            {
-                _centerArea.anchoredPosition = GetAnchoredPosition(touchedFinger.screenPosition);
-                
-                if (_hideOnPointerUp)
-                    _bgCanvasGroup.alpha = 1;
-            }
-        }
-
-        public void OnUp(Finger _)
+        public void OnUp(InputAction.CallbackContext _)
         {
             if (_joystickType == VirtualJoystickType.Floating)
             {
                 if (_centralizeOnPointerUp)
                     _centerArea.anchoredPosition = _initialPosition;
-
+        
                 _bgCanvasGroup.alpha = _hideOnPointerUp ? 0 : 1;
             }
         }
 
-        public void InjectCamera(Camera mainCamera) =>
-            _camera = mainCamera;
+        public void OnDown(InputAction.CallbackContext _)
+        {
+            if (_joystickType == VirtualJoystickType.Floating)
+            {
+                _centerArea.anchoredPosition = GetAnchoredPosition(_inputService.TouchJoystick);
+                
+                if (_hideOnPointerUp && Device.IsMobile)
+                    _bgCanvasGroup.alpha = 1;
+            }
+        }
 
         private Vector2 GetAnchoredPosition(Vector2 screenPosition)
         {

@@ -5,7 +5,7 @@ namespace Services.Inputs
     public interface IInputService
     {
         Vector2 MoveAxis { get; }
-        bool IsCurrentDevice();
+        Vector2 TouchJoystick { get; }
         void OnControls();
         void OffControls();
     }
