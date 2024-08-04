@@ -2,7 +2,6 @@
 using Plugins.MonoCache;
 using Services.Inputs;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
@@ -73,29 +72,25 @@ namespace JoystickLogic
             _handleStickController ??= _handle.gameObject.GetComponent<OnScreenStick>();
         }
 
-        public void OnUp()
-        {
-            print("+");
-            
-            if (_joystickType == VirtualJoystickType.Floating)
-            {
-                if (_centralizeOnPointerUp)
-                    _centerArea.anchoredPosition = _initialPosition;
-        
-                _bgCanvasGroup.alpha = _hideOnPointerUp ? 0 : 1;
-            }
-        }
-
         public void OnDown()
         {
-            print("-");
-            
             if (_joystickType == VirtualJoystickType.Floating)
             {
                 _centerArea.anchoredPosition = GetAnchoredPosition(_input.TouchJoystick);
                 
                 if (_hideOnPointerUp)
                     _bgCanvasGroup.alpha = 1;
+            }
+        }
+
+        public void OnUp()
+        {
+            if (_joystickType == VirtualJoystickType.Floating)
+            {
+                if (_centralizeOnPointerUp)
+                    _centerArea.anchoredPosition = _initialPosition;
+        
+                _bgCanvasGroup.alpha = _hideOnPointerUp ? 0 : 1;
             }
         }
 
