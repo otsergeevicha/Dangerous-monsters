@@ -15,13 +15,22 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Joystick",
+                    "name": "TouchPosition",
                     "type": "Value",
                     "id": "e179a767-8912-48f1-9ba0-d20631a7de2a",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Touch",
+                    "type": "Button",
+                    "id": "b21f6dc9-9117-4895-b14e-c47a6850aa71",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -153,7 +162,51 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad;KeyboardMouse",
-                    "action": "Joystick",
+                    "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d936d49-208d-472f-a0f9-f2d224fc06c2",
+                    "path": "<Mouse>/position",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad;KeyboardMouse",
+                    "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a70d8c3d-9cf1-4e7d-b641-07f89062c144",
+                    "path": "<Pointer>/press",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad;KeyboardMouse",
+                    "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6095f3ac-e828-43be-8a17-1f2142b30bf8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad;KeyboardMouse",
+                    "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2004400f-0427-4f00-95f1-2de3f0243a00",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;KeyboardMouse",
+                    "action": "Touch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

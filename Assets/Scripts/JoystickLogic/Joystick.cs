@@ -30,11 +30,11 @@ namespace JoystickLogic
         private Vector2 _initialPosition = Vector2.zero;
         private Camera _camera;
         
-        private IInputService _inputService;
+        private IInputService _input;
 
         public void Construct(Camera mainCamera, IInputService inputService)
         {
-            _inputService = inputService;
+            _input = inputService;
             _camera = mainCamera;
             
             Vector2 center = new Vector2(0.5f, 0.5f);
@@ -54,26 +54,15 @@ namespace JoystickLogic
             }
             else if (_joystickType == VirtualJoystickType.Floating)
                 _bgCanvasGroup.alpha = _hideOnPointerUp ? 0 : 1;
-        }
-
-        protected override void OnEnabled()
-        {
-            // _inputService.GetRootInput.Player.Joystick.started += OnUp;
-            // _inputService.GetRootInput.Player.Joystick.canceled += OnDown;
-
-            // ETouch.EnhancedTouchSupport.Enable();
-            // ETouch.Touch.onFingerDown += OnDown;
-            // ETouch.Touch.onFingerUp += OnUp;
+            
+            _input.OnJoystick += OnDown;
+            _input.OffJoystick += OnUp;
         }
 
         protected override void OnDisabled()
         {
-            // _inputService.GetRootInput.Player.Joystick.started -= OnUp;
-            // _inputService.GetRootInput.Player.Joystick.canceled -= OnDown;
-            
-            // ETouch.Touch.onFingerDown -= OnDown;
-            // ETouch.Touch.onFingerUp -= OnUp;
-            // ETouch.EnhancedTouchSupport.Disable();
+            _input.OnJoystick -= OnDown;
+            _input.OffJoystick -= OnUp;
         }
 
         private void OnValidate()
@@ -84,8 +73,10 @@ namespace JoystickLogic
             _handleStickController ??= _handle.gameObject.GetComponent<OnScreenStick>();
         }
 
-        public void OnUp(InputAction.CallbackContext _)
+        public void OnUp()
         {
+            print("+");
+            
             if (_joystickType == VirtualJoystickType.Floating)
             {
                 if (_centralizeOnPointerUp)
@@ -95,13 +86,15 @@ namespace JoystickLogic
             }
         }
 
-        public void OnDown(InputAction.CallbackContext _)
+        public void OnDown()
         {
+            print("-");
+            
             if (_joystickType == VirtualJoystickType.Floating)
             {
-                _centerArea.anchoredPosition = GetAnchoredPosition(_inputService.TouchJoystick);
+                _centerArea.anchoredPosition = GetAnchoredPosition(_input.TouchJoystick);
                 
-                if (_hideOnPointerUp && Device.IsMobile)
+                if (_hideOnPointerUp)
                     _bgCanvasGroup.alpha = 1;
             }
         }
