@@ -10,6 +10,8 @@ namespace Canvases
 {
     public class Hud : MonoCache
     {
+        [SerializeField] private Canvas _canvas;
+        
         [SerializeField] private HealthView _heroHealthView;
         
         [SerializeField] private Joystick _joystick;
@@ -43,6 +45,11 @@ namespace Canvases
         protected override void OnDisabled() => 
             _monstersPortal.OnEscaped -= MonsterEscaped;
 
+        public void OnActive() => 
+            _canvas.enabled = true;
+
+        public void InActive() => 
+            _canvas.enabled = false;
 
         public void WeaponReload(bool flag) =>
             _weaponReload.enabled = flag;

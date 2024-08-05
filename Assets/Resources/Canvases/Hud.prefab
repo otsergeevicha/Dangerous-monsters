@@ -573,7 +573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8374694, y: 0.98055553}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.20636, y: -17}
+  m_AnchoredPosition: {x: -4, y: -17}
   m_SizeDelta: {x: -23.587036, y: 222.74}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &3241344038064768148
@@ -687,7 +687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -48.69702, y: 0}
+  m_AnchoredPosition: {x: -48.5, y: 0}
   m_SizeDelta: {x: -779.15, y: 193.037}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!223 &8796323019059077612
@@ -1803,7 +1803,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.21679455}
   m_AnchorMax: {x: 1, y: 0.21679455}
-  m_AnchoredPosition: {x: 0, y: 49.55098}
+  m_AnchoredPosition: {x: 0, y: 49.5625}
   m_SizeDelta: {x: 343.41, y: 101.34599}
   m_Pivot: {x: 1, y: 1}
 --- !u!223 &2167753683825119943
@@ -2123,6 +2123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b906554a78534b6f8a24734cca124ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas: {fileID: 9175932864267111244}
   _heroHealthView: {fileID: 608806324410721309}
   _joystick: {fileID: 7459127607969155748}
   _money: {fileID: 241822169098974801}

@@ -37,7 +37,7 @@ TagManager:
   - EnemyTrigger
   - Camera
   - MonsterPortal
-  - 
+  - Base
   m_SortingLayers:
   - name: Default
     uniqueID: 0
