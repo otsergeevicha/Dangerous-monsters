@@ -853,7 +853,7 @@ GameObject:
   - component: {fileID: 2842018292035303551}
   - component: {fileID: 5617052843816502699}
   - component: {fileID: 4103672484533100361}
-  - component: {fileID: 6129304131342726392}
+  - component: {fileID: 5027036360673238358}
   m_Layer: 13
   m_Name: FiveEnemy
   m_TagString: Untagged
@@ -912,9 +912,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38f3006efa844508b95776fa2c7774f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyTriggers: {fileID: 6129304131342726392}
+  _enemyTriggers: {fileID: 6787617934622999302}
   EnemyAnimation: {fileID: 652429880286474483}
   _agent: {fileID: 2698720409822489541}
+  _tree: {fileID: 5027036360673238358}
+  CashTransform: {fileID: 0}
 --- !u!136 &5617052843816502699
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -965,7 +967,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6129304131342726392
+--- !u!114 &5027036360673238358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -974,9 +976,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 6322658795651346784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 7d40a687499b9004fa8441c8ac103016, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &6557076184583317986
 GameObject:
   m_ObjectHideFlags: 0

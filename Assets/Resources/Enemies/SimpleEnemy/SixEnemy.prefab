@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 2024655075119147175}
   - component: {fileID: 1263365772127802182}
   - component: {fileID: 8755853124029018996}
+  - component: {fileID: 2432753698404816449}
   m_Layer: 13
   m_Name: SixEnemy
   m_TagString: Untagged
@@ -117,6 +118,8 @@ MonoBehaviour:
   _enemyTriggers: {fileID: 8755853124029018996}
   EnemyAnimation: {fileID: 5320640026906050869}
   _agent: {fileID: 6656993047668740120}
+  _tree: {fileID: 2432753698404816449}
+  CashTransform: {fileID: 0}
 --- !u!195 &6656993047668740120
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -201,6 +204,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2432753698404816449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336907649018250580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 7d40a687499b9004fa8441c8ac103016, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &796898764205104891
 GameObject:
   m_ObjectHideFlags: 0

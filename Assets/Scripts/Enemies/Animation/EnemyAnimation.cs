@@ -1,4 +1,5 @@
-﻿using Plugins.MonoCache;
+﻿using System;
+using Plugins.MonoCache;
 using SO;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,6 +20,8 @@ namespace Enemies.Animation
         private EnemyData _enemyData;
         private Enemy _enemy;
         private NavMeshAgent _agent;
+
+        public event Action OnAttacked;
 
         public void Construct(EnemyData enemyData, Enemy enemy, NavMeshAgent agent)
         {
@@ -43,7 +46,7 @@ namespace Enemies.Animation
             _enemy.Death();
 
         private void EndAttack() =>
-            _enemy.AttackCompleted();
+            OnAttacked?.Invoke();
 
         public void EnableIdle()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using BehaviorDesigner.Runtime;
 using ContactZones;
 using Enemies.Animation;
 using HpBar;
@@ -46,11 +47,14 @@ namespace Enemies
     [RequireComponent(typeof(NavMeshAgent))]
     public abstract class Enemy : MonoCache
     {
-        [HideInInspector] [SerializeField] private EnemyTriggers _enemyTriggers;
-        [HideInInspector] public EnemyAnimation EnemyAnimation;
+        [SerializeField] private EnemyTriggers _enemyTriggers;
         [SerializeField] private NavMeshAgent _agent;
+        [SerializeField] private BehaviorTree _tree;
 
         private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
+        
+        [HideInInspector] public EnemyAnimation EnemyAnimation;
+        [HideInInspector] public Transform CashTransform;
 
         protected int MaxHealth;
         protected int Damage;
@@ -65,11 +69,13 @@ namespace Enemies
 
         private Hero _hero;
         private Coroutine _coroutine;
-        private bool _isAgro;
         private Vector3 _baseGate;
-        
+
+        public bool IsAgro { get; private set; }
         public bool IsDie { get; private set; }
-        protected EnemyData EnemyData { get; private set; }
+        public EnemyData EnemyData { get; private set; }
+        public Vector3 GetCurrentTarget { get; private set; }
+
 
         protected abstract int GetId();
         protected abstract void SetCurrentHealth();
@@ -80,6 +86,11 @@ namespace Enemies
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate,
             Hero hero, Vector3 baseGate)
         {
+            _enemyTriggers.SetRadius(enemyData.AgroDistance);
+            
+            CashTransform = transform;
+            _tree.enabled = false;
+
             _baseGate = baseGate;
             _hero = hero;
             _finishPlate = finishPlate;
@@ -95,27 +106,21 @@ namespace Enemies
 
             _enemyTriggers.OnAgro += () =>
             {
-                EnemyAnimation.EnableRun();
-
-                _agent.destination = _hero.transform.position;
-                _isAgro = true;
-                _coroutine = StartCoroutine(CheckAttackRange());
+                IsAgro = true;
+                GetCurrentTarget = _hero.transform.position;
+                _tree.enabled = false;
+                _tree.enabled = true;
             };
 
             _enemyTriggers.NonAgro += () =>
             {
-                EnemyAnimation.EnableRun();
-
-                _isAgro = false;
-                _agent.destination = baseGate;
-
-                if (_coroutine != null)
-                    StopCoroutine(CheckAttackRange());
+                IsAgro = false;
+                GetCurrentTarget = baseGate;
+                _tree.enabled = false;
+                _tree.enabled = true;
             };
 
             ResetHealth();
-
-            _agent.speed = enemyData.Speed;
         }
 
         public void Escape()
@@ -127,47 +132,20 @@ namespace Enemies
             InActive();
         }
 
-        protected override void UpdateCached()
-        {
-            if ((Vector3.Distance(transform.position, _hero.transform.position) > EnemyData.AgroDistance) && _agent.isStopped) 
-                return;
-            
-            if (_isAgro)
-            {
-                EnemyAnimation.EnableRun();
-                _agent.destination = _hero.transform.position;
-
-                _coroutine = StartCoroutine(CheckAttackRange());
-            }
-
-            if (!_isAgro)
-            {
-                EnemyAnimation.EnableRun();
-                _agent.destination = _baseGate;
-
-                if (_coroutine != null)
-                    StopCoroutine(CheckAttackRange());
-            }
-        }
-
         private void OnValidate()
         {
             EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
             _enemyTriggers ??= ChildrenGet<EnemyTriggers>();
             _agent ??= Get<NavMeshAgent>();
+            _tree ??= Get<BehaviorTree>();
         }
 
         public virtual void OnActive()
         {
             IsDie = false;
             gameObject.SetActive(true);
-
-            EnemyAnimation.EnableRun();
-            _isAgro = false;
-            _agent.destination = _baseGate;
-
-            if (_coroutine != null)
-                StopCoroutine(CheckAttackRange());
+            IsAgro = false;
+            _tree.enabled = true;
         }
 
         public virtual void InActive()
@@ -189,38 +167,14 @@ namespace Enemies
                 if (_bossLevels.Contains((BossId)GetId()))
                     _finishPlate.OnActive();
 
+                _tree.enabled = false;
+                
                 _currentHealth = 0;
                 _healthBar.InActive();
                 Died?.Invoke();
                 IsDie = true;
                 _agent.isStopped = true;
                 EnemyAnimation.EnableDie();
-            }
-        }
-
-        public void AttackCompleted()
-        {
-            if (Vector3.Distance(transform.position, _hero.transform.position) <= EnemyData.AttackDistance)
-            {
-                EnemyAnimation.EnableAttack();
-                return;
-            }
-
-            if (_isAgro)
-            {
-                EnemyAnimation.EnableRun();
-                _agent.destination = _hero.transform.position;
-
-                _coroutine = StartCoroutine(CheckAttackRange());
-            }
-
-            if (!_isAgro)
-            {
-                EnemyAnimation.EnableRun();
-                _agent.destination = _baseGate;
-
-                if (_coroutine != null)
-                    StopCoroutine(CheckAttackRange());
             }
         }
 
@@ -244,19 +198,5 @@ namespace Enemies
 
         private void ResetHealth() =>
             _currentHealth = MaxHealth;
-
-        private IEnumerator CheckAttackRange()
-        {
-            while (_isAgro)
-            {
-                if (Vector3.Distance(transform.position, _hero.transform.position) <= EnemyData.AttackDistance)
-                {
-                    EnemyAnimation.EnableAttack();
-                    yield break;
-                }
-
-                yield return null;
-            }
-        }
     }
 }

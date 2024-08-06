@@ -17,7 +17,7 @@ MonoBehaviour:
   HitHash: 1654612129
   DeathHash: 646380074
   Speed: 5
-  AgroDistance: 5
+  AgroDistance: 10
   AttackDistance: 2
   ZeroEnemyHealth: 6
   OneEnemyHealth: 8

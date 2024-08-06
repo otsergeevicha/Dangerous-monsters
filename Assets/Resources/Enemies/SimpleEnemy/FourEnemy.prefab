@@ -1119,7 +1119,7 @@ GameObject:
   - component: {fileID: 5988576550743016700}
   - component: {fileID: 2586181571190914082}
   - component: {fileID: 2622163675002286173}
-  - component: {fileID: 706212998849292672}
+  - component: {fileID: -2513649143108364508}
   m_Layer: 13
   m_Name: FourEnemy
   m_TagString: Untagged
@@ -1156,9 +1156,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc0e8381a9f42f4a90dedc30207164e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyTriggers: {fileID: 706212998849292672}
+  _enemyTriggers: {fileID: 7441185928685124707}
   EnemyAnimation: {fileID: 2017941060949670468}
   _agent: {fileID: 5988576550743016700}
+  _tree: {fileID: -2513649143108364508}
+  CashTransform: {fileID: 0}
 --- !u!195 &5988576550743016700
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1231,7 +1233,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &706212998849292672
+--- !u!114 &-2513649143108364508
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1240,9 +1242,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 7428878135858604479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 7d40a687499b9004fa8441c8ac103016, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &7777924846535139020
 GameObject:
   m_ObjectHideFlags: 0

@@ -592,6 +592,7 @@ GameObject:
   - component: {fileID: 4694591578421522247}
   - component: {fileID: 4527329500455488501}
   - component: {fileID: 2031490512347959163}
+  - component: {fileID: 805394783035393212}
   m_Layer: 13
   m_Name: EightLevelBoss
   m_TagString: Untagged
@@ -653,6 +654,8 @@ MonoBehaviour:
   _enemyTriggers: {fileID: 3819508087962794359}
   EnemyAnimation: {fileID: 9167558855294693658}
   _agent: {fileID: 4043829413273884156}
+  _tree: {fileID: 805394783035393212}
+  CashTransform: {fileID: 0}
 --- !u!136 &4527329500455488501
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -703,6 +706,46 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &805394783035393212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4154670651638770830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 0
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 11400000, guid: 4a1d01705b9e4d7468222bceab87f896, type: 2}
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: 
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &4575604897532380234
 GameObject:
   m_ObjectHideFlags: 0
