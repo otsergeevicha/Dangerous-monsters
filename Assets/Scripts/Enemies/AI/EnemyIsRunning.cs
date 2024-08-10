@@ -10,8 +10,8 @@ namespace Enemies.AI
         {
             float currentDistance = Vector3.Distance(Enemy.CashTransform.position, Enemy.GetCurrentTarget);
 
-            return currentDistance >= Enemy.EnemyData.AttackDistance
-                   || currentDistance >= Enemy.EnemyData.AgroDistance
+            return currentDistance > Enemy.EnemyData.AttackDistance
+                   || currentDistance > Enemy.EnemyData.AgroDistance
                 ? TaskStatus.Success
                 : TaskStatus.Failure;
         }

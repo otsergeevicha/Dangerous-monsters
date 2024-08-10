@@ -38,8 +38,11 @@ namespace Enemies.Animation
         {
             Physics.OverlapSphereNonAlloc(_attackPoint.position, _cleavage, _hits, _layerMask);
 
-            if (_hits[0] != null) 
+            if (_hits[0] != null)
+            {
                 _enemy.TakeDamage();
+                _hits[0] = null;
+            }
         }
 
         private void Death() =>

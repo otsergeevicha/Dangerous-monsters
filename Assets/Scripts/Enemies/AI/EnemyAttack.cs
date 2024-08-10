@@ -1,5 +1,4 @@
-﻿using BehaviorDesigner.Runtime.Tasks;
-using Enemies.AI.Parent;
+﻿using Enemies.AI.Parent;
 using UnityEngine;
 
 namespace Enemies.AI
@@ -12,18 +11,19 @@ namespace Enemies.AI
             Enemy.EnemyAnimation.OnAttacked += Attack;
         }
 
-        public override TaskStatus OnUpdate() =>
-            Vector3.Distance(Enemy.CashTransform.position, Enemy.GetCurrentTarget) <= Enemy.EnemyData.AttackDistance
-                ? TaskStatus.Running
-                : TaskStatus.Failure;
-
-        public override void OnEnd() => 
+        public override void OnEnd() =>
             Enemy.EnemyAnimation.OnAttacked -= Attack;
 
         private void Attack()
         {
-            Enemy.CashTransform.forward = Enemy.GetCurrentTarget;
-            Enemy.EnemyAnimation.EnableAttack();
+            if (InZone()) 
+                Enemy.EnemyAnimation.EnableAttack();
+            else
+                Enemy.ResetBehaviorTree();
         }
+
+        private bool InZone() =>
+            Vector3.Distance(Enemy.CashTransform.position, Enemy.GetCurrentTarget) <=
+            Enemy.EnemyData.AttackDistance;
     }
 }

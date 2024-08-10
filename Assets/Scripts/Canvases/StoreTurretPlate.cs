@@ -15,6 +15,9 @@ namespace Canvases
 {
     public class StoreTurretPlate : MonoCache
     {
+        [SerializeField] private Transform _rootCamera;
+        [SerializeField] private Transform _markerPosition;
+        
         [SerializeField] private TMP_Text _priceView;
         [SerializeField] private GameObject _ad;
         
@@ -37,6 +40,8 @@ namespace Canvases
         private PriceListData _priceListData;
         private ISDKService _sdk;
 
+        public event Action OnTutorialContacted;
+        
         public void Construct(PoolTurrets poolTurrets, IWallet wallet, PriceListData priceListData,
             ISDKService sdk)
         {
@@ -91,6 +96,12 @@ namespace Canvases
             }
         }
 
+        public Transform GetRootCamera() => 
+            _rootCamera;
+        
+        public Vector3 GetPositionMarker() => 
+            _markerPosition.transform.position;
+
         private void FinishWaiting()
         {
             if (_turret != null)
@@ -118,6 +129,7 @@ namespace Canvases
                 {
                     _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
                     _purchased = true;
+                    OnTutorialContacted?.Invoke();
                 }
 
                 _iconAdd.gameObject.SetActive(false);

@@ -12,6 +12,7 @@ namespace Spawners
         private readonly PoolLootBoxes _poolLootBoxes;
         private readonly PoolMoney _poolMoney;
         private readonly PoolData _poolData;
+        private readonly float _offSet = 5f;
 
         public LootSpawner(PoolMoney poolMoney, PoolLootBoxes poolLootBoxes, Transform[] squareLootSpawner,
             PoolData poolData)
@@ -60,7 +61,15 @@ namespace Spawners
             float randomZ = Random.Range(Mathf.Min(_squareLootSpawner[0].position.z, _squareLootSpawner[2].position.z),
                 Mathf.Max(_squareLootSpawner[1].position.z, _squareLootSpawner[3].position.z));
 
-            return new Vector3(randomX, 0f, randomZ);
+            Vector3 newPoint = new Vector3(randomX, 0f, randomZ);
+
+            return _poolLootBoxes.LootPoints.Any(lootPoint =>
+                lootPoint.transform.position != newPoint)
+                ? newPoint
+                : GetCorrectOffset(newPoint);
         }
+
+        private Vector3 GetCorrectOffset(Vector3 newPoint) => 
+            new (newPoint.x + Random.Range(-_offSet, _offSet), 0f, newPoint.z + Random.Range(-_offSet, _offSet));
     }
 }

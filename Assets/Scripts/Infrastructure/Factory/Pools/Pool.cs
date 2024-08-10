@@ -26,8 +26,8 @@ namespace Infrastructure.Factory.Pools
         public PoolTurrets PoolTurrets { get; private set; }
         public PoolWorkers PoolWorkers { get; private set; }
         public PoolEffects PoolEffects { get; private set; }
+        public PoolMoney PoolMoney { get; set; }
         private PoolMissiles PoolMissiles { get; set; }
-        private PoolMoney PoolMoney { get; set; }
         private PoolLootBoxes PoolLootBoxes { get; set; }
 
         public void Construct(IGameFactory factory, PoolData poolData, AssistantData assistantData,

@@ -8,9 +8,9 @@ using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
 using Loots;
+using Markers;
 using Modules;
 using Player;
-using RingZone;
 using Spawners;
 using Turrets;
 using Workers;
@@ -43,5 +43,6 @@ namespace Services.Factory
         UpgradeHeroScreen CreateUpgradeHeroScreen();
         VfxHitRed CreateVfxHit();
         VfxMissileExplosion CreateVfxExplosion();
+        TutorialMarker CreateTutorialMarker();
     }
 }

@@ -331,6 +331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _agent: {fileID: 4016367899677754638}
+  _collider: {fileID: 8181853602750694233}
+  _rigidbody: {fileID: 8819997195608011262}
   _hummer: {fileID: 3759278239490088195}
   _gem: {fileID: 812102760245857296}
 --- !u!114 &1735966324194172954

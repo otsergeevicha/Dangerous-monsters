@@ -9,6 +9,8 @@ namespace ContactZones
 {
     public class StorageGem : MonoCache
     {
+        [SerializeField] private Transform _markerPosition;
+        [SerializeField] private Transform _rootCamera;
         [SerializeField] private Gem[] _gems = new Gem[27];
 
         private const int MillisecondsDelay = 500;
@@ -18,7 +20,9 @@ namespace ContactZones
         
         private int _currentAmountGems = 0;
         private int _maxAmount;
-
+        
+        public event Action OnTutorialContacted;
+        
         public bool IsFulled { get; private set; }
 
         public bool IsEmpty => 
@@ -43,6 +47,8 @@ namespace ContactZones
                 IsFulled = true;
             }
             
+            OnTutorialContacted?.Invoke();
+            
             for (int i = 0; i < _maxAmount; i++)
             {
                 if (_gems[i].isActiveAndEnabled == false)
@@ -56,6 +62,12 @@ namespace ContactZones
 
         public void HeroOut() => 
             _isReplenishment = false;
+
+        public Transform GetRootCamera() => 
+            _rootCamera;
+
+        public Vector3 GetPositionMarker() => 
+            _markerPosition.transform.position;
 
         private void Spend()
         {

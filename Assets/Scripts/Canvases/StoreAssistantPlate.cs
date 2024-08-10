@@ -12,6 +12,8 @@ namespace Canvases
 {
     public class StoreAssistantPlate : MonoCache
     {
+        [SerializeField] private Transform _markerPosition;
+        [SerializeField] private Transform _rootCamera;
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _slotData;
         [SerializeField] private Mannequin _mannequin;
@@ -27,6 +29,8 @@ namespace Canvases
         private bool _isWaiting;
         private float _currentFillAmount = 1f;
         private PoolCargoAssistant _poolAssistant;
+        
+        public event Action OnTutorialContacted;
 
         public void Construct(int maxAssistant, PoolCargoAssistant poolAssistant)
         {
@@ -75,6 +79,12 @@ namespace Canvases
             }
         }
 
+        public Transform GetRootCamera() => 
+            _rootCamera;
+
+        public Vector3 GetPositionMarker() => 
+            _markerPosition.transform.position;
+
         private void FinishWaiting()
         {
             _currentCountAssistant++;
@@ -85,6 +95,8 @@ namespace Canvases
             UpdateSlotText();
 
             _poolAssistant.Assistants.FirstOrDefault(assistant => assistant.isActiveAndEnabled == false)?.OnActive(_spawnPoint);
+            
+            OnTutorialContacted?.Invoke();
         }
 
         private void UpdateSlotText() =>

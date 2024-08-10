@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using BehaviorDesigner.Runtime;
 using ContactZones;
@@ -52,10 +51,10 @@ namespace Enemies
         [SerializeField] private BehaviorTree _tree;
 
         private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
-        
+
         [HideInInspector] public EnemyAnimation EnemyAnimation;
         [HideInInspector] public Transform CashTransform;
-
+        
         protected int MaxHealth;
         protected int Damage;
 
@@ -68,13 +67,12 @@ namespace Enemies
         private bool _onMap;
 
         private Hero _hero;
-        private Coroutine _coroutine;
-        private Vector3 _baseGate;
 
         public bool IsAgro { get; private set; }
         public bool IsDie { get; private set; }
         public EnemyData EnemyData { get; private set; }
         public Vector3 GetCurrentTarget { get; private set; }
+        public Transform HeroTransform { get; private set; }
 
 
         protected abstract int GetId();
@@ -87,12 +85,12 @@ namespace Enemies
             Hero hero, Vector3 baseGate)
         {
             _enemyTriggers.SetRadius(enemyData.AgroDistance);
-            
+
             CashTransform = transform;
             _tree.enabled = false;
 
-            _baseGate = baseGate;
             _hero = hero;
+            HeroTransform = hero.transform;
             _finishPlate = finishPlate;
             _healthBar = healthBar;
             _lootSpawner = lootSpawner;
@@ -108,19 +106,19 @@ namespace Enemies
             {
                 IsAgro = true;
                 GetCurrentTarget = _hero.transform.position;
-                _tree.enabled = false;
-                _tree.enabled = true;
+                ResetBehaviorTree();
             };
 
             _enemyTriggers.NonAgro += () =>
             {
                 IsAgro = false;
                 GetCurrentTarget = baseGate;
-                _tree.enabled = false;
-                _tree.enabled = true;
+                ResetBehaviorTree();
             };
 
             ResetHealth();
+
+            _agent.stoppingDistance = enemyData.AttackDistance;
         }
 
         public void Escape()
@@ -168,7 +166,7 @@ namespace Enemies
                     _finishPlate.OnActive();
 
                 _tree.enabled = false;
-                
+
                 _currentHealth = 0;
                 _healthBar.InActive();
                 Died?.Invoke();
@@ -192,6 +190,18 @@ namespace Enemies
             Destroy(_healthBar);
             Destroy(this);
         }
+
+        public void ResetBehaviorTree()
+        {
+            _tree.enabled = false;
+            _tree.enabled = true;
+        }
+
+        public void OnSleep() => 
+            _tree.enabled = false;
+        
+        public void UnSleep() => 
+            _tree.enabled = true;
 
         private void SpawnLoot() =>
             _lootSpawner.SpawnMoney(GetId(), transform.position);

@@ -20,6 +20,7 @@
     public const string LootPointPath = "Loots/LootPoint";
     public const string HeroAimRingPath = "RingZone/HeroAimRing";
     public const string EnemyRingPath = "RingZone/EnemyRing";
+    public const string MarkerPath = "RingZone/Marker";
     public const string HpBarPath = "Canvases/HPBar";
     public const string LoseScreenPath = "Canvases/LoseScreen";
     public const string StartScreenPath = "Canvases/StartScreen";

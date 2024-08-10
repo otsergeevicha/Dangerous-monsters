@@ -6,24 +6,21 @@ namespace Infrastructure.Factory.Pools
 {
     public class PoolMoney
     {
-        private readonly List<Money> _moneys = new();
+        public readonly List<Money> Moneys = new();
         
-        public IReadOnlyList<Money> Moneys => 
-            _moneys.AsReadOnly();
-
         public PoolMoney(IGameFactory factory, int maxCountMoney)
         {
             for (int i = 0; i < maxCountMoney; i++)
             {
                 Money money = factory.CreateMoney();
                 money.gameObject.SetActive(false);
-                _moneys.Add(money);
+                Moneys.Add(money);
             }
         }
 
         public void AdaptingLevel()
         {
-            foreach (Money money in _moneys) 
+            foreach (Money money in Moneys) 
                 money.gameObject.SetActive(false);
         }
     }

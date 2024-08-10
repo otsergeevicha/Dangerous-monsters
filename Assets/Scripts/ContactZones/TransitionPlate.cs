@@ -11,6 +11,8 @@ namespace ContactZones
 {
     public class TransitionPlate : MonoCache
     {
+        [SerializeField] private Transform _markerPosition;
+        [SerializeField] private Transform _rootCamera;
         [SerializeField] private Transform _border;
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _slotData;
@@ -27,7 +29,9 @@ namespace ContactZones
         private float _currentFillAmount = 1f;
         private IWallet _wallet;
         private PriceListData _priceList;
-
+        
+        public event Action OnTutorialContacted;
+        
         public void Construct(IWallet wallet, PriceListData priceList)
         {
             _priceList = priceList;
@@ -73,6 +77,12 @@ namespace ContactZones
             }
         }
 
+        public Vector3 GetPositionMarker() => 
+            _markerPosition.transform.position;
+
+        public Transform GetRootCamera() => 
+            _rootCamera;
+
         public void UpdateLevel()
         {
             _border.gameObject.SetActive(true);
@@ -113,6 +123,8 @@ namespace ContactZones
             {
                 _border.gameObject.SetActive(false);
                 gameObject.SetActive(false);
+                
+                OnTutorialContacted?.Invoke();
             }
         }
 

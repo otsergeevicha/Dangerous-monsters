@@ -5,11 +5,11 @@ using Canvases.UpgradePlayer;
 using ContactZones;
 using Infrastructure.Factory.Pools;
 using Infrastructure.SDK;
+using Markers;
 using Modules;
 using Player;
 using Plugins.MonoCache;
 using Reflex.Core;
-using RingZone;
 using Services.Bank;
 using Services.Factory;
 using Services.Inputs;
@@ -26,6 +26,8 @@ namespace Reflex
     [RequireComponent(typeof(FocusGame))]
     public class MainSceneInstaller : MonoCache, IInstaller
     {
+        [SerializeField] private bool _firstLaunch;
+        
         [Header("Objects with scene")] 
         [SerializeField] private FocusGame _focusGame;
         [SerializeField] private UpgradePlayerBoard _upgradePlayerBoard;
@@ -129,6 +131,14 @@ namespace Reflex
 #if !UNITY_EDITOR
             YandexGamesSdk.GameReady();
 #endif
+
+            if (_firstLaunch)
+            {
+                TutorialModule tutorialModule = new TutorialModule(gameFactory, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, 
+                    _storeTurretPlates, _storageAmmoPlate, 
+                    _storeAssistantPlate, workerSpawner, 
+                    _storageGem, _transitionPlates, _upgradePlayerBoard, cameraFollow);
+            }
         }
 
         protected override void OnDisabled()

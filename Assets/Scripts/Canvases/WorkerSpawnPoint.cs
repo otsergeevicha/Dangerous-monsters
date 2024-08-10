@@ -3,6 +3,7 @@ using System.Linq;
 using Infrastructure.Factory.Pools;
 using Player;
 using Plugins.MonoCache;
+using Spawners;
 using UnityEngine;
 using UnityEngine.UI;
 using Workers;
@@ -25,9 +26,12 @@ namespace Canvases
         private Worker _currentWorker;
         private PoolWorkers _workers;
         private Vector3 _workplace;
+        private WorkerSpawner _workerSpawner;
 
-        public void Construct(PoolWorkers workers, Vector3 workplace)
+        public void Construct(PoolWorkers workers, Vector3 workplace,
+            WorkerSpawner workerSpawner)
         {
+            _workerSpawner = workerSpawner;
             _workplace = workplace;
             _workers = workers;
             _timerWaiting = _timerSeconds;
@@ -102,7 +106,8 @@ namespace Canvases
             if (_currentWorker != null)
             {
                 _currentWorker.OnActive();
-                _currentWorker.transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+                _currentWorker.SetMannequin(false);
+                _currentWorker.transform.position = new Vector3(transform.position.x, -.37f, transform.position.z);
                 _currentWorker.transform.rotation = Quaternion.Euler(-42f, 180f, 0f);
                 _isEmptyPlace = false;
             }
@@ -115,9 +120,11 @@ namespace Canvases
 
         private void FinishWaiting()
         {
+            _currentWorker.SetMannequin(true);
             _currentWorker.SendWorkplace(_workplace);
             Interactable(false);
             _isEmptyPlace = true;
+            _workerSpawner.Notify();
         }
 
         private void Interactable(bool flag)

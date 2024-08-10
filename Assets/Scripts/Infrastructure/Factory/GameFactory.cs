@@ -8,8 +8,8 @@ using Enemies;
 using HpBar;
 using Infrastructure.Factory.Pools;
 using Loots;
+using Markers;
 using Player;
-using RingZone;
 using Services.Assets;
 using Services.Factory;
 using Spawners;
@@ -104,6 +104,10 @@ namespace Infrastructure.Factory
         public VfxMissileExplosion CreateVfxExplosion() =>
             _assetsProvider.InstantiateEntity(Constants.VfxExplosionMissilePath)
                 .GetComponent<VfxMissileExplosion>();
+
+        public TutorialMarker CreateTutorialMarker() =>
+            _assetsProvider.InstantiateEntity(Constants.MarkerPath)
+                .GetComponent<TutorialMarker>();
 
         public StartScreen CreateStartScreen() =>
             _assetsProvider.InstantiateEntity(Constants.StartScreenPath)

@@ -555,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b3b7c3bf444b33bff22bebdce76251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 7818222158002393916}
 --- !u!1 &3278847173791776069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,9 +1158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyTriggers: {fileID: 7441185928685124707}
-  EnemyAnimation: {fileID: 2017941060949670468}
   _agent: {fileID: 5988576550743016700}
   _tree: {fileID: -2513649143108364508}
+  EnemyAnimation: {fileID: 2017941060949670468}
   CashTransform: {fileID: 0}
 --- !u!195 &5988576550743016700
 NavMeshAgent:
@@ -1175,7 +1176,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 255
-  m_StoppingDistance: 1.2
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1231,7 +1232,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &-2513649143108364508
 MonoBehaviour:
