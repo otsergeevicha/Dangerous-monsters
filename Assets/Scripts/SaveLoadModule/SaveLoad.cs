@@ -1,4 +1,5 @@
-﻿using Services.SaveLoad;
+﻿using Agava.YandexGames;
+using Services.SaveLoad;
 using UnityEngine;
 
 namespace SaveLoadModule
@@ -19,8 +20,20 @@ namespace SaveLoadModule
 
         public void Save()
         {
-            PlayerPrefs.SetString(Constants.Progress, JsonUtility.ToJson(_progress));
-            PlayerPrefs.Save();
+            string data = JsonUtility.ToJson(_progress);
+
+            RecordToPrefs(data);
+
+#if !UNITY_EDITOR
+            if (PlayerAccount.IsAuthorized) 
+                PlayerAccount.SetCloudSaveData(data);
+#endif
         } 
+        
+        private void RecordToPrefs(string data)
+        {
+            PlayerPrefs.SetString(Constants.Progress, data);
+            PlayerPrefs.Save();
+        }
     }
 }

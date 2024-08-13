@@ -7,8 +7,12 @@ namespace SaveLoadModule
     public class Progress
     {
         public DataWallet DataWallet;
+        public DataStateGame DataStateGame;
 
-        public Progress() => 
+        public Progress()
+        {
             DataWallet = new DataWallet();
+            DataStateGame = new DataStateGame();
+        }
     }
 }

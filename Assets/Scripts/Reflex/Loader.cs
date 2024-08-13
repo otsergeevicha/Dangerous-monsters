@@ -18,7 +18,23 @@ namespace Reflex
 #endif
             yield return YandexGamesSdk.Initialize(LaunchGame);
             Debug.Log("SDK initialized");
+            
+            if (PlayerAccount.IsAuthorized)
+                PlayerAccount.GetCloudSaveData(OnSuccessCallback, OnErrorCallback);
+            else
+                LaunchGame();
         }
+
+        private void OnSuccessCallback(string data)
+        {
+            PlayerPrefs.SetString(Constants.Progress, data);
+            PlayerPrefs.Save();
+            
+            LaunchGame();
+        }
+
+        private void OnErrorCallback(string _) => 
+            LaunchGame();
 
         private void LaunchGame()
         {
