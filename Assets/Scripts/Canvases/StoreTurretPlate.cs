@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Infrastructure.Factory.Pools;
+using Modules;
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
@@ -13,7 +14,7 @@ using UnityEngine.UI;
 
 namespace Canvases
 {
-    public class StoreTurretPlate : MonoCache
+    public class StoreTurretPlate : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _rootCamera;
         [SerializeField] private Transform _markerPosition;

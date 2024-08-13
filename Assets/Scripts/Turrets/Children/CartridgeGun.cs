@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Modules;
 using Plugins.MonoCache;
 using Services.Basket;
 using UnityEngine;
 
 namespace Turrets.Children
 {
-    public class CartridgeGun : MonoCache
+    public class CartridgeGun : MonoCache, ITutorialPlate
     {
+        [SerializeField] private Transform _markerPosition;
+        [SerializeField] private Transform _rootCamera;
+        
         [SerializeField] private CartridgeBox[] _cartridgeBoxes;
 
         private const int MillisecondsDelay = 500;
@@ -17,6 +21,7 @@ namespace Turrets.Children
         private int _maxAmount;
 
         public event Action Activated;
+        public event Action OnTutorialContacted;
 
         public bool IsRequiredDownload =>
             _currentAmountBoxes >= 0 && _currentAmountBoxes != _maxAmount;
@@ -54,6 +59,12 @@ namespace Turrets.Children
             _cartridgeBoxes.LastOrDefault(box => box.isActiveAndEnabled)?.InActive();
             _currentAmountBoxes--;
         }
+        
+        public Transform GetRootCamera() => 
+            _rootCamera;
+
+        public Vector3 GetPositionMarker() => 
+            _markerPosition.transform.position;
 
         private async UniTaskVoid Replenishment(IBasket basket)
         {
@@ -65,6 +76,8 @@ namespace Turrets.Children
                 if (basket.IsEmpty)
                     return;
 
+                OnTutorialContacted?.Invoke();
+                
                 if (_cartridgeBoxes[i].isActiveAndEnabled == false)
                 {
                     _cartridgeBoxes[i].OnActive();

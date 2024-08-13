@@ -1,11 +1,12 @@
 ﻿using System;
+using Modules;
 using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 
 namespace Canvases.UpgradePlayer
 {
-    public class UpgradePlayerBoard : MonoCache
+    public class UpgradePlayerBoard : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _markerPosition;
         [SerializeField] private Transform _rootCamera;

@@ -2,6 +2,7 @@
 using System.Linq;
 using Assistant;
 using Infrastructure.Factory.Pools;
+using Modules;
 using Player;
 using Plugins.MonoCache;
 using TMPro;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 
 namespace Canvases
 {
-    public class StoreAssistantPlate : MonoCache
+    public class StoreAssistantPlate : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _markerPosition;
         [SerializeField] private Transform _rootCamera;

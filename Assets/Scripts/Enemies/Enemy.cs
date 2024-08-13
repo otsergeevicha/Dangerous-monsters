@@ -199,7 +199,7 @@ namespace Enemies
 
         public void OnSleep() => 
             _tree.enabled = false;
-        
+
         public void UnSleep() => 
             _tree.enabled = true;
 

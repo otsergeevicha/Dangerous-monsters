@@ -1,4 +1,5 @@
 ﻿using System;
+using Modules;
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace ContactZones
 {
-    public class TransitionPlate : MonoCache
+    public class TransitionPlate : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _markerPosition;
         [SerializeField] private Transform _rootCamera;

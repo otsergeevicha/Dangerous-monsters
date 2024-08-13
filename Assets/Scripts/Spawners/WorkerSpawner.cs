@@ -1,12 +1,13 @@
 ﻿using System;
 using Canvases;
 using Infrastructure.Factory.Pools;
+using Modules;
 using Plugins.MonoCache;
 using UnityEngine;
 
 namespace Spawners
 {
-    public class WorkerSpawner : MonoCache
+    public class WorkerSpawner : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _markerPosition;
         [SerializeField] private Transform _rootCamera;

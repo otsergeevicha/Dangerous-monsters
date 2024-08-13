@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using CameraModule;
+﻿using CameraModule;
 using Canvases;
 using Canvases.UpgradePlayer;
 using ContactZones;
 using Cysharp.Threading.Tasks;
-using Enemies;
 using Markers;
 using Services.Factory;
 using Spawners;
+using Turrets;
 
 namespace Modules
 {
@@ -22,17 +21,19 @@ namespace Modules
         private readonly TransitionPlate[] _transitionPlates;
         private readonly UpgradePlayerBoard _upgradePlayerBoard;
         private readonly CameraFollow _cameraFollow;
-        private readonly List<Enemy> _enemies;
-        private readonly List<Enemy> _bosses;
+        private readonly WindowModule _windowModule;
+        private readonly EnemySpawner _enemySpawner;
+        private readonly TurretPlate _turretPlate;
 
-        public TutorialModule(IGameFactory factory, List<Enemy> enemies, List<Enemy> bosses,
+        public TutorialModule(IGameFactory factory,
             StoreTurretPlate[] storeTurretPlates, StorageAmmoPlate storageAmmoPlate,
             StoreAssistantPlate storeAssistantPlate, WorkerSpawner workerSpawner,
             StorageGem storageGem, TransitionPlate[] transitionPlates, UpgradePlayerBoard upgradePlayerBoard,
-            CameraFollow cameraFollow)
+            CameraFollow cameraFollow, WindowModule windowModule, EnemySpawner enemySpawner, TurretPlate turretPlate)
         {
-            _bosses = bosses;
-            _enemies = enemies;
+            _turretPlate = turretPlate;
+            _enemySpawner = enemySpawner;
+            _windowModule = windowModule;
             _cameraFollow = cameraFollow;
             _upgradePlayerBoard = upgradePlayerBoard;
             _transitionPlates = transitionPlates;
@@ -43,87 +44,46 @@ namespace Modules
             _storeTurretPlates = storeTurretPlates;
 
             _tutorialMarker = factory.CreateTutorialMarker();
-
-            Launch().Forget();
+            
+            _windowModule.OnStartGame += OnStart;
+            _storeAssistantPlate.OnTutorialContacted += WakeUpEnemies;
         }
+
+        public void Dispose()
+        {
+            _windowModule.OnStartGame -= OnStart;
+            _storeAssistantPlate.OnTutorialContacted -= WakeUpEnemies;
+        }
+
+        private void OnStart() =>
+            Launch().Forget();
+
+        private void WakeUpEnemies() => 
+            _enemySpawner.OnStart();
 
         private async UniTaskVoid Launch()
         {
+            await TutorialStep(_storeTurretPlates[0]);
+            await TutorialStep(_storageAmmoPlate);
+            await TutorialStep(_turretPlate.GetCartridgeGun);
+            await TutorialStep(_storeAssistantPlate);
+            await TutorialStep(_workerSpawner);
+            await TutorialStep(_storageGem);
+            await TutorialStep(_transitionPlates[0]);
+            await TutorialStep(_upgradePlayerBoard);
+        }
+        
+        private async UniTask TutorialStep(ITutorialPlate tutorialPlate)
+        {
             UniTaskCompletionSource token = new UniTaskCompletionSource();
-            
-            foreach (Enemy enemy in _enemies)
-                enemy.OnSleep();
 
-            foreach (Enemy boss in _bosses)
-                boss.OnSleep();
-            
-            _tutorialMarker.OnActive(_storeTurretPlates[0].GetPositionMarker());
-            _cameraFollow.ShowMarker(_storeTurretPlates[0].GetRootCamera());
+            _tutorialMarker.OnActive(tutorialPlate.GetPositionMarker());
+            _cameraFollow.ShowMarker(tutorialPlate.GetRootCamera());
 
-            _storeTurretPlates[0].OnTutorialContacted += () =>
+            tutorialPlate.OnTutorialContacted += () =>
                 token.TrySetResult();
             await token.Task;
-            _storeTurretPlates[0].OnTutorialContacted -= () =>
-                token.TrySetResult();
-            
-            _tutorialMarker.OnActive(_storageAmmoPlate.GetPositionMarker());
-            _cameraFollow.ShowMarker(_storageAmmoPlate.GetRootCamera());
-            
-            _storageAmmoPlate.OnTutorialContacted += () =>
-                token.TrySetResult();
-            await token.Task;
-            _storageAmmoPlate.OnTutorialContacted -= () =>
-                token.TrySetResult();
-            
-            _tutorialMarker.OnActive(_storeAssistantPlate.GetPositionMarker());
-            _cameraFollow.ShowMarker(_storeAssistantPlate.GetRootCamera());
-            
-            _storeAssistantPlate.OnTutorialContacted += () =>
-                token.TrySetResult();
-            await token.Task;
-            _storeAssistantPlate.OnTutorialContacted -= () =>
-                token.TrySetResult();
-            
-            foreach (Enemy enemy in _enemies)
-                enemy.UnSleep();
-
-            foreach (Enemy boss in _bosses)
-                boss.UnSleep();
-            
-            _tutorialMarker.OnActive(_workerSpawner.GetPositionMarker());
-            _cameraFollow.ShowMarker(_workerSpawner.GetRootCamera());
-            
-            _workerSpawner.OnTutorialContacted += () =>
-                token.TrySetResult();
-            await token.Task;
-            _workerSpawner.OnTutorialContacted -= () =>
-                token.TrySetResult();
-            
-            _tutorialMarker.OnActive(_storageGem.GetPositionMarker());
-            _cameraFollow.ShowMarker(_storageGem.GetRootCamera());
-            
-            _storageGem.OnTutorialContacted += () =>
-                token.TrySetResult();
-            await token.Task;
-            _storageGem.OnTutorialContacted -= () =>
-                token.TrySetResult();
-            
-            _tutorialMarker.OnActive(_transitionPlates[0].GetPositionMarker());
-            _cameraFollow.ShowMarker(_transitionPlates[0].GetRootCamera());
-            
-            _transitionPlates[0].OnTutorialContacted += () =>
-                token.TrySetResult();
-            await token.Task;
-            _transitionPlates[0].OnTutorialContacted -= () =>
-                token.TrySetResult();
-
-            _tutorialMarker.OnActive(_upgradePlayerBoard.GetPositionMarker());
-            _cameraFollow.ShowMarker(_upgradePlayerBoard.GetRootCamera());
-            
-            _upgradePlayerBoard.OnTutorialContacted += () =>
-                token.TrySetResult();
-            await token.Task;
-            _upgradePlayerBoard.OnTutorialContacted -= () =>
+            tutorialPlate.OnTutorialContacted -= () =>
                 token.TrySetResult();
         }
     }

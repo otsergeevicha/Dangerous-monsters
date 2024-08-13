@@ -2,12 +2,13 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Loots;
+using Modules;
 using Plugins.MonoCache;
 using UnityEngine;
 
 namespace ContactZones
 {
-    public class StorageGem : MonoCache
+    public class StorageGem : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _markerPosition;
         [SerializeField] private Transform _rootCamera;

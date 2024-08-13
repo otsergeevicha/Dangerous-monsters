@@ -18,7 +18,7 @@ namespace Spawners
         private PoolData _poolData;
         private PoolBosses _poolBosses;
 
-        public void Construct(Transform[] squareEnemySpawner, PoolEnemies poolSimpleEnemies, EnemySpawnerData enemySpawnerData, PoolBosses poolBosses, PoolData poolData)
+        public void Construct(Transform[] squareEnemySpawner, PoolEnemies poolSimpleEnemies, EnemySpawnerData enemySpawnerData, PoolBosses poolBosses, PoolData poolData, bool isFirstLaunch)
         {
             _poolBosses = poolBosses;
             _poolData = poolData;
@@ -28,12 +28,16 @@ namespace Spawners
 
             foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
                 enemy.Died += ReuseEnemy;
-            
-            ActiveCurrentBoss();
+
+            if (!isFirstLaunch) 
+                OnStart();
         }
 
-        private void Start() => 
+        public void OnStart()
+        {
+            ActiveCurrentBoss();
             LaunchSpawn().Forget();
+        }
 
         protected override void OnDisabled()
         {

@@ -16,7 +16,7 @@ namespace CameraModule
         
         private readonly float _shakeIntensity = 1.5f;
         private readonly float _shakeTime = .2f;
-        private readonly float _showMarkerTime = 2f;
+        private readonly float _showMarkerTime = 3f;
         
         private CinemachineBasicMultiChannelPerlin _perlin;
         private float _timer;
@@ -91,12 +91,25 @@ namespace CameraModule
 
         public void ShowMarker(Transform rootCamera)
         {
+            _timer = _showMarkerTime;
+            _isShowMarker = true;
+            _markerCamera.Follow = rootCamera;
             
+            _zoomFollow.gameObject.SetActive(false);
+            _cameraFollow.gameObject.SetActive(false);
+            _markerCamera.gameObject.SetActive(true);
         }
 
         private void StopShowMarker()
         {
-            throw new System.NotImplementedException();
+            _isShowMarker = false;
+
+            _markerCamera.gameObject.SetActive(false);
+
+            if (_isZoom)
+                OnZoom();
+            else
+                OffZoom();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Canvases;
+﻿using System;
+using Canvases;
 using Canvases.UpgradePlayer;
 using Infrastructure.Factory.Pools;
 using Player;
@@ -20,7 +21,8 @@ namespace Modules
         private UpgradePlayerBoard _upgradePlayerBoard;
         private UpgradeHeroScreen _upgradeHeroScreen;
         private Hero _hero;
-
+        public event Action OnStartGame;
+        
         public void Construct(StoreAssistantPlate storeAssistantPlate,
             StoreTurretPlate[] storeTurretPlates, PoolData poolData,
             Pool pool, IWallet wallet, Hud hud, LoseScreen loseScreen, StartScreen startScreen, WinScreen winScreen,
@@ -89,8 +91,11 @@ namespace Modules
         private void OnHeroUpgrade() => 
             _upgradeHeroScreen.OnActive();
 
-        private void LaunchGame() => 
+        private void LaunchGame()
+        {
+            OnStartGame?.Invoke();
             _input.OnControls();
+        }
 
         public void WinScreen()
         {

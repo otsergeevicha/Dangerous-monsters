@@ -62,6 +62,7 @@ namespace Reflex
         private WindowModule _windowModule;
         private LevelModule _levelModule;
         private EffectModule _effectModule;
+        private TutorialModule _tutorialModule;
 
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
@@ -107,7 +108,7 @@ namespace Reflex
                 enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, hud, _windowModule, cameraFollow, heroAimRing);
             
             cameraFollow.Construct(hero.GetCameraRoot());
-            enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData);
+            enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData, _firstLaunch);
             workerSpawner.Construct(pool.PoolWorkers, _workplace.gameObject.transform.position);
             _workplace.Construct(_poolData.MaxCountWorkers);
 
@@ -134,10 +135,10 @@ namespace Reflex
 
             if (_firstLaunch)
             {
-                TutorialModule tutorialModule = new TutorialModule(gameFactory, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, 
-                    _storeTurretPlates, _storageAmmoPlate, 
+                _tutorialModule = new TutorialModule(gameFactory, _storeTurretPlates, _storageAmmoPlate, 
                     _storeAssistantPlate, workerSpawner, 
-                    _storageGem, _transitionPlates, _upgradePlayerBoard, cameraFollow);
+                    _storageGem, _transitionPlates, _upgradePlayerBoard, cameraFollow,
+                    _windowModule, enemySpawner, _turretPlates[0]);
             }
         }
 
@@ -145,6 +146,7 @@ namespace Reflex
         {
             _windowModule.Dispose();
             _levelModule.Dispose();
+            _tutorialModule?.Dispose();
         }
     }
 }

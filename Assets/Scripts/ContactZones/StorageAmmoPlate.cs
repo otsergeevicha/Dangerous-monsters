@@ -1,11 +1,12 @@
 ﻿using System;
+using Modules;
 using Player;
 using Plugins.MonoCache;
 using UnityEngine;
 
 namespace ContactZones
 {
-    public class StorageAmmoPlate : MonoCache
+    public class StorageAmmoPlate : MonoCache, ITutorialPlate
     {
         [SerializeField] private Transform _rootCamera;
         [SerializeField] private Transform _markerPosition;
