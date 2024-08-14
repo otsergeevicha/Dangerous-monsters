@@ -21,7 +21,7 @@ namespace Loots
             gameObject.SetActive(true);
             
             _animatorBody.enabled = true;
-            _animatorCap.enabled = false;
+            //_animatorCap.enabled = false;
         }
 
         public void Open(Action opened)
@@ -29,14 +29,14 @@ namespace Loots
             _hero.OnHealing();
             opened?.Invoke();
             _animatorBody.enabled = false;
-            _animatorCap.enabled = true;
+            //_animatorCap.enabled = true;
         }
 
         public void InActive()
         {
             _animatorBody.enabled = true;
-            _animatorCap.enabled = false;
-            
+            //_animatorCap.enabled = false;
+
             gameObject.SetActive(false);
         }
     }

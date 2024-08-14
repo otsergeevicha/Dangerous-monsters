@@ -11,7 +11,10 @@ namespace Reflex
     {
         private IEnumerator Start()
         {
+            
 #if UNITY_EDITOR
+            PlayerPrefs.DeleteAll();
+            
             Debug.Log("Imitation SDK initialized");
             LaunchGame();
             yield break;

@@ -1,4 +1,5 @@
-﻿using Agava.YandexGames;
+﻿using System;
+using Agava.YandexGames;
 using CameraModule;
 using Canvases;
 using Canvases.UpgradePlayer;
@@ -65,6 +66,10 @@ namespace Reflex
         private EffectModule _effectModule;
         private TutorialModule _tutorialModule;
         private ISave _save;
+        private ISDKService _sdk;
+        private IInputService _input;
+        private IGameFactory _gameFactory;
+        private IWallet _wallet;
 
         public void InstallBindings(ContainerBuilder descriptor) => 
             descriptor.OnContainerBuilt += LoadLevel;
@@ -72,12 +77,20 @@ namespace Reflex
         private void LoadLevel(Container container)
         {
             _save = container.Single<ISave>();
-            
-            ISDKService sdk = container.Single<ISDKService>();
-            IInputService input = container.Single<IInputService>();
-            IGameFactory gameFactory = container.Single<IGameFactory>();
-            IWallet wallet = container.Single<IWallet>();
-            
+
+            _sdk = container.Single<ISDKService>();
+            _input = container.Single<IInputService>();
+            _gameFactory = container.Single<IGameFactory>();
+            _wallet = container.Single<IWallet>();
+
+            if (_save.AccessProgress().DataStateGame.FirstLaunch)
+                RecordData(CreateGame);
+            else
+                CreateGame();
+        }
+
+        private void CreateGame()
+        {
 #if !UNITY_EDITOR
             CollationData();
 #endif
@@ -85,34 +98,34 @@ namespace Reflex
             _windowModule = new WindowModule();
             _effectModule = new EffectModule();
             
-            Hud hud = gameFactory.CreateHud();
-            WinScreen winScreen = gameFactory.CreateWinScreen();
-            LoseScreen loseScreen = gameFactory.CreateLoseScreen();
-            StartScreen startScreen = gameFactory.CreateStartScreen();
-            UpgradeHeroScreen upgradeHeroScreen = gameFactory.CreateUpgradeHeroScreen();
-            Pool pool = gameFactory.CreatePool();
-            CameraFollow cameraFollow = gameFactory.CreateCamera();
-            Hero hero = gameFactory.CreateHero();
-            EnemySpawner enemySpawner = gameFactory.CreateEnemySpawner();
-            WorkerSpawner workerSpawner = gameFactory.CreateWorkerSpawner();
-            HeroAimRing heroAimRing = gameFactory.CreateHeroAimRing();
-            EnemyRing enemyRing = gameFactory.CreateEnemyRing();
+            Hud hud = _gameFactory.CreateHud();
+            WinScreen winScreen = _gameFactory.CreateWinScreen();
+            LoseScreen loseScreen = _gameFactory.CreateLoseScreen();
+            StartScreen startScreen = _gameFactory.CreateStartScreen();
+            UpgradeHeroScreen upgradeHeroScreen = _gameFactory.CreateUpgradeHeroScreen();
+            Pool pool = _gameFactory.CreatePool();
+            CameraFollow cameraFollow = _gameFactory.CreateCamera();
+            Hero hero = _gameFactory.CreateHero();
+            EnemySpawner enemySpawner = _gameFactory.CreateEnemySpawner();
+            WorkerSpawner workerSpawner = _gameFactory.CreateWorkerSpawner();
+            HeroAimRing heroAimRing = _gameFactory.CreateHeroAimRing();
+            EnemyRing enemyRing = _gameFactory.CreateEnemyRing();
 
-            sdk.Inject(cameraFollow.GetListener);
+            _sdk.Inject(cameraFollow.GetListener);
             
 #if !UNITY_EDITOR
             _focusGame.Construct(cameraFollow.GetListener);
 #endif
             
-            pool.Construct(gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
-                _turretPlates, _bulletData, _turretData, _squareLootSpawner, sdk, _workerData, _gemMiners, _storageGem, 
+            pool.Construct(_gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
+                _turretPlates, _bulletData, _turretData, _squareLootSpawner, _sdk, _workerData, _gemMiners, _storageGem, 
                 _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform.position, _effectModule);
 
             _effectModule.Construct(pool.PoolEffects);
             
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             
-            hero.Construct(input, wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, 
+            hero.Construct(_input, _wallet, _heroData, pool.PoolAmmoBox, pool.PoolBullet, _poolData.MaxCountBullets, 
                 enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, hud, _windowModule, cameraFollow, heroAimRing);
             
             cameraFollow.Construct(hero.GetCameraRoot());
@@ -121,15 +134,15 @@ namespace Reflex
             _workplace.Construct(_poolData.MaxCountWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
-                sectionPlate.Construct(wallet, _priceList, _poolData, sdk);
+                sectionPlate.Construct(_wallet, _priceList, _poolData, _sdk);
 
             foreach (TransitionPlate plate in _transitionPlates)
-                plate.Construct(wallet, _priceList);
+                plate.Construct(_wallet, _priceList);
 
-            hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, input);
+            hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, _input);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, 
-                pool, wallet, hud, loseScreen, startScreen, winScreen, input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, sdk);
+                pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, _sdk);
             
             _baseGate.Construct(heroAimRing, cameraFollow, hero);
             
@@ -143,7 +156,7 @@ namespace Reflex
 
             if (_firstLaunch)
             {
-                _tutorialModule = new TutorialModule(gameFactory, _storeTurretPlates, _storageAmmoPlate, 
+                _tutorialModule = new TutorialModule(_gameFactory, _storeTurretPlates, _storageAmmoPlate, 
                     _storeAssistantPlate, workerSpawner, 
                     _storageGem, _transitionPlates, _upgradePlayerBoard, cameraFollow,
                     _windowModule, enemySpawner, _turretPlates[0]);
@@ -162,26 +175,9 @@ namespace Reflex
             _heroData.Speed = _save.AccessProgress().DataStateGame.HeroSpeed;
             _heroData.SizeBasket = _save.AccessProgress().DataStateGame.HeroSizeBasket;
             _heroData.RadiusDetection = _save.AccessProgress().DataStateGame.HeroRadiusDetection;
-
-            _turretData.RadiusDetection = _save.AccessProgress().DataStateGame.RadiusDetection;
-            _turretData.RotateSpeed = _save.AccessProgress().DataStateGame.RotateSpeed;
-
-            _priceList.SectionPriceMultiplier = _save.AccessProgress().DataStateGame.SectionPriceMultiplier;
-            _priceList.PriceTransitionPlate = _save.AccessProgress().DataStateGame.PriceTransitionPlate;
-            _priceList.MultiplierIncreasePrice = _save.AccessProgress().DataStateGame.MultiplierIncreasePrice;
-            _priceList.StartPriceTurret = _save.AccessProgress().DataStateGame.StartPriceTurret;
-            _priceList.StepIncreasePriceTurret = _save.AccessProgress().DataStateGame.StepIncreasePriceTurret;
-            _priceList.PriceHeroHealth = _save.AccessProgress().DataStateGame.PriceHeroHealth;
-            _priceList.MultiplierPriceHeroHealth = _save.AccessProgress().DataStateGame.MultiplierPriceHeroHealth;
-            _priceList.StepIncreaseHealthHero = _save.AccessProgress().DataStateGame.StepIncreaseHealthHero;
-            _priceList.PriceHeroSpeed = _save.AccessProgress().DataStateGame.PriceHeroSpeed;
-            _priceList.PriceHeroBasket = _save.AccessProgress().DataStateGame.PriceHeroBasket;
-            _priceList.PriceHeroFiringRange = _save.AccessProgress().DataStateGame.PriceHeroFiringRange;
-            _priceList.LoseBonusMoney = _save.AccessProgress().DataStateGame.LoseBonusMoney;
-            _priceList.LoseBonusGem = _save.AccessProgress().DataStateGame.LoseBonusGem;
         }
 
-        private void RecordData()
+        private void RecordData(Action completed = null)
         {
             _save.AccessProgress().DataStateGame.FirstLaunch = _firstLaunch;
 
@@ -191,25 +187,9 @@ namespace Reflex
             _save.AccessProgress().DataStateGame.HeroSpeed = _heroData.Speed;
             _save.AccessProgress().DataStateGame.HeroSizeBasket = _heroData.SizeBasket;
             _save.AccessProgress().DataStateGame.HeroRadiusDetection = _heroData.RadiusDetection;
-
-            _save.AccessProgress().DataStateGame.RadiusDetection = _turretData.RadiusDetection;
-            _save.AccessProgress().DataStateGame.RotateSpeed = _turretData.RotateSpeed;
-
-            _save.AccessProgress().DataStateGame.SectionPriceMultiplier = _priceList.SectionPriceMultiplier;
-            _save.AccessProgress().DataStateGame.PriceTransitionPlate = _priceList.PriceTransitionPlate;
-            _save.AccessProgress().DataStateGame.MultiplierIncreasePrice = _priceList.MultiplierIncreasePrice;
-            _save.AccessProgress().DataStateGame.StartPriceTurret = _priceList.StartPriceTurret;
-            _save.AccessProgress().DataStateGame.StepIncreasePriceTurret = _priceList.StepIncreasePriceTurret;
-            _save.AccessProgress().DataStateGame.PriceHeroHealth = _priceList.PriceHeroHealth;
-            _save.AccessProgress().DataStateGame.MultiplierPriceHeroHealth = _priceList.MultiplierPriceHeroHealth;
-            _save.AccessProgress().DataStateGame.StepIncreaseHealthHero = _priceList.StepIncreaseHealthHero;
-            _save.AccessProgress().DataStateGame.PriceHeroSpeed = _priceList.PriceHeroSpeed;
-            _save.AccessProgress().DataStateGame.PriceHeroBasket = _priceList.PriceHeroBasket;
-            _save.AccessProgress().DataStateGame.PriceHeroFiringRange = _priceList.PriceHeroFiringRange;
-            _save.AccessProgress().DataStateGame.LoseBonusMoney = _priceList.LoseBonusMoney;
-            _save.AccessProgress().DataStateGame.LoseBonusGem = _priceList.LoseBonusGem;
             
             _save.Save();
+            completed?.Invoke();
         }
 
         protected override void OnDisabled()
