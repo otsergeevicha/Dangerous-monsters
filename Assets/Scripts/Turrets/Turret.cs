@@ -20,7 +20,7 @@ namespace Turrets
         [SerializeField] private CanvasTurretLowAmmo _canvasTurret;
         [SerializeField] private Animation _animationLowAmmo;
         
-        private readonly WaitForSeconds _waitSeconds = new (.5f);
+        private readonly WaitForSeconds _waitSeconds = new (.8f);
 
         private Collider[] _overlappedColliders = new Collider[5];
         private TurretData _turretData;

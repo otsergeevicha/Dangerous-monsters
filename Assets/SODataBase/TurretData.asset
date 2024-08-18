@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: TurretData
   m_EditorClassIdentifier: 
   RadiusDetection: 15
-  AngleInDegrees: 15
-  RotateSpeed: 95
+  RotateSpeed: 164
