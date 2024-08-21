@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using Enemies;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
+using SO;
 using UnityEngine;
 
 namespace Player.ShootingModule
@@ -23,10 +24,12 @@ namespace Player.ShootingModule
         private bool _isAttack;
         private CameraFollow _camera;
         private AudioSource _audioSource;
+        private BulletData _bulletData;
 
         public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow,
-            AudioSource audioSource)
+            AudioSource audioSource, BulletData bulletData)
         {
+            _bulletData = bulletData;
             _audioSource = audioSource;
             _camera = cameraFollow;
             _magazine = magazine;
@@ -57,9 +60,11 @@ namespace Player.ShootingModule
                 {
                     _audioSource.Play();
                     
-                    _pool.Bullets.FirstOrDefault(bullet =>
-                            bullet.isActiveAndEnabled == false)
-                        ?.Shot(_spawnPoint.position, _currentTarget.transform.position);
+                    _currentTarget.ApplyDamage(_bulletData.BulletDamage);
+                    
+                    // _pool.Bullets.FirstOrDefault(bullet =>
+                    //         bullet.isActiveAndEnabled == false)
+                    //     ?.Shot(_spawnPoint.position, _currentTarget.transform.position);
 
                    // _camera.Shake();
                     _magazine.Spend();

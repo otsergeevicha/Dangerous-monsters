@@ -46,6 +46,7 @@ namespace Enemies
     [RequireComponent(typeof(NavMeshAgent))]
     public abstract class Enemy : MonoCache
     {
+        
         [SerializeField] private EnemyTriggers _enemyTriggers;
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private BehaviorTree _tree;
@@ -68,6 +69,8 @@ namespace Enemies
 
         private Hero _hero;
 
+        public bool IsIdleBoss  { get; private set; } = true;
+
         public bool IsAgro { get; private set; }
         public bool IsDie { get; private set; }
         public EnemyData EnemyData { get; private set; }
@@ -84,6 +87,7 @@ namespace Enemies
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate,
             Hero hero, Vector3 baseGate)
         {
+
             _enemyTriggers.SetRadius(enemyData.AgroDistance);
 
             CashTransform = transform;
@@ -102,8 +106,14 @@ namespace Enemies
 
             EnemyAnimation.Construct(enemyData, this, _agent);
 
+            if (_bossLevels.Contains((BossId)GetId())) 
+                IsIdleBoss = true;
+
             _enemyTriggers.OnAgro += () =>
             {
+                if (_bossLevels.Contains((BossId)GetId())) 
+                    IsIdleBoss = false;
+                
                 IsAgro = true;
                 GetCurrentTarget = _hero.transform.position;
                 ResetBehaviorTree();
@@ -111,6 +121,9 @@ namespace Enemies
 
             _enemyTriggers.NonAgro += () =>
             {
+                if (_bossLevels.Contains((BossId)GetId())) 
+                    IsIdleBoss = true;
+                
                 IsAgro = false;
                 GetCurrentTarget = baseGate;
                 ResetBehaviorTree();
@@ -148,6 +161,9 @@ namespace Enemies
 
         public virtual void InActive()
         {
+            if (_bossLevels.Contains((BossId)GetId())) 
+                IsIdleBoss = true;
+            
             IsDie = false;
             gameObject.SetActive(false);
             ResetHealth();
@@ -158,7 +174,6 @@ namespace Enemies
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
             _healthBar.ChangeValue(_currentHealth, MaxHealth, damage);
-            _agent.isStopped = false;
 
             if (_currentHealth <= 0)
             {
@@ -173,7 +188,10 @@ namespace Enemies
                 IsDie = true;
                 _agent.isStopped = true;
                 EnemyAnimation.EnableDie();
+                return;
             }
+            
+            _agent.isStopped = false;
         }
 
         public void TakeDamage() =>
@@ -202,6 +220,10 @@ namespace Enemies
 
         public void UnSleep() => 
             _tree.enabled = true;
+
+        public bool InZone() =>
+            Vector3.Distance(CashTransform.position, GetCurrentTarget) <=
+            EnemyData.AttackDistance;
 
         private void SpawnLoot() =>
             _lootSpawner.SpawnMoney(GetId(), transform.position);

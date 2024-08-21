@@ -1,5 +1,4 @@
 ﻿using Enemies.AI.Parent;
-using UnityEngine;
 
 namespace Enemies.AI
 {
@@ -16,14 +15,10 @@ namespace Enemies.AI
 
         private void Attack()
         {
-            if (InZone()) 
+            if (Enemy.InZone()) 
                 Enemy.EnemyAnimation.EnableAttack();
             else
                 Enemy.ResetBehaviorTree();
         }
-
-        private bool InZone() =>
-            Vector3.Distance(Enemy.CashTransform.position, Enemy.GetCurrentTarget) <=
-            Enemy.EnemyData.AttackDistance;
     }
 }

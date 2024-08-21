@@ -2,6 +2,7 @@
 using CameraModule;
 using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
+using SO;
 using UnityEngine;
 
 namespace Player.ShootingModule
@@ -11,10 +12,11 @@ namespace Player.ShootingModule
         [SerializeField] private Weapon[] _weapons;
         [SerializeField] private AudioSource _audioSource;
 
-        public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow)
+        public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow,
+            BulletData bulletData)
         {
             foreach (Weapon weapon in _weapons)
-                weapon.Construct(poolBullet, magazine, cameraFollow, _audioSource);
+                weapon.Construct(poolBullet, magazine, cameraFollow, _audioSource, bulletData);
             
             Disarmed(true);
         }
