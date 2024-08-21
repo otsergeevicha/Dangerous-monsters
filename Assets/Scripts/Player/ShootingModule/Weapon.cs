@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using CameraModule;
 using Cysharp.Threading.Tasks;
 using Enemies;
-using Infrastructure.Factory.Pools;
 using Plugins.MonoCache;
 using SO;
 using UnityEngine;
@@ -12,28 +10,24 @@ namespace Player.ShootingModule
 {
     public class Weapon : MonoCache
     {
-        [SerializeField] private Transform _spawnPoint;
-
         private const int DelayShots = 500;
 
         private readonly CancellationTokenSource _shootToken = new();
 
         private IMagazine _magazine;
-        private PoolBullet _pool;
         private Enemy _currentTarget;
         private bool _isAttack;
         private CameraFollow _camera;
         private AudioSource _audioSource;
         private BulletData _bulletData;
 
-        public void Construct(PoolBullet poolBullet, IMagazine magazine, CameraFollow cameraFollow,
+        public void Construct(IMagazine magazine, CameraFollow cameraFollow,
             AudioSource audioSource, BulletData bulletData)
         {
             _bulletData = bulletData;
             _audioSource = audioSource;
             _camera = cameraFollow;
             _magazine = magazine;
-            _pool = poolBullet;
         }
 
         public void Shoot(Enemy enemy)
@@ -61,10 +55,6 @@ namespace Player.ShootingModule
                     _audioSource.Play();
                     
                     _currentTarget.ApplyDamage(_bulletData.BulletDamage);
-                    
-                    // _pool.Bullets.FirstOrDefault(bullet =>
-                    //         bullet.isActiveAndEnabled == false)
-                    //     ?.Shot(_spawnPoint.position, _currentTarget.transform.position);
 
                    // _camera.Shake();
                     _magazine.Spend();

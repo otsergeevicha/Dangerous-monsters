@@ -175,6 +175,9 @@ namespace Enemies
 
             _healthBar.ChangeValue(_currentHealth, MaxHealth, damage);
 
+            if (!IsDie)
+                _agent.isStopped = false;
+
             if (_currentHealth <= 0)
             {
                 if (_bossLevels.Contains((BossId)GetId()))
@@ -188,10 +191,7 @@ namespace Enemies
                 IsDie = true;
                 _agent.isStopped = true;
                 EnemyAnimation.EnableDie();
-                return;
             }
-            
-            _agent.isStopped = false;
         }
 
         public void TakeDamage() =>

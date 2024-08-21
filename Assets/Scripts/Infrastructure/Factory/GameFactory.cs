@@ -69,10 +69,6 @@ namespace Infrastructure.Factory
             _assetsProvider.InstantiateEntity(Constants.MoneyPath)
                 .GetComponent<Money>();
 
-        public Bullet CreateBullet() =>
-            _assetsProvider.InstantiateEntity(Constants.BulletPath)
-                .GetComponent<Bullet>();
-
         public HeroAimRing CreateHeroAimRing() =>
             _assetsProvider.InstantiateEntity(Constants.HeroAimRingPath)
                 .GetComponent<HeroAimRing>();

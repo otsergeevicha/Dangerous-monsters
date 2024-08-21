@@ -30,7 +30,6 @@ namespace Services.Factory
         Missile CreateMissile();
         Hud CreateHud();
         Money CreateMoney();
-        Bullet CreateBullet();
         HeroAimRing CreateHeroAimRing();
         EnemyRing CreateEnemyRing();
         HealthBar CreateHealthBar();

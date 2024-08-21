@@ -22,7 +22,6 @@ namespace Infrastructure.Factory.Pools
         public PoolCargoAssistant PoolCargoAssistant { get; private set; }
         public PoolEnemies PoolEnemies { get; private set; }
         public PoolBosses PoolBosses { get; private set; }
-        public PoolBullet PoolBullet { get; private set; }
         public PoolTurrets PoolTurrets { get; private set; }
         public PoolWorkers PoolWorkers { get; private set; }
         public PoolEffects PoolEffects { get; private set; }
@@ -55,7 +54,6 @@ namespace Infrastructure.Factory.Pools
                 spawnPointBoss, finishPlate, hero, baseGate);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData, effectModule);
             PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
-            PoolBullet = new PoolBullet(factory, poolData.MaxCountBullets, bulletData, effectModule);
             PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners,
                 storageGem.transform.position, storageGem);
         }
@@ -69,7 +67,6 @@ namespace Infrastructure.Factory.Pools
             PoolBosses.AdaptingLevel();
             PoolMissiles.AdaptingLevel();
             PoolTurrets.AdaptingLevel();
-            PoolBullet.AdaptingLevel();
             PoolWorkers.AdaptingLevel();
             PoolEffects.AdaptingLevel();
         }
