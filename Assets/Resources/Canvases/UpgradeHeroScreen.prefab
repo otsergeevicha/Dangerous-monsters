@@ -3404,6 +3404,7 @@ GameObject:
   - component: {fileID: 5950476067912242609}
   - component: {fileID: 7794957272525033746}
   - component: {fileID: 8422857301842211302}
+  - component: {fileID: 31105556167510835}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3427,8 +3428,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: -36, y: 50}
+  m_AnchoredPosition: {x: 0.058998108, y: -43.184998}
+  m_SizeDelta: {x: -61.35, y: 43.631}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7794957272525033746
 CanvasRenderer:
@@ -3458,7 +3459,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Firing range
+  m_text: "\u0414\u0430\u043B\u044C\u043D\u043E\u0441\u0442\u044C \u0441\u0442\u0440\u0435\u043B\u044C\u0431\u044B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 015573da50ed04390be9f20287a541d6, type: 2}
   m_sharedMaterial: {fileID: -2237749729835323621, guid: 015573da50ed04390be9f20287a541d6,
@@ -3486,13 +3487,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 19.5
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3528,6 +3529,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &31105556167510835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3010274856159132202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: FiringRange
+  FallbackText: Firing range
 --- !u!1 &3052288266216162623
 GameObject:
   m_ObjectHideFlags: 0
@@ -5063,6 +5078,7 @@ GameObject:
   - component: {fileID: 6779381970334918884}
   - component: {fileID: 7650317227886932983}
   - component: {fileID: 2611270361928549348}
+  - component: {fileID: 5280506694711592805}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5086,8 +5102,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: -36, y: 50}
+  m_AnchoredPosition: {x: 0.071998596, y: -41.724}
+  m_SizeDelta: {x: -49.725, y: 46.552}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7650317227886932983
 CanvasRenderer:
@@ -5117,7 +5133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Health
+  m_text: "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 015573da50ed04390be9f20287a541d6, type: 2}
   m_sharedMaterial: {fileID: -2237749729835323621, guid: 015573da50ed04390be9f20287a541d6,
@@ -5145,13 +5161,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 37.3
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -5187,6 +5203,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5280506694711592805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3912738496303226512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Health
+  FallbackText: Health
 --- !u!1 &3939089177820946363
 GameObject:
   m_ObjectHideFlags: 0
@@ -6386,6 +6416,7 @@ GameObject:
   - component: {fileID: 8229328040688664963}
   - component: {fileID: 8474006527845045343}
   - component: {fileID: 7312797946021672713}
+  - component: {fileID: 705768405870129289}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6409,8 +6440,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: -36, y: 50}
+  m_AnchoredPosition: {x: 3.1019974, y: -43.076996}
+  m_SizeDelta: {x: -60.496, y: 43.845}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8474006527845045343
 CanvasRenderer:
@@ -6440,7 +6471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Speed
+  m_text: "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 015573da50ed04390be9f20287a541d6, type: 2}
   m_sharedMaterial: {fileID: -2237749729835323621, guid: 015573da50ed04390be9f20287a541d6,
@@ -6468,13 +6499,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 36.2
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -6510,6 +6541,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &705768405870129289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5100266951488035079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Speed
+  FallbackText: Speed
 --- !u!1 &5202356745277026104
 GameObject:
   m_ObjectHideFlags: 0
@@ -6595,6 +6640,7 @@ GameObject:
   - component: {fileID: 3745618348407139103}
   - component: {fileID: 1604760472234997469}
   - component: {fileID: 4780558633940326713}
+  - component: {fileID: 8896896246514181014}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6618,8 +6664,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: -36, y: 50}
+  m_AnchoredPosition: {x: -1.9199982, y: -42.78}
+  m_SizeDelta: {x: -58.133, y: 44.439}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1604760472234997469
 CanvasRenderer:
@@ -6649,7 +6695,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ammo bag
+  m_text: "\u0421\u0443\u043C\u043A\u0430 \u0441 \u043F\u0430\u0442\u0440\u043E\u043D\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 015573da50ed04390be9f20287a541d6, type: 2}
   m_sharedMaterial: {fileID: -2237749729835323621, guid: 015573da50ed04390be9f20287a541d6,
@@ -6677,13 +6723,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 20.75
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -6719,6 +6765,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8896896246514181014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482368438634407960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: AmmoBag
+  FallbackText: Ammo bag
 --- !u!1 &5665765803628273758
 GameObject:
   m_ObjectHideFlags: 0
@@ -6902,6 +6962,7 @@ GameObject:
   - component: {fileID: 6947591209563651766}
   - component: {fileID: 5872954158892082151}
   - component: {fileID: 4638032216436211785}
+  - component: {fileID: 901734575823200310}
   m_Layer: 5
   m_Name: Text - Blue
   m_TagString: Untagged
@@ -6956,7 +7017,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Get a free upgrade
+  m_text: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439
+    \u0430\u043F\u0433\u0440\u0435\u0439\u0434"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 015573da50ed04390be9f20287a541d6, type: 2}
   m_sharedMaterial: {fileID: -2237749729835323621, guid: 015573da50ed04390be9f20287a541d6,
@@ -6984,13 +7046,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.4
+  m_fontSize: 37.1
   m_fontSizeBase: 46
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -7026,6 +7088,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &901734575823200310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811172482136678591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: GetFreeUpgrade
+  FallbackText: Get a free upgrade
 --- !u!1 &5870140928467236177
 GameObject:
   m_ObjectHideFlags: 0

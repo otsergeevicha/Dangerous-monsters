@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6858661117847224848}
   - component: {fileID: 2985217722011132797}
   - component: {fileID: 68694124195467069}
+  - component: {fileID: 1213715046365768722}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -65,7 +66,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tap to start
+  m_text: "\u041A\u043E\u0441\u043D\u0438\u0442\u0435\u0441\u044C \u0434\u043B\u044F
+    \u0441\u0442\u0430\u0440\u0442\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 015573da50ed04390be9f20287a541d6, type: 2}
   m_sharedMaterial: {fileID: -2237749729835323621, guid: 015573da50ed04390be9f20287a541d6,
@@ -135,6 +137,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1213715046365768722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608462109856342171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: TapToStart
+  FallbackText: Tap to start
 --- !u!1 &1350076033471430702
 GameObject:
   m_ObjectHideFlags: 0

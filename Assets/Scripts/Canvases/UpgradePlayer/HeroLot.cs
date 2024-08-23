@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Agava.YandexGames;
+using Player;
 using Plugins.MonoCache;
 using Services.Bank;
 using Services.SDK;
@@ -22,7 +23,8 @@ namespace Canvases.UpgradePlayer
         [SerializeField] protected GameObject MaxLevel;
         [SerializeField] protected GameObject ReadyUpgrade;
 
-        private const string FreeLot = "Free";
+        private const string EngFreeLot = "Free";
+        private const string RuFreeLot = "Бесплатно";
 
         protected int CurrentValue;
         protected int CurrentPrice;
@@ -75,7 +77,7 @@ namespace Canvases.UpgradePlayer
                 PriceView.gameObject.SetActive(true);
                 
                 CurrentPrice = 0;
-                PriceView.text = FreeLot;
+                PriceView.text = YandexGamesSdk.Environment.i18n.lang == "en" ? EngFreeLot : RuFreeLot;
             }
         }
 
