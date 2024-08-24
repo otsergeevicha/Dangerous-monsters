@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320ac793215f4020a06c8254a0edc6cd, type: 3}
   m_Name: PriceList
   m_EditorClassIdentifier: 
-  SectionPriceMultiplier: 1
-  PriceTransitionPlate: 3
+  SectionPriceMultiplier: 50
+  PriceTransitionPlate: 10
   MultiplierIncreasePrice: 3
   StartPriceTurret: 100
   StepIncreasePriceTurret: 100

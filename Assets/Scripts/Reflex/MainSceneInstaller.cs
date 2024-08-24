@@ -159,7 +159,7 @@ namespace Reflex
                 _tutorialModule = new TutorialModule(_gameFactory, _storeTurretPlates, _storageAmmoPlate, 
                     _storeAssistantPlate, workerSpawner, 
                     _storageGem, _transitionPlates, _upgradePlayerBoard, cameraFollow,
-                    _windowModule, enemySpawner, _turretPlates[0]);
+                     _windowModule, enemySpawner, _turretPlates[0]);
 
                 _firstLaunch = false;
             }

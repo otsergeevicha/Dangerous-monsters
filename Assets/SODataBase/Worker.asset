@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 645e1669a12a4264b6554f767998e75b, type: 3}
   m_Name: Worker
   m_EditorClassIdentifier: 
-  Speed: 4
+  Speed: 3
   IdleSitingHash: 1269520593
   MiningHash: 577859424
   WalkingHash: 1744665739

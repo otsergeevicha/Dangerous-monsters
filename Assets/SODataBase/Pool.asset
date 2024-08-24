@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxCountWorkers: 4
   MaxCountLootBoxes: 5
   PercentSpawnFreeLoot: 50
-  MaxCountCargoAssistant: 2
+  MaxCountCargoAssistant: 1
   CurrentLevelGame: 1
   OneLevelCountEnemy: 9
   TwoLevelCountEnemy: 7
@@ -28,5 +28,5 @@ MonoBehaviour:
   NineLevelCountEnemy: 7
   TenLevelCountEnemy: 9
   MaxCountMissiles: 20
-  MaxCountBullets: 20
+  MaxCountBullets: 30
   MaxCountMoney: 30
