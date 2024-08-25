@@ -2,6 +2,7 @@
 using CameraModule;
 using Cysharp.Threading.Tasks;
 using Enemies;
+using Modules;
 using Plugins.MonoCache;
 using SO;
 using UnityEngine;
@@ -20,10 +21,12 @@ namespace Player.ShootingModule
         private CameraFollow _camera;
         private AudioSource _audioSource;
         private BulletData _bulletData;
+        private EffectModule _effectModule;
 
         public void Construct(IMagazine magazine, CameraFollow cameraFollow,
-            AudioSource audioSource, BulletData bulletData)
+            AudioSource audioSource, BulletData bulletData, EffectModule effectModule)
         {
+            _effectModule = effectModule;
             _bulletData = bulletData;
             _audioSource = audioSource;
             _camera = cameraFollow;
@@ -55,6 +58,7 @@ namespace Player.ShootingModule
                     _audioSource.Play();
                     
                     _currentTarget.ApplyDamage(_bulletData.BulletDamage);
+                    _effectModule.OnHitEnemy(_currentTarget.gameObject.transform.position);
 
                    // _camera.Shake();
                     _magazine.Spend();

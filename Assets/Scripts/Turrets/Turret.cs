@@ -20,7 +20,7 @@ namespace Turrets
         [SerializeField] private CanvasTurretLowAmmo _canvasTurret;
         [SerializeField] private Animation _animationLowAmmo;
         
-        private readonly WaitForSeconds _waitSeconds = new (.8f);
+        private readonly float _waitSeconds =1f;
 
         private Collider[] _overlappedColliders = new Collider[5];
         private TurretData _turretData;
@@ -115,7 +115,7 @@ namespace Turrets
                 _cartridgeGun.Spend();
             }
             
-            OnAttack();
+            Invoke(nameof(OnAttack), _waitSeconds);
         }
 
         private IEnumerator RotateTurretAndAttack(Vector3 enemyPosition)
@@ -130,9 +130,7 @@ namespace Turrets
                     _turretData.RotateSpeed * Time.deltaTime);
                 yield return null;
             }
-            
-            yield return _waitSeconds;
-            
+
             Shoot(enemyPosition);
         }
     }

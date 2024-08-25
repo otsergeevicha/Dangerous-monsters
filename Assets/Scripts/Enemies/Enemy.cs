@@ -157,6 +157,8 @@ namespace Enemies
             gameObject.SetActive(true);
             IsAgro = false;
             _tree.enabled = true;
+            
+            ResetHealth();
         }
 
         public virtual void InActive()
@@ -166,7 +168,6 @@ namespace Enemies
             
             IsDie = false;
             gameObject.SetActive(false);
-            ResetHealth();
         }
 
         public void ApplyDamage(int damage)
@@ -174,9 +175,6 @@ namespace Enemies
             _currentHealth = _enemyHealthModule.CalculateDamage(_currentHealth, damage);
 
             _healthBar.ChangeValue(_currentHealth, MaxHealth, damage);
-
-            if (!IsDie)
-                _agent.isStopped = false;
 
             if (_currentHealth <= 0)
             {

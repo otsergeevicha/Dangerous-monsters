@@ -18,10 +18,10 @@ namespace Canvases
     {
         [SerializeField] private Transform _rootCamera;
         [SerializeField] private Transform _markerPosition;
-        
+
         [SerializeField] private TMP_Text _priceView;
         [SerializeField] private GameObject _ad;
-        
+
         [SerializeField] private Image _background;
         [SerializeField] private Transform _spawnPoint;
 
@@ -42,7 +42,7 @@ namespace Canvases
         private ISDKService _sdk;
 
         public event Action OnTutorialContacted;
-        
+
         public void Construct(PoolTurrets poolTurrets, IWallet wallet, PriceListData priceListData,
             ISDKService sdk)
         {
@@ -55,11 +55,11 @@ namespace Canvases
             if (_turret == null)
                 _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>
                     turret.isActiveAndEnabled == false);
-            
+
             _wallet.MoneyChanged += SetConfigurationPrice;
         }
 
-        protected override void OnDisabled() => 
+        protected override void OnDisabled() =>
             _wallet.MoneyChanged -= SetConfigurationPrice;
 
         private void OnTriggerEnter(Collider collision)
@@ -97,10 +97,10 @@ namespace Canvases
             }
         }
 
-        public Transform GetRootCamera() => 
+        public Transform GetRootCamera() =>
             _rootCamera;
-        
-        public Vector3 GetPositionMarker() => 
+
+        public Vector3 GetPositionMarker() =>
             _markerPosition.transform.position;
 
         private void FinishWaiting()
@@ -120,7 +120,7 @@ namespace Canvases
                         _sdk.AdReward(() =>
                             _turret.Upgrade());
                     }
-                    
+
                     UpdatePriceView();
                     SetConfigurationPrice(_wallet.ReadCurrentMoney());
                     return;
@@ -131,6 +131,7 @@ namespace Canvases
                     _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
                     _purchased = true;
                     OnTutorialContacted?.Invoke();
+                    SetConfigurationPrice(_wallet.ReadCurrentMoney());
                 }
 
                 _iconAdd.gameObject.SetActive(false);
@@ -144,6 +145,7 @@ namespace Canvases
             {
                 _ad.SetActive(false);
                 _priceView.gameObject.SetActive(true);
+                UpdatePriceView();
             }
             else
             {
@@ -152,7 +154,7 @@ namespace Canvases
             }
         }
 
-        private void UpdatePriceView() => 
+        private void UpdatePriceView() =>
             _priceView.text = _turret.GetPrice().ToString();
 
         private void ResetFill() =>

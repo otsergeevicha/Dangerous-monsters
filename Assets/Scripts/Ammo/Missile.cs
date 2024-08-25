@@ -9,7 +9,6 @@ namespace Ammo
     [RequireComponent(typeof(Rigidbody))]
     public class Missile : MonoCache
     {
-        
         private BulletData _bulletData;
         private Collider[] _overlappedColliders;
         private Vector3 _targetPosition;
@@ -26,31 +25,32 @@ namespace Ammo
             _speed = _bulletData.MissileSpeed;
         }
 
-        protected override void UpdateCached()
+        protected override void FixedUpdateCached()
         {
             if (!_isActive)
                 return;
-            
-            transform.position += _moveDirection * (Time.deltaTime * _speed);
 
-            if (_distanceBefore <= Vector3.Distance(transform.position, _targetPosition)) 
+            transform.position += _moveDirection * (Time.fixedDeltaTime * _speed);
+
+            if (_distanceBefore <= Vector3.Distance(transform.position, _targetPosition))
                 InActive();
         }
-        
+
         private void OnTriggerEnter(Collider collision)
         {
             if (collision.gameObject.TryGetComponent(out Enemy _))
             {
                 _overlappedColliders = Physics.OverlapSphere(transform.position, _bulletData.RadiusExplosion);
 
-                int count = _overlappedColliders.Length;
-            
-                for (int i = 0; i < count; i++)
+                foreach (Collider overlappedCollider in _overlappedColliders)
                 {
-                    if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
+                    if (overlappedCollider.TryGetComponent(out Enemy enemy))
+                    {
                         enemy.ApplyDamage(_bulletData.MissileDamage);
+                        print(enemy.name);
+                    }
                 }
-            
+
                 _effectModule.OnExplosion(transform.position);
                 InActive();
             }
@@ -65,13 +65,13 @@ namespace Ammo
         public void Throw(Vector3 currentPosition, Vector3 targetPosition)
         {
             transform.position = currentPosition;
-            
+
             _targetPosition = new Vector3(targetPosition.x, targetPosition.y + 1, targetPosition.z);
             _distanceBefore = Vector3.Distance(currentPosition, _targetPosition);
             _moveDirection = (_targetPosition - currentPosition).normalized;
-            
+
             gameObject.SetActive(true);
-            
+
             _isActive = true;
         }
     }

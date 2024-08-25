@@ -8,8 +8,10 @@ namespace Triggers
 {
     public class BaseGate : MonoCache
     {
+        [SerializeField] private TriggerOnZone _triggerOnZone;
+        [SerializeField] private TriggerOnBase _triggerOnBase;
+        
         private HeroAimRing _heroAimRing;
-        private bool _heroOnBase = true;
         private CameraFollow _cameraFollow;
         private Hero _hero;
 
@@ -18,33 +20,36 @@ namespace Triggers
             _hero = hero;
             _cameraFollow = cameraFollow;
             _heroAimRing = heroAimRing;
+
+            _triggerOnZone.OnEntered += OnZone;
+            _triggerOnBase.OnEntered += OnBase;
         }
-        
-        private void OnTriggerEnter(Collider collision)
+
+        protected override void OnDisabled()
         {
-            if (collision.gameObject.TryGetComponent(out Hero _)) 
-                UpdateState();
+            _triggerOnZone.OnEntered -= OnZone;
+            _triggerOnBase.OnEntered -= OnBase;
         }
 
-        private void UpdateState()
+        private void OnZone()
         {
-            _heroOnBase = !_heroOnBase;
-            _hero.AnimationController.SetActualRunHash(_heroOnBase);
-            _hero.SetShootingState(_heroOnBase);
-
-            if (!_heroOnBase)
-            {
-                _heroAimRing.OnActive();
-                _cameraFollow.OnZoom();
-            }
-            else
-            {
-                _heroAimRing.InActive();
-                _cameraFollow.OffZoom();
-            }
+            _hero.AnimationController.SetActualRunHash(false);
+            _hero.SetShootingState(false);
+            
+            _heroAimRing.OnActive();
+            _cameraFollow.OnZoom();
         }
 
-        public void UpdateLevel() => 
-            UpdateState();
+        private void OnBase()
+        {
+            _hero.AnimationController.SetActualRunHash(true);
+            _hero.SetShootingState(true);
+            
+            _heroAimRing.InActive();
+            _cameraFollow.OffZoom();
+        }
+
+        public void UpdateLevel() =>
+            OnBase();
     }
 }

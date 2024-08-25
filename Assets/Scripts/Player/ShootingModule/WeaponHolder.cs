@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CameraModule;
+using Modules;
 using Plugins.MonoCache;
 using SO;
 using UnityEngine;
@@ -12,10 +13,10 @@ namespace Player.ShootingModule
         [SerializeField] private AudioSource _audioSource;
 
         public void Construct(IMagazine magazine, CameraFollow cameraFollow,
-            BulletData bulletData)
+            BulletData bulletData, EffectModule effectModule)
         {
             foreach (Weapon weapon in _weapons)
-                weapon.Construct(magazine, cameraFollow, _audioSource, bulletData);
+                weapon.Construct(magazine, cameraFollow, _audioSource, bulletData, effectModule);
             
             Disarmed(true);
         }

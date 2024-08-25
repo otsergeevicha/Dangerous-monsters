@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Enemies;
 using Markers;
+using Modules;
 using Player.ShootingModule;
 using Plugins.MonoCache;
 using UnityEngine;
