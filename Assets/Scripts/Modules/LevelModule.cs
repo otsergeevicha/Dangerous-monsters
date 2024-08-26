@@ -20,12 +20,14 @@ namespace Modules
         private readonly WindowModule _windowModule;
         private readonly PoolData _poolData;
         private readonly EnemySpawner _enemySpawner;
+        private readonly BaseView _baseView;
 
         public LevelModule(PoolData poolData, FinishPlate finishPlate, WindowModule windowModule, Pool pool, Hero hero,
             WorkerSpawner workerSpawner,
             SectionPlate[] sectionPlates, TransitionPlate[] transitionPlates, BaseGate baseGate,
-            EnemySpawner enemySpawner)
+            EnemySpawner enemySpawner, BaseView baseView)
         {
+            _baseView = baseView;
             _enemySpawner = enemySpawner;
             _poolData = poolData;
             _windowModule = windowModule;
@@ -61,6 +63,8 @@ namespace Modules
             
             _workerSpawner.UpdateLevel();
             _windowModule.UpLevelCompleted();
+            
+            _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
         }
     }
 }

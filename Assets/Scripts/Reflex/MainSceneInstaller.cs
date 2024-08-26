@@ -29,8 +29,9 @@ namespace Reflex
     public class MainSceneInstaller : MonoCache, IInstaller
     {
         [SerializeField] private bool _firstLaunch;
-        
+
         [Header("Objects with scene")] 
+        [SerializeField] private BaseView _baseView;
         [SerializeField] private FocusGame _focusGame;
         [SerializeField] private UpgradePlayerBoard _upgradePlayerBoard;
         [SerializeField] private FinishPlate _finishPlate;
@@ -117,6 +118,8 @@ namespace Reflex
             _focusGame.Construct(cameraFollow.GetListener);
 #endif
             
+            _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
+            
             pool.Construct(_gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
                 _turretPlates, _bulletData, _turretData, _squareLootSpawner, _sdk, _workerData, _gemMiners, _storageGem, 
                 _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform.position, _effectModule);
@@ -146,7 +149,7 @@ namespace Reflex
             
             _baseGate.Construct(heroAimRing, cameraFollow, hero);
             
-            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner);
+            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView);
 
             _finishPlate.InActive();
             

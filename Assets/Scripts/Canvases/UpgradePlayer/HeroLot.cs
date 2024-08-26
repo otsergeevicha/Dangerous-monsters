@@ -77,7 +77,11 @@ namespace Canvases.UpgradePlayer
                 PriceView.gameObject.SetActive(true);
                 
                 CurrentPrice = 0;
+#if !UNITY_EDITOR
                 PriceView.text = YandexGamesSdk.Environment.i18n.lang == "en" ? EngFreeLot : RuFreeLot;
+                return;
+#endif
+                PriceView.text = EngFreeLot;
             }
         }
 
