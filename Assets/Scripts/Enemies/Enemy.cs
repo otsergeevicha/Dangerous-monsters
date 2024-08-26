@@ -187,7 +187,7 @@ namespace Enemies
                 _healthBar.InActive();
                 Died?.Invoke();
                 IsDie = true;
-                _agent.isStopped = true;
+
                 EnemyAnimation.EnableDie();
             }
         }

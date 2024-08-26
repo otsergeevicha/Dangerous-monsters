@@ -19,8 +19,8 @@ namespace Turrets
 
         [SerializeField] private CanvasTurretLowAmmo _canvasTurret;
         [SerializeField] private Animation _animationLowAmmo;
-        
-        private readonly float _waitSeconds =1f;
+
+        private readonly float _waitSeconds = 1.5f;
 
         private Collider[] _overlappedColliders = new Collider[5];
         private TurretData _turretData;
@@ -28,7 +28,7 @@ namespace Turrets
         private CartridgeGun _cartridgeGun;
         private Transform _turretBody;
         private Coroutine _coroutine;
-        
+
         private int _price;
 
         public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles)
@@ -37,19 +37,19 @@ namespace Turrets
             _poolMissiles = poolMissiles;
             _turretData = turretData;
             _turretBody = transform;
-            
+
             _canvasTurret.transform.SetParent(null);
         }
 
         public void OnActive(Transform spawnPoint, int currentPrice)
         {
             _price = currentPrice;
-            
+
             gameObject.SetActive(true);
 
             if (_coroutine != null)
                 StopCoroutine(_coroutine);
-            
+
             transform.position = spawnPoint.position;
 
             _trigger.OnActiveCollider();
@@ -71,10 +71,10 @@ namespace Turrets
             _trigger.SetRadiusTrigger(_turretData.RadiusDetection);
         }
 
-        public int GetPrice() => 
+        public int GetPrice() =>
             _price;
 
-        public void IncreasePrice(int stepIncreasePrice) => 
+        public void IncreasePrice(int stepIncreasePrice) =>
             _price += stepIncreasePrice;
 
         private void OnAttack()
@@ -89,7 +89,7 @@ namespace Turrets
                     {
                         if (_coroutine != null)
                             StopCoroutine(_coroutine);
-            
+
                         _coroutine = StartCoroutine(RotateTurretAndAttack(enemy.transform.position));
                         break;
                     }
@@ -98,7 +98,7 @@ namespace Turrets
             else
             {
                 _animationLowAmmo.Play();
-                
+
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
             }
@@ -106,16 +106,18 @@ namespace Turrets
 
         private void Shoot(Vector3 targetPosition)
         {
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
+
             Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
                 bullet.isActiveAndEnabled == false);
 
             if (missile != null)
             {
-                missile.Throw(_spawnPointGrenade.position, targetPosition);
+                missile.Throw(_spawnPointGrenade.position, new Vector3(targetPosition.x, 1f, targetPosition.z));
                 _cartridgeGun.Spend();
+                Invoke(nameof(OnAttack), _waitSeconds);
             }
-            
-            Invoke(nameof(OnAttack), _waitSeconds);
         }
 
         private IEnumerator RotateTurretAndAttack(Vector3 enemyPosition)
@@ -128,6 +130,7 @@ namespace Turrets
             {
                 _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, lookRotation,
                     _turretData.RotateSpeed * Time.deltaTime);
+
                 yield return null;
             }
 

@@ -29,10 +29,10 @@ namespace Ammo
         {
             if (!_isActive)
                 return;
-
+            
             transform.position += _moveDirection * (Time.fixedDeltaTime * _speed);
-
-            if (_distanceBefore <= Vector3.Distance(transform.position, _targetPosition))
+            
+            if (_distanceBefore <= Vector3.Distance(transform.position, _targetPosition)) 
                 InActive();
         }
 
@@ -42,15 +42,14 @@ namespace Ammo
             {
                 _overlappedColliders = Physics.OverlapSphere(transform.position, _bulletData.RadiusExplosion);
 
-                foreach (Collider overlappedCollider in _overlappedColliders)
+                int count = _overlappedColliders.Length;
+            
+                for (int i = 0; i < count; i++)
                 {
-                    if (overlappedCollider.TryGetComponent(out Enemy enemy))
-                    {
+                    if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
                         enemy.ApplyDamage(_bulletData.MissileDamage);
-                        print(enemy.name);
-                    }
                 }
-
+            
                 _effectModule.OnExplosion(transform.position);
                 InActive();
             }
@@ -65,13 +64,13 @@ namespace Ammo
         public void Throw(Vector3 currentPosition, Vector3 targetPosition)
         {
             transform.position = currentPosition;
-
-            _targetPosition = new Vector3(targetPosition.x, targetPosition.y + 1, targetPosition.z);
+            
+            _targetPosition = targetPosition;
             _distanceBefore = Vector3.Distance(currentPosition, _targetPosition);
             _moveDirection = (_targetPosition - currentPosition).normalized;
-
+            
             gameObject.SetActive(true);
-
+            
             _isActive = true;
         }
     }

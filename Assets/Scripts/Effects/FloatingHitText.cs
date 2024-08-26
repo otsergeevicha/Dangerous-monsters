@@ -14,7 +14,6 @@ namespace Effects
         [SerializeField] private Color[] _colors = new Color[5];
         
         private readonly float _offSetY = .5f;
-        private readonly float _randomizeIntensity = .05f;
 
         public bool IsActive =>
             _canvas.enabled;
@@ -26,7 +25,7 @@ namespace Effects
             _text.text = (damage * Random.Range(10, 30)).ToString();
             _text.color = _colors[Random.Range(0, _colors.Length)];
             
-            transform.localPosition += new Vector3(Random.Range(-_randomizeIntensity, _randomizeIntensity), _offSetY, 0);
+            transform.localPosition += new Vector3(0f, _offSetY, 0f);
 
             _animation.Play();
         }
