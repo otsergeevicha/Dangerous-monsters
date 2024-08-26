@@ -72,8 +72,6 @@ namespace Canvases
 
         private void OnTriggerExit(Collider collision)
         {
-            ResetFill();
-
             if (collision.TryGetComponent(out Hero _))
             {
                 _isWaiting = false;
@@ -93,6 +91,7 @@ namespace Canvases
                     FinishWaiting();
                     _isWaiting = false;
                     _currentFillAmount = 1f;
+                    ResetFill();
                 }
             }
         }
