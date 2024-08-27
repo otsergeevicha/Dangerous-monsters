@@ -147,7 +147,7 @@ namespace Reflex
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, 
                 pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, _sdk);
             
-            _baseGate.Construct(heroAimRing, cameraFollow, hero);
+            _baseGate.Construct(heroAimRing, cameraFollow, hero, _poolData);
             
             _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView);
 

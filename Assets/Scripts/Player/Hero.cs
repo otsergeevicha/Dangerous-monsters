@@ -175,6 +175,9 @@ namespace Player
             _heroShooting.SetOnBase(true);
         }
 
+        public void BasketClear() => 
+            _basketPlayer.Clear();
+
         private void OnDied() => 
             _windowModule.HeroDied();
 

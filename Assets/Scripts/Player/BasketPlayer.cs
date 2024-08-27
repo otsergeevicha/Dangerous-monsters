@@ -40,7 +40,13 @@ namespace Player
 
         public void Upgrade(int newSizeBasket) => 
             _maxSizeBasket = newSizeBasket;
-        
+
+        public void Clear()
+        {
+            _currentCount = 0;
+            Pool.AllInActive();
+        }
+
         private bool CheckFull() => 
             _currentCount == _maxSizeBasket;
 

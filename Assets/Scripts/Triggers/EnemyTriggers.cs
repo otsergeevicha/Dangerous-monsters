@@ -9,8 +9,9 @@ namespace Triggers
     {
         [SerializeField] private SphereCollider _collider;
 
+        public event Action<Vector3> OnAgroGate;
+        public event Action NonAgroGate;
         public event Action OnAgro;
-
         public event Action NonAgro;
 
         private void OnValidate() => 
@@ -18,12 +19,25 @@ namespace Triggers
 
         private void OnTriggerEnter(Collider collision)
         {
+            if (collision.gameObject.TryGetComponent(out BaseGate gate))
+            {
+                OnAgroGate?.Invoke(gate.transform.position);
+                print("nen");
+                return;
+            }
+            
             if (collision.gameObject.TryGetComponent(out Hero _)) 
                 OnAgro?.Invoke();
         }
 
         private void OnTriggerExit(Collider collision)
         {
+            if (collision.gameObject.TryGetComponent(out BaseGate _))
+            {
+                NonAgroGate?.Invoke();
+                return;
+            }
+            
             if (collision.gameObject.TryGetComponent(out Hero _)) 
                 NonAgro?.Invoke();
         }

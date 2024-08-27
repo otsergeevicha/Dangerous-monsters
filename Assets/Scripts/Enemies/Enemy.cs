@@ -75,7 +75,6 @@ namespace Enemies
         public bool IsDie { get; private set; }
         public EnemyData EnemyData { get; private set; }
         public Vector3 GetCurrentTarget { get; private set; }
-        public Transform HeroTransform { get; private set; }
 
 
         protected abstract int GetId();
@@ -85,7 +84,7 @@ namespace Enemies
 
         public void Construct(EnemyData enemyData,
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate,
-            Hero hero, Vector3 baseGate)
+            Hero hero, Vector3 portal)
         {
 
             _enemyTriggers.SetRadius(enemyData.AgroDistance);
@@ -94,7 +93,6 @@ namespace Enemies
             _tree.enabled = false;
 
             _hero = hero;
-            HeroTransform = hero.transform;
             _finishPlate = finishPlate;
             _healthBar = healthBar;
             _lootSpawner = lootSpawner;
@@ -109,6 +107,21 @@ namespace Enemies
             if (_bossLevels.Contains((BossId)GetId())) 
                 IsIdleBoss = true;
 
+            _enemyTriggers.OnAgroGate += 
+                gatePosition =>
+            {
+                IsAgro = true;
+                GetCurrentTarget = gatePosition;
+                ResetBehaviorTree();
+            };
+            
+            _enemyTriggers.NonAgroGate += () =>
+            {
+                IsAgro = true;
+                GetCurrentTarget = portal;
+                ResetBehaviorTree();
+            };
+            
             _enemyTriggers.OnAgro += () =>
             {
                 if (_bossLevels.Contains((BossId)GetId())) 
@@ -125,7 +138,7 @@ namespace Enemies
                     IsIdleBoss = true;
                 
                 IsAgro = false;
-                GetCurrentTarget = baseGate;
+                GetCurrentTarget = portal;
                 ResetBehaviorTree();
             };
 

@@ -62,5 +62,11 @@ namespace Infrastructure.Factory.Pools
             foreach (AmmoBox box in _ammoBoxes) 
                 box.InActive();
         }
+        
+        public void AllInActive()
+        {
+            foreach (AmmoBox box in _ammoBoxes) 
+                box.InActive();
+        }
     }
 }

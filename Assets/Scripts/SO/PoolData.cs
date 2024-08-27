@@ -19,7 +19,10 @@ namespace SO
         public int MaxCountCargoAssistant = 1;
 
         [Range(1, 10)] 
-        public int CurrentLevelGame = 1;
+        public int CurrentLevelGame = 1;        
+        
+        [Range(10, 100)] 
+        public int MaxHealthBaseGate = 10;
 
         [Header("Amount enemies")]
         [Range(1, 10)] 

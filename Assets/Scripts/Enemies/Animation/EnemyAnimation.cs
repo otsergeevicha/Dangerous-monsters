@@ -1,6 +1,7 @@
 ﻿using System;
 using Plugins.MonoCache;
 using SO;
+using Triggers;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +13,8 @@ namespace Enemies.Animation
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _attackPoint;
 
-        private const string LayerName = "Player";
+        private const string LayerNameHero = "Player";
+        private const string LayerNameGate = "Player";
         private readonly float _cleavage = 0.5f;
 
         private Collider[] _hits = new Collider[1];
@@ -28,7 +30,11 @@ namespace Enemies.Animation
             _agent = agent;
             _enemy = enemy;
             _enemyData = enemyData;
-            _layerMask = 1 << LayerMask.NameToLayer(LayerName);
+            
+            int mask1 = 1 << LayerMask.NameToLayer(LayerNameHero);
+            int mask2 = 1 << LayerMask.NameToLayer(LayerNameGate);
+
+            _layerMask = mask1 | mask2;
         }
 
         private void OnValidate() =>
@@ -40,7 +46,12 @@ namespace Enemies.Animation
 
             if (_hits[0] != null)
             {
-                _enemy.TakeDamage();
+                if (_hits[0].gameObject.TryGetComponent(out Enemy enemy)) 
+                    enemy.TakeDamage();
+
+                if (_hits[0].gameObject.TryGetComponent(out BaseGate gate)) 
+                    gate.TakeDamage();
+
                 _hits[0] = null;
             }
         }
