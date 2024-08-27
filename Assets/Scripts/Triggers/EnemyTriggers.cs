@@ -21,8 +21,7 @@ namespace Triggers
         {
             if (collision.gameObject.TryGetComponent(out BaseGate gate))
             {
-                OnAgroGate?.Invoke(gate.transform.position);
-                print("nen");
+                OnAgroGate?.Invoke(new Vector3(gate.transform.position.x, 1, gate.transform.position.z));
                 return;
             }
             

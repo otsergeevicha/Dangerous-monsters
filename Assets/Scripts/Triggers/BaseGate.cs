@@ -14,8 +14,11 @@ namespace Triggers
         [SerializeField] private TriggerOnBase _triggerOnBase;
 
         [SerializeField] private ParticleSystem _explosionVfx;
+        [SerializeField] private ParticleSystem _gateZoneVfx;
         [SerializeField] private MeshRenderer _mesh;
         [SerializeField] private BoxCollider _collider;
+
+        [SerializeField] private Transform _rootMarker;
         
         private HeroAimRing _heroAimRing;
         private CameraFollow _cameraFollow;
@@ -76,16 +79,25 @@ namespace Triggers
 
         private void InActive()
         {
+            _cameraFollow.ShowMarker(_rootMarker);
             _mesh.enabled = false;
             _collider.enabled = false;
-            _explosionVfx.gameObject.SetActive(true);
+            
+            Invoke(nameof(Explosion), .4f);
         }
-        
-        private void OnActive()
+
+        public void OnActive()
         {
             _mesh.enabled = true;
             _collider.enabled = true;
             _explosionVfx.gameObject.SetActive(false);
+            _gateZoneVfx.gameObject.SetActive(true);
+        }
+
+        private void Explosion()
+        {
+            _explosionVfx.gameObject.SetActive(true);
+            _gateZoneVfx.gameObject.SetActive(false);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Enemies.Animation
         [SerializeField] private Transform _attackPoint;
 
         private const string LayerNameHero = "Player";
-        private const string LayerNameGate = "Player";
+        private const string LayerNameGate = "BaseGate";
         private readonly float _cleavage = 0.5f;
 
         private Collider[] _hits = new Collider[1];
@@ -33,8 +33,10 @@ namespace Enemies.Animation
             
             int mask1 = 1 << LayerMask.NameToLayer(LayerNameHero);
             int mask2 = 1 << LayerMask.NameToLayer(LayerNameGate);
-
+            
             _layerMask = mask1 | mask2;
+
+            //_layerMask = 1 << LayerMask.NameToLayer(LayerNameGate);
         }
 
         private void OnValidate() =>

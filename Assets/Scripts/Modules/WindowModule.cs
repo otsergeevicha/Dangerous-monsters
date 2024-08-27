@@ -7,6 +7,7 @@ using Services.Bank;
 using Services.Inputs;
 using Services.SDK;
 using SO;
+using Triggers;
 
 namespace Modules
 {
@@ -27,7 +28,7 @@ namespace Modules
             StoreTurretPlate[] storeTurretPlates, PoolData poolData,
             Pool pool, IWallet wallet, Hud hud, LoseScreen loseScreen, StartScreen startScreen, WinScreen winScreen,
             IInputService input, UpgradePlayerBoard upgradePlayerBoard, UpgradeHeroScreen upgradeHeroScreen,
-            HeroData heroData, PriceListData priceList, Hero hero, ISDKService sdk)
+            HeroData heroData, PriceListData priceList, Hero hero, ISDKService sdk, BaseGate baseGate)
         {
             _hero = hero;
             _upgradeHeroScreen = upgradeHeroScreen;
@@ -55,7 +56,7 @@ namespace Modules
 
             _startScreen.Construct(_hud);
             _winScreen.Construct(_wallet, sdk);
-            _loseScreen.Construct(wallet, sdk, priceList);
+            _loseScreen.Construct(wallet, sdk, priceList, baseGate);
             
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant);
 

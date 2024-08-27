@@ -53,8 +53,8 @@ namespace Enemies
 
         private readonly BossId[] _bossLevels = Enum.GetValues(typeof(BossId)).Cast<BossId>().ToArray();
 
-        [HideInInspector] public EnemyAnimation EnemyAnimation;
-        [HideInInspector] public Transform CashTransform;
+        public EnemyAnimation EnemyAnimation;
+        public Transform CashTransform;
         
         protected int MaxHealth;
         protected int Damage;

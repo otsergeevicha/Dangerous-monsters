@@ -4,6 +4,7 @@ using Services.Bank;
 using Services.SDK;
 using SO;
 using TMPro;
+using Triggers;
 using UnityEngine;
 
 namespace Canvases
@@ -26,9 +27,11 @@ namespace Canvases
         private bool _isAdShowed;
 
         private PriceListData _priceList;
+        private BaseGate _baseGate;
 
-        public void Construct(IWallet wallet, ISDKService sdk, PriceListData priceList)
+        public void Construct(IWallet wallet, ISDKService sdk, PriceListData priceList, BaseGate baseGate)
         {
+            _baseGate = baseGate;
             _priceList = priceList;
             _sdk = sdk;
             _wallet = wallet;
@@ -92,6 +95,8 @@ namespace Canvases
             Time.timeScale = 1;
             _particle.gameObject.SetActive(false);
             _canvas.enabled = false;
+
+            _baseGate.OnActive();
         }
     }
 }
