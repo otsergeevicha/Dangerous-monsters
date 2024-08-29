@@ -9,7 +9,7 @@ namespace Triggers
     {
         [SerializeField] private SphereCollider _collider;
 
-        public event Action<Vector3> OnAgroGate;
+        public event Action<Transform> OnAgroGate;
         public event Action NonAgroGate;
         public event Action OnAgro;
         public event Action NonAgro;
@@ -21,10 +21,10 @@ namespace Triggers
         {
             if (collision.gameObject.TryGetComponent(out BaseGate gate))
             {
-                OnAgroGate?.Invoke(new Vector3(gate.transform.position.x, 1, gate.transform.position.z));
+                OnAgroGate?.Invoke(gate.AgroPoint);
                 return;
             }
-            
+
             if (collision.gameObject.TryGetComponent(out Hero _)) 
                 OnAgro?.Invoke();
         }

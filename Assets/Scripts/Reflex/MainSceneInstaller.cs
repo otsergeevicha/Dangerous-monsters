@@ -122,7 +122,7 @@ namespace Reflex
             
             pool.Construct(_gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
                 _turretPlates, _bulletData, _turretData, _squareLootSpawner, _sdk, _workerData, _gemMiners, _storageGem, 
-                _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform.position, _effectModule);
+                _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform, _effectModule);
 
             _effectModule.Construct(pool.PoolEffects);
             
@@ -156,7 +156,7 @@ namespace Reflex
 #if !UNITY_EDITOR
             YandexGamesSdk.GameReady();
 #endif
-
+  
             if (_firstLaunch)
             {
                 _tutorialModule = new TutorialModule(_gameFactory, _storeTurretPlates, _storageAmmoPlate, 

@@ -15,8 +15,11 @@ namespace Enemies.AI
 
         private void Attack()
         {
-            if (Enemy.InZone()) 
+            if (Enemy.InZone())
+            {
+                //rotate
                 Enemy.EnemyAnimation.EnableAttack();
+            }
             else
                 Enemy.ResetBehaviorTree();
         }

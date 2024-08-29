@@ -8,7 +8,7 @@ namespace Enemies.AI
     {
         public override TaskStatus OnUpdate()
         {
-            float currentDistance = Vector3.Distance(Enemy.CashTransform.position, Enemy.GetCurrentTarget);
+            float currentDistance = Vector3.Distance(Enemy.CashTransform.position, Enemy.GetCurrentTarget.position);
 
             return currentDistance > Enemy.EnemyData.AttackDistance
                    || currentDistance > Enemy.EnemyData.AgroDistance

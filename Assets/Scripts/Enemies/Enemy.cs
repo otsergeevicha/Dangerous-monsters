@@ -74,7 +74,7 @@ namespace Enemies
         public bool IsAgro { get; private set; }
         public bool IsDie { get; private set; }
         public EnemyData EnemyData { get; private set; }
-        public Vector3 GetCurrentTarget { get; private set; }
+        public Transform GetCurrentTarget { get; private set; }
 
 
         protected abstract int GetId();
@@ -84,9 +84,11 @@ namespace Enemies
 
         public void Construct(EnemyData enemyData,
             EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, HealthBar healthBar, FinishPlate finishPlate,
-            Hero hero, Vector3 portal)
+            Hero hero, Transform portal)
         {
-
+            GetCurrentTarget = portal;
+            print(portal);
+            
             _enemyTriggers.SetRadius(enemyData.AgroDistance);
 
             CashTransform = transform;
@@ -128,7 +130,7 @@ namespace Enemies
                     IsIdleBoss = false;
                 
                 IsAgro = true;
-                GetCurrentTarget = _hero.transform.position;
+                GetCurrentTarget = _hero.transform;
                 ResetBehaviorTree();
             };
 
@@ -233,7 +235,7 @@ namespace Enemies
             _tree.enabled = true;
 
         public bool InZone() =>
-            Vector3.Distance(CashTransform.position, GetCurrentTarget) <=
+            Vector3.Distance(CashTransform.position, _hero.transform.position) <=
             EnemyData.AttackDistance;
 
         private void SpawnLoot() =>

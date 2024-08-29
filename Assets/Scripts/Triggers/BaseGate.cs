@@ -19,6 +19,8 @@ namespace Triggers
         [SerializeField] private BoxCollider _collider;
 
         [SerializeField] private Transform _rootMarker;
+
+        public Transform AgroPoint;
         
         private HeroAimRing _heroAimRing;
         private CameraFollow _cameraFollow;

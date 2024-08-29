@@ -34,10 +34,10 @@ namespace Infrastructure.Factory.Pools
         private readonly FinishPlate _finishPlate;
         private int[] _levelCounts;
         private Hero _hero;
-        private Vector3 _baseGate;
+        private Transform _baseGate;
 
         public PoolEnemies(IGameFactory factory, PoolData poolData, EnemyData enemyData,EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner,
-            FinishPlate finishPlate, Hero hero, Vector3 baseGate)
+            FinishPlate finishPlate, Hero hero, Transform baseGate)
         {
             _baseGate = baseGate;
             _hero = hero;

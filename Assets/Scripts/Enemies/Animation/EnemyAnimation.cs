@@ -35,8 +35,6 @@ namespace Enemies.Animation
             int mask2 = 1 << LayerMask.NameToLayer(LayerNameGate);
             
             _layerMask = mask1 | mask2;
-
-            //_layerMask = 1 << LayerMask.NameToLayer(LayerNameGate);
         }
 
         private void OnValidate() =>
@@ -48,6 +46,8 @@ namespace Enemies.Animation
 
             if (_hits[0] != null)
             {
+                print(_hits[0].gameObject.name);
+                
                 if (_hits[0].gameObject.TryGetComponent(out Enemy enemy)) 
                     enemy.TakeDamage();
 
@@ -73,8 +73,8 @@ namespace Enemies.Animation
         public void EnableRun()
         {
             _agent.isStopped = false;
-            _animator.SetBool(_enemyData.WalkHash, true);
             _animator.SetBool(_enemyData.AttackHash, false);
+            _animator.SetBool(_enemyData.WalkHash, true);
         }
 
         public void EnableAgro()

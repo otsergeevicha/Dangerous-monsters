@@ -63,6 +63,7 @@ namespace Modules
 
         private async UniTaskVoid Launch()
         {
+            //первым шагов сделать показ требование победы над боссом
             await TutorialStep(_storeTurretPlates[0]);
             await TutorialStep(_storageAmmoPlate);
             await TutorialStep(_turretPlate.GetCartridgeGun);

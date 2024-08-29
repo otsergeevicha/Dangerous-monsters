@@ -33,7 +33,7 @@ namespace Infrastructure.Factory.Pools
             EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate,
             TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner,
             ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
-            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Vector3 baseGate, EffectModule effectModule)
+            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Transform baseGate, EffectModule effectModule)
         {
             _enemyHealthModule = new EnemyHealthModule();
 

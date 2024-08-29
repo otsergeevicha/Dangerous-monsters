@@ -29,10 +29,10 @@ namespace Infrastructure.Factory.Pools
         private LootSpawner _lootSpawner;
         private EnemyHealthModule _enemyHealthModule;
         private Hero _hero;
-        private Vector3 _baseGate;
+        private Transform _baseGate;
 
         public PoolBosses(IGameFactory factory, EnemyData enemyData,
-            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint, FinishPlate finishPlate, Hero hero, Vector3 baseGate)
+            EnemyHealthModule enemyHealthModule, LootSpawner lootSpawner, Vector3 spawnPoint, FinishPlate finishPlate, Hero hero, Transform baseGate)
         {
             _baseGate = baseGate;
             _hero = hero;
