@@ -87,7 +87,6 @@ namespace Enemies
             Hero hero, Transform portal)
         {
             GetCurrentTarget = portal;
-            print(portal);
             
             _enemyTriggers.SetRadius(enemyData.AgroDistance);
 

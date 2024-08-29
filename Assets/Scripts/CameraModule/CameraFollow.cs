@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using Plugins.MonoCache;
 using UnityEngine;
 
@@ -16,13 +17,18 @@ namespace CameraModule
         
         private readonly float _shakeIntensity = 1.5f;
         private readonly float _shakeTime = .2f;
+        
         private readonly float _showMarkerTime = 3f;
         
+        private readonly float _showBossTime = 4f;
+        
         private CinemachineBasicMultiChannelPerlin _perlin;
+        
         private float _timer;
         private bool _isShake;
         private bool _isShowMarker;
         private bool _isZoom;
+        private bool _isShowBoss;
 
         public void Construct(Transform cameraRoot)
         {
@@ -35,6 +41,8 @@ namespace CameraModule
             _perlin = _zoomFollow.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); 
             StopShake();
         }
+
+        public event Action OnShowed;
 
         protected override void UpdateCached()
         {
@@ -52,6 +60,23 @@ namespace CameraModule
                 
                 if (_timer <= 0) 
                     StopShowMarker();
+            }
+
+            if (_isShowBoss)
+            {
+                _timer -= Time.deltaTime;
+
+                if (_timer <= 0)
+                {
+                    OnShowed?.Invoke();
+
+                    _isShowBoss = false;
+
+                    if (_isZoom)
+                        OnZoom();
+                    else
+                        OffZoom();
+                }
             }
         }
 
@@ -87,6 +112,17 @@ namespace CameraModule
             _isShake = false;
             _perlin.m_AmplitudeGain = 0f;
             _timer = 0;
+        }
+
+        public void ShowBoss(Transform bossTransform)
+        {
+            _timer = _showBossTime;
+            _isShowBoss = true;
+            _markerCamera.Follow = bossTransform;
+            
+            _zoomFollow.gameObject.SetActive(false);
+            _cameraFollow.gameObject.SetActive(false);
+            _markerCamera.gameObject.SetActive(true);
         }
 
         public void ShowMarker(Transform rootCamera)

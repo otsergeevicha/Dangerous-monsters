@@ -24,13 +24,16 @@ namespace Modules
         private readonly WindowModule _windowModule;
         private readonly EnemySpawner _enemySpawner;
         private readonly TurretPlate _turretPlate;
+        private readonly Hud _hud;
 
         public TutorialModule(IGameFactory factory,
             StoreTurretPlate[] storeTurretPlates, StorageAmmoPlate storageAmmoPlate,
             StoreAssistantPlate storeAssistantPlate, WorkerSpawner workerSpawner,
             StorageGem storageGem, TransitionPlate[] transitionPlates, UpgradePlayerBoard upgradePlayerBoard,
-            CameraFollow cameraFollow, WindowModule windowModule, EnemySpawner enemySpawner, TurretPlate turretPlate)
+            CameraFollow cameraFollow, WindowModule windowModule, EnemySpawner enemySpawner, TurretPlate turretPlate,
+            Hud hud)
         {
+            _hud = hud;
             _turretPlate = turretPlate;
             _enemySpawner = enemySpawner;
             _windowModule = windowModule;
@@ -55,15 +58,25 @@ namespace Modules
             _storeAssistantPlate.OnTutorialContacted -= WakeUpEnemies;
         }
 
-        private void OnStart() =>
-            Launch().Forget();
+        private void OnStart()
+        {
+            _hud.TutorialView.SetActive(true);
+            
+            
+            _cameraFollow.ShowBoss(_enemySpawner.ActiveBoss.transform);
+
+            _cameraFollow.OnShowed += () =>
+            {
+                _hud.TutorialView.SetActive(false);
+                Launch().Forget();
+            };
+        }
 
         private void WakeUpEnemies() => 
             _enemySpawner.OnStart();
 
         private async UniTaskVoid Launch()
         {
-            //первым шагов сделать показ требование победы над боссом
             await TutorialStep(_storeTurretPlates[0]);
             await TutorialStep(_storageAmmoPlate);
             await TutorialStep(_turretPlate.GetCartridgeGun);

@@ -10,6 +10,8 @@ namespace Spawners
 {
     public class EnemySpawner : MonoCache
     {
+        public Enemy ActiveBoss { get; private set; }
+        
         private Transform[] _squarePoints;
         private PoolEnemies _poolSimpleEnemies;
         private EnemySpawnerData _enemySpawnerData;
@@ -31,13 +33,12 @@ namespace Spawners
 
             if (!isFirstLaunch) 
                 OnStart();
+            
+            ActiveCurrentBoss();
         }
 
-        public void OnStart()
-        {
-            ActiveCurrentBoss();
+        public void OnStart() => 
             LaunchSpawn().Forget();
-        }
 
         protected override void OnDisabled()
         {
@@ -45,8 +46,14 @@ namespace Spawners
                 enemy.Died -= ReuseEnemy;
         }
 
-        public void ActiveCurrentBoss() => 
-            _poolBosses.Bosses[_poolData.CurrentLevelGame - 1].OnActive();
+        public void ActiveCurrentBoss()
+        {
+            if (ActiveBoss!=null) 
+                ActiveBoss = null;
+
+            ActiveBoss = _poolBosses.Bosses[_poolData.CurrentLevelGame - 1];
+            ActiveBoss.OnActive();
+        }
 
         private void ReuseEnemy()
         {

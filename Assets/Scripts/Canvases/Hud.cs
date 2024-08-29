@@ -22,6 +22,8 @@ namespace Canvases
 
         [SerializeField] private TMP_Text _monsterEscapeText;
 
+        public GameObject TutorialView;
+
         private const int MaxCountEscape = 30;
         private const string ColorText = "<#64b0ef>";
         
