@@ -19,9 +19,9 @@ MonoBehaviour:
   Speed: 3
   AgroDistance: 12
   AttackDistance: 2
-  ZeroEnemyHealth: 3
-  OneEnemyHealth: 4
-  TwoEnemyHealth: 5
+  ZeroEnemyHealth: 50
+  OneEnemyHealth: 50
+  TwoEnemyHealth: 50
   ThreeEnemyHealth: 6
   FourEnemyHealth: 7
   FiveEnemyHealth: 8
