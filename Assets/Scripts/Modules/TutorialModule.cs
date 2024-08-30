@@ -60,14 +60,13 @@ namespace Modules
 
         private void OnStart()
         {
-            _hud.TutorialView.SetActive(true);
-            
+            _hud.SetTutorialView(true);
             
             _cameraFollow.ShowBoss(_enemySpawner.ActiveBoss.transform);
 
             _cameraFollow.OnShowed += () =>
             {
-                _hud.TutorialView.SetActive(false);
+               _hud.SetTutorialView(false);
                 Launch().Forget();
             };
         }

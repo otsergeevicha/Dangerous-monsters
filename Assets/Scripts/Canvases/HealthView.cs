@@ -9,6 +9,7 @@ namespace Canvases
     {
         [SerializeField] private Canvas _canvas;
         [SerializeField] private Slider _sliderHP;
+        [SerializeField] private Animation _animation;
         
         private Coroutine _coroutine;
 
@@ -40,6 +41,14 @@ namespace Canvases
                 _sliderHP.value = Mathf.MoveTowards(_sliderHP.value, targetValue, Time.deltaTime * 1.5f);
                 yield return null;
             }
+        }
+
+        public void ActiveHeartAnimation(bool flag)
+        {
+            if (flag) 
+                _animation.Play();
+            else
+                _animation.Stop();
         }
 
         public void ChangeActive(bool flag) => 

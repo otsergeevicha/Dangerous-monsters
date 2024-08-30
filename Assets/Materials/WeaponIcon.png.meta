@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: eb588508fe2771f47ab16aae3999fb48
+guid: 5c12745d4e1ff4542bc1960d2ac35058
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hero
+      name: AuroPistol
       rect:
         serializedVersion: 2
-        x: 7
-        y: 17
-        width: 292
-        height: 399
+        x: 9
+        y: 343
+        width: 454
+        height: 343
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf7c9f4f1adb1bf4aad7af03457b8728
-      internalID: 767980435
+      spriteID: 728b34d70aa76cd4eb5889bc43a4ffee
+      internalID: 1389192473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss
+      name: Minigun
       rect:
         serializedVersion: 2
-        x: 300
-        y: 8
-        width: 440
-        height: 440
+        x: 493
+        y: 395
+        width: 477
+        height: 289
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c06c8d27852430b43b682deda361bb01
-      internalID: 1692256033
+      spriteID: 3ec48f3b732362946b0868e5ce794ce8
+      internalID: 1851008226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Uzi
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 9
+        width: 419
+        height: 379
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a92623f53845776498838c9ec91d8e90
+      internalID: -1257386600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rifle
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 67
+        width: 409
+        height: 268
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cb24d1a138d27e4a9ac9f0164b83373
+      internalID: 1883508691
       vertices: []
       indices: 
       edges: []
@@ -167,7 +209,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 20c824a43e6d0ee44a55e53738048ece
+    spriteID: b2a0fac0c34bc804c806cbf797e16655
     internalID: 0
     vertices: []
     indices: 
@@ -175,9 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Boss: 1692256033
-      BossHero_0: -187447550
-      Hero: 767980435
+      AuroPistol: 1389192473
+      Minigun: 1851008226
+      Rifle: 1883508691
+      Uzi: -1257386600
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -69,7 +69,7 @@ namespace Player
             _basketPlayer.Construct(pool, heroData.SizeBasket);
 
             _magazine = new MagazineBullets(maxCountBullets / 2, hud);
-            _weaponHolder.Construct(_magazine, cameraFollow, bulletData, effectModule);
+            _weaponHolder.Construct(_magazine, cameraFollow, bulletData, effectModule, _hud);
             _heroShooting.Construct(_heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
             _heroShooting.MergeEnemies(poolEnemies, poolBosses);
             
