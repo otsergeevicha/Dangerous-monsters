@@ -56,5 +56,8 @@ namespace SO
 
         [Range(30, 100)]
         public int MaxCountMoney = 30;
+        
+        [Range(1, 30)]
+        public int MaxCountCoinBlast = 10;
     }
 }

@@ -37,7 +37,7 @@ namespace Infrastructure.Factory.Pools
         {
             _enemyHealthModule = new EnemyHealthModule();
 
-            PoolEffects = new PoolEffects(factory, poolData.MaxCountBullets, poolData.MaxCountMissiles);
+            PoolEffects = new PoolEffects(factory, poolData.MaxCountBullets, poolData.MaxCountMissiles, poolData.MaxCountCoinBlast);
             
             PoolAmmoBox = new PoolAmmoBoxPlayer(factory, poolData.SizeAmmoBoxPlayer);
             PoolCargoAssistant =
@@ -46,7 +46,7 @@ namespace Infrastructure.Factory.Pools
             PoolMoney = new PoolMoney(factory, poolData.MaxCountMoney);
             PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, sdkService, hero);
 
-            _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData);
+            _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData, PoolEffects);
 
             PoolEnemies = new PoolEnemies(factory, poolData, enemyData, _enemyHealthModule,
                 _lootSpawner, finishPlate, hero, baseGate);

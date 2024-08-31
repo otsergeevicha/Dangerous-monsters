@@ -36,7 +36,7 @@ namespace Loots
         }
 
         private void SetNominal(int enemyId) => 
-            CurrentNominal = (enemyId + 1) * 3;
+            CurrentNominal = (enemyId + 1) * 5;
 
         private void ResetNominal() => 
             CurrentNominal = 1;

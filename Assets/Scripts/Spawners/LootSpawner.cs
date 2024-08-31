@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Effects;
 using Infrastructure.Factory.Pools;
 using Loots;
 using SO;
@@ -13,10 +14,12 @@ namespace Spawners
         private readonly PoolMoney _poolMoney;
         private readonly PoolData _poolData;
         private readonly float _offSet = 5f;
+        private readonly PoolEffects _poolEffects;
 
         public LootSpawner(PoolMoney poolMoney, PoolLootBoxes poolLootBoxes, Transform[] squareLootSpawner,
-            PoolData poolData)
+            PoolData poolData, PoolEffects poolEffects)
         {
+            _poolEffects = poolEffects;
             _poolData = poolData;
             _squareLootSpawner = squareLootSpawner;
             _poolLootBoxes = poolLootBoxes;
@@ -36,10 +39,32 @@ namespace Spawners
                 lootPoint.OnPickUp -= ReSpawnLoot;
         }
         
-        public void SpawnMoney(int enemyId, Vector3 position) =>
-            _poolMoney.Moneys.FirstOrDefault(money =>
-                    money.isActiveAndEnabled == false)
-                ?.OnActive(enemyId, position);
+        public void SpawnMoney(int enemyId, Vector3 position)
+        {
+            _poolEffects.Effects.FirstOrDefault(effect => 
+                effect.isActiveAndEnabled == false 
+                && effect.TryGetComponent(out CoinBlastVfx _))
+                ?.OnActive(position);
+
+            int moneyCount = 0;
+            
+            float radius = 0.8f;
+            int totalMoneys = 3;
+
+            foreach (Money money in _poolMoney.Moneys.Where(money => 
+                         money.isActiveAndEnabled == false))
+            {
+                float angle = (moneyCount * 360f / totalMoneys) * Mathf.Deg2Rad;
+                Vector3 offset = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+                Vector3 newPosition = position + offset;
+
+                money.OnActive(enemyId, newPosition);
+                moneyCount++;
+
+                if (moneyCount >= totalMoneys)
+                    break;
+            }
+        }
 
         private void ReSpawnLoot()
         {

@@ -43,5 +43,6 @@ namespace Services.Factory
         VfxHitRed CreateVfxHit();
         VfxMissileExplosion CreateVfxExplosion();
         TutorialMarker CreateTutorialMarker();
+        CoinBlastVfx CreateCoinBlastVfx();
     }
 }

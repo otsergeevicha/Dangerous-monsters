@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxCountWorkers: 4
   MaxCountCargoAssistant: 2
   CurrentLevelGame: 1
-  MaxHealthBaseGate: 10
+  MaxHealthBaseGate: 20
   MaxCountLootBoxes: 3
   PercentSpawnFreeLoot: 18
   OneLevelCountEnemy: 9

@@ -1,4 +1,5 @@
 ﻿using System;
+using Player;
 using Plugins.MonoCache;
 using SO;
 using Triggers;
@@ -46,10 +47,8 @@ namespace Enemies.Animation
 
             if (_hits[0] != null)
             {
-                print(_hits[0].gameObject.name);
-                
-                if (_hits[0].gameObject.TryGetComponent(out Enemy enemy)) 
-                    enemy.TakeDamage();
+                if (_hits[0].gameObject.TryGetComponent(out Hero _)) 
+                    _enemy.TakeDamage();
 
                 if (_hits[0].gameObject.TryGetComponent(out BaseGate gate)) 
                     gate.TakeDamage();
@@ -58,7 +57,7 @@ namespace Enemies.Animation
             }
         }
 
-        private void Death() =>
+        private void Death() => 
             _enemy.Death();
 
         private void EndAttack() =>
