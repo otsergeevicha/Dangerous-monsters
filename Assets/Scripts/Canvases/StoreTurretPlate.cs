@@ -52,10 +52,6 @@ namespace Canvases
             _poolTurrets = poolTurrets;
             ResetFill();
 
-            if (_turret == null)
-                _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>
-                    turret.isActiveAndEnabled == false);
-
             _wallet.MoneyChanged += SetConfigurationPrice;
         }
 
@@ -104,43 +100,46 @@ namespace Canvases
 
         private void FinishWaiting()
         {
-            if (_turret != null)
+            if (_purchased && _turret != null)
             {
-                if (_purchased)
+                if (_wallet.Check(_turret.GetPrice()))
                 {
-                    if (_wallet.Check(_turret.GetPrice()))
-                    {
-                        _wallet.SpendMoney(_turret.GetPrice());
-                        _turret.IncreasePrice(_priceListData.StepIncreasePriceTurret);
-                        _turret.Upgrade();
-                    }
-                    else
-                    {
-                        _sdk.AdReward(() =>
-                            _turret.Upgrade());
-                    }
-
-                    UpdatePriceView();
-                    SetConfigurationPrice(_wallet.ReadCurrentMoney());
-                    return;
+                    _wallet.SpendMoney(_turret.GetPrice());
+                    _turret.IncreasePrice(_priceListData.StepIncreasePriceTurret);
+                    _turret.Upgrade();
+                }
+                else
+                {
+                    _sdk.AdReward(() =>
+                        _turret.Upgrade());
                 }
 
-                if (!_turret.isActiveAndEnabled)
-                {
-                    _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
-                    _purchased = true;
-                    OnTutorialContacted?.Invoke();
-                    SetConfigurationPrice(_wallet.ReadCurrentMoney());
-                }
-
-                _iconAdd.gameObject.SetActive(false);
-                _iconUpgrade.gameObject.SetActive(true);
+                UpdatePriceView();
+                SetConfigurationPrice(_wallet.ReadCurrentMoney());
+                return;
             }
+
+            if (!_purchased)
+            {
+                _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>
+                    turret.isActiveAndEnabled == false);
+
+                if (_turret!=null) 
+                    _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
+                
+                _purchased = true;
+                OnTutorialContacted?.Invoke();
+                
+                SetConfigurationPrice(_wallet.ReadCurrentMoney());
+            }
+
+            _iconAdd.gameObject.SetActive(false);
+            _iconUpgrade.gameObject.SetActive(true);
         }
 
         private void SetConfigurationPrice(int moneyAmount)
         {
-            if (_turret.GetPrice() <= moneyAmount)
+            if (GetCurrentPrice() <= moneyAmount)
             {
                 _ad.SetActive(false);
                 _priceView.gameObject.SetActive(true);
@@ -153,8 +152,11 @@ namespace Canvases
             }
         }
 
+        private int GetCurrentPrice() => 
+            _purchased ? _turret.GetPrice() : _priceListData.StartPriceTurret;
+
         private void UpdatePriceView() =>
-            _priceView.text = _turret.GetPrice().ToString();
+            _priceView.text = GetCurrentPrice().ToString();
 
         private void ResetFill() =>
             _background.fillAmount = 1;

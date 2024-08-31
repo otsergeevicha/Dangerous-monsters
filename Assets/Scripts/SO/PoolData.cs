@@ -7,12 +7,7 @@ namespace SO
     {
         [Range(4, 10)]
         public int MaxCountWorkers = 4;
-            
-        [Range(1, 10)]
-        public int MaxCountLootBoxes = 5;
-        [Range(0, 100)]
-        public int PercentSpawnFreeLoot = 50;
-        
+
         public readonly int SizeAmmoBoxPlayer = 15;
 
         [Range(1, 4)]
@@ -23,6 +18,12 @@ namespace SO
         
         [Range(10, 100)] 
         public int MaxHealthBaseGate = 10;
+        
+        [Header("Loot boxes")]
+        [Range(1, 10)]
+        public int MaxCountLootBoxes = 5;
+        [Range(0, 100)]
+        public int PercentSpawnFreeLoot = 50;
 
         [Header("Amount enemies")]
         [Range(1, 10)] 

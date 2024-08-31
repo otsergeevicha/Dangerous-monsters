@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Pool
   m_EditorClassIdentifier: 
   MaxCountWorkers: 4
-  MaxCountLootBoxes: 5
-  PercentSpawnFreeLoot: 50
-  MaxCountCargoAssistant: 1
+  MaxCountCargoAssistant: 2
   CurrentLevelGame: 1
+  MaxHealthBaseGate: 10
+  MaxCountLootBoxes: 3
+  PercentSpawnFreeLoot: 18
   OneLevelCountEnemy: 9
   TwoLevelCountEnemy: 7
   ThreeLevelCountEnemy: 6
