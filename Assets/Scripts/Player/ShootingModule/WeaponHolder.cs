@@ -12,7 +12,7 @@ namespace Player.ShootingModule
     {
         [SerializeField] private Weapon[] _weapons;
         [SerializeField] private AudioSource _audioSource;
-        
+
         private Hud _hud;
 
         public void Construct(IMagazine magazine, CameraFollow cameraFollow,
@@ -49,8 +49,10 @@ namespace Player.ShootingModule
 
         private void ChangeGun(int currentGun)
         {
-            foreach (Weapon weapon in _weapons) 
+            foreach (Weapon weapon in _weapons)
+            {
                 weapon.gameObject.SetActive(false);
+            }
 
             _weapons[currentGun].gameObject.SetActive(true);
         }

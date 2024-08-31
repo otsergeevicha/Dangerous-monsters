@@ -565,6 +565,8 @@ MonoBehaviour:
   - {fileID: 4965620291790203364}
   - {fileID: 7109123218240637435}
   _audioSource: {fileID: 4388191268071834782}
+  _colorInActive: {r: 0, g: 0, b: 0, a: 0}
+  _colorOnActive: {r: 0.4156863, g: 0.6627451, b: 0.37254903, a: 0}
 --- !u!82 &4388191268071834782
 AudioSource:
   m_ObjectHideFlags: 0

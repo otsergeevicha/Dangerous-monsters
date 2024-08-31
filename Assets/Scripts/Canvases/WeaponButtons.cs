@@ -1,6 +1,7 @@
 ﻿using System;
 using Plugins.MonoCache;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Canvases
 {
@@ -16,31 +17,48 @@ namespace Canvases
     {
         [SerializeField] private Canvas _canvas;
 
+        [SerializeField] private Color[] _colors = new Color[2];
+        [SerializeField] private Image[] _icons = new Image[4];
+
         public event Action<int> OnChanged;
 
-        public void ChangeActive(bool flag) => 
+        public void ChangeActive(bool flag)
+        {
             _canvas.enabled = flag;
+
+            if (flag) 
+                ActiveGun((int)WeaponType.Uzi);
+        }
 
         public void ActiveGun(int currentGun)
         {
+            foreach (Image icon in _icons) 
+                icon.color = _colors[0];
+
             switch (currentGun)
             {
                 case (int)WeaponType.Uzi:
-                    OnChanged?.Invoke(currentGun);
+                    Notify(currentGun);
                     break;
                 case (int)WeaponType.AutoPistol:
-                    OnChanged?.Invoke(currentGun);
+                    Notify(currentGun);
                     break;
                 case (int)WeaponType.MiniGun:
-                    OnChanged?.Invoke(currentGun);
+                    Notify(currentGun);
                     break;
                 case (int)WeaponType.Rifle:
-                    OnChanged?.Invoke(currentGun);
+                    Notify(currentGun);
                     break;
                 default:
-                    OnChanged?.Invoke((int)WeaponType.Uzi);
+                    Notify(currentGun);
                     break;
             }
+        }
+
+        private void Notify(int currentGun)
+        {
+            _icons[currentGun].color = _colors[1];
+            OnChanged?.Invoke(currentGun);
         }
     }
 }
