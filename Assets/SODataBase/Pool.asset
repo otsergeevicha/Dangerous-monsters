@@ -28,6 +28,7 @@ MonoBehaviour:
   EightLevelCountEnemy: 6
   NineLevelCountEnemy: 7
   TenLevelCountEnemy: 9
-  MaxCountMissiles: 20
-  MaxCountBullets: 30
+  MaxCountMissiles: 15
+  MaxCountBullets: 10
   MaxCountMoney: 30
+  MaxCountCoinBlast: 10

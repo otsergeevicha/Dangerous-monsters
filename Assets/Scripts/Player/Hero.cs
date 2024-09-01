@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ammo;
 using CameraModule;
 using Canvases;
 using ContactZones;
@@ -37,7 +38,6 @@ namespace Player
         [SerializeField] private GameObject _healingEffect;
 
         private IWallet _wallet;
-        private IMagazine _magazine;
         
         private HeroHealthModule _heroHealthModule;
         private WindowModule _windowModule;
@@ -50,7 +50,7 @@ namespace Player
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
             List<Enemy> poolBosses, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing,
-            BulletData bulletData, EffectModule effectModule)
+            BulletData bulletData, EffectModule effectModule, IReadOnlyList<Bullet> poolBullets)
         {
             _hud = hud;
             _aimRing = aimRing;
@@ -67,9 +67,7 @@ namespace Player
             _heroAnimation.Construct(heroData);
             _heroMovement.Construct(input, heroData.Speed, _heroAnimation);
             _basketPlayer.Construct(pool, heroData.SizeBasket);
-
-            _magazine = new MagazineBullets(maxCountBullets / 2, hud);
-            _weaponHolder.Construct(_magazine, cameraFollow, bulletData, effectModule, _hud);
+            _weaponHolder.Construct(cameraFollow, bulletData, effectModule, _hud, poolBullets);
             _heroShooting.Construct(_heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
             _heroShooting.MergeEnemies(poolEnemies, poolBosses);
             
@@ -161,7 +159,7 @@ namespace Player
             _heroMovement.SetStateBattle(false, null);
             _heroShooting.MergeEnemies(_poolEnemies, _poolBosses);
             _heroAnimation.EnableIdle();
-            _magazine.UpdateLevel();
+            _weaponHolder.UpdateLevel();
         }
 
         public void OnMagnetEffect() =>

@@ -13,9 +13,9 @@ namespace Infrastructure.Factory.Pools
         public IReadOnlyList<Missile> Missiles =>
             _missiles.AsReadOnly();
         
-        public PoolMissiles(IGameFactory factory, int maxCountBullets, BulletData bulletData, EffectModule effectModule)
+        public PoolMissiles(IGameFactory factory, int maxCountMissiles, BulletData bulletData, EffectModule effectModule)
         {
-            for (int i = 0; i < maxCountBullets; i++)
+            for (int i = 0; i < maxCountMissiles; i++)
             {
                 Missile missile = factory.CreateMissile();
                 missile.Construct(bulletData, effectModule);

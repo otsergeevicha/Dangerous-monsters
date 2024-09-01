@@ -109,6 +109,10 @@ namespace Infrastructure.Factory
             _assetsProvider.InstantiateEntity(Constants.CoinBlastVfxPath)
                 .GetComponent<CoinBlastVfx>();
 
+        public Bullet CreateBullet() =>
+            _assetsProvider.InstantiateEntity(Constants.BulletPath)
+                .GetComponent<Bullet>();
+
         public StartScreen CreateStartScreen() =>
             _assetsProvider.InstantiateEntity(Constants.StartScreenPath)
                 .GetComponent<StartScreen>();

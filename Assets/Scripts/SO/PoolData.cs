@@ -48,11 +48,12 @@ namespace SO
         public int TenLevelCountEnemy = 9;
         
         [Header("Size pool missiles turret")]
-        [Range(15, 30)] 
-        public int MaxCountMissiles = 20;
+        [Range(10, 30)] 
+        public int MaxCountMissiles = 10;
 
-        [Range(20, 50)] 
-        public int MaxCountBullets = 20;
+        [Header("Size pool bullets")]
+        [Range(10, 50)] 
+        public int MaxCountBullets = 10;
 
         [Range(30, 100)]
         public int MaxCountMoney = 30;
