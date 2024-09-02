@@ -44,9 +44,10 @@ namespace Enemies
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(AudioSource))]
     public abstract class Enemy : MonoCache
     {
-        
+        [SerializeField] private AudioSource _deathSound;
         [SerializeField] private EnemyTriggers _enemyTriggers;
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private BehaviorTree _tree;
@@ -150,6 +151,7 @@ namespace Enemies
 
         public void Escape()
         {
+            _deathSound.Play();
             _healthBar.InActive();
             Died?.Invoke();
             IsDie = true;
@@ -163,6 +165,7 @@ namespace Enemies
             _enemyTriggers ??= ChildrenGet<EnemyTriggers>();
             _agent ??= Get<NavMeshAgent>();
             _tree ??= Get<BehaviorTree>();
+            _deathSound ??= Get<AudioSource>();
         }
 
         public virtual void OnActive()
@@ -203,6 +206,7 @@ namespace Enemies
                 IsDie = true;
 
                 EnemyAnimation.EnableDie();
+                _deathSound.Play();
             }
         }
 

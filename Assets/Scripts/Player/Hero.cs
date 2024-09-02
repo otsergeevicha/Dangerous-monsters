@@ -26,6 +26,7 @@ namespace Player
     [RequireComponent(typeof(LootTriggers))]
     public class Hero : MonoCache
     {
+        [SerializeField] private AudioSource _hitSound;
         [SerializeField] private HeroMovement _heroMovement;
         [SerializeField] private RootCamera _rootCamera;
         [SerializeField] private BasketPlayer _basketPlayer;
@@ -127,8 +128,11 @@ namespace Player
         public Transform GetCameraRoot() =>
             _rootCamera.transform;
 
-        public void ApplyDamage(int damage) => 
+        public void ApplyDamage(int damage)
+        {
+            _hitSound.Play();
             _heroHealthModule.ApplyDamage(damage);
+        }
 
         public void OnHealing()
         {
