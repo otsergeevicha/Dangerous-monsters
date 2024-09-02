@@ -53,6 +53,42 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Uzi"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7e23ae5-afe5-453c-a463-df9d32c0ff1e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AutoPistol"",
+                    ""type"": ""Button"",
+                    ""id"": ""5b8bc95e-14cd-477e-a2ba-d09afb583478"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rifle"",
+                    ""type"": ""Button"",
+                    ""id"": ""4377a5e2-60a3-4bca-8684-80be9ba8a1ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiniGun"",
+                    ""type"": ""Button"",
+                    ""id"": ""d659711c-0791-400c-a646-6b4fe791d40c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -231,6 +267,50 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Touch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77f3c220-c947-4022-acc8-621bb679b325"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Uzi"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f697d19f-300d-4487-8bb2-0be15da9c0c5"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""AutoPistol"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43fa24fc-54fb-4225-ba5b-d5d0c7945aa4"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rifle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a659c49b-fcca-42e3-a3ce-3272a79ea3a6"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniGun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +350,10 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_TouchPosition = m_Player.FindAction("TouchPosition", throwIfNotFound: true);
         m_Player_Touch = m_Player.FindAction("Touch", throwIfNotFound: true);
+        m_Player_Uzi = m_Player.FindAction("Uzi", throwIfNotFound: true);
+        m_Player_AutoPistol = m_Player.FindAction("AutoPistol", throwIfNotFound: true);
+        m_Player_Rifle = m_Player.FindAction("Rifle", throwIfNotFound: true);
+        m_Player_MiniGun = m_Player.FindAction("MiniGun", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -334,6 +418,10 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_TouchPosition;
     private readonly InputAction m_Player_Touch;
+    private readonly InputAction m_Player_Uzi;
+    private readonly InputAction m_Player_AutoPistol;
+    private readonly InputAction m_Player_Rifle;
+    private readonly InputAction m_Player_MiniGun;
     public struct PlayerActions
     {
         private @MapInputs m_Wrapper;
@@ -341,6 +429,10 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @TouchPosition => m_Wrapper.m_Player_TouchPosition;
         public InputAction @Touch => m_Wrapper.m_Player_Touch;
+        public InputAction @Uzi => m_Wrapper.m_Player_Uzi;
+        public InputAction @AutoPistol => m_Wrapper.m_Player_AutoPistol;
+        public InputAction @Rifle => m_Wrapper.m_Player_Rifle;
+        public InputAction @MiniGun => m_Wrapper.m_Player_MiniGun;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -359,6 +451,18 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
             @Touch.started += instance.OnTouch;
             @Touch.performed += instance.OnTouch;
             @Touch.canceled += instance.OnTouch;
+            @Uzi.started += instance.OnUzi;
+            @Uzi.performed += instance.OnUzi;
+            @Uzi.canceled += instance.OnUzi;
+            @AutoPistol.started += instance.OnAutoPistol;
+            @AutoPistol.performed += instance.OnAutoPistol;
+            @AutoPistol.canceled += instance.OnAutoPistol;
+            @Rifle.started += instance.OnRifle;
+            @Rifle.performed += instance.OnRifle;
+            @Rifle.canceled += instance.OnRifle;
+            @MiniGun.started += instance.OnMiniGun;
+            @MiniGun.performed += instance.OnMiniGun;
+            @MiniGun.canceled += instance.OnMiniGun;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -372,6 +476,18 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
             @Touch.started -= instance.OnTouch;
             @Touch.performed -= instance.OnTouch;
             @Touch.canceled -= instance.OnTouch;
+            @Uzi.started -= instance.OnUzi;
+            @Uzi.performed -= instance.OnUzi;
+            @Uzi.canceled -= instance.OnUzi;
+            @AutoPistol.started -= instance.OnAutoPistol;
+            @AutoPistol.performed -= instance.OnAutoPistol;
+            @AutoPistol.canceled -= instance.OnAutoPistol;
+            @Rifle.started -= instance.OnRifle;
+            @Rifle.performed -= instance.OnRifle;
+            @Rifle.canceled -= instance.OnRifle;
+            @MiniGun.started -= instance.OnMiniGun;
+            @MiniGun.performed -= instance.OnMiniGun;
+            @MiniGun.canceled -= instance.OnMiniGun;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -412,5 +528,9 @@ public partial class @MapInputs: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
         void OnTouch(InputAction.CallbackContext context);
+        void OnUzi(InputAction.CallbackContext context);
+        void OnAutoPistol(InputAction.CallbackContext context);
+        void OnRifle(InputAction.CallbackContext context);
+        void OnMiniGun(InputAction.CallbackContext context);
     }
 }

@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countBullet: 20
+  _indexWeapon: 1
   _spawnPointBullet: {fileID: 3755988359663440277}
+  _shotDelay: 0.35
+  _damageCorrection: 0
 --- !u!1 &55462617470160881
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +200,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countBullet: 15
+  _indexWeapon: 2
   _spawnPointBullet: {fileID: 5354967359313208712}
+  _shotDelay: 1
+  _damageCorrection: 5
 --- !u!1 &55819959312917833
 GameObject:
   m_ObjectHideFlags: 0
@@ -15572,7 +15578,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countBullet: 25
+  _indexWeapon: 0
   _spawnPointBullet: {fileID: 2207775081767746753}
+  _shotDelay: 0.15
+  _damageCorrection: 0
 --- !u!1 &3407022396981686882
 GameObject:
   m_ObjectHideFlags: 0
@@ -15850,7 +15859,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countBullet: 75
+  _indexWeapon: 3
   _spawnPointBullet: {fileID: 7268087627746203270}
+  _shotDelay: 0.25
+  _damageCorrection: 0
 --- !u!1 &4878138762959265337
 GameObject:
   m_ObjectHideFlags: 0

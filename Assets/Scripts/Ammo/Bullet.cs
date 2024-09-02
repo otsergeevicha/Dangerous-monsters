@@ -43,8 +43,10 @@ namespace Ammo
             }
         }
 
-        public void Shot(Vector3 currentPosition, Vector3 targetPosition)
+        public void Shoot(Vector3 currentPosition, Vector3 targetPosition, int damageCorrection)
         {
+            _currentDamage += damageCorrection;
+            
             transform.position = currentPosition;
             
             _targetPosition = targetPosition;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ammo;
 using CameraModule;
@@ -17,13 +18,15 @@ namespace Player.ShootingModule
 
         private Hud _hud;
 
+        public event Action OnChanged;
+        
         public void Construct(CameraFollow cameraFollow,
             BulletData bulletData, EffectModule effectModule, Hud hud, IReadOnlyList<Bullet> poolBullets)
         {
             _hud = hud;
             
             foreach (Weapon weapon in _weapons)
-                weapon.Construct(cameraFollow, _audioSource, bulletData, effectModule, hud, poolBullets);
+                weapon.Construct(cameraFollow, _audioSource, hud, poolBullets);
 
             _hud.WeaponButtons.OnChanged += ChangeGun;
             
@@ -51,10 +54,15 @@ namespace Player.ShootingModule
 
         private void ChangeGun(int currentGun)
         {
-            foreach (Weapon weapon in _weapons) 
+            foreach (Weapon weapon in _weapons)
+            {
                 weapon.gameObject.SetActive(false);
+                weapon.OffShoot();
+            }
 
             _weapons[currentGun].gameObject.SetActive(true);
+
+            OnChanged?.Invoke();
         }
 
         public void UpdateLevel()

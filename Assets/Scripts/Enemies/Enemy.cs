@@ -180,7 +180,7 @@ namespace Enemies
             if (_bossLevels.Contains((BossId)GetId())) 
                 IsIdleBoss = true;
             
-            IsDie = false;
+            IsDie = true;
             gameObject.SetActive(false);
         }
 

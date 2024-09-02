@@ -48,6 +48,7 @@ namespace Canvases
             UpdateText();
             _monstersPortal.OnEscaped += MonsterEscaped;
             WeaponButtons.ChangeActive(false);
+            WeaponButtons.Construct(inputService);
         }
 
         protected override void OnDisabled() =>

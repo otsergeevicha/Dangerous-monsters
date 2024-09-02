@@ -12,9 +12,9 @@ namespace Player
     public class HeroShooting : MonoCache
     {
         [SerializeField] private Animator _animator;
-        
+
         private readonly float _waitingDownGun = 2f;
-        
+
         private WeaponHolder _weaponHolder;
         private HeroMovement _heroMovement;
 
@@ -25,7 +25,7 @@ namespace Player
         private bool _haveTarget;
         private Enemy _currentEnemy;
         private int _requestTarget;
-        
+
         private float _timerDownGun;
 
         public void Construct(HeroMovement heroMovement,
@@ -36,6 +36,12 @@ namespace Player
 
             _heroMovement = heroMovement;
             _weaponHolder = weaponHolder;
+
+            _weaponHolder.OnChanged += () =>
+            {
+                _currentEnemy = null;
+                _requestTarget = 0;
+            };
         }
 
         protected override void UpdateCached()
@@ -49,13 +55,13 @@ namespace Player
             {
                 _timerDownGun = _waitingDownGun;
 
-                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f,  1f));
+                _animator.SetLayerWeight(1, Mathf.Lerp(_animator.GetLayerWeight(1), 1f, 1f));
                 _heroMovement.SetStateBattle(true, _currentEnemy.transform);
                 _enemyRing.OnActive(_currentEnemy);
-                
+
                 Shoot(_currentEnemy);
             }
-            
+
             if (!_haveTarget)
             {
                 _timerDownGun -= Time.deltaTime;
@@ -68,6 +74,12 @@ namespace Player
                 OffShoot();
                 _enemyRing.InActive();
             }
+        }
+
+        protected override void OnDisabled()
+        {
+            if (_currentEnemy != null)
+                _currentEnemy.Died -= UpdateTarget;
         }
 
         public void SetOnBase(bool heroOnBase)
@@ -84,16 +96,16 @@ namespace Player
         public void MergeEnemies(List<Enemy> poolSimpleEnemies, List<Enemy> poolBosses)
         {
             _enemies = new List<Enemy>();
-            
+
             _enemies.AddRange(poolSimpleEnemies);
             _enemies.AddRange(poolBosses);
-            
+
             OffShoot();
         }
 
-        public void Upgrade(float newRadiusDetection) => 
+        public void Upgrade(float newRadiusDetection) =>
             _heroDataRadiusDetection = newRadiusDetection;
-        
+
         private void FindNearestEnemy()
         {
             float minDistance = _heroDataRadiusDetection;
@@ -105,29 +117,45 @@ namespace Player
 
                 if (distance <= _heroDataRadiusDetection && distance < minDistance && enemy.IsDie == false)
                 {
+                    if (_currentEnemy != null)
+                        _currentEnemy.Died -= UpdateTarget;
+
                     _currentEnemy = enemy;
                     _requestTarget++;
 
-                    if (_currentEnemy != enemy)
-                    {
+                    if (_currentEnemy != enemy) 
                         _requestTarget = 1;
-                    }
-                    
+
                     _haveTarget = true;
+                    _currentEnemy.Died += UpdateTarget;
+
                     return;
                 }
-                
+
+                UpdateTarget();
                 _haveTarget = false;
             }
         }
 
+        private void UpdateTarget()
+        {
+            _currentEnemy = null;
+            _requestTarget = 0;
+            _enemyRing.InActive();
+        }
+
         private void Shoot(Enemy enemy)
         {
-            if (!_heroOnBase) 
+            if (!_heroOnBase)
                 _weaponHolder.GetActiveGun().Shoot(enemy);
         }
 
-        private void OffShoot() => 
+        private void OffShoot()
+        {
+            if (_currentEnemy != null)
+                _currentEnemy.Died -= UpdateTarget;
+
             _weaponHolder.GetActiveGun()?.OffShoot();
+        }
     }
 }

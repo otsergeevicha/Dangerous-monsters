@@ -10,19 +10,25 @@ namespace Player.ShootingModule
         private readonly MagazineReload _magazineReload;
         private readonly int _maxSize;
         private readonly Hud _hud;
+        private readonly int _indexWeapon;
         private int _size;
 
-        public MagazineBullets(int size, Hud hud)
+        public MagazineBullets(int maxCountBullets, Hud hud, int indexWeapon)
         {
+            _indexWeapon = indexWeapon;
             _hud = hud;
             hud.WeaponReload(false);
-            _size = size;
-            _maxSize = size;
+            _size = maxCountBullets;
+            _maxSize = maxCountBullets;
             _magazineReload = new MagazineReload(this);
+            _hud.WeaponButtons.UpdateViewBullets(_indexWeapon, _size, _maxSize);
         }
 
-        public void Spend() =>
+        public void Spend()
+        {
             _size--;
+            _hud.WeaponButtons.UpdateViewBullets(_indexWeapon, _size, _maxSize);
+        }
 
         public bool Check()
         {
@@ -44,7 +50,11 @@ namespace Player.ShootingModule
             {
                 _magazineReload.StopReplenishment();
                 fulled?.Invoke();
+                _hud.WeaponButtons.UpdateViewBullets(_indexWeapon, _size, _maxSize);
+                return;
             }
+            
+            _hud.WeaponButtons.UpdateViewBullets(_indexWeapon, _size, _maxSize);
         }
 
         public void Shortage()
@@ -59,7 +69,10 @@ namespace Player.ShootingModule
             }
         }
 
-        public void UpdateLevel() =>
+        public void UpdateLevel()
+        {
             _size = _maxSize;
+            _hud.WeaponButtons.UpdateViewBullets(_indexWeapon, _size, _maxSize);
+        }
     }
 }

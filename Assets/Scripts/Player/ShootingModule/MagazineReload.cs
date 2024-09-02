@@ -40,7 +40,10 @@ namespace Player.ShootingModule
             }
         }
 
-        public void StopReplenishment() =>
+        public void StopReplenishment()
+        {
             _tokenReplenishment.Cancel();
+            _isReplenishment = false;
+        }
     }
 }

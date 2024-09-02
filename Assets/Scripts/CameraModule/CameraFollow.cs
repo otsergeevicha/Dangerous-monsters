@@ -85,6 +85,12 @@ namespace CameraModule
 
         public void Shake()
         {
+            if (_isShake)
+            {
+                _timer = Mathf.Max(_timer, _shakeTime);
+                return;
+            }
+            
             _isShake = true;
             _perlin.m_AmplitudeGain = _shakeIntensity;
             _timer = _shakeTime;
