@@ -149,7 +149,7 @@ namespace Reflex
             
             _baseGate.Construct(heroAimRing, cameraFollow, hero, _poolData);
             
-            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView);
+            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView, _storeTurretPlates, _cartridgeGuns);
 
             _finishPlate.InActive();
             

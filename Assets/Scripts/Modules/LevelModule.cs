@@ -5,6 +5,7 @@ using Player;
 using SO;
 using Spawners;
 using Triggers;
+using Turrets.Children;
 
 namespace Modules
 {
@@ -21,12 +22,17 @@ namespace Modules
         private readonly PoolData _poolData;
         private readonly EnemySpawner _enemySpawner;
         private readonly BaseView _baseView;
+        private readonly StoreTurretPlate[] _storeTurretPlates;
+        private readonly CartridgeGun[] _cartridgeGuns;
 
         public LevelModule(PoolData poolData, FinishPlate finishPlate, WindowModule windowModule, Pool pool, Hero hero,
             WorkerSpawner workerSpawner,
             SectionPlate[] sectionPlates, TransitionPlate[] transitionPlates, BaseGate baseGate,
-            EnemySpawner enemySpawner, BaseView baseView)
+            EnemySpawner enemySpawner, BaseView baseView, StoreTurretPlate[] storeTurretPlates,
+            CartridgeGun[] cartridgeGuns)
         {
+            _cartridgeGuns = cartridgeGuns;
+            _storeTurretPlates = storeTurretPlates;
             _baseView = baseView;
             _enemySpawner = enemySpawner;
             _poolData = poolData;
@@ -51,6 +57,13 @@ namespace Modules
             _poolData.CurrentLevelGame++;
 
             _pool.UpdateLevel();
+
+            foreach (StoreTurretPlate plate in _storeTurretPlates) 
+                plate.UpdateLevel();
+
+            foreach (CartridgeGun cartridge in _cartridgeGuns) 
+                cartridge.UpdateLevel();
+
             _baseGate.UpdateLevel();
             _hero.UpdateLevel();
             _enemySpawner.ActiveCurrentBoss();

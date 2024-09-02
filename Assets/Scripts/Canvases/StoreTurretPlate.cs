@@ -98,6 +98,12 @@ namespace Canvases
         public Vector3 GetPositionMarker() =>
             _markerPosition.transform.position;
 
+        public void UpdateLevel()
+        {
+            _purchased = false;
+            SetConfigurationPrice(_wallet.ReadCurrentMoney());
+        }
+
         private void FinishWaiting()
         {
             if (_purchased && _turret != null)

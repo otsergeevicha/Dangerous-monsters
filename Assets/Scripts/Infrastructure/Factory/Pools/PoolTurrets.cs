@@ -29,8 +29,10 @@ namespace Infrastructure.Factory.Pools
 
         public void AdaptingLevel()
         {
-            foreach (Turret turret in _turrets) 
+            foreach (Turret turret in _turrets)
+            {
                 turret.InActive();
+            }
         }
     }
 }

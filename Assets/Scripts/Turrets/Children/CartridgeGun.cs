@@ -66,6 +66,14 @@ namespace Turrets.Children
         public Vector3 GetPositionMarker() => 
             _markerPosition.transform.position;
 
+        public void UpdateLevel()
+        {
+            foreach (CartridgeBox box in _cartridgeBoxes) 
+                box.InActive();
+
+            _currentAmountBoxes = 0;
+        }
+        
         private async UniTaskVoid Replenishment(IBasket basket)
         {
             for (int i = 0; i < _maxAmount; i++)
