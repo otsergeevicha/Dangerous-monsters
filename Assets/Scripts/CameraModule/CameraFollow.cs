@@ -8,22 +8,22 @@ namespace CameraModule
     public class CameraFollow : MonoCache
     {
         [SerializeField] private AudioListener _audioListener;
-        
+
         [SerializeField] private CinemachineVirtualCamera _cameraFollow;
         [SerializeField] private CinemachineVirtualCamera _zoomFollow;
         [SerializeField] private CinemachineVirtualCamera _markerCamera;
-        
+
         [SerializeField] private Camera _camera;
-        
+
         private readonly float _shakeIntensity = 1.5f;
         private readonly float _shakeTime = .2f;
-        
+
         private readonly float _showMarkerTime = 3f;
-        
+
         private readonly float _showBossTime = 4f;
-        
+
         private CinemachineBasicMultiChannelPerlin _perlin;
-        
+
         private float _timer;
         private bool _isShake;
         private bool _isShowMarker;
@@ -34,11 +34,11 @@ namespace CameraModule
         {
             _cameraFollow.Follow = cameraRoot;
             _zoomFollow.Follow = cameraRoot;
-            
+
             _cameraFollow.LookAt = cameraRoot;
             _zoomFollow.LookAt = cameraRoot;
 
-            _perlin = _zoomFollow.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); 
+            _perlin = _zoomFollow.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             StopShake();
         }
 
@@ -50,15 +50,15 @@ namespace CameraModule
             {
                 _timer -= Time.deltaTime;
 
-                if (_timer <= 0) 
+                if (_timer <= 0)
                     StopShake();
             }
 
             if (_isShowMarker)
             {
                 _timer -= Time.deltaTime;
-                
-                if (_timer <= 0) 
+
+                if (_timer <= 0)
                     StopShowMarker();
             }
 
@@ -85,12 +85,9 @@ namespace CameraModule
 
         public void Shake()
         {
-            if (_isShake)
-            {
-                _timer = Mathf.Max(_timer, _shakeTime);
-                return;
-            }
-            
+            if (_isShake) 
+                StopShake();
+
             _isShake = true;
             _perlin.m_AmplitudeGain = _shakeIntensity;
             _timer = _shakeTime;
@@ -105,6 +102,7 @@ namespace CameraModule
 
         public void OffZoom()
         {
+            _isShake = false;
             _isZoom = false;
             _cameraFollow.gameObject.SetActive(true);
             _zoomFollow.gameObject.SetActive(false);
@@ -125,7 +123,7 @@ namespace CameraModule
             _timer = _showBossTime;
             _isShowBoss = true;
             _markerCamera.Follow = bossTransform;
-            
+
             _zoomFollow.gameObject.SetActive(false);
             _cameraFollow.gameObject.SetActive(false);
             _markerCamera.gameObject.SetActive(true);
@@ -136,7 +134,7 @@ namespace CameraModule
             _timer = _showMarkerTime;
             _isShowMarker = true;
             _markerCamera.Follow = rootCamera;
-            
+
             _zoomFollow.gameObject.SetActive(false);
             _cameraFollow.gameObject.SetActive(false);
             _markerCamera.gameObject.SetActive(true);
