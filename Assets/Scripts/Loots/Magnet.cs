@@ -11,10 +11,8 @@ namespace Loots
         public void Construct(Hero hero) => 
             _hero = hero;
 
-        public void OnActive()
-        {
+        public void OnActive() => 
             gameObject.SetActive(true);
-        }
 
         public void Open(Action opened)
         {

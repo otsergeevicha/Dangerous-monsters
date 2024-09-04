@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameAnalyticsSDK;
+using UnityEngine;
 
 namespace Canvases.UpgradePlayer
 {
@@ -7,9 +8,14 @@ namespace Canvases.UpgradePlayer
         protected override void UpdatePrice() => 
             CurrentPrice = PriceList.PriceHeroFiringRange;
 
-        protected override void UpdateValue() => 
+        protected override void UpdateValue()
+        {
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"UpgradePlayer:RadiusDetection:{HeroData.RadiusDetection}");
+#endif
             CurrentValue = (int)HeroData.RadiusDetection;
-        
+        }
+
         protected override void Upgrade() =>
             HeroData.RadiusDetection++;
 

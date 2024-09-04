@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Assistant;
+using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player;
 using Plugins.MonoCache;
+using SO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,11 +32,13 @@ namespace Canvases
         private bool _isWaiting;
         private float _currentFillAmount = 1f;
         private PoolCargoAssistant _poolAssistant;
-        
+        private PoolData _poolData;
+
         public event Action OnTutorialContacted;
 
-        public void Construct(int maxAssistant, PoolCargoAssistant poolAssistant)
+        public void Construct(int maxAssistant, PoolCargoAssistant poolAssistant, PoolData poolData)
         {
+            _poolData = poolData;
             _poolAssistant = poolAssistant;
             _maxAssistant = maxAssistant;
 
@@ -76,6 +80,10 @@ namespace Canvases
                     FinishWaiting();
                     _isWaiting = false;
                     _currentFillAmount = 1f;
+                    
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Canvases:Buy_Assistant:On_level {_poolData.CurrentLevelGame}");
+#endif
                 }
             }
         }

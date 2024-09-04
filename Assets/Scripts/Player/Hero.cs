@@ -4,6 +4,7 @@ using CameraModule;
 using Canvases;
 using ContactZones;
 using Enemies;
+using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Markers;
 using Modules;
@@ -47,12 +48,14 @@ namespace Player
         private HeroData _heroData;
         private HeroAimRing _aimRing;
         private Hud _hud;
+        private PoolData _poolData;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
             int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
             List<Enemy> poolBosses, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing,
-            BulletData bulletData, EffectModule effectModule, IReadOnlyList<Bullet> poolBullets)
+            BulletData bulletData, EffectModule effectModule, IReadOnlyList<Bullet> poolBullets, PoolData poolData)
         {
+            _poolData = poolData;
             _hud = hud;
             _aimRing = aimRing;
             _heroData = heroData;
@@ -180,8 +183,13 @@ namespace Player
         public void BasketClear() => 
             _basketPlayer.Clear();
 
-        private void OnDied() => 
+        private void OnDied()
+        {
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Player:Died:On level - {_poolData.CurrentLevelGame}");
+#endif
             _windowModule.HeroDied();
+        }
 
         private void OnStorageEntered() =>
             _basketPlayer.Replenishment().Forget();

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Player;
 using Plugins.MonoCache;
+using SO;
 using Spawners;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,10 +29,12 @@ namespace Canvases
         private PoolWorkers _workers;
         private Vector3 _workplace;
         private WorkerSpawner _workerSpawner;
+        private PoolData _poolData;
 
         public void Construct(PoolWorkers workers, Vector3 workplace,
-            WorkerSpawner workerSpawner)
+            WorkerSpawner workerSpawner, PoolData poolData)
         {
+            _poolData = poolData;
             _workerSpawner = workerSpawner;
             _workplace = workplace;
             _workers = workers;
@@ -120,6 +124,10 @@ namespace Canvases
 
         private void FinishWaiting()
         {
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Canvases:Buy_Worker:On_level {_poolData.CurrentLevelGame}");
+#endif
+            
             _currentWorker.SetMannequin(true);
             _currentWorker.SendWorkplace(_workplace);
             Interactable(false);

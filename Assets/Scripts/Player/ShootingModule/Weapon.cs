@@ -66,7 +66,7 @@ namespace Player.ShootingModule
                     new Vector3(_currentTarget.transform.position.x, 1f, _currentTarget.transform.position.z),
                     _damageCorrection);
                 
-                _camera.Shake();
+               // _camera.Shake();
 
                 _magazine.Spend();
                 _lastShotTime = Time.time;

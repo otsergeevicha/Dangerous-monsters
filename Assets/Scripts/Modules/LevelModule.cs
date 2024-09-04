@@ -1,5 +1,6 @@
 ﻿using Canvases;
 using ContactZones;
+using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Player;
 using SO;
@@ -55,6 +56,10 @@ namespace Modules
         {
             _windowModule.WinScreen();
             _poolData.CurrentLevelGame++;
+
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Level:Up:{_poolData.CurrentLevelGame}");
+#endif
 
             _pool.UpdateLevel();
 

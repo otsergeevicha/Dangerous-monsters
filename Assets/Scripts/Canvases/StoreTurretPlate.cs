@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player;
@@ -40,12 +41,14 @@ namespace Canvases
         private IWallet _wallet;
         private PriceListData _priceListData;
         private ISDKService _sdk;
+        private PoolData _poolData;
 
         public event Action OnTutorialContacted;
 
         public void Construct(PoolTurrets poolTurrets, IWallet wallet, PriceListData priceListData,
-            ISDKService sdk)
+            ISDKService sdk, PoolData poolData)
         {
+            _poolData = poolData;
             _sdk = sdk;
             _priceListData = priceListData;
             _wallet = wallet;
@@ -130,13 +133,17 @@ namespace Canvases
                 _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>
                     turret.isActiveAndEnabled == false);
 
-                if (_turret!=null) 
+                if (_turret != null)
                     _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
-                
+
                 _purchased = true;
                 OnTutorialContacted?.Invoke();
-                
+
                 SetConfigurationPrice(_wallet.ReadCurrentMoney());
+                
+#if !UNITY_EDITOR
+                GameAnalytics.NewDesignEvent($"Canvases:Buy_Turret:On_level {_poolData.CurrentLevelGame}");
+#endif
             }
 
             _iconAdd.gameObject.SetActive(false);
@@ -158,7 +165,7 @@ namespace Canvases
             }
         }
 
-        private int GetCurrentPrice() => 
+        private int GetCurrentPrice() =>
             _purchased ? _turret.GetPrice() : _priceListData.StartPriceTurret;
 
         private void UpdatePriceView() =>

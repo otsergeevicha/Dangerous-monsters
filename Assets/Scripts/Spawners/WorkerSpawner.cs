@@ -3,6 +3,7 @@ using Canvases;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Plugins.MonoCache;
+using SO;
 using UnityEngine;
 
 namespace Spawners
@@ -15,10 +16,10 @@ namespace Spawners
 
         public event Action OnTutorialContacted;
         
-        public void Construct(PoolWorkers pool, Vector3 workplace)
+        public void Construct(PoolWorkers pool, Vector3 workplace, PoolData poolData)
         {
             foreach (WorkerSpawnPoint spawnPoint in _workerSpawnPoints) 
-                spawnPoint.Construct(pool, workplace, this);
+                spawnPoint.Construct(pool, workplace, this, poolData);
         }
 
         public void UpdateLevel()

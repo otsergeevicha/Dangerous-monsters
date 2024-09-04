@@ -58,10 +58,10 @@ namespace Modules
             _winScreen.Construct(_wallet, sdk);
             _loseScreen.Construct(wallet, sdk, priceList, baseGate);
             
-            storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant);
+            storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant, poolData);
 
             for (int i = 0; i < storeTurretPlates.Length; i++)
-                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, sdk);
+                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, sdk, poolData);
 
             upgradeHeroScreen.Construct(_input, heroData, priceList, _wallet, hero, sdk);
             
