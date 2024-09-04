@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Player;
 using Plugins.MonoCache;
@@ -124,10 +123,6 @@ namespace Canvases
 
         private void FinishWaiting()
         {
-#if !UNITY_EDITOR
-            GameAnalytics.NewDesignEvent($"Canvases:Buy_Worker:On_level {_poolData.CurrentLevelGame}");
-#endif
-            
             _currentWorker.SetMannequin(true);
             _currentWorker.SendWorkplace(_workplace);
             Interactable(false);

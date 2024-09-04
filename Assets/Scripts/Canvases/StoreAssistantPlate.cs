@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Assistant;
-using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player;
@@ -80,10 +79,6 @@ namespace Canvases
                     FinishWaiting();
                     _isWaiting = false;
                     _currentFillAmount = 1f;
-                    
-#if !UNITY_EDITOR
-            GameAnalytics.NewDesignEvent($"Canvases:Buy_Assistant:On_level {_poolData.CurrentLevelGame}");
-#endif
                 }
             }
         }

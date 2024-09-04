@@ -1,19 +1,12 @@
-﻿using GameAnalyticsSDK;
-
-namespace Canvases.UpgradePlayer
+﻿namespace Canvases.UpgradePlayer
 {
     public class HeroHealthLot : HeroLot
     {
         protected override void UpdatePrice() => 
             CurrentPrice = PriceList.PriceHeroHealth;
 
-        protected override void UpdateValue()
-        {
-#if !UNITY_EDITOR
-            GameAnalytics.NewDesignEvent($"UpgradePlayer:MaxHealth:{HeroData.MaxHealth}");
-#endif
+        protected override void UpdateValue() => 
             CurrentValue = HeroData.MaxHealth;
-        }
 
         protected override void Upgrade() => 
             HeroData.MaxHealth += PriceList.StepIncreaseHealthHero;

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Agava.YandexGames;
-using GameAnalyticsSDK;
 using Plugins.MonoCache;
 using Reflex.Core;
 using UnityEngine;
@@ -12,7 +11,6 @@ namespace Reflex
     {
         private IEnumerator Start()
         {
-            
 #if UNITY_EDITOR
             PlayerPrefs.DeleteAll();
             
@@ -20,8 +18,6 @@ namespace Reflex
             LaunchGame();
             yield break;
 #endif
-            GameAnalytics.Initialize();
-
             yield return YandexGamesSdk.Initialize(LaunchGame);
             Debug.Log("SDK initialized");
             

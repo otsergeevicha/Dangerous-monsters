@@ -1,5 +1,4 @@
 ﻿using System;
-using GameAnalyticsSDK;
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
@@ -73,10 +72,6 @@ namespace Canvases.UpgradePlayer
 
         public void OnActive()
         {
-#if !UNITY_EDITOR
-            GameAnalytics.NewDesignEvent($"UpgradePlayer:OnActive_Canvas");
-#endif
-
             Time.timeScale = 0;
             _particle.gameObject.SetActive(true);
             _canvas.enabled = true;

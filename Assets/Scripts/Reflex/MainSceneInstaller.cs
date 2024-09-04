@@ -1,5 +1,4 @@
 ﻿using System;
-using Agava.YandexGames;
 using CameraModule;
 using Canvases;
 using Canvases.UpgradePlayer;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player;
@@ -140,10 +139,6 @@ namespace Canvases
                 OnTutorialContacted?.Invoke();
 
                 SetConfigurationPrice(_wallet.ReadCurrentMoney());
-                
-#if !UNITY_EDITOR
-                GameAnalytics.NewDesignEvent($"Canvases:Buy_Turret:On_level {_poolData.CurrentLevelGame}");
-#endif
             }
 
             _iconAdd.gameObject.SetActive(false);

@@ -4,7 +4,6 @@ using CameraModule;
 using Canvases;
 using ContactZones;
 using Enemies;
-using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Markers;
 using Modules;
@@ -183,13 +182,8 @@ namespace Player
         public void BasketClear() => 
             _basketPlayer.Clear();
 
-        private void OnDied()
-        {
-#if !UNITY_EDITOR
-            GameAnalytics.NewDesignEvent($"Player:Died:On level - {_poolData.CurrentLevelGame}");
-#endif
+        private void OnDied() => 
             _windowModule.HeroDied();
-        }
 
         private void OnStorageEntered() =>
             _basketPlayer.Replenishment().Forget();
