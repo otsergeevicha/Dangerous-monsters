@@ -99,8 +99,11 @@ namespace Canvases
         public void ResetLogic() => 
             _endSpawn = false;
 
-        public void OnActiveSpawner() => 
-            _endSpawn = true;
+        public void OnActiveSpawner()
+        {
+            _endSpawn = false;
+            Spawn();
+        }
 
         private void Spawn()
         {

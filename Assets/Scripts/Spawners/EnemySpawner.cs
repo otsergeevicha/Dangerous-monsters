@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Enemies;
 using Infrastructure.Factory.Pools;
@@ -11,16 +12,20 @@ namespace Spawners
     public class EnemySpawner : MonoCache
     {
         public Enemy ActiveBoss { get; private set; }
-        
+
+        private CancellationTokenSource _token = new ();
+
+
         private Transform[] _squarePoints;
         private PoolEnemies _poolSimpleEnemies;
         private EnemySpawnerData _enemySpawnerData;
-        
+
         private bool _isWork = true;
         private PoolData _poolData;
         private PoolBosses _poolBosses;
 
-        public void Construct(Transform[] squareEnemySpawner, PoolEnemies poolSimpleEnemies, EnemySpawnerData enemySpawnerData, PoolBosses poolBosses, PoolData poolData, bool isFirstLaunch)
+        public void Construct(Transform[] squareEnemySpawner, PoolEnemies poolSimpleEnemies,
+            EnemySpawnerData enemySpawnerData, PoolBosses poolBosses, PoolData poolData, bool isFirstLaunch)
         {
             _poolBosses = poolBosses;
             _poolData = poolData;
@@ -28,31 +33,47 @@ namespace Spawners
             _poolSimpleEnemies = poolSimpleEnemies;
             _squarePoints = squareEnemySpawner;
 
-            foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
+            foreach (Enemy enemy in _poolSimpleEnemies.Enemies)
                 enemy.Died += ReuseEnemy;
 
-            if (!isFirstLaunch) 
+            if (!isFirstLaunch)
                 OnStart();
-            
+
             ActiveCurrentBoss();
         }
 
-        public void OnStart() => 
-            LaunchSpawn().Forget();
+        public void OnStart() =>
+            LaunchSpawn(_token.Token).Forget();
 
         protected override void OnDisabled()
         {
-            foreach (Enemy enemy in _poolSimpleEnemies.Enemies) 
+            foreach (Enemy enemy in _poolSimpleEnemies.Enemies)
                 enemy.Died -= ReuseEnemy;
         }
 
         public void ActiveCurrentBoss()
         {
-            if (ActiveBoss!=null) 
+            if (ActiveBoss != null)
                 ActiveBoss = null;
 
             ActiveBoss = _poolBosses.Bosses[_poolData.CurrentLevelGame - 1];
             ActiveBoss.OnActive();
+        }
+
+        public void ClearOldEnemies()
+        {
+            if (_token != null)
+            {
+                _token.Cancel();
+                _token.Dispose();
+
+                _token = new CancellationTokenSource();
+                
+                _isWork = true;
+            }
+
+            foreach (Enemy enemy in _poolSimpleEnemies.Enemies)
+                enemy.InActive();
         }
 
         private void ReuseEnemy()
@@ -82,13 +103,12 @@ namespace Spawners
             return new Vector3(randomX, 0f, randomZ);
         }
 
-        private async UniTaskVoid LaunchSpawn()
+        private async UniTaskVoid LaunchSpawn(CancellationToken token)
         {
             while (_isWork)
             {
                 ReuseEnemy();
-                
-                await UniTask.Delay(_enemySpawnerData.IntervalSpawn);
+                await UniTask.Delay(_enemySpawnerData.IntervalSpawn, cancellationToken: token);
             }
         }
     }

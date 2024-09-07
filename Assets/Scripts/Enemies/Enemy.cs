@@ -76,6 +76,8 @@ namespace Enemies
         public bool IsDie { get; private set; }
         public EnemyData EnemyData { get; private set; }
         public Transform GetCurrentTarget { get; private set; }
+        public int CurrentAttackDistance { get; private set; }
+        public int CurrentAgroDistance { get; private set; }
 
 
         protected abstract int GetId();
@@ -101,10 +103,16 @@ namespace Enemies
             _enemyHealthModule = enemyHealthModule;
             EnemyData = enemyData;
 
+            CurrentAttackDistance = _bossLevels.Contains((BossId)GetId()) 
+                ? EnemyData.BossAttackDistance 
+                : EnemyData.AttackDistance;
+            
+            CurrentAgroDistance = EnemyData.AgroDistance;
+            
             SetCurrentHealth();
             SetCurrentDamage();
 
-            EnemyAnimation.Construct(enemyData, this, _agent);
+            EnemyAnimation.Construct(enemyData, this, _agent, _bossLevels.Contains((BossId)GetId()));
 
             if (_bossLevels.Contains((BossId)GetId())) 
                 IsIdleBoss = true;
@@ -241,8 +249,13 @@ namespace Enemies
             Vector3.Distance(CashTransform.position, _hero.transform.position) <=
             EnemyData.AttackDistance;
 
-        private void SpawnLoot() =>
+        private void SpawnLoot()
+        {
+            if (_bossLevels.Contains((BossId)GetId()))
+                return;
+
             _lootSpawner.SpawnMoney(GetId(), transform.position);
+        }
 
         private void ResetHealth() =>
             _currentHealth = MaxHealth;

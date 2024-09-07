@@ -16,7 +16,7 @@ namespace Enemies.Animation
 
         private const string LayerNameHero = "Player";
         private const string LayerNameGate = "BaseGate";
-        private readonly float _cleavage = 0.5f;
+        private float _cleavage = 1.5f;
 
         private Collider[] _hits = new Collider[1];
         private int _layerMask;
@@ -26,7 +26,7 @@ namespace Enemies.Animation
 
         public event Action OnAttacked;
 
-        public void Construct(EnemyData enemyData, Enemy enemy, NavMeshAgent agent)
+        public void Construct(EnemyData enemyData, Enemy enemy, NavMeshAgent agent, bool isBoss)
         {
             _agent = agent;
             _enemy = enemy;
@@ -36,6 +36,9 @@ namespace Enemies.Animation
             int mask2 = 1 << LayerMask.NameToLayer(LayerNameGate);
             
             _layerMask = mask1 | mask2;
+
+            if (isBoss) 
+                _cleavage *= 2;
         }
 
         private void OnValidate() =>

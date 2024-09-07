@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PriceList
   m_EditorClassIdentifier: 
   SectionPriceMultiplier: 50
-  PriceTransitionPlate: 10
+  PriceTransitionPlate: 3
   MultiplierIncreasePrice: 3
   StartPriceTurret: 100
   StepIncreasePriceTurret: 100

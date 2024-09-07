@@ -20,7 +20,7 @@ namespace Player
 
         private bool _heroOnBase = true;
         private float _heroDataRadiusDetection;
-        private List<Enemy> _enemies = new List<Enemy>();
+        private List<Enemy> _enemies;
         private EnemyRing _enemyRing;
         private bool _haveTarget;
         private Enemy _currentEnemy;
@@ -101,6 +101,8 @@ namespace Player
             _enemies.AddRange(poolBosses);
 
             OffShoot();
+            UpdateTarget();
+            _haveTarget = false;
         }
 
         public void Upgrade(float newRadiusDetection) =>
@@ -111,7 +113,7 @@ namespace Player
             float minDistance = _heroDataRadiusDetection;
             Vector3 heroPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
-            foreach (var enemy in _enemies)
+            foreach (Enemy enemy in _enemies)
             {
                 float distance = Vector3.Distance(heroPosition, enemy.transform.position);
 

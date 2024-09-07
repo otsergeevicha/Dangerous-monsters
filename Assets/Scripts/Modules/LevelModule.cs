@@ -55,6 +55,7 @@ namespace Modules
         {
             _windowModule.WinScreen();
             _poolData.CurrentLevelGame++;
+            _enemySpawner.ClearOldEnemies();
             _pool.UpdateLevel();
 
             foreach (StoreTurretPlate plate in _storeTurretPlates) 
@@ -65,7 +66,9 @@ namespace Modules
 
             _baseGate.UpdateLevel();
             _hero.UpdateLevel();
+
             _enemySpawner.ActiveCurrentBoss();
+            _enemySpawner.OnStart();
 
             foreach (SectionPlate plate in _sectionPlates) 
                 plate.UpdateLevel();
@@ -77,6 +80,8 @@ namespace Modules
             _windowModule.UpLevelCompleted();
             
             _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
+
+            _finishPlate.InActive();
         }
     }
 }

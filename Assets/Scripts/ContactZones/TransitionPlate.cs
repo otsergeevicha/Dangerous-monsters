@@ -89,7 +89,7 @@ namespace ContactZones
             _border.gameObject.SetActive(true);
             gameObject.SetActive(true);
             _currentCountGem = 0;
-            _priceList.PriceTransitionPlate *= _priceList.MultiplierIncreasePrice;
+            _priceList.PriceTransitionPlate += _priceList.MultiplierIncreasePrice;
             _maxGem = _priceList.PriceTransitionPlate;
             UpdateSlotText();
         }

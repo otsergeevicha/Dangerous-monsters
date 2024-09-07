@@ -51,19 +51,21 @@ namespace Infrastructure.Factory.Pools
             Create();
         }
 
-        public List<Enemy> Enemies { get; private set; } = new();
+        public List<Enemy> Enemies { get; private set; }
 
         public void AdaptingLevel()
         {
             foreach (Enemy enemy in Enemies)
                 enemy.OnDestroy();
 
-            Enemies = new List<Enemy>();
+            Enemies.Clear();
             Create();
         }
 
         private void Create()
         {
+            Enemies = new List<Enemy>();
+            
             _levelCounts = new[]
             {
                 _poolData.OneLevelCountEnemy, _poolData.TwoLevelCountEnemy, _poolData.ThreeLevelCountEnemy,

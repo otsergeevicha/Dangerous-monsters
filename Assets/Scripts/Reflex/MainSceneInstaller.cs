@@ -129,7 +129,8 @@ namespace Reflex
             heroAimRing.Construct(hero.transform, _heroData.RadiusDetection);
             
             hero.Construct(_input, _wallet, _heroData, pool.PoolAmmoBox, _poolData.MaxCountBullets, 
-                enemyRing, pool.PoolEnemies.Enemies, pool.PoolBosses.Bosses, hud, _windowModule, cameraFollow, heroAimRing, _bulletData, _effectModule, pool.PoolBullets.Bullets, _poolData);
+                enemyRing, pool.PoolEnemies, pool.PoolBosses, hud, _windowModule, cameraFollow, heroAimRing, 
+                _bulletData, _effectModule, pool.PoolBullets.Bullets, _poolData);
             
             cameraFollow.Construct(hero.GetCameraRoot());
             enemySpawner.Construct(_squareEnemySpawner, pool.PoolEnemies, _enemySpawnerData, pool.PoolBosses, _poolData, _firstLaunch);

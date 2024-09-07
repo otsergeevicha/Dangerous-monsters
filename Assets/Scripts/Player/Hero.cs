@@ -42,24 +42,24 @@ namespace Player
         
         private HeroHealthModule _heroHealthModule;
         private WindowModule _windowModule;
-        private List<Enemy> _poolEnemies;
-        private List<Enemy> _poolBosses;
         private HeroData _heroData;
         private HeroAimRing _aimRing;
         private Hud _hud;
         private PoolData _poolData;
+        private PoolBosses _poolBosses;
+        private PoolEnemies _poolEnemies;
 
         public void Construct(IInputService input, IWallet wallet, HeroData heroData, PoolAmmoBoxPlayer pool,
-            int maxCountBullets, EnemyRing enemyRing, List<Enemy> poolEnemies,
-            List<Enemy> poolBosses, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing,
+            int maxCountBullets, EnemyRing enemyRing, PoolEnemies poolEnemies,
+            PoolBosses poolBosses, Hud hud, WindowModule windowModule, CameraFollow cameraFollow, HeroAimRing aimRing,
             BulletData bulletData, EffectModule effectModule, IReadOnlyList<Bullet> poolBullets, PoolData poolData)
         {
+            _poolEnemies = poolEnemies;
+            _poolBosses = poolBosses;
             _poolData = poolData;
             _hud = hud;
             _aimRing = aimRing;
             _heroData = heroData;
-            _poolBosses = poolBosses;
-            _poolEnemies = poolEnemies;
             _windowModule = windowModule;
             _wallet = wallet;
             
@@ -72,7 +72,7 @@ namespace Player
             _basketPlayer.Construct(pool, heroData.SizeBasket);
             _weaponHolder.Construct(cameraFollow, bulletData, effectModule, _hud, poolBullets);
             _heroShooting.Construct(_heroMovement, _weaponHolder, heroData.RadiusDetection, enemyRing);
-            _heroShooting.MergeEnemies(poolEnemies, poolBosses);
+            _heroShooting.MergeEnemies(_poolEnemies.Enemies, _poolBosses.Bosses);
             
             _healingEffect.SetActive(false);
         }
@@ -163,7 +163,7 @@ namespace Player
             _heroShooting.SetOnBase(true);
             _heroMovement.SetStartPosition();
             _heroMovement.SetStateBattle(false, null);
-            _heroShooting.MergeEnemies(_poolEnemies, _poolBosses);
+            _heroShooting.MergeEnemies(_poolEnemies.Enemies, _poolBosses.Bosses);
             _heroAnimation.EnableIdle();
             _weaponHolder.UpdateLevel();
         }

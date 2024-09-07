@@ -19,6 +19,7 @@ MonoBehaviour:
   Speed: 2
   AgroDistance: 12
   AttackDistance: 2
+  BossAttackDistance: 4
   ZeroEnemyHealth: 3
   OneEnemyHealth: 4
   TwoEnemyHealth: 5

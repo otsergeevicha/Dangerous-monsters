@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 565130422718350729}
-  _attackPoint: {fileID: 0}
+  _attackPoint: {fileID: 5793815866419529605}
 --- !u!1 &2566975285457565861
 GameObject:
   m_ObjectHideFlags: 0
