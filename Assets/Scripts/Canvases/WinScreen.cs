@@ -9,7 +9,6 @@ namespace Canvases
     public class WinScreen : MonoCache
     {
         [HideInInspector] [SerializeField] private Canvas _canvas;
-        [SerializeField] private ParticleSystem _particle;
         [SerializeField] private GameObject _buttonContinue;
 
         [SerializeField] private TMP_Text _remainingMoney;
@@ -28,7 +27,6 @@ namespace Canvases
         private void Start()
         {
             _canvas.enabled = false;
-            _particle.gameObject.SetActive(false);
             _buttonContinue.SetActive(false);
         }
 
@@ -52,7 +50,6 @@ namespace Canvases
         public void OnActive()
         {
             Time.timeScale = 0;
-            _particle.gameObject.SetActive(true);
             _canvas.enabled = true;
 
             _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
@@ -72,7 +69,6 @@ namespace Canvases
         private void ContinueGame()
         {
             Time.timeScale = 1;
-            _particle.gameObject.SetActive(false);
             _buttonContinue.SetActive(false);
             _canvas.enabled = false;
         }

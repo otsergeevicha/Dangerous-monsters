@@ -12,7 +12,6 @@ namespace Canvases
     public class LoseScreen : MonoCache
     {
         [HideInInspector] [SerializeField] private Canvas _canvas;
-        [SerializeField] private ParticleSystem _particle;
 
         [SerializeField] private TMP_Text _remainingMoney;
         [SerializeField] private TMP_Text _remainingGem;
@@ -37,11 +36,8 @@ namespace Canvases
             _wallet = wallet;
         }
 
-        private void Start()
-        {
+        private void Start() => 
             _canvas.enabled = false;
-            _particle.gameObject.SetActive(false);
-        }
 
         private void OnValidate() =>
             _canvas ??= Get<Canvas>();
@@ -64,7 +60,6 @@ namespace Canvases
         public void OnActive()
         {
             Time.timeScale = 0;
-            _particle.gameObject.SetActive(true);
             _canvas.enabled = true;
 
             _bonusMoney.text = _priceList.LoseBonusMoney.ToString();
@@ -93,7 +88,6 @@ namespace Canvases
         {
             OnClickReStart?.Invoke();
             Time.timeScale = 1;
-            _particle.gameObject.SetActive(false);
             _canvas.enabled = false;
 
             _baseGate.OnActive();

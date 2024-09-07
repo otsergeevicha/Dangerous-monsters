@@ -14,7 +14,6 @@ namespace Canvases.UpgradePlayer
     public class UpgradeHeroScreen : MonoCache
     {
         [HideInInspector] [SerializeField] private Canvas _canvas;
-        [SerializeField] private ParticleSystem _particle;
         
         [SerializeField] private TMP_Text _money;
         [SerializeField] private TMP_Text _timerView;
@@ -40,11 +39,8 @@ namespace Canvases.UpgradePlayer
                 heroLot.Construct(heroData, priceList, wallet, hero, sdk, this);
         }
 
-        private void Start()
-        {
+        private void Start() => 
             _canvas.enabled = false;
-            _particle.gameObject.SetActive(false);
-        }
 
         private void OnValidate() => 
             _canvas ??= Get<Canvas>();
@@ -73,14 +69,12 @@ namespace Canvases.UpgradePlayer
         public void OnActive()
         {
             Time.timeScale = 0;
-            _particle.gameObject.SetActive(true);
             _canvas.enabled = true;
         }
 
         public void InActive()
         {
             Time.timeScale = 1;
-            _particle.gameObject.SetActive(false);
             _canvas.enabled = false;
             _input.OnControls();
         }

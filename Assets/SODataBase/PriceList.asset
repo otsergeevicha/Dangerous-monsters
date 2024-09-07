@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PriceList
   m_EditorClassIdentifier: 
   SectionPriceMultiplier: 50
-  PriceTransitionPlate: 3
-  MultiplierIncreasePrice: 3
+  PriceTransitionPlate: 5
+  MultiplierIncreasePrice: 15
   StartPriceTurret: 100
   StepIncreasePriceTurret: 100
   PriceHeroHealth: 50

@@ -1,6 +1,7 @@
 ﻿using Agava.YandexGames;
 using Services.SaveLoad;
 using UnityEngine;
+using PlayerPrefs = UnityEngine.PlayerPrefs;
 
 namespace SaveLoadModule
 {

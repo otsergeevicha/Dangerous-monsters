@@ -92,6 +92,7 @@ namespace Reflex
 
         private void CreateGame()
         {
+
 #if !UNITY_EDITOR
             CollationData();
 #endif
@@ -157,15 +158,18 @@ namespace Reflex
 #if !UNITY_EDITOR
             YandexGamesSdk.GameReady();
 #endif
-  
+            
             if (_firstLaunch)
             {
+                _firstLaunch = false;
+                
+                _save.AccessProgress().DataStateGame.FirstLaunch = _firstLaunch;
+                _save.Save();
+                
                 _tutorialModule = new TutorialModule(_gameFactory, _storeTurretPlates, _storageAmmoPlate, 
                     _storeAssistantPlate, workerSpawner, 
                     _storageGem, _transitionPlates, _upgradePlayerBoard, cameraFollow,
                      _windowModule, enemySpawner, _turretPlates[0], hud);
-
-                _firstLaunch = false;
             }
         }
 
