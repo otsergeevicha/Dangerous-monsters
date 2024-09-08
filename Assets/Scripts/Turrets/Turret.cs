@@ -55,6 +55,7 @@ namespace Turrets
             _trigger.OnActiveCollider();
             _trigger.SetRadiusTrigger(_turretData.RadiusDetection);
             _trigger.Invasion += OnAttack;
+            _cartridgeGun.OnCharge += OnAttack;
         }
 
         public void InActive()
@@ -62,6 +63,7 @@ namespace Turrets
             _animationLowAmmo.Stop();
             _trigger.InActiveCollider();
             _trigger.Invasion -= OnAttack;
+            _cartridgeGun.OnCharge -= OnAttack;
             gameObject.SetActive(false);
         }
 

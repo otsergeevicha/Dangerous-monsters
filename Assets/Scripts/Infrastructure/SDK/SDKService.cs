@@ -8,8 +8,8 @@ namespace Infrastructure.SDK
     {
         private readonly YandexSdk _yandex = new();
 
-        public void Inject(AudioListener audioListener) => 
-            _yandex.Inject(audioListener);
+        public void Inject(AudioSource audioSource) => 
+            _yandex.Inject(audioSource);
 
         public void AdReward(Action rewardCompleted)
         {

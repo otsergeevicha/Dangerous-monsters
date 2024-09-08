@@ -6,41 +6,39 @@ namespace Infrastructure.SDK
 {
     public class FocusGame : MonoCache
     {
-        private AudioListener _listener;
+        private AudioSource _audioSource;
 
-#if !UNITY_EDITOR
-
-        public void Construct(AudioListener listener)
+        public void Construct(AudioSource audioSource)
         {
-            _listener = listener;
-            
-            Application.focusChanged += OnfocusChanged;
+            _audioSource = audioSource;
+
             WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeEvent;
         }
 
         protected override void OnDisabled()
         {
-            Application.focusChanged -= OnfocusChanged;
             WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
         }
 
-        private void OnfocusChanged(bool inApp)
-        {
-            MuteAudio(!inApp);
-            PauseGame(!inApp);
-        }
-
-        private void PauseGame(bool value) =>
-            Time.timeScale = value ? 0 : 1;
-
-        private void MuteAudio(bool value) => 
-            _listener.enabled = value;
-
         private void OnInBackgroundChangeEvent(bool isBackground)
         {
-            MuteAudio(isBackground);
-            PauseGame(isBackground);
+            if (isBackground) 
+                Mute();
+            
+            if (!isBackground) 
+                UnMute();
         }
-#endif
+        
+        private void Mute()
+        {
+            Time.timeScale = 0;
+            _audioSource.volume = 0;
+        }
+
+        private void UnMute()
+        {
+            Time.timeScale = 1;
+            _audioSource.volume = 1;
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace Turrets.Children
 
         public event Action Activated;
         public event Action OnTutorialContacted;
+        public event Action OnCharge;
 
         public bool IsRequiredDownload =>
             _currentAmountBoxes >= 0 && _currentAmountBoxes != _maxAmount;
@@ -91,6 +92,7 @@ namespace Turrets.Children
                     _cartridgeBoxes[i].OnActive();
                     _currentAmountBoxes++;
                     basket.SpendBox();
+                    OnCharge?.Invoke();
 
                     await UniTask.Delay(MillisecondsDelay);
                 }

@@ -430,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9532ac13d274098a4c881de02f08791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nameGame: {fileID: 0}
 --- !u!1 &152376471
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +488,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Palworld
+  m_text: Dangerous monsters
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9fa5016cb7e534c0aa0c0adb2ecf9124, type: 2}
   m_sharedMaterial: {fileID: 6098576539282327867, guid: 9fa5016cb7e534c0aa0c0adb2ecf9124,
@@ -515,7 +516,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 172
+  m_fontSize: 159.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

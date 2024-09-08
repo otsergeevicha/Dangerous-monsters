@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Assistants
   m_EditorClassIdentifier: 
   Speed: 2
-  SizeBasket: 3
+  SizeBasket: 4
   IdleHash: 2081823275
   RunHash: 1748754976

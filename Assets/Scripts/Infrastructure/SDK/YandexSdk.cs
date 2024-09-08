@@ -6,10 +6,10 @@ namespace Infrastructure.SDK
 {
     public class YandexSdk
     {
-        private AudioListener _audioListener;
+        private AudioSource _audioSource;
 
-        public void Inject(AudioListener audioListener) =>
-            _audioListener = audioListener;
+        public void Inject(AudioSource audioSource) => 
+            _audioSource = audioSource;
 
         public void ShowReward(Action onCompleted)
         {
@@ -40,13 +40,13 @@ namespace Infrastructure.SDK
         private void Mute()
         {
             Time.timeScale = 0;
-            _audioListener.enabled = false;
+            _audioSource.volume = 0;
         }
 
         private void UnMute()
         {
             Time.timeScale = 1;
-            _audioListener.enabled = true;
+            _audioSource.volume = 1;
         }
     }
 }

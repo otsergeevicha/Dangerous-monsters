@@ -113,11 +113,9 @@ namespace Reflex
             HeroAimRing heroAimRing = _gameFactory.CreateHeroAimRing();
             EnemyRing enemyRing = _gameFactory.CreateEnemyRing();
 
-            _sdk.Inject(cameraFollow.GetListener);
+            _sdk.Inject(cameraFollow.GetMusic);
             
-#if !UNITY_EDITOR
-            _focusGame.Construct(cameraFollow.GetListener);
-#endif
+            _focusGame.Construct(cameraFollow.GetMusic);
             
             _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
             

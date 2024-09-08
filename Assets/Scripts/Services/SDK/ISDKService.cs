@@ -7,6 +7,6 @@ namespace Services.SDK
     {
         void AdReward(Action rewardCompleted);
         void ShowInterstitial(Action adCompleted);
-        void Inject(AudioListener audioListener);
+        void Inject(AudioSource audioSource);
     }
 }
