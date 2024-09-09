@@ -55,7 +55,7 @@ namespace Modules
         {
             _windowModule.WinScreen();
             _poolData.CurrentLevelGame++;
-            _enemySpawner.ClearOldEnemies();
+            _enemySpawner.ClearField();
             _pool.UpdateLevel();
 
             foreach (StoreTurretPlate plate in _storeTurretPlates) 

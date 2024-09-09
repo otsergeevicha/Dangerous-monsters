@@ -81,7 +81,7 @@ namespace Canvases.UpgradePlayer
                 PriceView.text = YandexGamesSdk.Environment.i18n.lang == "en" ? EngFreeLot : RuFreeLot;
                 return;
 #endif
-                PriceView.text = EngFreeLot;
+                PriceView.text = RuFreeLot;
             }
         }
 
@@ -131,6 +131,12 @@ namespace Canvases.UpgradePlayer
             SetConfigurationValue();
         }
 
+        public void UpdatePriceView() =>
+            PriceView.text = CurrentPrice.ToString();
+
+        public void UpdateValueView() =>
+            ValueView.text = CurrentValue.ToString();
+        
         private void SetConfigurationValue()
         {
             if (CheckUpperLimit())
@@ -164,11 +170,5 @@ namespace Canvases.UpgradePlayer
                 PriceView.gameObject.SetActive(false);
             }
         }
-
-        private void UpdatePriceView() =>
-            PriceView.text = CurrentPrice.ToString();
-
-        private void UpdateValueView() =>
-            ValueView.text = CurrentValue.ToString();
     }
 }

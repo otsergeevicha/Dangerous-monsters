@@ -16,7 +16,7 @@ namespace Enemies.Animation
 
         private const string LayerNameHero = "Player";
         private const string LayerNameGate = "BaseGate";
-        private float _cleavage = 1.5f;
+        private float _cleavage = 2f;
 
         private Collider[] _hits = new Collider[1];
         private int _layerMask;

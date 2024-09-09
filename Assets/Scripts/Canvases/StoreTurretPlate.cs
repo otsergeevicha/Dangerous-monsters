@@ -74,6 +74,7 @@ namespace Canvases
             {
                 _isWaiting = false;
                 _currentFillAmount = 1;
+                ResetFill();
             }
         }
 

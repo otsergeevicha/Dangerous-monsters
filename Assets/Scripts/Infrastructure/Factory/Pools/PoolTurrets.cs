@@ -2,6 +2,7 @@
 using Services.Bank;
 using Services.Factory;
 using SO;
+using Triggers;
 using Turrets;
 
 namespace Infrastructure.Factory.Pools
@@ -14,14 +15,14 @@ namespace Infrastructure.Factory.Pools
            _turrets.AsReadOnly();
 
         public PoolTurrets(IGameFactory factory, TurretPlate[] turretPlates, TurretData turretData,
-            PoolMissiles poolMissiles)
+            PoolMissiles poolMissiles, BaseGate baseGate)
         {
             int maxCount = turretPlates.Length;
 
             for (int i = 0; i < maxCount; i++)
             {
                 Turret turret = factory.CreateTurret();
-                turret.Construct(turretPlates[i].GetCartridgeGun, turretData, poolMissiles);
+                turret.Construct(turretPlates[i].GetCartridgeGun, turretData, poolMissiles, baseGate);
                 turret.InActive();
                 _turrets.Add(turret);
             }

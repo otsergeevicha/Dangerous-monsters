@@ -60,7 +60,7 @@ namespace Spawners
             ActiveBoss.OnActive();
         }
 
-        public void ClearOldEnemies()
+        public void ClearField()
         {
             if (_token != null)
             {

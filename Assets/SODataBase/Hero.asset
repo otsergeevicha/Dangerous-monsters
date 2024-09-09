@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Hero
   m_EditorClassIdentifier: 
   MaxHealth: 50
-  Speed: 3
-  SizeBasket: 5
+  Speed: 8
+  SizeBasket: 15
   RadiusDetection: 5
   IdleHash: 2081823275
   RunHash: 1748754976

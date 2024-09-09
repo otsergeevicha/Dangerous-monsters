@@ -31,7 +31,8 @@ namespace Turrets
 
         private int _price;
 
-        public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles)
+        public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles,
+            BaseGate baseGate)
         {
             _cartridgeGun = cartridgeGun;
             _poolMissiles = poolMissiles;
@@ -39,6 +40,12 @@ namespace Turrets
             _turretBody = transform;
 
             _canvasTurret.transform.SetParent(null);
+
+            baseGate.OnHit += () =>
+            {
+                if (_coroutine == null && isActiveAndEnabled)
+                    OnAttack();
+            };
         }
 
         public void OnActive(Transform spawnPoint, int currentPrice)
@@ -46,9 +53,7 @@ namespace Turrets
             _price = currentPrice;
 
             gameObject.SetActive(true);
-
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
+            CheckCoroutine();
 
             transform.position = spawnPoint.position;
 
@@ -89,9 +94,7 @@ namespace Turrets
                 {
                     if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
                     {
-                        if (_coroutine != null)
-                            StopCoroutine(_coroutine);
-
+                        CheckCoroutine();
                         _coroutine = StartCoroutine(RotateTurretAndAttack(enemy.transform.position));
                         break;
                     }
@@ -100,16 +103,13 @@ namespace Turrets
             else
             {
                 _animationLowAmmo.Play();
-
-                if (_coroutine != null)
-                    StopCoroutine(_coroutine);
+                CheckCoroutine();
             }
         }
 
         private void Shoot(Vector3 targetPosition)
         {
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
+            CheckCoroutine();
 
             Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
                 bullet.isActiveAndEnabled == false);
@@ -119,6 +119,15 @@ namespace Turrets
                 missile.Throw(_spawnPointGrenade.position, new Vector3(targetPosition.x, 1f, targetPosition.z));
                 _cartridgeGun.Spend();
                 Invoke(nameof(OnAttack), _waitSeconds);
+            }
+        }
+
+        private void CheckCoroutine()
+        {
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+                _coroutine = null;
             }
         }
 

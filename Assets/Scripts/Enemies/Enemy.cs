@@ -76,7 +76,7 @@ namespace Enemies
         public bool IsDie { get; private set; }
         public EnemyData EnemyData { get; private set; }
         public Transform GetCurrentTarget { get; private set; }
-        public int CurrentAttackDistance { get; private set; }
+        public float CurrentAttackDistance { get; private set; }
         public int CurrentAgroDistance { get; private set; }
 
 
@@ -118,16 +118,23 @@ namespace Enemies
                 IsIdleBoss = true;
 
             _enemyTriggers.OnAgroGate += 
-                gatePosition =>
+                gate =>
             {
                 IsAgro = true;
-                GetCurrentTarget = gatePosition;
+                GetCurrentTarget = gate.AgroPoint;
                 ResetBehaviorTree();
+
+                gate.Destroyed += () =>
+                {
+                    IsAgro = false;
+                    GetCurrentTarget = portal;
+                    ResetBehaviorTree();
+                };
             };
             
             _enemyTriggers.NonAgroGate += () =>
             {
-                IsAgro = true;
+                IsAgro = false;
                 GetCurrentTarget = portal;
                 ResetBehaviorTree();
             };

@@ -5,7 +5,7 @@ namespace Player.ShootingModule
 {
     public class MagazineBullets : IMagazine
     {
-        private const int DelayRegenerationMagazine = 5000;
+        private const int DelayRegenerationMagazine = 500;
 
         private readonly MagazineReload _magazineReload;
         private readonly int _maxSize;

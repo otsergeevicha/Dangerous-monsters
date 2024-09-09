@@ -59,6 +59,7 @@ namespace ContactZones
             {
                 _isWaiting = false;
                 _currentFillAmount = 1;
+                ResetFill();
             }
         }
 
@@ -74,6 +75,7 @@ namespace ContactZones
                     FinishWaiting();
                     _isWaiting = false;
                     _currentFillAmount = 1f;
+                    ResetFill();
                 }
             }
         }

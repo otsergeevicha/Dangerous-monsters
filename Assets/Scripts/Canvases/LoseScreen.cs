@@ -3,6 +3,7 @@ using Plugins.MonoCache;
 using Services.Bank;
 using Services.SDK;
 using SO;
+using Spawners;
 using TMPro;
 using Triggers;
 using UnityEngine;
@@ -27,9 +28,12 @@ namespace Canvases
 
         private PriceListData _priceList;
         private BaseGate _baseGate;
+        private EnemySpawner _enemySpawner;
 
-        public void Construct(IWallet wallet, ISDKService sdk, PriceListData priceList, BaseGate baseGate)
+        public void Construct(IWallet wallet, ISDKService sdk, PriceListData priceList, BaseGate baseGate,
+            EnemySpawner enemySpawner)
         {
+            _enemySpawner = enemySpawner;
             _baseGate = baseGate;
             _priceList = priceList;
             _sdk = sdk;
@@ -67,6 +71,8 @@ namespace Canvases
 
             _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
             _remainingGem.text = _wallet.ReadCurrentGem().ToString();
+
+            _enemySpawner.ClearField();
         }
 
         public void InActive()
@@ -91,6 +97,7 @@ namespace Canvases
             _canvas.enabled = false;
 
             _baseGate.OnActive();
+            _enemySpawner.OnStart();
         }
     }
 }

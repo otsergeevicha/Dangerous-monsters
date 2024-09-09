@@ -18,9 +18,9 @@ namespace SO
         [Range(5, 15)] 
         public int AgroDistance = 5;
         [Range(1, 5)] 
-        public int AttackDistance = 1;
+        public float AttackDistance = 1;
         [Range(1, 15)] 
-        public int BossAttackDistance = 1;
+        public float BossAttackDistance = 1;
 
         [Header("Health simple enemies")] 
         [Range(1, 50)]

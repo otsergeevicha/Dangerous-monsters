@@ -1,9 +1,11 @@
-﻿using CameraModule;
+﻿using System;
+using CameraModule;
 using Markers;
 using Modules;
 using Player;
 using Plugins.MonoCache;
 using SO;
+using TMPro;
 using UnityEngine;
 
 namespace Triggers
@@ -16,9 +18,13 @@ namespace Triggers
         [SerializeField] private ParticleSystem _explosionVfx;
         [SerializeField] private ParticleSystem _gateZoneVfx;
         [SerializeField] private MeshRenderer _mesh;
-        [SerializeField] private BoxCollider _collider;
+        [SerializeField] private BoxCollider _triggerEnemyCollider;
+        [SerializeField] private BoxCollider _bodyCollider;
 
         [SerializeField] private Transform _rootMarker;
+
+        [SerializeField] private Canvas _canvas;
+        [SerializeField] private TMP_Text _healthView;
 
         public Transform AgroPoint;
         
@@ -27,13 +33,16 @@ namespace Triggers
         private Hero _hero;
         private HealthGateModule _healthGateModule;
 
+        public event Action Destroyed;
+        public event Action OnHit;
+        
         public void Construct(HeroAimRing heroAimRing, CameraFollow cameraFollow, Hero hero, PoolData poolData)
         {
             _hero = hero;
             _cameraFollow = cameraFollow;
             _heroAimRing = heroAimRing;
 
-            _healthGateModule = new HealthGateModule(poolData.MaxHealthBaseGate);
+            _healthGateModule = new HealthGateModule(poolData.MaxHealthBaseGate, _healthView);
 
             _triggerOnZone.OnEntered += OnZone;
             _triggerOnBase.OnEntered += OnBase;
@@ -57,8 +66,11 @@ namespace Triggers
             OnBase();
         }
 
-        public void TakeDamage() => 
+        public void TakeDamage()
+        {
             _healthGateModule.ApplyDamage();
+            OnHit?.Invoke();
+        }
 
         private void OnZone()
         {
@@ -81,25 +93,32 @@ namespace Triggers
 
         private void InActive()
         {
+            Destroyed?.Invoke();
+            
             _cameraFollow.ShowMarker(_rootMarker);
             _mesh.enabled = false;
-            _collider.enabled = false;
+            _triggerEnemyCollider.enabled = false;
+            _bodyCollider.enabled = false;
             
             Invoke(nameof(Explosion), .4f);
         }
 
         public void OnActive()
-        {
+        {   
+            _healthGateModule.Reset();
             _mesh.enabled = true;
-            _collider.enabled = true;
+            _triggerEnemyCollider.enabled = true;
+            _bodyCollider.enabled = true;
             _explosionVfx.gameObject.SetActive(false);
             _gateZoneVfx.gameObject.SetActive(true);
+            _canvas.enabled = true;
         }
 
         private void Explosion()
         {
             _explosionVfx.gameObject.SetActive(true);
             _gateZoneVfx.gameObject.SetActive(false);
+            _canvas.enabled = false;
         }
     }
 }

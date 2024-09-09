@@ -23,15 +23,17 @@ namespace Canvases.UpgradePlayer
 
         [SerializeField] private HeroLot[] _heroLots = new HeroLot[4];
         
-        private readonly int _timerSeconds = 600;
+        private readonly int _timerSeconds = 10;
         
         private IInputService _input;
         private bool _isGift;
         private float _timer;
+        private IWallet _wallet;
 
         public void Construct(IInputService input, HeroData heroData, PriceListData priceList, IWallet wallet,
             Hero hero, ISDKService sdk)
         {
+            _wallet = wallet;
             _input = input;
             _timer = _timerSeconds;
 
@@ -70,6 +72,13 @@ namespace Canvases.UpgradePlayer
         {
             Time.timeScale = 0;
             _canvas.enabled = true;
+            UpdateMoneyView(_wallet.ReadCurrentMoney());
+
+            foreach (HeroLot lot in _heroLots)
+            {
+                lot.UpdatePriceView();
+                lot.UpdateValueView();
+            }
         }
 
         public void InActive()

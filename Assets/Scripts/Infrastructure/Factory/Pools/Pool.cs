@@ -7,6 +7,7 @@ using Services.Factory;
 using Services.SDK;
 using SO;
 using Spawners;
+using Triggers;
 using Turrets;
 using Turrets.Children;
 using UnityEngine;
@@ -34,7 +35,8 @@ namespace Infrastructure.Factory.Pools
             EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate,
             TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner,
             ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
-            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Transform baseGate, EffectModule effectModule)
+            Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Transform baseGate, EffectModule effectModule,
+            BaseGate gate)
         {
             _enemyHealthModule = new EnemyHealthModule();
 
@@ -55,7 +57,7 @@ namespace Infrastructure.Factory.Pools
                 spawnPointBoss, finishPlate, hero, baseGate);
             PoolMissiles = new PoolMissiles(factory, poolData.MaxCountMissiles, bulletData, effectModule);
             PoolBullets = new PoolBullets(factory, poolData.MaxCountBullets, bulletData, effectModule);
-            PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles);
+            PoolTurrets = new PoolTurrets(factory, turretPlates, turretData, PoolMissiles, gate);
             PoolWorkers = new PoolWorkers(factory, poolData.MaxCountWorkers, workerData, gemMiners,
                 storageGem.transform.position, storageGem);
         }
