@@ -78,8 +78,7 @@ namespace Enemies
         public Transform GetCurrentTarget { get; private set; }
         public float CurrentAttackDistance { get; private set; }
         public int CurrentAgroDistance { get; private set; }
-
-
+        
         protected abstract int GetId();
         protected abstract void SetCurrentHealth();
         protected abstract void SetCurrentDamage();
@@ -164,6 +163,15 @@ namespace Enemies
             _agent.stoppingDistance = enemyData.AttackDistance;
         }
 
+        private void OnValidate()
+        {
+            EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
+            _enemyTriggers ??= ChildrenGet<EnemyTriggers>();
+            _agent ??= Get<NavMeshAgent>();
+            _tree ??= Get<BehaviorTree>();
+            _deathSound ??= Get<AudioSource>();
+        }
+
         public void Escape()
         {
             _deathSound.Play();
@@ -172,15 +180,6 @@ namespace Enemies
             IsDie = true;
             _agent.isStopped = true;
             InActive();
-        }
-
-        private void OnValidate()
-        {
-            EnemyAnimation ??= ChildrenGet<EnemyAnimation>();
-            _enemyTriggers ??= ChildrenGet<EnemyTriggers>();
-            _agent ??= Get<NavMeshAgent>();
-            _tree ??= Get<BehaviorTree>();
-            _deathSound ??= Get<AudioSource>();
         }
 
         public virtual void OnActive()

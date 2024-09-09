@@ -12,23 +12,21 @@ namespace Turrets.Children
     {
         [SerializeField] private Transform _markerPosition;
         [SerializeField] private Transform _rootCamera;
-        
+
         [SerializeField] private CartridgeBox[] _cartridgeBoxes;
 
         private const int MillisecondsDelay = 500;
         private bool _isCourierExited;
         private int _currentAmountBoxes = 0;
+        private int _multiplier = 2;
         private int _maxAmount;
 
-        public event Action Activated;
         public event Action OnTutorialContacted;
         public event Action OnCharge;
+        public event Action OnEmpty;
 
         public bool IsRequiredDownload =>
             _currentAmountBoxes >= 0 && _currentAmountBoxes != _maxAmount;
-
-        public bool CheckMagazine =>
-            _currentAmountBoxes > 0;
 
         private void Start()
         {
@@ -41,8 +39,18 @@ namespace Turrets.Children
             }
         }
 
-        public void OnActive() =>
-            Activated?.Invoke();
+        public bool CheckMagazine()
+        {
+            if (_currentAmountBoxes > 0)
+            {
+                return true;
+            }
+            else
+            {
+                OnEmpty?.Invoke();
+                return false;
+            }
+        }
 
         public void SetPresenceCourier(bool status) =>
             _isCourierExited = status;
@@ -52,29 +60,40 @@ namespace Turrets.Children
             if (_maxAmount == 0)
                 return;
 
+            if (_currentAmountBoxes == _maxAmount)
+                return;
+            
             Replenishment(basket).Forget();
         }
 
         public void Spend()
         {
-            _cartridgeBoxes.LastOrDefault(box => box.isActiveAndEnabled)?.InActive();
-            _currentAmountBoxes--;
+            if (_multiplier == 0)
+            {
+                _cartridgeBoxes.LastOrDefault(box => box.isActiveAndEnabled)?.InActive();
+                _currentAmountBoxes--;
+                _multiplier = 2;
+                OnEmpty?.Invoke();
+                return;
+            }
+
+            _multiplier--;
         }
-        
-        public Transform GetRootCamera() => 
+
+        public Transform GetRootCamera() =>
             _rootCamera;
 
-        public Vector3 GetPositionMarker() => 
+        public Vector3 GetPositionMarker() =>
             _markerPosition.transform.position;
 
         public void UpdateLevel()
         {
-            foreach (CartridgeBox box in _cartridgeBoxes) 
+            foreach (CartridgeBox box in _cartridgeBoxes)
                 box.InActive();
 
             _currentAmountBoxes = 0;
         }
-        
+
         private async UniTaskVoid Replenishment(IBasket basket)
         {
             for (int i = 0; i < _maxAmount; i++)
@@ -86,7 +105,7 @@ namespace Turrets.Children
                     return;
 
                 OnTutorialContacted?.Invoke();
-                
+
                 if (_cartridgeBoxes[i].isActiveAndEnabled == false)
                 {
                     _cartridgeBoxes[i].OnActive();

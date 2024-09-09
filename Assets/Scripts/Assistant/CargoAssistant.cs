@@ -1,4 +1,5 @@
-﻿using ContactZones;
+﻿using BehaviorDesigner.Runtime;
+using ContactZones;
 using Plugins.MonoCache;
 using SO;
 using Triggers;
@@ -14,10 +15,11 @@ namespace Assistant
     public class CargoAssistant : MonoCache
     {
         [HideInInspector] [SerializeField] private AmmoTriggers _ammoTriggers;
-        
+        [SerializeField] private BehaviorTree _tree;
+
         public BasketCargoAssistant Basket;
-        
-        public AssistantAnimation AssistantAnimation{ get; private set; }
+
+        public AssistantAnimation AssistantAnimation { get; private set; }
         public AssistantData AssistantData { get; private set; }
         public StorageAmmoPlate StorageAmmoPlate { get; private set; }
         public CartridgeGun[] CartridgeGuns { get; private set; }
@@ -36,30 +38,39 @@ namespace Assistant
             AssistantAnimation.Construct(assistantData);
         }
 
-        private void OnValidate() => 
+        private void OnValidate() =>
             _ammoTriggers ??= Get<AmmoTriggers>();
 
         public void OnActive(Transform spawnPoint)
         {
             SetPosition(spawnPoint);
             gameObject.SetActive(true);
-            
+
             _ammoTriggers.StorageEntered += OnStorageEntered;
             _ammoTriggers.StorageExited += OnStorageExited;
-            
-             _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
-             _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
+
+            _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
+
+            foreach (CartridgeGun gun in CartridgeGuns)
+            {
+                gun.OnEmpty += () =>
+                {
+                    _tree.enabled = false;
+                    _tree.enabled = true;
+                };
+            }
         }
 
-        private void SetPosition(Transform spawnPoint) => 
+        private void SetPosition(Transform spawnPoint) =>
             transform.position = spawnPoint.position;
 
-        private void OnStorageEntered() => 
+        private void OnStorageEntered() =>
             Basket.Replenishment().Forget();
-        
+
         private void OnStorageExited() =>
             Basket.StopReplenishment();
-        
+
         private void OnCartridgeGunEntered(CartridgeGun cartridgeGun)
         {
             if (Basket.IsEmpty)
@@ -69,16 +80,16 @@ namespace Assistant
             cartridgeGun.ApplyBox(Basket);
         }
 
-        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) => 
+        private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
             cartridgeGun.SetPresenceCourier(true);
 
         public void InActive()
         {
             _ammoTriggers.StorageEntered -= OnStorageEntered;
             _ammoTriggers.StorageExited -= OnStorageExited;
-            
-             _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
-             _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
+
+            _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
             gameObject.SetActive(false);
         }
     }

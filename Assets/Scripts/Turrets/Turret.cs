@@ -20,16 +20,24 @@ namespace Turrets
         [SerializeField] private CanvasTurretLowAmmo _canvasTurret;
         [SerializeField] private Animation _animationLowAmmo;
 
-        private readonly float _waitSeconds = 1.5f;
+        private const string LayerNameEnemy = "Enemy";
 
-        private Collider[] _overlappedColliders = new Collider[5];
+        private readonly Collider[] _hits = new Collider[1];
+        private readonly float _shotDelay = .8f;
+        
         private TurretData _turretData;
         private PoolMissiles _poolMissiles;
         private CartridgeGun _cartridgeGun;
         private Transform _turretBody;
-        private Coroutine _coroutine;
+        private bool _isAttack;
+        private float _lastShotTime;
+
+        private int _layerMask;
 
         private int _price;
+        private Vector3 _currentTarget;
+        private Vector3 _fromTo;
+        private Quaternion _lookRotation;
 
         public void Construct(CartridgeGun cartridgeGun, TurretData turretData, PoolMissiles poolMissiles,
             BaseGate baseGate)
@@ -40,35 +48,76 @@ namespace Turrets
             _turretBody = transform;
 
             _canvasTurret.transform.SetParent(null);
+            _layerMask = 1 << LayerMask.NameToLayer(LayerNameEnemy);
 
             baseGate.OnHit += () =>
             {
-                if (_coroutine == null && isActiveAndEnabled)
-                    OnAttack();
+                if (isActiveAndEnabled)
+                    CheckEnemy();
             };
+        }
+
+        protected override void UpdateCached()
+        {
+            if (!_isAttack || !isActiveAndEnabled)
+                return;
+
+            if (!(Time.time >= _lastShotTime + _shotDelay))
+                return;
+
+            _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, _lookRotation,
+                _turretData.RotateSpeed * Time.deltaTime);
+
+            if (_turretBody.rotation == _lookRotation) 
+                Shoot(_currentTarget);
+        }
+
+        private void CheckEnemy()
+        {
+            Physics.OverlapSphereNonAlloc(transform.position, _turretData.RadiusDetection, _hits, _layerMask);
+
+            if (_hits[0] != null && _hits[0].gameObject.TryGetComponent(out Enemy enemy))
+            {
+                _isAttack = true;
+
+                enemy.Died += () =>
+                {
+                    _isAttack = false;
+                    CheckEnemy();
+                };
+                
+                _currentTarget = enemy.transform.position;
+
+                _fromTo = _currentTarget - transform.position;
+                _fromTo.y = .0f;
+                _lookRotation = Quaternion.LookRotation(_fromTo);
+
+                _hits[0] = null;
+            }
+            else
+            {
+                _isAttack = false;
+            }
         }
 
         public void OnActive(Transform spawnPoint, int currentPrice)
         {
             _price = currentPrice;
-
             gameObject.SetActive(true);
-            CheckCoroutine();
-
             transform.position = spawnPoint.position;
 
             _trigger.OnActiveCollider();
             _trigger.SetRadiusTrigger(_turretData.RadiusDetection);
-            _trigger.Invasion += OnAttack;
-            _cartridgeGun.OnCharge += OnAttack;
+            _trigger.Invasion += CheckEnemy;
+            _cartridgeGun.OnCharge += CheckEnemy;
         }
 
         public void InActive()
         {
             _animationLowAmmo.Stop();
             _trigger.InActiveCollider();
-            _trigger.Invasion -= OnAttack;
-            _cartridgeGun.OnCharge -= OnAttack;
+            _trigger.Invasion -= CheckEnemy;
+            _cartridgeGun.OnCharge -= CheckEnemy;
             gameObject.SetActive(false);
         }
 
@@ -84,33 +133,8 @@ namespace Turrets
         public void IncreasePrice(int stepIncreasePrice) =>
             _price += stepIncreasePrice;
 
-        private void OnAttack()
-        {
-            if (_cartridgeGun.CheckMagazine)
-            {
-                _overlappedColliders = Physics.OverlapSphere(transform.position, _turretData.RadiusDetection);
-
-                for (int i = 0; i < _overlappedColliders.Length; i++)
-                {
-                    if (_overlappedColliders[i].gameObject.TryGetComponent(out Enemy enemy))
-                    {
-                        CheckCoroutine();
-                        _coroutine = StartCoroutine(RotateTurretAndAttack(enemy.transform.position));
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                _animationLowAmmo.Play();
-                CheckCoroutine();
-            }
-        }
-
         private void Shoot(Vector3 targetPosition)
         {
-            CheckCoroutine();
-
             Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
                 bullet.isActiveAndEnabled == false);
 
@@ -118,34 +142,9 @@ namespace Turrets
             {
                 missile.Throw(_spawnPointGrenade.position, new Vector3(targetPosition.x, 1f, targetPosition.z));
                 _cartridgeGun.Spend();
-                Invoke(nameof(OnAttack), _waitSeconds);
+                _lastShotTime = Time.time;
+                CheckEnemy();
             }
-        }
-
-        private void CheckCoroutine()
-        {
-            if (_coroutine != null)
-            {
-                StopCoroutine(_coroutine);
-                _coroutine = null;
-            }
-        }
-
-        private IEnumerator RotateTurretAndAttack(Vector3 enemyPosition)
-        {
-            Vector3 fromTo = enemyPosition - transform.position;
-            fromTo.y = .0f;
-            Quaternion lookRotation = Quaternion.LookRotation(fromTo);
-
-            while (_turretBody.rotation != lookRotation)
-            {
-                _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, lookRotation,
-                    _turretData.RotateSpeed * Time.deltaTime);
-
-                yield return null;
-            }
-
-            Shoot(enemyPosition);
         }
     }
 }

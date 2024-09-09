@@ -32,8 +32,8 @@ namespace Effects
         
         public void EndAnimation()
         {
-            _animation.Stop();
             _canvas.enabled = false;
+            _animation.Stop();
         }
     }
 }

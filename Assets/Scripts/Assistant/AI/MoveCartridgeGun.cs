@@ -10,7 +10,7 @@ namespace Assistant.AI
         private CartridgeGun _gun;
         
         public override void OnStart()
-        {
+        { 
             _gun = CargoAssistant.CartridgeGuns.FirstOrDefault(cartridge => cartridge.IsRequiredDownload);
 
             if (_gun != null)
@@ -22,6 +22,6 @@ namespace Assistant.AI
         }
 
         public override TaskStatus OnUpdate() => 
-            _gun.IsRequiredDownload ? TaskStatus.Success : TaskStatus.Failure;
+            _gun != null && _gun.IsRequiredDownload ? TaskStatus.Success : TaskStatus.Failure;
     }
 }

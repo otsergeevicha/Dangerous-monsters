@@ -23,6 +23,15 @@ namespace Triggers
                 CartridgeGunEntered?.Invoke(cartridge);
         }
         
+        private void OnTriggerStay(Collider collision)
+        {
+            if (collision.gameObject.TryGetComponent(out StorageAmmoPlate _)) 
+                StorageEntered?.Invoke();
+            
+            if (collision.TryGetComponent(out CartridgeGun cartridge)) 
+                CartridgeGunEntered?.Invoke(cartridge);
+        }
+        
         private void OnTriggerExit(Collider collision)
         {
             if (collision.TryGetComponent(out StorageAmmoPlate _)) 
