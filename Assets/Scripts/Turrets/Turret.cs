@@ -24,7 +24,7 @@ namespace Turrets
 
         private readonly Collider[] _hits = new Collider[1];
         private readonly float _shotDelay = .8f;
-        
+
         private TurretData _turretData;
         private PoolMissiles _poolMissiles;
         private CartridgeGun _cartridgeGun;
@@ -68,7 +68,7 @@ namespace Turrets
             _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, _lookRotation,
                 _turretData.RotateSpeed * Time.deltaTime);
 
-            if (_turretBody.rotation == _lookRotation) 
+            if (_turretBody.rotation == _lookRotation && _cartridgeGun.CheckMagazine())
                 Shoot(_currentTarget);
         }
 
@@ -85,7 +85,7 @@ namespace Turrets
                     _isAttack = false;
                     CheckEnemy();
                 };
-                
+
                 _currentTarget = enemy.transform.position;
 
                 _fromTo = _currentTarget - transform.position;
