@@ -131,6 +131,9 @@ namespace CameraModule
 
         public void ShowMarker(Transform rootCamera)
         {
+            if (_isShowMarker)
+                return;
+
             _timer = _showMarkerTime;
             _isShowMarker = true;
             _markerCamera.Follow = rootCamera;

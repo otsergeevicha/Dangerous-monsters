@@ -23,7 +23,6 @@ namespace Turrets
         private const string LayerNameEnemy = "Enemy";
 
         private readonly Collider[] _hits = new Collider[1];
-        private readonly float _shotDelay = .8f;
 
         private TurretData _turretData;
         private PoolMissiles _poolMissiles;
@@ -31,6 +30,7 @@ namespace Turrets
         private Transform _turretBody;
         private bool _isAttack;
         private float _lastShotTime;
+        private float _shotDelay;
 
         private int _layerMask;
 
@@ -46,6 +46,7 @@ namespace Turrets
             _poolMissiles = poolMissiles;
             _turretData = turretData;
             _turretBody = transform;
+            _shotDelay = turretData.ShotDelay;
 
             _canvasTurret.transform.SetParent(null);
             _layerMask = 1 << LayerMask.NameToLayer(LayerNameEnemy);
@@ -68,36 +69,8 @@ namespace Turrets
             _turretBody.rotation = Quaternion.RotateTowards(_turretBody.rotation, _lookRotation,
                 _turretData.RotateSpeed * Time.deltaTime);
 
-            if (_turretBody.rotation == _lookRotation && _cartridgeGun.CheckMagazine())
+            if (_turretBody.rotation == _lookRotation)
                 Shoot(_currentTarget);
-        }
-
-        private void CheckEnemy()
-        {
-            Physics.OverlapSphereNonAlloc(transform.position, _turretData.RadiusDetection, _hits, _layerMask);
-
-            if (_hits[0] != null && _hits[0].gameObject.TryGetComponent(out Enemy enemy))
-            {
-                _isAttack = true;
-
-                enemy.Died += () =>
-                {
-                    _isAttack = false;
-                    CheckEnemy();
-                };
-
-                _currentTarget = enemy.transform.position;
-
-                _fromTo = _currentTarget - transform.position;
-                _fromTo.y = .0f;
-                _lookRotation = Quaternion.LookRotation(_fromTo);
-
-                _hits[0] = null;
-            }
-            else
-            {
-                _isAttack = false;
-            }
         }
 
         public void OnActive(Transform spawnPoint, int currentPrice)
@@ -132,13 +105,62 @@ namespace Turrets
 
         public void IncreasePrice(int stepIncreasePrice) =>
             _price += stepIncreasePrice;
+        
+        private void CheckEnemy()
+        {
+            if (DetectEnemy(_turretData.RadiusDetection)
+                || DetectEnemy(_turretData.RadiusDetection / 2)
+                || DetectEnemy(_turretData.RadiusDetection / 3))
+            {
+                PreFire();
+            }
+            else
+            {
+                _isAttack = false;
+            }
+        }
+
+        private bool DetectEnemy(float radius)
+        {
+            Overlap(radius);
+            return _hits[0] != null;
+        }
+
+        private void PreFire()
+        {
+            if (_hits[0].gameObject.TryGetComponent(out Enemy enemy))
+            {
+                _isAttack = true;
+
+                enemy.Died += () =>
+                {
+                    _isAttack = false;
+                    CheckEnemy();
+                };
+
+                _currentTarget = enemy.transform.position;
+
+                _fromTo = _currentTarget - transform.position;
+                _fromTo.y = .0f;
+                _lookRotation = Quaternion.LookRotation(_fromTo);
+
+                _hits[0] = null;
+            }
+            else
+            {
+                _isAttack = false;
+            }
+        }
+
+        private void Overlap(float cleavage) => 
+            Physics.OverlapSphereNonAlloc(transform.position, cleavage, _hits, _layerMask);
 
         private void Shoot(Vector3 targetPosition)
         {
             Missile missile = _poolMissiles.Missiles.FirstOrDefault(bullet =>
                 bullet.isActiveAndEnabled == false);
 
-            if (missile != null)
+            if (missile != null && _cartridgeGun.CheckMagazine())
             {
                 missile.Throw(_spawnPointGrenade.position, new Vector3(targetPosition.x, 1f, targetPosition.z));
                 _cartridgeGun.Spend();

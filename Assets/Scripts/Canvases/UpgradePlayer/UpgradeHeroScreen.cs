@@ -23,13 +23,15 @@ namespace Canvases.UpgradePlayer
 
         [SerializeField] private HeroLot[] _heroLots = new HeroLot[4];
         
-        private readonly int _timerSeconds = 10;
+        private readonly int _timerSeconds = 600;
         
         private IInputService _input;
         private bool _isGift;
         private float _timer;
         private IWallet _wallet;
 
+        public event Action<string> OnCurrentTime;
+        
         public void Construct(IInputService input, HeroData heroData, PriceListData priceList, IWallet wallet,
             Hero hero, ISDKService sdk)
         {
@@ -103,7 +105,10 @@ namespace Canvases.UpgradePlayer
         private void UpdateTimeView()
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(_timer);
-            _timerView.text = $"{timeSpan.Minutes:00}:{timeSpan.Seconds:00}";
+            
+            string currentTime = $"{timeSpan.Minutes:00}:{timeSpan.Seconds:00}";
+            OnCurrentTime?.Invoke(currentTime);
+            _timerView.text = currentTime;
         }
 
         public void ReturnPrice()

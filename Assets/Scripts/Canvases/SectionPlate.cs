@@ -31,6 +31,8 @@ namespace Canvases
         private ISDKService _sdk;
         private int _currentPrice;
 
+        public event Action OnNotifyAssistant;
+
         public void Construct(IWallet wallet, PriceListData priceListData, PoolData poolData, ISDKService sdk)
         {
             _sdk = sdk;
@@ -132,6 +134,8 @@ namespace Canvases
 
         private void OnAdditionalSection()
         {
+            OnNotifyAssistant?.Invoke();
+            
             _section.SetActive(true);
 
             foreach (GameObject inActiveObject in _inActiveObjects)

@@ -18,8 +18,7 @@ namespace Assistant
         private bool _isReplenishment;
         private int _maxSizeBasket;
         private int _currentCount = 0;
-
-        public bool IsFull { get; private set; }
+        
         public bool IsEmpty => 
             _currentCount == 0;
 
@@ -33,7 +32,6 @@ namespace Assistant
                     box.InActive();
             }
         }
-
 
         public void StopReplenishment() => 
             _isReplenishment = false;
@@ -49,14 +47,9 @@ namespace Assistant
             _box = null;
             _currentCount--;
 
-            IsFull = false;
-            
             if (_currentCount <= 0) 
                 _currentCount = 0;
         }
-
-        private bool CheckFull() => 
-            _currentCount == _maxSizeBasket;
 
         public async UniTaskVoid Replenishment()
         {
@@ -64,9 +57,8 @@ namespace Assistant
 
             while (_isReplenishment)
             {
-                if (CheckFull())
+                if (_currentCount == _maxSizeBasket)
                 {
-                    IsFull = true;
                     _isReplenishment = false;
                 }
                 else

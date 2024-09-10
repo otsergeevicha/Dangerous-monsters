@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Assistant.AI.Parents;
+﻿using Assistant.AI.Parents;
 using BehaviorDesigner.Runtime.Tasks;
 using Turrets.Children;
 
@@ -8,11 +7,33 @@ namespace Assistant.AI
     public class MoveCartridgeGun : CargoAssistantAction
     {
         private CartridgeGun _gun;
-        
-        public override void OnStart()
-        { 
-            _gun = CargoAssistant.CartridgeGuns.FirstOrDefault(cartridge => cartridge.IsRequiredDownload);
 
+        public override void OnStart()
+        {
+            foreach (CartridgeGun cartridge in CargoAssistant.CartridgeGuns)
+            {
+                if (cartridge.isActiveAndEnabled)
+                    cartridge.OnNotifyAssistant += GetCurrentCartridge;
+            }
+            
+            GetCurrentCartridge();
+            EnableState();
+        }
+
+        public override TaskStatus OnUpdate() =>
+            _gun != null && _gun.IsRequiredDownload ? TaskStatus.Success : TaskStatus.Failure;
+
+        public override void OnEnd()
+        {
+            foreach (CartridgeGun cartridge in CargoAssistant.CartridgeGuns)
+            {
+                if (cartridge.isActiveAndEnabled)
+                    cartridge.OnNotifyAssistant -= GetCurrentCartridge;
+            }
+        }
+
+        private void EnableState()
+        {
             if (_gun != null)
             {
                 CargoAssistant.AssistantAnimation.EnableRun();
@@ -21,7 +42,25 @@ namespace Assistant.AI
             }
         }
 
-        public override TaskStatus OnUpdate() => 
-            _gun != null && _gun.IsRequiredDownload ? TaskStatus.Success : TaskStatus.Failure;
+        private void GetCurrentCartridge()
+        {
+            _gun = null;
+
+            int minAmountBullet = int.MaxValue;
+
+            foreach (CartridgeGun cartridge in CargoAssistant.CartridgeGuns)
+            {
+                if (cartridge.isActiveAndEnabled)
+                {
+                    int currentAmmo = cartridge.ReadCurrentAmmo();
+                    
+                    if (currentAmmo < minAmountBullet)
+                    {
+                        minAmountBullet = currentAmmo;
+                        _gun = cartridge;
+                    }
+                }
+            }
+        }
     }
 }

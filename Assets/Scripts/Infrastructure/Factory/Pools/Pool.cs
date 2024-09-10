@@ -1,4 +1,5 @@
-﻿using ContactZones;
+﻿using Canvases;
+using ContactZones;
 using Modules;
 using Player;
 using Plugins.MonoCache;
@@ -36,7 +37,7 @@ namespace Infrastructure.Factory.Pools
             TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner,
             ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
             Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Transform baseGate, EffectModule effectModule,
-            BaseGate gate)
+            BaseGate gate, SectionPlate[] sectionPlates)
         {
             _enemyHealthModule = new EnemyHealthModule();
 
@@ -44,7 +45,7 @@ namespace Infrastructure.Factory.Pools
             
             PoolAmmoBox = new PoolAmmoBoxPlayer(factory, poolData.SizeAmmoBoxPlayer);
             PoolCargoAssistant =
-                new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate);
+                new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate, sectionPlates);
 
             PoolMoney = new PoolMoney(factory, poolData.MaxCountMoney);
             PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, sdkService, hero);

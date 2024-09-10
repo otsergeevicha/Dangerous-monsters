@@ -17,16 +17,16 @@ namespace Turrets.Children
 
         private const int MillisecondsDelay = 500;
         private bool _isCourierExited;
-        private int _currentAmountBoxes = 0;
+        private int _currentAmountBoxes;
         private int _multiplier = 2;
         private int _maxAmount;
 
         public event Action OnTutorialContacted;
         public event Action OnCharge;
-        public event Action OnEmpty;
+        public event Action OnNotifyAssistant;
 
         public bool IsRequiredDownload =>
-            _currentAmountBoxes >= 0 && _currentAmountBoxes != _maxAmount;
+            _currentAmountBoxes >= 0 && _currentAmountBoxes < _maxAmount;
 
         private void Start()
         {
@@ -42,14 +42,10 @@ namespace Turrets.Children
         public bool CheckMagazine()
         {
             if (_currentAmountBoxes > 0)
-            {
                 return true;
-            }
-            else
-            {
-                OnEmpty?.Invoke();
-                return false;
-            }
+
+            OnNotifyAssistant?.Invoke();
+            return false;
         }
 
         public void SetPresenceCourier(bool status) =>
@@ -61,8 +57,11 @@ namespace Turrets.Children
                 return;
 
             if (_currentAmountBoxes == _maxAmount)
+            {
+                OnNotifyAssistant?.Invoke();
                 return;
-            
+            }
+
             Replenishment(basket).Forget();
         }
 
@@ -73,7 +72,7 @@ namespace Turrets.Children
                 _cartridgeBoxes.LastOrDefault(box => box.isActiveAndEnabled)?.InActive();
                 _currentAmountBoxes--;
                 _multiplier = 2;
-                OnEmpty?.Invoke();
+                OnNotifyAssistant?.Invoke();
                 return;
             }
 
@@ -93,6 +92,9 @@ namespace Turrets.Children
 
             _currentAmountBoxes = 0;
         }
+
+        public int ReadCurrentAmmo() => 
+            _currentAmountBoxes;
 
         private async UniTaskVoid Replenishment(IBasket basket)
         {

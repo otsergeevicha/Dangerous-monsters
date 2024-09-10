@@ -6,10 +6,13 @@ namespace SO
     public class TurretData : ScriptableObject
     {
         [Header("Detection radius")]
-        [Range(5f, 25f)]
+        [Range(5f, 35f)]
         public float RadiusDetection = 5f;
 
         [Range(145f, 195f)] 
         public float RotateSpeed = 195f;
+
+        [Range(.1f, 5f)] 
+        public float ShotDelay = .8f;
     }
 }

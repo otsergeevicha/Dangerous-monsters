@@ -1,4 +1,6 @@
 ﻿using System;
+using CameraModule;
+using Canvases.UpgradePlayer;
 using ContactZones;
 using JoystickLogic;
 using Plugins.MonoCache;
@@ -27,6 +29,8 @@ namespace Canvases
         [SerializeField] private Canvas _canvasWallet;
         [SerializeField] private Canvas _canvasMonsterEscape;
 
+        [SerializeField] private TMP_Text _timer;
+        
         public WeaponButtons WeaponButtons;
 
         private const int MaxCountEscape = 30;
@@ -34,14 +38,19 @@ namespace Canvases
     
         private MonstersPortal _monstersPortal;
         private int _countMonsters;
-    
+        private CameraFollow _cameraFollow;
+        private Transform _rootUpgradePlayerBoard;
+
         public event Action OnGameOver;
 
         public HealthView GetHeroHealthView =>
             _heroHealthView;
 
-        public void Construct(Camera mainCamera, MonstersPortal monstersPortal, IInputService inputService)
+        public void Construct(Camera mainCamera, MonstersPortal monstersPortal, IInputService inputService,
+            UpgradeHeroScreen upgradeHeroScreen, CameraFollow cameraFollow, Transform rootUpgradePlayerBoard)
         {
+            _rootUpgradePlayerBoard = rootUpgradePlayerBoard;
+            _cameraFollow = cameraFollow;
             _monstersPortal = monstersPortal;
 
             _joystick.Construct(mainCamera, inputService);
@@ -49,6 +58,9 @@ namespace Canvases
             _monstersPortal.OnEscaped += MonsterEscaped;
             WeaponButtons.ChangeActive(false);
             WeaponButtons.Construct(inputService);
+
+            upgradeHeroScreen.OnCurrentTime += timerText => 
+                _timer.text = timerText;
         }
 
         protected override void OnDisabled() =>
@@ -75,6 +87,22 @@ namespace Canvases
             _heroHealthView.ActiveHeartAnimation(flag);
             _heroHealthView.ChangeActive(flag);
         }
+        
+        public void UpdateMonstersCounter()
+        {
+            _countMonsters = 0;
+            UpdateText();
+        }
+
+        public void SetTutorialView(bool flag)
+        {
+            _canvasWallet.enabled = !flag;
+            _canvasMonsterEscape.enabled = !flag;
+            _tutorialView.SetActive(flag);
+        }
+
+        public void OnClickGift() => 
+            _cameraFollow.ShowMarker(_rootUpgradePlayerBoard);
 
         private void MonsterEscaped()
         {
@@ -95,18 +123,5 @@ namespace Canvases
         private void UpdateText() =>
             _monsterEscapeText.text
                 = $"{_countMonsters} {ColorText}/ {MaxCountEscape}";
-
-        public void UpdateMonstersCounter()
-        {
-            _countMonsters = 0;
-            UpdateText();
-        }
-
-        public void SetTutorialView(bool flag)
-        {
-            _canvasWallet.enabled = !flag;
-            _canvasMonsterEscape.enabled = !flag;
-            _tutorialView.SetActive(flag);
-        }
     }
 }   

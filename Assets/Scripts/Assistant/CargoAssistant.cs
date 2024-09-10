@@ -1,4 +1,5 @@
 ﻿using BehaviorDesigner.Runtime;
+using Canvases;
 using ContactZones;
 using Plugins.MonoCache;
 using SO;
@@ -18,6 +19,8 @@ namespace Assistant
         [SerializeField] private BehaviorTree _tree;
 
         public BasketCargoAssistant Basket;
+        
+        private SectionPlate[] _sectionPlates;
 
         public AssistantAnimation AssistantAnimation { get; private set; }
         public AssistantData AssistantData { get; private set; }
@@ -28,8 +31,9 @@ namespace Assistant
             AssistantData.SizeBasket;
 
         public void Construct(AssistantData assistantData, CartridgeGun[] cartridgeGuns,
-            StorageAmmoPlate storageAmmoPlate)
+            StorageAmmoPlate storageAmmoPlate, SectionPlate[] sectionPlates)
         {
+            _sectionPlates = sectionPlates;
             AssistantData = assistantData;
             StorageAmmoPlate = storageAmmoPlate;
             CartridgeGuns = cartridgeGuns;
@@ -51,15 +55,17 @@ namespace Assistant
 
             _ammoTriggers.CartridgeGunEntered += OnCartridgeGunEntered;
             _ammoTriggers.CartridgeGunExited += OnCartridgeGunExited;
+        }
 
-            foreach (CartridgeGun gun in CartridgeGuns)
-            {
-                gun.OnEmpty += () =>
-                {
-                    _tree.enabled = false;
-                    _tree.enabled = true;
-                };
-            }
+        public void InActive()
+        {
+            _ammoTriggers.StorageEntered -= OnStorageEntered;
+            _ammoTriggers.StorageExited -= OnStorageExited;
+
+            _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
+            _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
+
+            gameObject.SetActive(false);
         }
 
         private void SetPosition(Transform spawnPoint) =>
@@ -82,15 +88,5 @@ namespace Assistant
 
         private void OnCartridgeGunExited(CartridgeGun cartridgeGun) =>
             cartridgeGun.SetPresenceCourier(true);
-
-        public void InActive()
-        {
-            _ammoTriggers.StorageEntered -= OnStorageEntered;
-            _ammoTriggers.StorageExited -= OnStorageExited;
-
-            _ammoTriggers.CartridgeGunEntered -= OnCartridgeGunEntered;
-            _ammoTriggers.CartridgeGunExited -= OnCartridgeGunExited;
-            gameObject.SetActive(false);
-        }
     }
 }

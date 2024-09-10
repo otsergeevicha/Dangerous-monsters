@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assistant;
+using Canvases;
 using ContactZones;
 using Services.Factory;
 using SO;
@@ -14,15 +15,15 @@ namespace Infrastructure.Factory.Pools
         public IReadOnlyList<CargoAssistant> Assistants =>
             _assistants.AsReadOnly();
 
-        public PoolCargoAssistant(IGameFactory factory, PoolData poolData, AssistantData assistantData, 
-            CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate)
+        public PoolCargoAssistant(IGameFactory factory, PoolData poolData, AssistantData assistantData,
+            CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate, SectionPlate[] sectionPlates)
         {
             int maxCountAssistant = poolData.MaxCountCargoAssistant;
             
             for (int i = 0; i < maxCountAssistant; i++)
             {
                 CargoAssistant cargoAssistant = factory.CreateCargoAssistant();
-                cargoAssistant.Construct(assistantData, cartridgeGuns, storageAmmoPlate);
+                cargoAssistant.Construct(assistantData, cartridgeGuns, storageAmmoPlate, sectionPlates);
                 cargoAssistant.InActive();
                 _assistants.Add(cargoAssistant);
             }
