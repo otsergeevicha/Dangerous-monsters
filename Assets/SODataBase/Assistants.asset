@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8f30fb147849ebb483f9c061c58854, type: 3}
   m_Name: Assistants
   m_EditorClassIdentifier: 
-  Speed: 4
-  SizeBasket: 8
+  Speed: 2.2
+  SizeBasket: 3
   IdleHash: 2081823275
   RunHash: 1748754976
