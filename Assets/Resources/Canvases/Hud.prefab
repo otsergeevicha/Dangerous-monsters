@@ -4389,6 +4389,7 @@ MonoBehaviour:
   _tutorialView: {fileID: 7137351508033016753}
   _canvasWallet: {fileID: 7570180786070221123}
   _canvasMonsterEscape: {fileID: 3836521726110647000}
+  _canvasGiftTimer: {fileID: 1391713758684209381}
   _timer: {fileID: 1461864250961344832}
   WeaponButtons: {fileID: 4408329838148030546}
 --- !u!114 &7081118529046787723

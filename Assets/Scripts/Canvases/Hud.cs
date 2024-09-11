@@ -28,6 +28,7 @@ namespace Canvases
         
         [SerializeField] private Canvas _canvasWallet;
         [SerializeField] private Canvas _canvasMonsterEscape;
+        [SerializeField] private Canvas _canvasGiftTimer;
 
         [SerializeField] private TMP_Text _timer;
         
@@ -98,6 +99,7 @@ namespace Canvases
         {
             _canvasWallet.enabled = !flag;
             _canvasMonsterEscape.enabled = !flag;
+            _canvasGiftTimer.enabled = !flag;
             _tutorialView.SetActive(flag);
         }
 

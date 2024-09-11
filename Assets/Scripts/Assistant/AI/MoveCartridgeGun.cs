@@ -10,27 +10,12 @@ namespace Assistant.AI
 
         public override void OnStart()
         {
-            foreach (CartridgeGun cartridge in CargoAssistant.CartridgeGuns)
-            {
-                if (cartridge.isActiveAndEnabled)
-                    cartridge.OnNotifyAssistant += GetCurrentCartridge;
-            }
-            
             GetCurrentCartridge();
             EnableState();
         }
 
         public override TaskStatus OnUpdate() =>
             _gun != null && _gun.IsRequiredDownload ? TaskStatus.Success : TaskStatus.Failure;
-
-        public override void OnEnd()
-        {
-            foreach (CartridgeGun cartridge in CargoAssistant.CartridgeGuns)
-            {
-                if (cartridge.isActiveAndEnabled)
-                    cartridge.OnNotifyAssistant -= GetCurrentCartridge;
-            }
-        }
 
         private void EnableState()
         {
