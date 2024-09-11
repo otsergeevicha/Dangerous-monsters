@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Agava.YandexGames;
+using GameAnalyticsSDK;
 using Plugins.MonoCache;
 using Reflex.Core;
 using UnityEngine;
@@ -18,6 +19,8 @@ namespace Reflex
             LaunchGame();
             yield break;
 #endif
+            GameAnalytics.Initialize();           
+
             yield return YandexGamesSdk.Initialize(LaunchGame);
             Debug.Log("SDK initialized");
 

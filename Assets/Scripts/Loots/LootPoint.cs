@@ -1,4 +1,5 @@
 ﻿using System;
+using GameAnalyticsSDK;
 using Player;
 using Plugins.MonoCache;
 using Services.SDK;
@@ -72,6 +73,9 @@ namespace Loots
             {
                 if (!_isFreeLoot)
                 {
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Loot:PickUp:NotFree:{_actualLoot.GetName()}");
+#endif
                     _sdkService.AdReward(() => 
                         _actualLoot.Open(InActive));
                 }
@@ -121,6 +125,9 @@ namespace Loots
 
                 if (_currentFillAmount <= Single.Epsilon)
                 {
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Loot:PickUp:Free:{_actualLoot.GetName()}");
+#endif
                     _actualLoot.Open(InActive);
                     _isWaiting = false;
                     _currentFillAmount = 1f;

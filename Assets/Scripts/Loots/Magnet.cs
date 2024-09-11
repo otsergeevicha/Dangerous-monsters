@@ -20,6 +20,9 @@ namespace Loots
             opened?.Invoke();
         }
 
+        public string GetName() => 
+            "Magnet";
+
         public void InActive() => 
             gameObject.SetActive(false);
     }

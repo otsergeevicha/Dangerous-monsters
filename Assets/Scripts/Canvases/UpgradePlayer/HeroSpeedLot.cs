@@ -1,12 +1,20 @@
-﻿namespace Canvases.UpgradePlayer
+﻿using GameAnalyticsSDK;
+
+namespace Canvases.UpgradePlayer
 {
     public class HeroSpeedLot : HeroLot
     {
         protected override void UpdatePrice() => 
             CurrentPrice = PriceList.PriceHeroSpeed;
 
-        protected override void UpdateValue() => 
+        protected override void UpdateValue()
+        {
             CurrentValue = HeroData.Speed;
+            
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Hero upgrade:Speed {HeroData.Speed}");
+#endif
+        }
 
         protected override void Upgrade() =>
             HeroData.Speed++;

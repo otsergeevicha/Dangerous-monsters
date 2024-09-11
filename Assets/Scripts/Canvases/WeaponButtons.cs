@@ -1,4 +1,5 @@
 ﻿using System;
+using GameAnalyticsSDK;
 using Plugins.MonoCache;
 using Services.Inputs;
 using TMPro;
@@ -78,6 +79,10 @@ namespace Canvases
 
         private void Notify(int currentGun)
         {
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"SelectedWeapon::{currentGun}");
+#endif
+            
             _icons[currentGun].color = _colors[1];
             _countBullets[currentGun].enabled = true;
             OnChanged?.Invoke(currentGun);

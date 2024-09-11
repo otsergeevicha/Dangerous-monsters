@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assistant;
+using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Modules;
 using Player;
@@ -101,6 +102,10 @@ namespace Canvases
             UpdateSlotText();
 
             _poolAssistant.Assistants.FirstOrDefault(assistant => assistant.isActiveAndEnabled == false)?.OnActive(_spawnPoint);
+            
+#if !UNITY_EDITOR
+            GameAnalytics.NewDesignEvent($"Assistant:Buy_OnLevel - {_poolData.CurrentLevelGame}");
+#endif
             
             OnTutorialContacted?.Invoke();
         }

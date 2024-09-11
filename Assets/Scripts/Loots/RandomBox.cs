@@ -59,7 +59,6 @@ namespace Loots
             }
             
             _animatorBody.enabled = true;
-           // _animatorCap.enabled = false;
             
             gameObject.SetActive(true);
         }
@@ -82,13 +81,14 @@ namespace Loots
             
             opened?.Invoke();
             _animatorBody.enabled = false;
-           // _animatorCap.enabled = true;
         }
+
+        public string GetName() => 
+            "RandomBox";
 
         public void InActive()
         {
             _animatorBody.enabled = true;
-           // _animatorCap.enabled = false;
             
             _money.SetActive(false);
             _gem.SetActive(false);
