@@ -120,8 +120,8 @@ namespace Reflex
             _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
             
             pool.Construct(_gameFactory, _poolData, _assistantData, _enemyData, _cartridgeGuns, _storageAmmoPlate, 
-                _turretPlates, _bulletData, _turretData, _squareLootSpawner, _sdk, _workerData, _gemMiners, _storageGem, 
-                _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform, _effectModule, _baseGate, _sectionPlates);
+                _turretPlates, _bulletData, _turretData, _squareLootSpawner, _workerData, _gemMiners, _storageGem, 
+                _spawnPointBoss.position, _finishPlate, hero, _monstersPortal.transform, _effectModule, _baseGate, _sectionPlates, hud.NotifyRewardScreen);
 
             _effectModule.Construct(pool.PoolEffects);
             
@@ -137,12 +137,12 @@ namespace Reflex
             _workplace.Construct(_poolData.MaxCountWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
-                sectionPlate.Construct(_wallet, _priceList, _poolData, _sdk);
+                sectionPlate.Construct(_wallet, _priceList, _poolData, hud.NotifyRewardScreen);
 
             foreach (TransitionPlate plate in _transitionPlates)
                 plate.Construct(_wallet, _priceList);
 
-            hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, _input, upgradeHeroScreen, cameraFollow, _upgradePlayerBoard.GetRootCamera());
+            hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, _input, upgradeHeroScreen, cameraFollow, _upgradePlayerBoard.GetRootCamera(), _sdk);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, 
                 pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, _sdk, _baseGate, enemySpawner);

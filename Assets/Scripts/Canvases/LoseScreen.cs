@@ -1,4 +1,5 @@
 ﻿using System;
+using Agava.YandexGames;
 using Plugins.MonoCache;
 using Services.Bank;
 using Services.SDK;
@@ -20,8 +21,9 @@ namespace Canvases
         [SerializeField] private TMP_Text _bonusMoney;
         [SerializeField] private TMP_Text _bonusGem;
 
-        public event Action OnClickReStart;
-
+        private const string EngDescription = "coins and crystals";
+        private const string RuDescription = "монеты и кристалы";
+        
         private IWallet _wallet;
         private ISDKService _sdk;
         private bool _isAdShowed;
@@ -29,10 +31,14 @@ namespace Canvases
         private PriceListData _priceList;
         private BaseGate _baseGate;
         private EnemySpawner _enemySpawner;
+        private NotifyRewardScreen _hudNotifyRewardScreen;
 
+        public event Action OnClickReStart;
+        
         public void Construct(IWallet wallet, ISDKService sdk, PriceListData priceList, BaseGate baseGate,
-            EnemySpawner enemySpawner)
+            EnemySpawner enemySpawner, NotifyRewardScreen hudNotifyRewardScreen)
         {
+            _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _enemySpawner = enemySpawner;
             _baseGate = baseGate;
             _priceList = priceList;
@@ -49,7 +55,9 @@ namespace Canvases
 
         public void RewardBonus()
         {
-            _sdk.AdReward(delegate
+            _hudNotifyRewardScreen.OnActive(BuildDescription());
+            
+            _hudNotifyRewardScreen.RewardCompleted += () =>
             {
                 _wallet.ApplyMoney(_priceList.LoseBonusMoney);
                 _wallet.ApplyGem(_priceList.LoseBonusGem);
@@ -58,7 +66,17 @@ namespace Canvases
                 _remainingGem.text = _wallet.ReadCurrentGem().ToString();
 
                 _isAdShowed = true;
-            });
+            };
+        }
+
+        private string BuildDescription()
+        {
+#if !UNITY_EDITOR
+            return YandexGamesSdk.Environment.i18n.lang == "en"
+                ? EngDescription
+                : RuDescription;
+#endif
+            return RuDescription;
         }
 
         public void OnActive()

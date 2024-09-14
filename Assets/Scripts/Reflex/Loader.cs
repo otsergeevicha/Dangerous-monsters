@@ -24,6 +24,8 @@ namespace Reflex
             yield return YandexGamesSdk.Initialize(LaunchGame);
             Debug.Log("SDK initialized");
 
+            YandexGamesSdk.GameReady();
+            
             if (PlayerAccount.IsAuthorized)
                 PlayerAccount.GetCloudSaveData(OnSuccessCallback, OnErrorCallback);
             else

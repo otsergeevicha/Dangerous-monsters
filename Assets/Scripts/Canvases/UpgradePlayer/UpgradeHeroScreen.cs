@@ -34,14 +34,14 @@ namespace Canvases.UpgradePlayer
         public event Action<string> OnCurrentTime;
         
         public void Construct(IInputService input, HeroData heroData, PriceListData priceList, IWallet wallet,
-            Hero hero, ISDKService sdk)
+            Hero hero, NotifyRewardScreen hudNotifyRewardScreen)
         {
             _wallet = wallet;
             _input = input;
             _timer = _timerSeconds;
 
             foreach (HeroLot heroLot in _heroLots) 
-                heroLot.Construct(heroData, priceList, wallet, hero, sdk, this);
+                heroLot.Construct(heroData, priceList, wallet, hero, this, hudNotifyRewardScreen);
         }
 
         private void Start() => 
@@ -83,6 +83,7 @@ namespace Canvases.UpgradePlayer
 
             foreach (HeroLot lot in _heroLots)
             {
+                lot.SetConfigurationPrice(_wallet.ReadCurrentMoney());
                 lot.UpdatePriceView();
                 lot.UpdateValueView();
             }

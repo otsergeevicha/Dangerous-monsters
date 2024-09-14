@@ -1,4 +1,5 @@
 ﻿using Plugins.MonoCache;
+using Agava.YandexGames;
 using Services.Bank;
 using Services.SDK;
 using TMPro;
@@ -14,12 +15,17 @@ namespace Canvases
         [SerializeField] private TMP_Text _remainingMoney;
         [SerializeField] private TMP_Text _remainingGem;
 
+        private const string EngDescription = "x2 coins and crystals";
+        private const string RuDescription = "x2 монеты и кристалы";
+        
         private IWallet _wallet;
         private ISDKService _sdk;
         private bool _isAdShowed;
+        private NotifyRewardScreen _hudNotifyRewardScreen;
 
-        public void Construct(IWallet wallet, ISDKService sdk)
+        public void Construct(IWallet wallet, ISDKService sdk, NotifyRewardScreen hudNotifyRewardScreen)
         {
+            _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _sdk = sdk;
             _wallet = wallet;
         }
@@ -35,7 +41,9 @@ namespace Canvases
 
         public void RewardX2()
         {
-            _sdk.AdReward(delegate
+            _hudNotifyRewardScreen.OnActive(BuildDescription());
+
+            _hudNotifyRewardScreen.RewardCompleted += () =>
             {
                 _wallet.ApplyMoney(_wallet.ReadCurrentMoney());
                 _wallet.ApplyGem(_wallet.ReadCurrentGem());
@@ -44,7 +52,7 @@ namespace Canvases
                 _remainingGem.text = _wallet.ReadCurrentGem().ToString();
 
                 _isAdShowed = true;
-            });
+            };
         }
 
         public void OnActive()
@@ -66,6 +74,16 @@ namespace Canvases
             _isAdShowed = false;
         }
 
+        private string BuildDescription()
+        {
+#if !UNITY_EDITOR
+            return YandexGamesSdk.Environment.i18n.lang == "en"
+                ? EngDescription
+                : RuDescription;
+#endif
+            return RuDescription;
+        }
+        
         private void ContinueGame()
         {
             Time.timeScale = 1;

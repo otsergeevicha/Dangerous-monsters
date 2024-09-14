@@ -1,4 +1,5 @@
 ﻿using System;
+using Agava.YandexGames;
 using Player;
 using Plugins.MonoCache;
 using UnityEngine;
@@ -11,6 +12,9 @@ namespace Loots
         [SerializeField] private Animator _animatorBody;
         [SerializeField] private Animator _animatorCap;
 
+        private const string EngName = "healing";
+        private const string RuName = "исцеление";
+        
         private Hero _hero;
 
         public void Construct(Hero hero) => 
@@ -29,8 +33,15 @@ namespace Loots
             _animatorBody.enabled = false;
         }
 
-        public string GetName() => 
-            "MedicalBox";
+        public string GetName()
+        {
+#if !UNITY_EDITOR
+            return YandexGamesSdk.Environment.i18n.lang == "en" 
+                ? EngName 
+                : RuName;
+#endif
+            return RuName;
+        }
 
         public void InActive()
         {

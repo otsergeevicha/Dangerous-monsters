@@ -57,15 +57,15 @@ namespace Modules
             _hud.UpdateGemView(_wallet.ReadCurrentGem());
 
             _startScreen.Construct(_hud);
-            _winScreen.Construct(_wallet, sdk);
-            _loseScreen.Construct(wallet, sdk, priceList, baseGate, enemySpawner);
+            _winScreen.Construct(_wallet, sdk, hud.NotifyRewardScreen);
+            _loseScreen.Construct(wallet, sdk, priceList, baseGate, enemySpawner, hud.NotifyRewardScreen);
             
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant, poolData);
 
             for (int i = 0; i < storeTurretPlates.Length; i++)
-                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, sdk, poolData);
+                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, poolData, _hud.NotifyRewardScreen);
 
-            upgradeHeroScreen.Construct(_input, heroData, priceList, _wallet, hero, sdk);
+            upgradeHeroScreen.Construct(_input, heroData, priceList, _wallet, hero, hud.NotifyRewardScreen);
             
             _input.OffControls();
             startScreen.OnActive();

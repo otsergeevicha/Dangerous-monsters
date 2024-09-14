@@ -5,6 +5,7 @@ using ContactZones;
 using JoystickLogic;
 using Plugins.MonoCache;
 using Services.Inputs;
+using Services.SDK;
 using TMPro;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Canvases
     public class Hud : MonoCache
     {
         [SerializeField] private Canvas _canvas;
-
+        
         [SerializeField] private HealthView _heroHealthView;
 
         [SerializeField] private Joystick _joystick;
@@ -32,6 +33,7 @@ namespace Canvases
 
         [SerializeField] private TMP_Text _timer;
         
+        public NotifyRewardScreen NotifyRewardScreen;
         public WeaponButtons WeaponButtons;
 
         private const int MaxCountEscape = 30;
@@ -48,7 +50,8 @@ namespace Canvases
             _heroHealthView;
 
         public void Construct(Camera mainCamera, MonstersPortal monstersPortal, IInputService inputService,
-            UpgradeHeroScreen upgradeHeroScreen, CameraFollow cameraFollow, Transform rootUpgradePlayerBoard)
+            UpgradeHeroScreen upgradeHeroScreen, CameraFollow cameraFollow, Transform rootUpgradePlayerBoard,
+            ISDKService sdk)
         {
             _rootUpgradePlayerBoard = rootUpgradePlayerBoard;
             _cameraFollow = cameraFollow;
@@ -62,6 +65,9 @@ namespace Canvases
 
             upgradeHeroScreen.OnCurrentTime += timerText => 
                 _timer.text = timerText;
+            
+            NotifyRewardScreen.Construct(sdk);
+            NotifyRewardScreen.InActive();
         }
 
         protected override void OnDisabled() =>

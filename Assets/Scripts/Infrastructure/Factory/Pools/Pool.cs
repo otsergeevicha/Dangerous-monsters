@@ -35,9 +35,9 @@ namespace Infrastructure.Factory.Pools
         public void Construct(IGameFactory factory, PoolData poolData, AssistantData assistantData,
             EnemyData enemyData, CartridgeGun[] cartridgeGuns, StorageAmmoPlate storageAmmoPlate,
             TurretPlate[] turretPlates, BulletData bulletData, TurretData turretData, Transform[] squareLootSpawner,
-            ISDKService sdkService, WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
+            WorkerData workerData, Transform[] gemMiners, StorageGem storageGem,
             Vector3 spawnPointBoss, FinishPlate finishPlate, Hero hero, Transform baseGate, EffectModule effectModule,
-            BaseGate gate, SectionPlate[] sectionPlates)
+            BaseGate gate, SectionPlate[] sectionPlates, NotifyRewardScreen hudNotifyRewardScreen)
         {
             _enemyHealthModule = new EnemyHealthModule();
 
@@ -48,7 +48,7 @@ namespace Infrastructure.Factory.Pools
                 new PoolCargoAssistant(factory, poolData, assistantData, cartridgeGuns, storageAmmoPlate, sectionPlates);
 
             PoolMoney = new PoolMoney(factory, poolData.MaxCountMoney);
-            PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, sdkService, hero);
+            PoolLootBoxes = new PoolLootBoxes(factory, poolData.MaxCountLootBoxes, hero, hudNotifyRewardScreen);
 
             _lootSpawner = new LootSpawner(PoolMoney, PoolLootBoxes, squareLootSpawner, poolData, PoolEffects);
 

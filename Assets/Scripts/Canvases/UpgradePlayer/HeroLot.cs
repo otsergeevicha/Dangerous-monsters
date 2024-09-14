@@ -2,7 +2,6 @@
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
-using Services.SDK;
 using SO;
 using TMPro;
 using UnityEngine;
@@ -25,6 +24,9 @@ namespace Canvases.UpgradePlayer
 
         private const string EngFreeLot = "Free";
         private const string RuFreeLot = "Бесплатно";
+        
+        private const string EngDescription = "upgrade";
+        private const string RuDescription = "апгрейд";
 
         protected int CurrentValue;
         protected int CurrentPrice;
@@ -37,7 +39,7 @@ namespace Canvases.UpgradePlayer
         private IWallet _wallet;
         private int _tempPrice;
         private Hero _hero;
-        private ISDKService _sdk;
+        private NotifyRewardScreen _hudNotifyRewardScreen;
 
         protected abstract void UpdatePrice();
         protected abstract void UpdateValue();
@@ -46,10 +48,10 @@ namespace Canvases.UpgradePlayer
         protected abstract bool CheckUpperLimit();
 
         public void Construct(HeroData heroData, PriceListData priceList,
-            IWallet wallet, Hero hero, ISDKService sdk, UpgradeHeroScreen upgradeHeroScreen)
+            IWallet wallet, Hero hero, UpgradeHeroScreen upgradeHeroScreen, NotifyRewardScreen hudNotifyRewardScreen)
         {
+            _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _upgradeHeroScreen = upgradeHeroScreen;
-            _sdk = sdk;
             _hero = hero;
             _wallet = wallet;
             PriceList = priceList;
@@ -109,14 +111,16 @@ namespace Canvases.UpgradePlayer
             }
             else
             {
-                _sdk.AdReward(delegate
+                _hudNotifyRewardScreen.OnActive(BuildDescription());
+
+                _hudNotifyRewardScreen.RewardCompleted += () =>
                 {
                     CurrentValue++;
                     Upgrade();
                     UpdateValue();
 
                     _hero.Upgrade();
-                });
+                };
             }
 
             _upgradeHeroScreen.ReturnPrice();
@@ -136,7 +140,31 @@ namespace Canvases.UpgradePlayer
 
         public void UpdateValueView() =>
             ValueView.text = CurrentValue.ToString();
-        
+
+        public void SetConfigurationPrice(int moneyAmount)
+        {
+            if (CurrentPrice <= moneyAmount)
+            {
+                Ad.SetActive(false);
+                PriceView.gameObject.SetActive(true);
+            }
+            else
+            {
+                Ad.SetActive(true);
+                PriceView.gameObject.SetActive(false);
+            }
+        }
+
+        private string BuildDescription()
+        {
+#if !UNITY_EDITOR
+            return YandexGamesSdk.Environment.i18n.lang == "en"
+                ? EngDescription
+                : RuDescription;
+#endif
+            return RuDescription;
+        }
+
         private void SetConfigurationValue()
         {
             if (CheckUpperLimit())
@@ -154,20 +182,6 @@ namespace Canvases.UpgradePlayer
                 ReadyUpgrade.SetActive(true);
 
                 _activeButton.interactable = true;
-            }
-        }
-
-        private void SetConfigurationPrice(int moneyAmount)
-        {
-            if (CurrentPrice <= moneyAmount)
-            {
-                Ad.SetActive(false);
-                PriceView.gameObject.SetActive(true);
-            }
-            else
-            {
-                Ad.SetActive(true);
-                PriceView.gameObject.SetActive(false);
             }
         }
     }

@@ -12,12 +12,23 @@ namespace Infrastructure.SDK
         {
             _audioSource = audioSource;
 
+            Application.focusChanged += OnInBackgroundChangeApp;
             WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeEvent;
         }
 
         protected override void OnDisabled()
         {
+            Application.focusChanged -= OnInBackgroundChangeApp;
             WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
+        }
+
+        private void OnInBackgroundChangeApp(bool inApp)
+        {
+            if (inApp) 
+                Mute();
+            
+            if (!inApp) 
+                UnMute();
         }
 
         private void OnInBackgroundChangeEvent(bool isBackground)

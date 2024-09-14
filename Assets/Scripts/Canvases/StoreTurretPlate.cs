@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Agava.YandexGames;
 using GameAnalyticsSDK;
 using Infrastructure.Factory.Pools;
 using Modules;
@@ -30,6 +31,9 @@ namespace Canvases
 
         [Header("Second")] [SerializeField] private GameObject _iconUpgrade;
 
+        private const string EngDescription = "upgrade turret";
+        private const string RuDescription = "улучшение турели";
+        
         private readonly float _waitTime = 2f;
 
         private bool _isWaiting;
@@ -40,16 +44,16 @@ namespace Canvases
 
         private IWallet _wallet;
         private PriceListData _priceListData;
-        private ISDKService _sdk;
         private PoolData _poolData;
+        private NotifyRewardScreen _hudNotifyRewardScreen;
 
         public event Action OnTutorialContacted;
 
-        public void Construct(PoolTurrets poolTurrets, IWallet wallet, PriceListData priceListData,
-            ISDKService sdk, PoolData poolData)
+        public void Construct(PoolTurrets poolTurrets, IWallet wallet, PriceListData priceListData, PoolData poolData,
+            NotifyRewardScreen hudNotifyRewardScreen)
         {
+            _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _poolData = poolData;
-            _sdk = sdk;
             _priceListData = priceListData;
             _wallet = wallet;
             _poolTurrets = poolTurrets;
@@ -120,8 +124,8 @@ namespace Canvases
                 }
                 else
                 {
-                    _sdk.AdReward(() =>
-                        _turret.Upgrade());
+                    _hudNotifyRewardScreen.OnActive(BuildDescription());
+                    _hudNotifyRewardScreen.RewardCompleted += () => _turret.Upgrade();
                 }
 
                 UpdatePriceView();
@@ -153,6 +157,16 @@ namespace Canvases
 
             _iconAdd.gameObject.SetActive(false);
             _iconUpgrade.gameObject.SetActive(true);
+        }
+        
+        private string BuildDescription()
+        {
+#if !UNITY_EDITOR
+            return YandexGamesSdk.Environment.i18n.lang == "en"
+                ? EngDescription
+                : RuDescription;
+#endif
+            return RuDescription;
         }
 
         private void SetConfigurationPrice(int moneyAmount)

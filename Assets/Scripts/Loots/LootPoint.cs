@@ -1,4 +1,6 @@
 ﻿using System;
+using Agava.YandexGames;
+using Canvases;
 using GameAnalyticsSDK;
 using Player;
 using Plugins.MonoCache;
@@ -38,18 +40,17 @@ namespace Loots
         
         private readonly float _waitTime = 2f;
         
-        private ISDKService _sdkService;
         private ILoot _actualLoot;
         
         private bool _isFreeLoot;
         private bool _isWaiting;
         private float _timer;
         private float _currentFillAmount = 1f;
+        private NotifyRewardScreen _hudNotifyRewardScreen;
 
-        public void Construct(ISDKService sdkService, Hero hero)
+        public void Construct(Hero hero, NotifyRewardScreen hudNotifyRewardScreen)
         {
-            _sdkService = sdkService;
-
+            _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _magnet.Construct(hero);
             _medicalBox.Construct(hero);
             _randomBox.Construct(hero);
@@ -76,14 +77,13 @@ namespace Loots
 #if !UNITY_EDITOR
             GameAnalytics.NewDesignEvent($"Loot:PickUp:NotFree:{_actualLoot.GetName()}");
 #endif
-                    _sdkService.AdReward(() => 
-                        _actualLoot.Open(InActive));
+                    _hudNotifyRewardScreen.OnActive(_actualLoot.GetName());
+                    _hudNotifyRewardScreen.RewardCompleted += () => _actualLoot.Open(InActive);
                 }
                 else
                 {
                     _isWaiting = true;
                 }
-                
             }
         }
 

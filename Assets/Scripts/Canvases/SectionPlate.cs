@@ -1,4 +1,5 @@
 ﻿using System;
+using Agava.YandexGames;
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
@@ -20,6 +21,9 @@ namespace Canvases
         [SerializeField] private TMP_Text _price;
         [SerializeField] private GameObject _ad;
         
+        private const string EngDescription = "expanding the base";
+        private const string RuDescription = "расширение базы";
+        
         private readonly float _waitTime = 2f;
 
         private IWallet _wallet;
@@ -28,14 +32,14 @@ namespace Canvases
         private bool _isWaiting;
         private float _currentFillAmount = 1f;
         private PoolData _poolData;
-        private ISDKService _sdk;
         private int _currentPrice;
+        private NotifyRewardScreen _hudNotifyRewardScreen;
 
         public event Action OnNotifyAssistant;
 
-        public void Construct(IWallet wallet, PriceListData priceListData, PoolData poolData, ISDKService sdk)
+        public void Construct(IWallet wallet, PriceListData priceListData, PoolData poolData, NotifyRewardScreen hudNotifyRewardScreen)
         {
-            _sdk = sdk;
+            _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _poolData = poolData;
             _priceList = priceListData;
             _wallet = wallet;
@@ -110,12 +114,24 @@ namespace Canvases
             }
             else
             {
-                _sdk.AdReward(delegate
+                _hudNotifyRewardScreen.OnActive(BuildDescription());
+
+                _hudNotifyRewardScreen.RewardCompleted += () =>
                 {
                     OnAdditionalSection();
                     gameObject.SetActive(false);
-                });
+                };
             }
+        }
+        
+        private string BuildDescription()
+        {
+#if !UNITY_EDITOR
+            return YandexGamesSdk.Environment.i18n.lang == "en"
+                ? EngDescription
+                : RuDescription;
+#endif
+            return RuDescription;
         }
         
         private void SetConfigurationPrice(int moneyAmount)
