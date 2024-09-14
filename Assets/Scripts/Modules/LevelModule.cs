@@ -2,6 +2,7 @@
 using ContactZones;
 using Infrastructure.Factory.Pools;
 using Player;
+using Services.SaveLoad;
 using SO;
 using Spawners;
 using Triggers;
@@ -24,13 +25,15 @@ namespace Modules
         private readonly BaseView _baseView;
         private readonly StoreTurretPlate[] _storeTurretPlates;
         private readonly CartridgeGun[] _cartridgeGuns;
+        private ISave _save;
 
         public LevelModule(PoolData poolData, FinishPlate finishPlate, WindowModule windowModule, Pool pool, Hero hero,
             WorkerSpawner workerSpawner,
             SectionPlate[] sectionPlates, TransitionPlate[] transitionPlates, BaseGate baseGate,
             EnemySpawner enemySpawner, BaseView baseView, StoreTurretPlate[] storeTurretPlates,
-            CartridgeGun[] cartridgeGuns)
+            CartridgeGun[] cartridgeGuns, ISave save)
         {
+            _save = save;
             _cartridgeGuns = cartridgeGuns;
             _storeTurretPlates = storeTurretPlates;
             _baseView = baseView;
@@ -53,6 +56,8 @@ namespace Modules
 
         private void Up()
         {
+            ResetLevelData();
+
             _windowModule.WinScreen();
             _poolData.CurrentLevelGame++;
             _enemySpawner.ClearField();
@@ -82,6 +87,21 @@ namespace Modules
             _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
 
             _finishPlate.InActive();
+        }
+
+        private void ResetLevelData()
+        {
+            _save.AccessProgress().DataStateLevel.HaveLeftTurret = false;
+            _save.AccessProgress().DataStateLevel.HaveCenterTurret = false;
+            _save.AccessProgress().DataStateLevel.HaveRightTurret = false;
+
+            _save.AccessProgress().DataStateLevel.OpenLeftSection = false;
+            _save.AccessProgress().DataStateLevel.OpenRightSection = false;
+
+            _save.AccessProgress().DataStateLevel.OpenOneTransition = false;
+            _save.AccessProgress().DataStateLevel.OpenTwoTransition = false;
+            
+            _save.Save();
         }
     }
 }

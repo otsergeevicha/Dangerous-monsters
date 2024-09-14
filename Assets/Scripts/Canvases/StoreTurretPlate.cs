@@ -7,6 +7,7 @@ using Modules;
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
+using Services.SaveLoad;
 using Services.SDK;
 using SO;
 using TMPro;
@@ -16,8 +17,18 @@ using UnityEngine.UI;
 
 namespace Canvases
 {
+    enum TypeSectionTurret
+    {
+        Left,
+        Center,
+        Right
+    }
+
     public class StoreTurretPlate : MonoCache, ITutorialPlate
     {
+        [Range((int)TypeSectionTurret.Left, (int)TypeSectionTurret.Right)] [SerializeField]
+        private int _indexSection;
+
         [SerializeField] private Transform _rootCamera;
         [SerializeField] private Transform _markerPosition;
 
@@ -33,7 +44,7 @@ namespace Canvases
 
         private const string EngDescription = "upgrade turret";
         private const string RuDescription = "улучшение турели";
-        
+
         private readonly float _waitTime = 2f;
 
         private bool _isWaiting;
@@ -46,12 +57,14 @@ namespace Canvases
         private PriceListData _priceListData;
         private PoolData _poolData;
         private NotifyRewardScreen _hudNotifyRewardScreen;
+        private ISave _save;
 
         public event Action OnTutorialContacted;
 
         public void Construct(PoolTurrets poolTurrets, IWallet wallet, PriceListData priceListData, PoolData poolData,
-            NotifyRewardScreen hudNotifyRewardScreen)
+            NotifyRewardScreen hudNotifyRewardScreen, ISave save)
         {
+            _save = save;
             _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _poolData = poolData;
             _priceListData = priceListData;
@@ -60,6 +73,26 @@ namespace Canvases
             ResetFill();
 
             _wallet.MoneyChanged += SetConfigurationPrice;
+
+            CorrectState();
+        }
+
+        private void CorrectState()
+        {
+            if (!isActiveAndEnabled)
+                return;
+
+            if (_indexSection == (int)TypeSectionTurret.Left
+                && _save.AccessProgress().DataStateLevel.HaveLeftTurret) 
+                OnActiveTurret();
+
+            if (_indexSection == (int)TypeSectionTurret.Center
+                && _save.AccessProgress().DataStateLevel.HaveCenterTurret) 
+                OnActiveTurret();
+
+            if (_indexSection == (int)TypeSectionTurret.Right
+                && _save.AccessProgress().DataStateLevel.HaveRightTurret) 
+                OnActiveTurret();
         }
 
         protected override void OnDisabled() =>
@@ -110,6 +143,8 @@ namespace Canvases
         {
             _purchased = false;
             SetConfigurationPrice(_wallet.ReadCurrentMoney());
+            
+            SaveOpen(false);
         }
 
         private void FinishWaiting()
@@ -130,7 +165,7 @@ namespace Canvases
 
                 UpdatePriceView();
                 SetConfigurationPrice(_wallet.ReadCurrentMoney());
-                
+
 #if !UNITY_EDITOR
             GameAnalytics.NewDesignEvent($"Turret:Upgrade:OnLevel - {_poolData.CurrentLevelGame}");
 #endif
@@ -139,17 +174,9 @@ namespace Canvases
 
             if (!_purchased)
             {
-                _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>
-                    turret.isActiveAndEnabled == false);
+                OnActiveTurret();
+                SaveOpen(true);
 
-                if (_turret != null)
-                    _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
-
-                _purchased = true;
-                OnTutorialContacted?.Invoke();
-
-                SetConfigurationPrice(_wallet.ReadCurrentMoney());
-                
 #if !UNITY_EDITOR
             GameAnalytics.NewDesignEvent($"Turret:Purchased:OnLevel - {_poolData.CurrentLevelGame}");
 #endif
@@ -158,7 +185,7 @@ namespace Canvases
             _iconAdd.gameObject.SetActive(false);
             _iconUpgrade.gameObject.SetActive(true);
         }
-        
+
         private string BuildDescription()
         {
 #if !UNITY_EDITOR
@@ -169,6 +196,34 @@ namespace Canvases
             return RuDescription;
         }
 
+        private void SaveOpen(bool flag)
+        {
+            if (_indexSection == (int)TypeSectionTurret.Left)
+                _save.AccessProgress().DataStateLevel.HaveLeftTurret = flag;
+
+            if (_indexSection == (int)TypeSectionTurret.Center)
+                _save.AccessProgress().DataStateLevel.HaveCenterTurret = flag;
+
+            if (_indexSection == (int)TypeSectionTurret.Right)
+                _save.AccessProgress().DataStateLevel.HaveRightTurret = flag;
+            
+            _save.Save();
+        }
+        
+        private void OnActiveTurret()
+        {
+            _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>
+                turret.isActiveAndEnabled == false);
+
+            if (_turret != null)
+                _turret.OnActive(_spawnPoint, _priceListData.StartPriceTurret);
+
+            _purchased = true;
+            OnTutorialContacted?.Invoke();
+
+            SetConfigurationPrice(_wallet.ReadCurrentMoney());
+        }
+        
         private void SetConfigurationPrice(int moneyAmount)
         {
             if (GetCurrentPrice() <= moneyAmount)

@@ -137,19 +137,19 @@ namespace Reflex
             _workplace.Construct(_poolData.MaxCountWorkers);
 
             foreach (SectionPlate sectionPlate in _sectionPlates) 
-                sectionPlate.Construct(_wallet, _priceList, _poolData, hud.NotifyRewardScreen);
+                sectionPlate.Construct(_wallet, _priceList, _poolData, hud.NotifyRewardScreen, _save);
 
             foreach (TransitionPlate plate in _transitionPlates)
-                plate.Construct(_wallet, _priceList);
+                plate.Construct(_wallet, _priceList, _save);
 
             hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, _input, upgradeHeroScreen, cameraFollow, _upgradePlayerBoard.GetRootCamera(), _sdk);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, 
-                pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, _sdk, _baseGate, enemySpawner);
+                pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, _sdk, _baseGate, enemySpawner, _save);
             
             _baseGate.Construct(heroAimRing, cameraFollow, hero, _poolData);
             
-            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView, _storeTurretPlates, _cartridgeGuns);
+            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView, _storeTurretPlates, _cartridgeGuns, _save);
 
             _finishPlate.InActive();
             

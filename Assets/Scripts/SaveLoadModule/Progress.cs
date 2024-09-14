@@ -8,11 +8,13 @@ namespace SaveLoadModule
     {
         public DataWallet DataWallet;
         public DataStateGame DataStateGame;
+        public DataStateLevel DataStateLevel;
 
         public Progress()
         {
             DataWallet = new DataWallet();
             DataStateGame = new DataStateGame();
+            DataStateLevel = new DataStateLevel();
         }
     }
 }

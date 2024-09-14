@@ -3,6 +3,7 @@ using Agava.YandexGames;
 using Player;
 using Plugins.MonoCache;
 using Services.Bank;
+using Services.SaveLoad;
 using Services.SDK;
 using SO;
 using TMPro;
@@ -11,8 +12,17 @@ using UnityEngine.UI;
 
 namespace Canvases
 {
+    enum TypeSection
+    {
+        LeftSection,
+        RightSection
+    }
+    
     public class SectionPlate : MonoCache
     {
+        [Range((int)TypeSection.LeftSection, (int)TypeSection.RightSection)]
+        [SerializeField] private int _indexSection;
+        
         [SerializeField] private GameObject _section;
         [SerializeField] private GameObject[] _inActiveObjects;
 
@@ -34,11 +44,14 @@ namespace Canvases
         private PoolData _poolData;
         private int _currentPrice;
         private NotifyRewardScreen _hudNotifyRewardScreen;
+        private ISave _save;
 
         public event Action OnNotifyAssistant;
 
-        public void Construct(IWallet wallet, PriceListData priceListData, PoolData poolData, NotifyRewardScreen hudNotifyRewardScreen)
+        public void Construct(IWallet wallet, PriceListData priceListData, PoolData poolData,
+            NotifyRewardScreen hudNotifyRewardScreen, ISave save)
         {
+            _save = save;
             _hudNotifyRewardScreen = hudNotifyRewardScreen;
             _poolData = poolData;
             _priceList = priceListData;
@@ -49,6 +62,8 @@ namespace Canvases
             UpdatePrice();
             _wallet.MoneyChanged += SetConfigurationPrice;
             SetConfigurationPrice(_wallet.ReadCurrentMoney());
+
+            CorrectState();
         }
 
         protected override void OnDisabled() => 
@@ -102,12 +117,16 @@ namespace Canvases
             
             UpdatePrice();
             SetConfigurationPrice(_wallet.ReadCurrentMoney());
+            
+            SaveOpen(false);
         }
 
         private void FinishWaiting()
         {
             if (_wallet.Check(_currentPrice))
             {
+                SaveOpen(true);
+
                 _wallet.SpendMoney(_currentPrice);
                 OnAdditionalSection();
                 gameObject.SetActive(false);
@@ -118,12 +137,41 @@ namespace Canvases
 
                 _hudNotifyRewardScreen.RewardCompleted += () =>
                 {
+                    SaveOpen(true);
+                    
                     OnAdditionalSection();
                     gameObject.SetActive(false);
                 };
             }
         }
-        
+
+        private void CorrectState()
+        {
+            if (_save.AccessProgress().DataStateLevel.OpenLeftSection
+                && _indexSection == (int)TypeSection.LeftSection)
+            {
+                OnAdditionalSection();
+                gameObject.SetActive(false);
+            }
+
+            if (_save.AccessProgress().DataStateLevel.OpenRightSection
+                && _indexSection == (int)TypeSection.RightSection)
+            {
+                OnAdditionalSection();
+                gameObject.SetActive(false);
+            }
+        }
+
+        private void SaveOpen(bool flag)
+        {
+            if (_indexSection == (int)TypeSection.LeftSection)
+                _save.AccessProgress().DataStateLevel.OpenLeftSection = flag;
+            else
+                _save.AccessProgress().DataStateLevel.OpenRightSection = flag;
+            
+            _save.Save();
+        }
+
         private string BuildDescription()
         {
 #if !UNITY_EDITOR

@@ -5,6 +5,7 @@ using Infrastructure.Factory.Pools;
 using Player;
 using Services.Bank;
 using Services.Inputs;
+using Services.SaveLoad;
 using Services.SDK;
 using SO;
 using Spawners;
@@ -30,7 +31,7 @@ namespace Modules
             Pool pool, IWallet wallet, Hud hud, LoseScreen loseScreen, StartScreen startScreen, WinScreen winScreen,
             IInputService input, UpgradePlayerBoard upgradePlayerBoard, UpgradeHeroScreen upgradeHeroScreen,
             HeroData heroData, PriceListData priceList, Hero hero, ISDKService sdk, BaseGate baseGate,
-            EnemySpawner enemySpawner)
+            EnemySpawner enemySpawner, ISave save)
         {
             _hero = hero;
             _upgradeHeroScreen = upgradeHeroScreen;
@@ -63,7 +64,7 @@ namespace Modules
             storeAssistantPlate.Construct(poolData.MaxCountCargoAssistant, pool.PoolCargoAssistant, poolData);
 
             for (int i = 0; i < storeTurretPlates.Length; i++)
-                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, poolData, _hud.NotifyRewardScreen);
+                storeTurretPlates[i].Construct(pool.PoolTurrets, _wallet, priceList, poolData, _hud.NotifyRewardScreen, save);
 
             upgradeHeroScreen.Construct(_input, heroData, priceList, _wallet, hero, hud.NotifyRewardScreen);
             
