@@ -11,25 +11,11 @@ namespace Infrastructure.SDK
         public void Construct(AudioSource audioSource)
         {
             _audioSource = audioSource;
-
-            Application.focusChanged += OnInBackgroundChangeApp;
             WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeEvent;
         }
 
-        protected override void OnDisabled()
-        {
-            Application.focusChanged -= OnInBackgroundChangeApp;
+        protected override void OnDisabled() => 
             WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeEvent;
-        }
-
-        private void OnInBackgroundChangeApp(bool inApp)
-        {
-            if (inApp) 
-                Mute();
-            
-            if (!inApp) 
-                UnMute();
-        }
 
         private void OnInBackgroundChangeEvent(bool isBackground)
         {

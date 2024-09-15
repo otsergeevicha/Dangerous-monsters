@@ -6458,6 +6458,7 @@ GameObject:
   - component: {fileID: 5589692759727646418}
   - component: {fileID: 3213628603260113154}
   - component: {fileID: 5770403155557752292}
+  - component: {fileID: 7719556645572331849}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6583,6 +6584,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7719556645572331849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457017155501093640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: DescriptionNotifyScreen
+  FallbackText: "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u0440\u0435\u043A\u043B\u0430\u043C\u0443
+    \u0438 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435"
 --- !u!1 &8519770863880066015
 GameObject:
   m_ObjectHideFlags: 0
