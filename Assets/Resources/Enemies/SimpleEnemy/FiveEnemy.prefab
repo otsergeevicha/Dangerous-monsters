@@ -919,7 +919,7 @@ MonoBehaviour:
   _agent: {fileID: 2698720409822489541}
   _tree: {fileID: 5027036360673238358}
   EnemyAnimation: {fileID: 652429880286474483}
-  CashTransform: {fileID: 0}
+  CashTransform: {fileID: 6393706155420690053}
 --- !u!136 &5617052843816502699
 CapsuleCollider:
   m_ObjectHideFlags: 0

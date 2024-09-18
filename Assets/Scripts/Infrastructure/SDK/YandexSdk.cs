@@ -19,7 +19,11 @@ namespace Infrastructure.SDK
                     onCompleted?.Invoke();
                     UnMute();
                 }, UnMute
-                , (string _) => { UnMute(); });
+                , (string _) =>
+                {
+                    onCompleted?.Invoke();
+                    UnMute();
+                });
         }
 
         public void InterstitialAd(Action action)

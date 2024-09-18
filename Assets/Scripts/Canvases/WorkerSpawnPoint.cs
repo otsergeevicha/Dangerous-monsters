@@ -96,8 +96,11 @@ namespace Canvases
             }
         }
 
-        public void ResetLogic() => 
+        public void ResetLogic()
+        {
+            Interactable(true);
             _endSpawn = false;
+        }
 
         public void OnActiveSpawner()
         {

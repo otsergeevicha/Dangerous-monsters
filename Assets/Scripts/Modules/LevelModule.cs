@@ -26,13 +26,15 @@ namespace Modules
         private readonly StoreTurretPlate[] _storeTurretPlates;
         private readonly CartridgeGun[] _cartridgeGuns;
         private ISave _save;
+        private StoreAssistantPlate _storeAssistantPlate;
 
         public LevelModule(PoolData poolData, FinishPlate finishPlate, WindowModule windowModule, Pool pool, Hero hero,
             WorkerSpawner workerSpawner,
             SectionPlate[] sectionPlates, TransitionPlate[] transitionPlates, BaseGate baseGate,
             EnemySpawner enemySpawner, BaseView baseView, StoreTurretPlate[] storeTurretPlates,
-            CartridgeGun[] cartridgeGuns, ISave save)
+            CartridgeGun[] cartridgeGuns, ISave save, StoreAssistantPlate storeAssistantPlate)
         {
+            _storeAssistantPlate = storeAssistantPlate;
             _save = save;
             _cartridgeGuns = cartridgeGuns;
             _storeTurretPlates = storeTurretPlates;
@@ -83,9 +85,10 @@ namespace Modules
             
             _workerSpawner.UpdateLevel();
             _windowModule.UpLevelCompleted();
+            _storeAssistantPlate.UpdateLevel();
             
             _baseView.UpdateText(_poolData.CurrentLevelGame.ToString());
-
+            
             _finishPlate.InActive();
         }
 

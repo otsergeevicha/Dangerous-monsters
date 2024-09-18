@@ -1226,7 +1226,7 @@ MonoBehaviour:
   _agent: {fileID: 7666194800462483558}
   _tree: {fileID: -5590502995446569318}
   EnemyAnimation: {fileID: 816875422872919353}
-  CashTransform: {fileID: 0}
+  CashTransform: {fileID: 6637983716780275395}
 --- !u!195 &7666194800462483558
 NavMeshAgent:
   m_ObjectHideFlags: 0

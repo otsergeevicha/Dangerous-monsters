@@ -92,6 +92,14 @@ namespace Canvases
         public Vector3 GetPositionMarker() => 
             _markerPosition.transform.position;
 
+        public void UpdateLevel()
+        {
+            _currentCountAssistant = 0;
+            _mannequin.gameObject.SetActive(true);
+            UpdateSlotText();
+            ResetFill();
+        }
+
         private void FinishWaiting()
         {
             _currentCountAssistant++;

@@ -68,8 +68,11 @@ namespace Workers
         public void OnActive() =>
             gameObject.SetActive(true);
 
-        public void InActive() =>
+        public void InActive()
+        {
             gameObject.SetActive(false);
+            Reset();
+        }
 
         public void SendWorkplace(Vector3 workplace)
         {
@@ -84,6 +87,8 @@ namespace Workers
             _agent.enabled = false;
 
             IsReadyWork = false;
+            _hummer.gameObject.SetActive(false);
+            _gem.gameObject.SetActive(false);
             AtWork = false;
         }
 

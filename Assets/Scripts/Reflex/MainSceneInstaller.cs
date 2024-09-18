@@ -145,11 +145,13 @@ namespace Reflex
             hud.Construct(cameraFollow.GetCameraMain, _monstersPortal, _input, upgradeHeroScreen, cameraFollow, _upgradePlayerBoard.GetRootCamera(), _sdk);
 
             _windowModule.Construct(_storeAssistantPlate, _storeTurretPlates, _poolData, 
-                pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, _priceList, hero, _sdk, _baseGate, enemySpawner, _save);
+                pool, _wallet, hud, loseScreen, startScreen, winScreen, _input, _upgradePlayerBoard, upgradeHeroScreen, _heroData, 
+                _priceList, hero, _sdk, _baseGate, enemySpawner, _save);
             
             _baseGate.Construct(heroAimRing, cameraFollow, hero, _poolData);
             
-            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, _transitionPlates, _baseGate, enemySpawner, _baseView, _storeTurretPlates, _cartridgeGuns, _save);
+            _levelModule = new LevelModule(_poolData, _finishPlate, _windowModule,  pool, hero, workerSpawner, _sectionPlates, 
+                _transitionPlates, _baseGate, enemySpawner, _baseView, _storeTurretPlates, _cartridgeGuns, _save, _storeAssistantPlate);
 
             _finishPlate.InActive();
             
