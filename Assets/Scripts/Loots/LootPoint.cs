@@ -78,7 +78,7 @@ namespace Loots
             GameAnalytics.NewDesignEvent($"Loot:PickUp:NotFree:{_actualLoot.GetName()}");
 #endif
                     _hudNotifyRewardScreen.OnActive(_actualLoot.GetName());
-                    _hudNotifyRewardScreen.RewardCompleted += () => _actualLoot.Open(InActive);
+                    _hudNotifyRewardScreen.RewardCompleted += OnRewardCompleted;
                 }
                 else
                 {
@@ -167,6 +167,12 @@ namespace Loots
 
             gameObject.SetActive(false);
             OnPickUp?.Invoke();
+        }
+
+        private void OnRewardCompleted()
+        {
+            _actualLoot.Open(InActive);
+            _hudNotifyRewardScreen.RewardCompleted -= OnRewardCompleted;
         }
 
         private void OnConfirmationBar()

@@ -56,17 +56,7 @@ namespace Canvases
         public void RewardBonus()
         {
             _hudNotifyRewardScreen.OnActive(BuildDescription());
-            
-            _hudNotifyRewardScreen.RewardCompleted += () =>
-            {
-                _wallet.ApplyMoney(_priceList.LoseBonusMoney);
-                _wallet.ApplyGem(_priceList.LoseBonusGem);
-
-                _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
-                _remainingGem.text = _wallet.ReadCurrentGem().ToString();
-
-                _isAdShowed = true;
-            };
+            _hudNotifyRewardScreen.RewardCompleted += OnRewardCompleted;
         }
 
         private string BuildDescription()
@@ -106,6 +96,18 @@ namespace Canvases
                 TryAgain();
                 _isAdShowed = false;
             }
+        }
+
+        private void OnRewardCompleted()
+        {
+            _wallet.ApplyMoney(_priceList.LoseBonusMoney);
+            _wallet.ApplyGem(_priceList.LoseBonusGem);
+
+            _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
+            _remainingGem.text = _wallet.ReadCurrentGem().ToString();
+
+            _isAdShowed = true;
+            _hudNotifyRewardScreen.RewardCompleted -= OnRewardCompleted;
         }
 
         private void TryAgain()

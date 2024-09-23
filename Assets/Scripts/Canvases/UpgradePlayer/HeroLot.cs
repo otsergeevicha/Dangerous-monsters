@@ -112,15 +112,7 @@ namespace Canvases.UpgradePlayer
             else
             {
                 _hudNotifyRewardScreen.OnActive(BuildDescription());
-
-                _hudNotifyRewardScreen.RewardCompleted += () =>
-                {
-                    CurrentValue++;
-                    Upgrade();
-                    UpdateValue();
-
-                    _hero.Upgrade();
-                };
+                _hudNotifyRewardScreen.RewardCompleted += OnRewardCompleted;
             }
 
             _upgradeHeroScreen.ReturnPrice();
@@ -153,6 +145,16 @@ namespace Canvases.UpgradePlayer
                 Ad.SetActive(true);
                 PriceView.gameObject.SetActive(false);
             }
+        }
+
+        private void OnRewardCompleted()
+        {
+            CurrentValue++;
+            Upgrade();
+            _upgradeHeroScreen.ReturnPrice();
+            
+            _hero.Upgrade();
+            _hudNotifyRewardScreen.RewardCompleted -= OnRewardCompleted;
         }
 
         private string BuildDescription()

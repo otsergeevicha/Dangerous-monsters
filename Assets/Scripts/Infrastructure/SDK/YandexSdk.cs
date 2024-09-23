@@ -17,7 +17,6 @@ namespace Infrastructure.SDK
                 , () =>
                 {
                     onCompleted?.Invoke();
-                    UnMute();
                 }, UnMute
                 , (string _) =>
                 {
@@ -28,9 +27,13 @@ namespace Infrastructure.SDK
 
         public void InterstitialAd(Action action)
         {
-            Agava.YandexGames.InterstitialAd.Show(Mute
-                , (bool _) => action?.Invoke()
-                , (string _) =>
+            Agava.YandexGames.InterstitialAd.Show(
+                Mute
+                , (bool _) =>
+                {
+                    action?.Invoke();
+                    UnMute();
+                }, (string _) =>
                 {
                     action?.Invoke();
                     UnMute();

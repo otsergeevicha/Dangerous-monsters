@@ -160,7 +160,7 @@ namespace Canvases
                 else
                 {
                     _hudNotifyRewardScreen.OnActive(BuildDescription());
-                    _hudNotifyRewardScreen.RewardCompleted += () => _turret.Upgrade();
+                    _hudNotifyRewardScreen.RewardCompleted += OnRewardCompleted;
                 }
 
                 UpdatePriceView();
@@ -209,7 +209,13 @@ namespace Canvases
             
             _save.Save();
         }
-        
+
+        private void OnRewardCompleted()
+        {
+            _turret.Upgrade();
+            _hudNotifyRewardScreen.RewardCompleted -= OnRewardCompleted;
+        }
+
         private void OnActiveTurret()
         {
             _turret = _poolTurrets.Turrets.FirstOrDefault(turret =>

@@ -42,17 +42,7 @@ namespace Canvases
         public void RewardX2()
         {
             _hudNotifyRewardScreen.OnActive(BuildDescription());
-
-            _hudNotifyRewardScreen.RewardCompleted += () =>
-            {
-                _wallet.ApplyMoney(_wallet.ReadCurrentMoney());
-                _wallet.ApplyGem(_wallet.ReadCurrentGem());
-
-                _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
-                _remainingGem.text = _wallet.ReadCurrentGem().ToString();
-
-                _isAdShowed = true;
-            };
+            _hudNotifyRewardScreen.RewardCompleted += OnRewardCompleted;
         }
 
         public void OnActive()
@@ -72,6 +62,18 @@ namespace Canvases
                 ContinueGame();
 
             _isAdShowed = false;
+        }
+
+        private void OnRewardCompleted()
+        {
+            _wallet.ApplyMoney(_wallet.ReadCurrentMoney());
+            _wallet.ApplyGem(_wallet.ReadCurrentGem());
+
+            _remainingMoney.text = _wallet.ReadCurrentMoney().ToString();
+            _remainingGem.text = _wallet.ReadCurrentGem().ToString();
+
+            _isAdShowed = true;
+            _hudNotifyRewardScreen.RewardCompleted -= OnRewardCompleted;
         }
 
         private string BuildDescription()

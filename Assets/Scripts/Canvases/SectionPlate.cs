@@ -134,15 +134,17 @@ namespace Canvases
             else
             {
                 _hudNotifyRewardScreen.OnActive(BuildDescription());
-
-                _hudNotifyRewardScreen.RewardCompleted += () =>
-                {
-                    SaveOpen(true);
-                    
-                    OnAdditionalSection();
-                    gameObject.SetActive(false);
-                };
+                _hudNotifyRewardScreen.RewardCompleted += OnRewardCompleted;
             }
+        }
+
+        private void OnRewardCompleted()
+        {
+            SaveOpen(true);
+                    
+            OnAdditionalSection();
+            gameObject.SetActive(false);
+            _hudNotifyRewardScreen.RewardCompleted -= OnRewardCompleted;
         }
 
         private void CorrectState()
